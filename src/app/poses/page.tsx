@@ -60,12 +60,12 @@ function render(
   familiesBySlug: Record<string, string[]> = {}
 ) {
   const totalPages = Math.max(1, Math.ceil(count / pageSize));
-  const qs = (p: number) => {
-    const params = new URLSearchParams();
-    if (q) params.set("q", q);
-    if (family) params.set("family", family);
-    if (p > 1) params.set("page", String(p));
-    return `/poses?${params.toString()}`;
+  const createQuery = (p: number) => {
+    const params: { q?: string; family?: string; page?: string } = {};
+    if (q) params.q = q;
+    if (family) params.family = family;
+    if (p > 1) params.page = String(p);
+    return params;
   };
 
   return (
@@ -104,9 +104,9 @@ function render(
       )}
 
       <div className="flex items-center justify-center gap-2">
-        <Link href={qs(Math.max(1, page - 1))} className="rounded-xl border px-3 py-2 bg-white">Prev</Link>
+        <Link href={{ pathname: '/poses', query: createQuery(Math.max(1, page - 1)) }} className="rounded-xl border px-3 py-2 bg-white">Prev</Link>
         <div className="text-sm text-gray-500">Page {page} / {totalPages}</div>
-        <Link href={qs(Math.min(totalPages, page + 1))} className="rounded-xl border px-3 py-2 bg-white">Next</Link>
+        <Link href={{ pathname: '/poses', query: createQuery(Math.min(totalPages, page + 1)) }} className="rounded-xl border px-3 py-2 bg-white">Next</Link>
       </div>
     </main>
   );
