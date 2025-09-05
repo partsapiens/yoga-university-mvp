@@ -1,0 +1,12 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* brand extras pulled from your original index.html vibe */
+:root {
+  --indigo: #6366f1;
+  --purple: #a855f7;
+}
+html, body {
+  min-height: 100%;
+}
