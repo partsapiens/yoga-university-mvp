@@ -1,0 +1,1069 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yoga University - AI Flow Builder</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lucide/0.263.1/umd/lucide.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+        
+        .nav-links a {
+            text-decoration: none;
+            color: #555;
+            font-weight: 500;
+            cursor: pointer;
+        }
+        
+        .nav-links a.active {
+            color: #667eea;
+        }
+        
+        .btn {
+            padding: 0.5rem 1.5rem;
+            border: none;
+            border-radius: 8px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+        }
+        
+        .btn-secondary {
+            background: transparent;
+            color: #555;
+            border: 1px solid #ddd;
+        }
+        
+        .main-content {
+            background: white;
+            margin: 2rem 0;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+        }
+        
+        .tab-nav {
+            display: flex;
+            background: #f8f9fa;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .tab-btn {
+            flex: 1;
+            padding: 1rem 2rem;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-weight: 500;
+            color: #666;
+            transition: all 0.3s;
+        }
+        
+        .tab-btn.active {
+            background: white;
+            color: #667eea;
+            border-bottom: 2px solid #667eea;
+        }
+        
+        .tab-content {
+            display: none;
+            padding: 2rem;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        /* Pose Library */
+        .search-filters {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+        
+        .search-input {
+            flex: 1;
+            padding: 0.75rem 1rem;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 1rem;
+        }
+        
+        .filter-select {
+            padding: 0.75rem 1rem;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            background: white;
+        }
+        
+        .poses-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .pose-card {
+            border: 1px solid #eee;
+            border-radius: 12px;
+            overflow: hidden;
+            transition: all 0.3s;
+            cursor: pointer;
+            background: white;
+        }
+        
+        .pose-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .pose-image {
+            width: 100%;
+            height: 180px;
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+        }
+        
+        .pose-info {
+            padding: 1.5rem;
+        }
+        
+        .pose-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+        
+        .pose-meta {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+        
+        .badge {
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+        
+        .badge-beginner { background: #e8f5e8; color: #2d7d2d; }
+        .badge-intermediate { background: #fff3cd; color: #856404; }
+        .badge-advanced { background: #f8d7da; color: #721c24; }
+        
+        /* Flow Builder */
+        .flow-builder {
+            display: grid;
+            grid-template-columns: 300px 1fr;
+            gap: 2rem;
+            height: 600px;
+        }
+        
+        .pose-palette {
+            background: #f8f9fa;
+            border-radius: 12px;
+            padding: 1rem;
+            overflow-y: auto;
+        }
+        
+        .palette-pose {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.75rem;
+            background: white;
+            border-radius: 8px;
+            margin-bottom: 0.5rem;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .palette-pose:hover {
+            background: #e9ecef;
+            transform: translateX(4px);
+        }
+        
+        .pose-icon {
+            width: 40px;
+            height: 40px;
+            background: #667eea;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.2rem;
+        }
+        
+        .flow-timeline {
+            background: white;
+            border: 2px dashed #ddd;
+            border-radius: 12px;
+            padding: 1rem;
+            overflow-y: auto;
+            min-height: 500px;
+        }
+        
+        .flow-step {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            background: #f8f9fa;
+            border-radius: 8px;
+            margin-bottom: 0.5rem;
+            border-left: 4px solid #667eea;
+        }
+        
+        .step-info {
+            flex: 1;
+        }
+        
+        .step-controls {
+            display: flex;
+            gap: 0.5rem;
+            align-items: center;
+        }
+        
+        .step-input {
+            width: 60px;
+            padding: 0.25rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            text-align: center;
+        }
+        
+        .remove-btn {
+            background: #dc3545;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            padding: 0.25rem 0.5rem;
+            cursor: pointer;
+            font-size: 0.8rem;
+        }
+        
+        .suggestion-bar {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin: 1rem 0;
+        }
+        
+        .suggestions-grid {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+        
+        .suggestion-chip {
+            background: rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: white;
+            padding: 0.75rem 1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-align: center;
+        }
+        
+        .suggestion-chip:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+        
+        .empty-state {
+            text-align: center;
+            padding: 3rem;
+            color: #999;
+        }
+        
+        .empty-state-icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            opacity: 0.5;
+        }
+        
+        .flow-actions {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid #eee;
+        }
+        
+        /* Journal */
+        .journal-entry {
+            background: #f8f9fa;
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .entry-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+        
+        .entry-date {
+            font-weight: 600;
+        }
+        
+        .mood-selector {
+            display: flex;
+            gap: 0.5rem;
+        }
+        
+        .mood-btn {
+            background: none;
+            border: 2px solid transparent;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+        
+        .mood-btn.selected {
+            border-color: #667eea;
+            background: #f0f4ff;
+        }
+        
+        .form-group {
+            margin-bottom: 1rem;
+        }
+        
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+        
+        .form-input, .form-textarea, .form-select {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+        }
+        
+        .form-textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+        
+        .form-row {
+            display: flex;
+            gap: 1rem;
+        }
+        
+        @media (max-width: 768px) {
+            .flow-builder {
+                grid-template-columns: 1fr;
+                height: auto;
+            }
+            
+            .form-row {
+                flex-direction: column;
+            }
+            
+            .search-filters {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="container">
+            <div class="logo">Yoga University</div>
+            <ul class="nav-links">
+                <li><a href="#" class="nav-link active" data-tab="poses">Poses</a></li>
+                <li><a href="#" class="nav-link" data-tab="flows">Flow Builder</a></li>
+                <li><a href="#" class="nav-link" data-tab="journal">Journal</a></li>
+            </ul>
+            <div>
+                <a href="#" class="btn btn-secondary">Sign In</a>
+                <a href="#" class="btn btn-primary">Get Started</a>
+            </div>
+        </nav>
+    </header>
+
+    <div class="container">
+        <div class="main-content">
+            <div class="tab-nav">
+                <button class="tab-btn active" data-tab="poses">Pose Library</button>
+                <button class="tab-btn" data-tab="flows">Flow Builder</button>
+                <button class="tab-btn" data-tab="journal">Journal</button>
+            </div>
+
+            <!-- Pose Library Tab -->
+            <div class="tab-content active" id="poses-tab">
+                <div class="search-filters">
+                    <input type="text" class="search-input" placeholder="Search poses..." id="pose-search">
+                    <select class="filter-select" id="category-filter">
+                        <option value="">All Categories</option>
+                        <option value="Standing">Standing</option>
+                        <option value="Hip Opener">Hip Opener</option>
+                        <option value="Backbend">Backbend</option>
+                        <option value="Forward Fold">Forward Fold</option>
+                        <option value="Twist">Twist</option>
+                        <option value="Inversion">Inversion</option>
+                        <option value="Restorative">Restorative</option>
+                    </select>
+                    <select class="filter-select" id="level-filter">
+                        <option value="">All Levels</option>
+                        <option value="Beginner">Beginner</option>
+                        <option value="Intermediate">Intermediate</option>
+                        <option value="Advanced">Advanced</option>
+                    </select>
+                </div>
+                
+                <div class="poses-grid" id="poses-grid">
+                    <!-- Poses populated by JavaScript -->
+                </div>
+            </div>
+
+            <!-- Flow Builder Tab -->
+            <div class="tab-content" id="flows-tab">
+                <div class="flow-builder">
+                    <div class="pose-palette">
+                        <h3 style="margin-bottom: 1rem;">Pose Palette</h3>
+                        <div id="palette-poses">
+                            <!-- Palette poses populated by JavaScript -->
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <div class="flow-timeline" id="flow-timeline">
+                            <div class="empty-state">
+                                <div class="empty-state-icon">🧘‍♀️</div>
+                                <p>Select your goal to start building</p>
+                                <div style="margin-top: 2rem;">
+                                    <h4 style="margin-bottom: 1rem;">What's your focus?</h4>
+                                    <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; max-width: 300px; margin: 0 auto;">
+                                        <button class="btn btn-secondary" onclick="setGoal('Hips')">Hips</button>
+                                        <button class="btn btn-secondary" onclick="setGoal('Shoulders')">Shoulders</button>
+                                        <button class="btn btn-secondary" onclick="setGoal('Back')">Back</button>
+                                        <button class="btn btn-secondary" onclick="setGoal('Balance')">Balance</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="flow-actions">
+                            <button class="btn btn-primary" id="save-flow">Save Flow</button>
+                            <button class="btn btn-secondary" id="export-pdf">Export PDF</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Journal Tab -->
+            <div class="tab-content" id="journal-tab">
+                <div class="journal-entry">
+                    <div class="entry-header">
+                        <div class="entry-date">Today - September 5, 2025</div>
+                        <div class="mood-selector">
+                            <button class="mood-btn" data-mood="😊">😊</button>
+                            <button class="mood-btn" data-mood="🙂">🙂</button>
+                            <button class="mood-btn" data-mood="😐">😐</button>
+                            <button class="mood-btn" data-mood="😔">😔</button>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Practice Notes</label>
+                        <textarea class="form-textarea" placeholder="How was your practice today?"></textarea>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label">Type</label>
+                            <select class="form-select">
+                                <option value="">Select...</option>
+                                <option value="taught">Taught Class</option>
+                                <option value="attended">Attended Class</option>
+                                <option value="personal">Personal Practice</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Duration (min)</label>
+                            <input type="number" class="form-input" placeholder="60">
+                        </div>
+                    </div>
+                    
+                    <button class="btn btn-primary">Save Entry</button>
+                </div>
+                
+                <div class="journal-entry">
+                    <div class="entry-header">
+                        <div class="entry-date">Yesterday</div>
+                        <div style="font-size: 1.2rem;">🙂</div>
+                    </div>
+                    <p>Great HPF class today. Focused on hip opening with supported poses. Students seemed really engaged.</p>
+                    <div style="margin-top: 0.5rem; font-size: 0.9rem; color: #666;">
+                        Taught • HPF • 75 min
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Initialize Lucide icons
+        if (typeof lucide !== 'undefined') {
+            lucide.createIcons();
+        }
+        
+        // Sample pose data
+        const poses = [
+            {
+                id: "mountain",
+                name: "Mountain Pose",
+                sanskrit: "Tadasana",
+                category: "Standing",
+                level: "Beginner",
+                icon: "🏔️",
+                holdTime: 30
+            },
+            {
+                id: "warrior-2-r",
+                name: "Warrior II (Right)",
+                sanskrit: "Virabhadrasana II",
+                category: "Standing",
+                level: "Intermediate",
+                icon: "⚔️",
+                holdTime: 45,
+                otherSide: "warrior-2-l"
+            },
+            {
+                id: "warrior-2-l",
+                name: "Warrior II (Left)",
+                sanskrit: "Virabhadrasana II",
+                category: "Standing",
+                level: "Intermediate",
+                icon: "⚔️",
+                holdTime: 45,
+                otherSide: "warrior-2-r"
+            },
+            {
+                id: "down-dog",
+                name: "Downward Dog",
+                sanskrit: "Adho Mukha Svanasana",
+                category: "Inversion",
+                level: "Beginner",
+                icon: "🐕",
+                holdTime: 30
+            },
+            {
+                id: "child",
+                name: "Child's Pose",
+                sanskrit: "Balasana",
+                category: "Restorative",
+                level: "Beginner",
+                icon: "🧘‍♀️",
+                holdTime: 60
+            },
+            {
+                id: "low-lunge-r",
+                name: "Low Lunge (Right)",
+                sanskrit: "Anjaneyasana",
+                category: "Hip Opener",
+                level: "Beginner",
+                icon: "🦎",
+                holdTime: 45,
+                otherSide: "low-lunge-l"
+            },
+            {
+                id: "low-lunge-l",
+                name: "Low Lunge (Left)",
+                sanskrit: "Anjaneyasana",
+                category: "Hip Opener",
+                level: "Beginner",
+                icon: "🦎",
+                holdTime: 45,
+                otherSide: "low-lunge-r"
+            },
+            {
+                id: "bridge",
+                name: "Bridge Pose",
+                sanskrit: "Setu Bandhasana",
+                category: "Backbend",
+                level: "Beginner",
+                icon: "🌉",
+                holdTime: 30
+            },
+            {
+                id: "cobra",
+                name: "Cobra Pose",
+                sanskrit: "Bhujangasana",
+                category: "Backbend",
+                level: "Beginner",
+                icon: "🐍",
+                holdTime: 20
+            },
+            {
+                id: "twist-r",
+                name: "Seated Twist (Right)",
+                sanskrit: "Ardha Matsyendrasana",
+                category: "Twist",
+                level: "Intermediate",
+                icon: "🌀",
+                holdTime: 45,
+                otherSide: "twist-l"
+            },
+            {
+                id: "twist-l",
+                name: "Seated Twist (Left)",
+                sanskrit: "Ardha Matsyendrasana",
+                category: "Twist",
+                level: "Intermediate",
+                icon: "🌀",
+                holdTime: 45,
+                otherSide: "twist-r"
+            },
+            {
+                id: "forward-fold",
+                name: "Forward Fold",
+                sanskrit: "Uttanasana",
+                category: "Forward Fold",
+                level: "Beginner",
+                icon: "🙇‍♀️",
+                holdTime: 30
+            }
+        ];
+
+        let currentFlow = {
+            steps: [],
+            goal: null
+        };
+        let filteredPoses = [...poses];
+
+        // AI Suggestion Engine
+        const suggestionEngine = {
+            startSuggestions: {
+                "Hips": [
+                    { id: "child", why: "Centering and gentle opening" },
+                    { id: "low-lunge-r", why: "Hip flexor opener" },
+                    { id: "down-dog", why: "Full body warmup" }
+                ],
+                "Shoulders": [
+                    { id: "down-dog", why: "Shoulder strengthener" },
+                    { id: "child", why: "Gentle shoulder release" },
+                    { id: "mountain", why: "Postural awareness" }
+                ],
+                "Back": [
+                    { id: "child", why: "Gentle spine release" },
+                    { id: "bridge", why: "Back strengthening" },
+                    { id: "cobra", why: "Gentle backbend" }
+                ],
+                "Balance": [
+                    { id: "mountain", why: "Foundation pose" },
+                    { id: "warrior-2-r", why: "Stable base" },
+                    { id: "down-dog", why: "Full body engagement" }
+                ]
+            },
+
+            getStartSuggestions(goal) {
+                return this.startSuggestions[goal] || this.startSuggestions["Hips"];
+            },
+
+            getNextSuggestions(flow, goal) {
+                if (flow.steps.length === 0) {
+                    return this.getStartSuggestions(goal);
+                }
+
+                const lastStep = flow.steps[flow.steps.length - 1];
+                const lastPose = poses.find(p => p.id === lastStep.poseId);
+                
+                // Check for other side
+                if (lastPose && lastPose.otherSide) {
+                    const hasOtherSide = flow.steps.some(step => step.poseId === lastPose.otherSide);
+                    if (!hasOtherSide) {
+                        const otherSidePose = poses.find(p => p.id === lastPose.otherSide);
+                        return [{ id: otherSidePose.id, why: "Complete other side" }];
+                    }
+                }
+
+                // Basic next suggestions based on goal
+                const goalSuggestions = {
+                    "Hips": [
+                        { id: "low-lunge-r", why: "Hip opener progression" },
+                        { id: "child", why: "Reset pose" },
+                        { id: "bridge", why: "Counter hip flexors" }
+                    ],
+                    "Shoulders": [
+                        { id: "down-dog", why: "Shoulder strengthener" },
+                        { id: "cobra", why: "Open front body" },
+                        { id: "child", why: "Shoulder release" }
+                    ],
+                    "Back": [
+                        { id: "bridge", why: "Back strengthening" },
+                        { id: "cobra", why: "Gentle backbend" },
+                        { id: "twist-r", why: "Spinal mobility" }
+                    ],
+                    "Balance": [
+                        { id: "warrior-2-r", why: "Standing balance" },
+                        { id: "mountain", why: "Center and ground" },
+                        { id: "down-dog", why: "Full body stability" }
+                    ]
+                };
+
+                return goalSuggestions[goal] || goalSuggestions["Hips"];
+            }
+        };
+
+        // Tab switching
+        document.querySelectorAll('.tab-btn, .nav-link').forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                e.preventDefault();
+                const tabName = this.dataset.tab;
+                switchTab(tabName);
+            });
+        });
+
+        function switchTab(tabName) {
+            // Update active states
+            document.querySelectorAll('.tab-btn, .nav-link').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            document.querySelectorAll('.tab-content').forEach(content => {
+                content.classList.remove('active');
+            });
+            
+            // Activate selected tab
+            document.querySelector(`[data-tab="${tabName}"]`).classList.add('active');
+            document.getElementById(`${tabName}-tab`).classList.add('active');
+            
+            if (tabName === 'poses') {
+                renderPoses();
+            } else if (tabName === 'flows') {
+                renderPalettePoses();
+            }
+        }
+
+        // Render poses
+        function renderPoses() {
+            const grid = document.getElementById('poses-grid');
+            if (!grid) return;
+            
+            grid.innerHTML = '';
+            
+            filteredPoses.forEach(pose => {
+                const card = document.createElement('div');
+                card.className = 'pose-card';
+                
+                card.innerHTML = `
+                    <div class="pose-image">${pose.icon}</div>
+                    <div class="pose-info">
+                        <div class="pose-title">${pose.name}</div>
+                        <div class="pose-meta">
+                            <span class="badge badge-${pose.level.toLowerCase()}">${pose.level}</span>
+                            <span class="badge" style="background: #e9ecef; color: #555;">${pose.category}</span>
+                        </div>
+                        <div style="font-size: 0.9rem; color: #666;">Hold: ${pose.holdTime}s</div>
+                    </div>
+                `;
+                
+                grid.appendChild(card);
+            });
+        }
+
+        function renderPalettePoses() {
+            const palette = document.getElementById('palette-poses');
+            if (!palette) return;
+            
+            palette.innerHTML = '';
+            
+            poses.slice(0, 8).forEach(pose => {
+                const poseEl = document.createElement('div');
+                poseEl.className = 'palette-pose';
+                poseEl.onclick = () => addPoseToFlow(pose.id);
+                
+                poseEl.innerHTML = `
+                    <div class="pose-icon">${pose.icon}</div>
+                    <div>
+                        <div style="font-weight: 500; font-size: 0.9rem;">${pose.name}</div>
+                        <div style="font-size: 0.8rem; color: #666;">${pose.holdTime}s</div>
+                    </div>
+                `;
+                
+                palette.appendChild(poseEl);
+            });
+        }
+
+        // Flow building
+        function setGoal(goal) {
+            currentFlow.goal = goal;
+            updateSuggestions();
+        }
+
+        function addPoseToFlow(poseId) {
+            const pose = poses.find(p => p.id === poseId);
+            if (!pose) return;
+
+            currentFlow.steps.push({
+                poseId: pose.id,
+                holdSeconds: pose.holdTime
+            });
+
+            renderFlowTimeline();
+            updateSuggestions();
+        }
+
+        function updateSuggestions() {
+            if (!currentFlow.goal) return;
+
+            const suggestions = suggestionEngine.getNextSuggestions(currentFlow, currentFlow.goal);
+            renderSuggestions(suggestions);
+        }
+
+        function renderSuggestions(suggestions) {
+            let suggestionBar = document.getElementById('suggestion-bar');
+            if (!suggestionBar) {
+                suggestionBar = document.createElement('div');
+                suggestionBar.id = 'suggestion-bar';
+                suggestionBar.className = 'suggestion-bar';
+                
+                const timeline = document.getElementById('flow-timeline');
+                timeline.parentNode.insertBefore(suggestionBar, timeline.nextSibling);
+            }
+
+            suggestionBar.innerHTML = `
+                <div style="font-weight: 600; margin-bottom: 1rem;">AI Suggestions</div>
+                <div class="suggestions-grid">
+                    ${suggestions.map(sug => {
+                        const pose = poses.find(p => p.id === sug.id);
+                        return `
+                            <div class="suggestion-chip" onclick="addPoseToFlow('${sug.id}')">
+                                <div style="font-weight: 600;">${pose?.name || sug.id}</div>
+                                <div style="font-size: 0.8rem; opacity: 0.9;">${sug.why}</div>
+                            </div>
+                        `;
+                    }).join('')}
+                </div>
+            `;
+        }
+
+        function renderFlowTimeline() {
+            const timeline = document.getElementById('flow-timeline');
+            if (!timeline) return;
+
+            if (currentFlow.steps.length === 0) {
+                timeline.innerHTML = `
+                    <div class="empty-state">
+                        <div class="empty-state-icon">🧘‍♀️</div>
+                        <p>Select your goal to start building</p>
+                        <div style="margin-top: 2rem;">
+                            <h4 style="margin-bottom: 1rem;">What's your focus?</h4>
+                            <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; max-width: 300px; margin: 0 auto;">
+                                <button class="btn btn-secondary" onclick="setGoal('Hips')">Hips</button>
+                                <button class="btn btn-secondary" onclick="setGoal('Shoulders')">Shoulders</button>
+                                <button class="btn btn-secondary" onclick="setGoal('Back')">Back</button>
+                                <button class="btn btn-secondary" onclick="setGoal('Balance')">Balance</button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                return;
+            }
+
+            timeline.innerHTML = currentFlow.steps.map((step, index) => {
+                const pose = poses.find(p => p.id === step.poseId);
+                if (!pose) return '';
+
+                return `
+                    <div class="flow-step">
+                        <div class="pose-icon">${pose.icon}</div>
+                        <div class="step-info">
+                            <div style="font-weight: 500;">${pose.name}</div>
+                            <div style="font-size: 0.8rem; color: #666;">${step.holdSeconds}s hold</div>
+                        </div>
+                        <div class="step-controls">
+                            <input type="number" class="step-input" value="${step.holdSeconds}" 
+                                   onchange="updateStepHold(${index}, this.value)">
+                            <button class="remove-btn" onclick="removeStep(${index})">×</button>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function updateStepHold(index, value) {
+            currentFlow.steps[index].holdSeconds = parseInt(value) || 30;
+        }
+
+        function removeStep(index) {
+            currentFlow.steps.splice(index, 1);
+            renderFlowTimeline();
+            updateSuggestions();
+        }
+
+        // Search and filter
+        document.getElementById('pose-search')?.addEventListener('input', function() {
+            const query = this.value.toLowerCase();
+            filteredPoses = poses.filter(pose => 
+                pose.name.toLowerCase().includes(query) ||
+                pose.category.toLowerCase().includes(query)
+            );
+            renderPoses();
+        });
+
+        document.getElementById('category-filter')?.addEventListener('change', function() {
+            const category = this.value;
+            filteredPoses = category ? poses.filter(pose => pose.category === category) : [...poses];
+            renderPoses();
+        });
+
+        document.getElementById('level-filter')?.addEventListener('change', function() {
+            const level = this.value;
+            filteredPoses = level ? poses.filter(pose => pose.level === level) : [...poses];
+            renderPoses();
+        });
+
+        // Flow actions
+        document.getElementById('save-flow')?.addEventListener('click', function() {
+            if (currentFlow.steps.length === 0) {
+                alert('Add some poses to your flow first');
+                return;
+            }
+            const flowName = prompt('Name your flow:') || `${currentFlow.goal} Flow`;
+            alert(`"${flowName}" saved successfully!`);
+        });
+
+        document.getElementById('export-pdf')?.addEventListener('click', function() {
+            if (currentFlow.steps.length === 0) {
+                alert('Add some poses before exporting');
+                return;
+            }
+            exportToPDF();
+        });
+
+        function exportToPDF() {
+            // Simple HTML export as fallback
+            const totalTime = Math.round(currentFlow.steps.reduce((sum, step) => sum + step.holdSeconds, 0) / 60);
+            const flowTitle = `${currentFlow.goal || 'Yoga'} Flow`;
+            
+            const htmlContent = `
+                <!DOCTYPE html>
+                <html>
+                <head>
+                    <title>${flowTitle}</title>
+                    <style>
+                        body { font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; }
+                        .header { text-align: center; margin-bottom: 30px; }
+                        .pose { margin-bottom: 20px; padding: 15px; border: 1px solid #ddd; border-radius: 8px; }
+                        .pose-title { font-size: 18px; font-weight: bold; margin-bottom: 5px; }
+                        .pose-details { color: #666; }
+                    </style>
+                </head>
+                <body>
+                    <div class="header">
+                        <h1>${flowTitle}</h1>
+                        <p>${currentFlow.steps.length} poses • ${totalTime} minutes</p>
+                    </div>
+                    ${currentFlow.steps.map((step, index) => {
+                        const pose = poses.find(p => p.id === step.poseId);
+                        return `
+                            <div class="pose">
+                                <div class="pose-title">${index + 1}. ${pose?.name || step.poseId}</div>
+                                <div class="pose-details">Hold for ${step.holdSeconds} seconds</div>
+                            </div>
+                        `;
+                    }).join('')}
+                </body>
+                </html>
+            `;
+
+            const blob = new Blob([htmlContent], { type: 'text/html' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `${flowTitle.replace(/\s+/g, '_')}.html`;
+            a.click();
+            URL.revokeObjectURL(url);
+            
+            alert('Flow exported as HTML file!');
+        }
+
+        // Mood selection
+        document.querySelectorAll('.mood-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                document.querySelectorAll('.mood-btn').forEach(b => b.classList.remove('selected'));
+                this.classList.add('selected');
+            });
+        });
+
+        // Initialize the app
+        function initialize() {
+            renderPoses();
+            renderPalettePoses();
+        }
+
+        // Start the app
+        initialize();
+        
+        console.log('Yoga University loaded successfully with', poses.length, 'poses');
+    </script>
+</body>
+</html>
