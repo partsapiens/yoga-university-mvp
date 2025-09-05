@@ -4,6 +4,14 @@ import Link from "next/link";
 export default async function Page({ params }: { params: { order_num: string } }) {
   const supabase = supabaseBrowser();
 
+  if (!supabase) {
+    return (
+      <main className="mx-auto max-w-3xl px-4 py-10">
+        <div className="rounded-2xl border p-8">Error: Supabase client not available. Check environment variables.</div>
+      </main>
+    );
+  }
+
   const { data: chakra } = await supabase
     .from("chakras")
     .select("*")

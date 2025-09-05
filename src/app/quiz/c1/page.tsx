@@ -4,12 +4,21 @@ type QA = { prompt: string; answer: string };
 type Board = { categories: string[]; grid: Record<string, Record<number, QA>> };
 
 async function fetchBoard(): Promise<Board> {
-  const supabase = createClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-  );
+  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+
+  if (!supabaseUrl || !supabaseKey) {
+    console.warn("Supabase URL or key is missing. Returning empty board for build process.");
+    return { categories: [], grid: {} };
+  }
+
+  const supabase = createClient(supabaseUrl, supabaseKey);
   const { data: setRow } = await supabase.from("quiz_sets").select("id").eq("title", "C1 Review Jeopardy").maybeSingle();
-  if (!setRow) throw new Error("Seed Jeopardy first.");
+  if (!setRow) {
+    console.warn("Jeopardy set 'C1 Review Jeopardy' not found. Returning empty board.");
+    return { categories: [], grid: {} };
+  }
+
   const { data: rows } = await supabase
     .from("quiz_questions")
     .select("category,value,prompt,answer")

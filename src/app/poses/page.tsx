@@ -15,6 +15,10 @@ export default async function Page({ searchParams }: { searchParams: SearchParam
   const from = (page - 1) * pageSize;
   const to = from + pageSize - 1;
 
+  if (!supabase) {
+    return render(q, [], family, [], 0, page, pageSize);
+  }
+
   const { data: fams } = await supabase.from("posture_families").select("name").order("name", { ascending: true });
 
   let poseQuery = supabase.from("poses").select("slug,name,sanskrit,category,thumbnail_url", { count: "exact" });

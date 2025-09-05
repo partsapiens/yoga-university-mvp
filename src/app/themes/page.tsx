@@ -5,6 +5,18 @@ export const dynamic = "force-dynamic";
 
 export default async function Page() {
   const supabase = supabaseBrowser();
+
+  if (!supabase) {
+    return (
+      <main className="mx-auto max-w-3xl px-4 py-8 grid gap-6">
+        <h1 className="text-2xl font-bold">Themes</h1>
+        <div className="rounded-xl border p-8 text-center text-gray-500">
+          Error: Supabase client not available. Check environment variables.
+        </div>
+      </main>
+    );
+  }
+
   const { data: themes } = await supabase
     .from("themes")
     .select("id, name")
