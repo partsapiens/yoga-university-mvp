@@ -337,59 +337,6 @@
             font-size: 1.1rem;
         }
         
-        /* Flow Builder styles remain the same as before */
-        .flow-builder {
-            display: grid;
-            grid-template-columns: 300px 1fr;
-            gap: 2rem;
-            height: 600px;
-        }
-        
-        .pose-palette {
-            background: #f8f9fa;
-            border-radius: 12px;
-            padding: 1rem;
-            overflow-y: auto;
-        }
-        
-        .palette-pose {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            padding: 0.75rem;
-            background: white;
-            border-radius: 8px;
-            margin-bottom: 0.5rem;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-        
-        .palette-pose:hover {
-            background: #e9ecef;
-            transform: translateX(4px);
-        }
-        
-        .pose-icon {
-            width: 40px;
-            height: 40px;
-            background: #667eea;
-            border-radius: 6px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 1.2rem;
-        }
-        
-        .flow-timeline {
-            background: white;
-            border: 2px dashed #ddd;
-            border-radius: 12px;
-            padding: 1rem;
-            overflow-y: auto;
-            min-height: 500px;
-        }
-        
         .empty-state {
             text-align: center;
             padding: 3rem;
@@ -403,13 +350,12 @@
         }
         
         @media (max-width: 768px) {
-            .flow-builder {
-                grid-template-columns: 1fr;
-                height: auto;
-            }
-            
             .poses-grid {
                 grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            }
+            
+            .search-filters {
+                flex-direction: column;
             }
         }
     </style>
@@ -450,7 +396,7 @@
                         <option value="Forward Folds">Forward Folds</option>
                         <option value="Twists">Twists</option>
                         <option value="Inversions">Inversions</option>
-                        <option value="Arm Balances">Arm Balances</option>
+                        <option value="Balances">Balances</option>
                         <option value="Core">Core</option>
                         <option value="Restorative">Restorative</option>
                     </select>
@@ -468,6 +414,8 @@
                         <option value="spine">Spine</option>
                         <option value="core">Core</option>
                         <option value="legs">Legs</option>
+                        <option value="chest">Chest</option>
+                        <option value="ankles">Ankles</option>
                     </select>
                 </div>
                 
@@ -481,40 +429,21 @@
                 </div>
             </div>
 
-            <!-- Flow Builder Tab (same as before) -->
+            <!-- Flow Builder Tab -->
             <div class="tab-content" id="flows-tab">
-                <div class="flow-builder">
-                    <div class="pose-palette">
-                        <h3 style="margin-bottom: 1rem;">Pose Palette</h3>
-                        <div id="palette-poses">
-                            <!-- Palette poses populated by JavaScript -->
-                        </div>
-                    </div>
-                    
-                    <div>
-                        <div class="flow-timeline" id="flow-timeline">
-                            <div class="empty-state">
-                                <div class="empty-state-icon">🧘‍♀️</div>
-                                <p>Select your goal to start building</p>
-                                <div style="margin-top: 2rem;">
-                                    <h4 style="margin-bottom: 1rem;">What's your focus?</h4>
-                                    <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; max-width: 300px; margin: 0 auto;">
-                                        <button class="btn btn-secondary" onclick="setGoal('Hips')">Hips</button>
-                                        <button class="btn btn-secondary" onclick="setGoal('Shoulders')">Shoulders</button>
-                                        <button class="btn btn-secondary" onclick="setGoal('Back')">Back</button>
-                                        <button class="btn btn-secondary" onclick="setGoal('Balance')">Balance</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                <div class="empty-state">
+                    <div class="empty-state-icon">🔨</div>
+                    <h3>Flow Builder Coming Soon!</h3>
+                    <p>We're working on an amazing flow builder that will use your pose library to create custom sequences.</p>
                 </div>
             </div>
 
-            <!-- Journal Tab (same as before) -->
+            <!-- Journal Tab -->
             <div class="tab-content" id="journal-tab">
-                <div style="text-align: center; padding: 3rem; color: #666;">
-                    <p>Journal functionality coming soon!</p>
+                <div class="empty-state">
+                    <div class="empty-state-icon">📔</div>
+                    <h3>Practice Journal Coming Soon!</h3>
+                    <p>Track your practice, moods, and progress with our upcoming journal feature.</p>
                 </div>
             </div>
         </div>
@@ -535,25 +464,15 @@
     </div>
 
     <script>
-        // Initialize Supabase
-        // YOU NEED TO REPLACE THESE WITH YOUR ACTUAL SUPABASE CREDENTIALS
-        const SUPABASE_URL = 'YOUR_SUPABASE_URL_HERE'
-        const SUPABASE_ANON_KEY = 'YOUR_SUPABASE_ANON_KEY_HERE'
+        // Initialize Supabase with YOUR credentials
+        const SUPABASE_URL = 'https://mcoqofytqpjjjradpqfc.supabase.co'
+        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1jb3FvZnl0cXBqampyYWRwcWZjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTcwODgzNjcsImV4cCI6MjA3MjY2NDM2N30.Wm_RwyJs8pobxmQ-2M6or_50k-61y1SxpJX7CPE0to8'
         
-        // Remove the line below and uncomment the line above once you add your credentials
-        console.warn('⚠️ Please add your Supabase credentials to connect to the database')
-        
-        let supabase;
-        if (SUPABASE_URL !== 'YOUR_SUPABASE_URL_HERE') {
-            supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
-        }
+        const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
+        console.log('✅ Supabase connected successfully!')
 
         let allPoses = [];
         let filteredPoses = [];
-        let currentFlow = {
-            steps: [],
-            goal: null
-        };
 
         // Enhanced Pose Management
         class PoseManager {
@@ -693,7 +612,7 @@
                 : '';
 
             return `
-                <div class="pose-card" onclick="openPoseModal('${pose.id}')">
+                <div class="pose-card" onclick="openPoseModal('${pose.id || pose.slug}')">
                     <div class="pose-image">
                         ${pose.image_url ? `<img src="${pose.image_url}" alt="${pose.name}">` : pose.icon}
                     </div>
@@ -703,7 +622,7 @@
                         <div class="pose-meta">
                             <span class="badge badge-${pose.level.toLowerCase()}">${pose.level}</span>
                             <span class="badge" style="background: #e9ecef; color: #555;">${pose.category}</span>
-                            <span class="badge" style="background: #f0f4ff; color: #667eea;">${pose.holdTime}s</span>
+                            <span class="badge" style="background: #f0f4ff; color: #667eea;">${pose.holdTime || pose.hold_time}s</span>
                         </div>
                         ${anatomicalTags}
                         <div class="pose-details">
@@ -733,7 +652,7 @@
         }
 
         function openPoseModal(poseId) {
-            const pose = allPoses.find(p => p.id === poseId);
+            const pose = allPoses.find(p => (p.id === poseId || p.slug === poseId));
             if (!pose) return;
 
             const modal = document.getElementById('pose-modal');
@@ -754,7 +673,7 @@
                 <div class="section">
                     <span class="badge badge-${pose.level.toLowerCase()}">${pose.level}</span>
                     <span class="badge" style="background: #e9ecef; color: #555; margin-left: 0.5rem;">${pose.category}</span>
-                    <span class="badge" style="background: #f0f4ff; color: #667eea; margin-left: 0.5rem;">Hold ${pose.holdTime}s</span>
+                    <span class="badge" style="background: #f0f4ff; color: #667eea; margin-left: 0.5rem;">Hold ${pose.holdTime || pose.hold_time}s</span>
                 </div>
                 
                 ${anatomicalTags}
@@ -788,12 +707,6 @@
                         <p style="color: #dc3545; font-weight: 500;">${pose.contraindications}</p>
                     </div>
                 ` : ''}
-                
-                <div class="section">
-                    <button class="btn btn-primary" onclick="addPoseToFlow('${pose.id}'); closePoseModal();">
-                        Add to Flow
-                    </button>
-                </div>
             `;
 
             modal.style.display = 'flex';
@@ -853,24 +766,6 @@
             if (tabName === 'poses') {
                 renderPoses();
             }
-        }
-
-        // Flow building functions (simplified for demo)
-        function setGoal(goal) {
-            currentFlow.goal = goal;
-            console.log('Goal set:', goal);
-        }
-
-        function addPoseToFlow(poseId) {
-            const pose = allPoses.find(p => p.id === poseId);
-            if (!pose) return;
-
-            currentFlow.steps.push({
-                poseId: pose.id,
-                holdSeconds: pose.holdTime
-            });
-
-            console.log('Added to flow:', pose.name);
         }
 
         // Initialize the app
