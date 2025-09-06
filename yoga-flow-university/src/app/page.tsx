@@ -6,7 +6,7 @@ import PoseLibrary from '@/components/poses/PoseLibrary'
 import FlowBuilder from '@/components/flows/FlowBuilder'
 import Journal from '@/components/journal/Journal'
 import Navigation from '@/components/layout/Navigation'
-import type { Pose, Flow } from '@/types'
+import type { Pose, Flow, FlowStep } from '@/types'
 
 export default function Home() {
   const [currentTab, setCurrentTab] = useState('poses')
@@ -150,12 +150,12 @@ export default function Home() {
                 updated_at: ''
               }
 
-              const newStep = {
+              const newStep: FlowStep = {
                 poseId,
                 holdSeconds: pose.meta.typicalHoldSec,
                 sides: pose.meta.sides === 'unilateral' ? 'R' : 'both',
-                order: newFlow.steps.length
-              }
+                order: newFlow.steps.length,
+              };
 
               setCurrentFlow({
                 ...newFlow,
