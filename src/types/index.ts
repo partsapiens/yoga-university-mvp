@@ -23,15 +23,27 @@ export interface User {
 // 2. Pose and Flow Data Structures
 export interface Pose {
   id: string;
-  name: string;
+  name:string;
   sanskritName: string;
   description: string;
   imageUrl: string;
   videoUrl?: string;
   difficulty: 'beginner' | 'intermediate' | 'advanced';
-  category: 'standing' | 'seated' | 'inversion' | 'restorative' | 'arm-balance' | 'back-bend';
+
+  // Enhanced metadata for AI suggestions
+  categories: ('standing' | 'seated' | 'inversion' | 'restorative' | 'arm-balance' | 'back-bend' | 'hip-opener' | 'twist' | 'forward-bend')[];
+  intensity: number; // Scale of 1-10
+  isUnilateral: boolean;
+  planeOfMotion?: 'sagittal' | 'frontal' | 'transverse';
+
   benefits: string[];
   contraindications: string[];
+
+  relatedPoseIds?: {
+    counter?: string[];
+    preparation?: string[];
+    followUp?: string[];
+  };
 }
 
 export interface FlowPose {
