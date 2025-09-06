@@ -7,6 +7,15 @@ export interface User {
   email: string;
   role: UserRole;
   avatarUrl?: string;
+  experienceLevel: 'beginner' | 'intermediate' | 'advanced';
+  preferences: {
+    focusAreas: string[];
+    practiceStyle: string[];
+    limitations: string[];
+    goals: string[];
+    preferredDuration: number;
+    practiceFrequency: 'daily' | 'weekly' | 'monthly';
+  };
   createdAt: Date;
   updatedAt: Date;
 }
