@@ -92,7 +92,7 @@ export default function AdminDashboard() {
         </Tabs>
 
         {/* User Detail Modal */}
-        <Modal open={!!selectedUser} onOpenChange={(isOpen) => !isOpen && setSelectedUser(null)}>
+        <Modal open={!!selectedUser} onOpenChange={(isOpen) => { if (!isOpen) setSelectedUser(null); }}>
           <ModalContent size="lg">
             {selectedUser && <UserDetailView user={selectedUser} />}
           </ModalContent>
