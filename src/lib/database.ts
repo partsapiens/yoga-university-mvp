@@ -1,29 +1,62 @@
-import { Pose } from "@/types";
+import { createClient } from '@supabase/supabase-js'
+import { Pose } from '@/types'
 
-// This file will contain database-related functions.
-// For example, it could include functions for connecting to a database,
-// and for fetching and updating data.
+// Create a single supabase client for interacting with your database
+const supabase = createClient(
+  process.env.NEXT_PUBLIC_SUPABASE_URL!,
+  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+)
 
-// Example with Supabase
-// import { createClient } from '@supabase/supabase-js'
-// const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!
-// const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-// export const supabase = createClient(supabaseUrl, supabaseAnonKey)
+/**
+ * Transforms a pose object from the database to match the TypeScript type.
+ * @param dbPose - The pose object from the database.
+ * @returns The transformed pose object.
+ */
+function transformPose(dbPose: any): Pose {
+  return {
+    id: dbPose.id,
+    name: dbPose.name,
+    sanskritName: dbPose.sanskrit_name,
+    description: dbPose.description,
+    imageUrl: dbPose.image_url,
+    videoUrl: dbPose.video_url,
+    difficulty: dbPose.difficulty,
+    category: dbPose.category,
+    benefits: dbPose.benefits || [],
+    contraindications: dbPose.contraindications || [],
+  }
+}
 
-const mockPoses: Pose[] = [
-    { id: '1', name: 'Downward-Facing Dog', sanskritName: 'Adho Mukha Svanasana', description: 'An inverted V-shape from your hands and feet on the floor.', imageUrl: 'https://via.placeholder.com/300', difficulty: 'beginner', category: 'standing', benefits: ['Stretches the hamstrings, calves, and spine', 'Builds strength in the arms and legs'], contraindications: ['Carpal tunnel syndrome', 'High blood pressure'] },
-    { id: '2', name: 'Warrior II', sanskritName: 'Virabhadrasana II', description: 'A standing pose that strengthens the legs and opens the hips and chest.', imageUrl: 'https://via.placeholder.com/300', difficulty: 'intermediate', category: 'standing', benefits: ['Strengthens the legs and ankles', 'Stretches the groins, chest, and shoulders'], contraindications: ['High blood pressure', 'Neck problems'] },
-    { id: '3', name: 'Tree Pose', sanskritName: 'Vrksasana', description: 'A balancing pose that improves focus and concentration.', imageUrl: 'https://via.placeholder.com/300', difficulty: 'beginner', category: 'standing', benefits: ['Improves balance and stability in the legs', 'Strengthens the thighs, calves, ankles, and spine'], contraindications: ['High blood pressure', 'Headache'] },
-    { id: '4', name: 'Triangle Pose', sanskritName: 'Trikonasana', description: 'A standing pose that stretches the hamstrings, groins, and hips.', imageUrl: 'https://via.placeholder.com/300', difficulty: 'beginner', category: 'standing', benefits: ['Stretches and strengthens the thighs, knees, and ankles', 'Stretches the hips, groins, hamstrings, and calves'], contraindications: ['Low blood pressure', 'Neck problems'] },
-];
+/**
+ * Fetches all poses from the database.
+ * @returns A promise that resolves to an array of poses.
+ */
+export async function getPoses(): Promise<Pose[]> {
+  const { data, error } = await supabase.from('poses').select('*')
 
-export const getPoses = async (): Promise<Pose[]> => {
-  // Simulate a network delay
-  await new Promise(resolve => setTimeout(resolve, 500));
-  return mockPoses;
-};
+  if (error) {
+    console.error('Error fetching poses:', error)
+    return []
+  }
 
-export const getFlows = async () => {
-  // TODO: Implement actual data fetching
-  return [];
-};
+  return data.map(transformPose)
+}
+
+/**
+ * Searches for poses by name or Sanskrit name.
+ * @param query - The search query.
+ * @returns A promise that resolves to an array of matching poses.
+ */
+export async function searchPoses(query: string): Promise<Pose[]> {
+  const { data, error } = await supabase
+    .from('poses')
+    .select('*')
+    .or(`name.ilike.%${query}%,sanskrit_name.ilike.%${query}%`)
+
+  if (error) {
+    console.error('Error searching poses:', error)
+    return []
+  }
+
+  return data.map(transformPose)
+}

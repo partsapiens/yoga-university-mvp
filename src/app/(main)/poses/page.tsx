@@ -1,10 +1,12 @@
 "use client";
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import Image from 'next/image';
 import { Pose } from '@/types';
-import { getPoses } from '@/lib/database';
-import { Card } from '@/components/ui';
+import { searchPoses, getPoses } from '@/lib/database';
+import { Card } from '@/components/ui/Card';
+import { Input } from '@/components/ui/Input';
+import { useDebounce } from '@/hooks/useDebounce';
 
 const PoseCard = ({ pose }: { pose: Pose }) => (
     <div className="card">
@@ -19,51 +21,44 @@ const PoseCard = ({ pose }: { pose: Pose }) => (
 const PoseLibraryPage = () => {
   const [poses, setPoses] = useState<Pose[]>([]);
   const [loading, setLoading] = useState(true);
-  const [search, setSearch] = useState('');
+  const [searchTerm, setSearchTerm] = useState('');
+  const debouncedSearchTerm = useDebounce(searchTerm, 300);
 
-  useEffect(() => {
-    const fetchPoses = async () => {
-      setLoading(true);
-      const fetchedPoses = await getPoses();
-      setPoses(fetchedPoses);
-      setLoading(false);
-    };
-    fetchPoses();
+  const fetchPoses = useCallback(async (query: string) => {
+    setLoading(true);
+    const fetchedPoses = query ? await searchPoses(query) : await getPoses();
+    setPoses(fetchedPoses);
+    setLoading(false);
   }, []);
 
-  const filteredPoses = poses.filter(pose =>
-    pose.name.toLowerCase().includes(search.toLowerCase()) ||
-    pose.sanskritName.toLowerCase().includes(search.toLowerCase())
-  );
-
-  const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSearch(e.target.value);
-  };
-
-  if (loading) {
-    return <div>Loading...</div>; // TODO: Replace with a proper loading skeleton
-  }
+  useEffect(() => {
+    fetchPoses(debouncedSearchTerm);
+  }, [debouncedSearchTerm, fetchPoses]);
 
   return (
     <div className="container mx-auto p-4 md:p-8">
       <h1 className="text-4xl font-bold mb-8">Pose Library</h1>
 
       <div className="mb-8">
-        <input
+        <Input
           type="text"
           placeholder="Search by name or Sanskrit term..."
-          className="input w-full md:w-1/2"
-          value={search}
-          onChange={handleSearch}
+          className="w-full md:w-1/2"
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
         />
         {/* TODO: Add category and difficulty filters */}
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
-        {filteredPoses.map(pose => (
-          <PoseCard key={pose.id} pose={pose} />
-        ))}
-      </div>
+      {loading ? (
+        <div>Loading...</div> // TODO: Replace with a proper loading skeleton
+      ) : (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+          {poses.map(pose => (
+            <PoseCard key={pose.id} pose={pose} />
+          ))}
+        </div>
+      )}
       {/* TODO: Add modal for pose details */}
     </div>
   );
