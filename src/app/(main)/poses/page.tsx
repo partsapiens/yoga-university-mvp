@@ -1,18 +1,19 @@
 "use client";
 
 import React, { useState, useEffect } from 'react';
+import Image from 'next/image';
 import { Pose } from '@/types';
 import { getPoses } from '@/lib/database';
 import { Card } from '@/components/ui';
 
 const PoseCard = ({ pose }: { pose: Pose }) => (
-  <div className="card">
-    <img src={pose.imageUrl} alt={pose.name} className="w-full h-48 object-cover" />
-    <div className="p-4">
-      <h3 className="text-lg font-bold">{pose.name}</h3>
-      <p className="text-sm text-muted-foreground">{pose.sanskritName}</p>
+    <div className="card">
+        <Image src={pose.imageUrl} alt={pose.name} width={300} height={200} className="w-full h-48 object-cover" />
+        <div className="p-4">
+            <h3 className="text-lg font-bold">{pose.name}</h3>
+            <p className="text-sm text-muted-foreground">{pose.sanskritName}</p>
+        </div>
     </div>
-  </div>
 );
 
 const PoseLibraryPage = () => {
