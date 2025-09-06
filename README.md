@@ -1,5 +1,32 @@
 # 🧘 Yoga University MVP
 
+# Yoga University MVP 🧘‍♂️
+
+Yoga University is a learning and practice companion app built with **Next.js** and **Supabase**.  
+It’s designed to help yoga teachers (and students) track their practice, journal insights, and build personalized flows.
+
+---
+
+## 🚀 Features
+- **Flows**: Create and save custom yoga flows.
+- **Journals**: Record reflections, insights, and goals for each practice.
+- **Reading List**: Track books, articles, and study materials with notes and tags.
+- **Supabase Integration**: Secure data storage and retrieval.
+- **Netlify Deployment**: Continuous deployment with GitHub.
+
+---
+
+## 🛠️ Tech Stack
+- [Next.js 14](https://nextjs.org/) – React framework
+- [TypeScript](https://www.typescriptlang.org/) – Static typing
+- [Tailwind CSS](https://tailwindcss.com/) – Styling
+- [Supabase](https://supabase.com/) – Database & authentication
+- [Netlify](https://www.netlify.com/) – Hosting & CI/CD
+
+---
+
+## 📂 Project Structure
+
 ![Yoga Banner](./public/banner.png) <!-- Replace with your own banner image if you have one -->
 
 > **Yoga University** is a modern learning and practice companion app for yoga teachers and students.  
