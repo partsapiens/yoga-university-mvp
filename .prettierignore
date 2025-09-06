@@ -1,0 +1,8 @@
+.next
+node_modules
+.vercel
+public
+package.json
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
