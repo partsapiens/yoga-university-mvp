@@ -1,4 +1,4 @@
-import { Pose } from "@/types";
+import { Pose, PoseRelation } from "@/types";
 import { createClient } from '@supabase/supabase-js'
 
 // This file will contain database-related functions.
@@ -24,3 +24,17 @@ export const getFlows = async () => {
   // TODO: Implement actual data fetching
   return [];
 };
+
+export const getPoseRelations = async (poseId: string): Promise<PoseRelation[]> => {
+  const { data, error } = await supabase
+    .from('pose_relations')
+    .select('*')
+    .eq('source_pose_id', poseId);
+
+  if (error) {
+    console.error('Error fetching pose relations:', error);
+    return [];
+  }
+
+  return data as PoseRelation[];
+}

@@ -42,6 +42,17 @@ export interface Pose {
   contraindications?: string | null; // text
   anatomical_focus?: string[] | null; // text[]
   other_side_slug?: string | null; // text
+  intensity?: number | null; // 1-5
+}
+
+export type PoseRelationType = 'good_followup' | 'counterpose' | 'preparation';
+
+export interface PoseRelation {
+  id: string; // uuid
+  source_pose_id: string;
+  target_pose_id: string;
+  relation_type: PoseRelationType;
+  weight: number;
 }
 
 export interface FlowPose {
