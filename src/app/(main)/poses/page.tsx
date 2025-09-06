@@ -1,14 +1,9 @@
 "use client";
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Pose } from '@/types';
-
-// Mock data for demonstration
-const mockPoses: Pose[] = [
-  { id: '1', name: 'Downward-Facing Dog', sanskritName: 'Adho Mukha Svanasana', description: '...', imageUrl: 'https://via.placeholder.com/300', difficulty: 'beginner', category: 'standing', benefits: [], contraindications: [] },
-  { id: '2', name: 'Warrior II', sanskritName: 'Virabhadrasana II', description: '...', imageUrl: 'https://via.placeholder.com/300', difficulty: 'intermediate', category: 'standing', benefits: [], contraindications: [] },
-  { id: '3', name: 'Tree Pose', sanskritName: 'Vrksasana', description: '...', imageUrl: 'https://via.placeholder.com/300', difficulty: 'beginner', category: 'standing', benefits: [], contraindications: [] },
-];
+import { getPoses } from '@/lib/database';
+import { Card } from '@/components/ui';
 
 const PoseCard = ({ pose }: { pose: Pose }) => (
   <div className="card">
@@ -21,13 +16,32 @@ const PoseCard = ({ pose }: { pose: Pose }) => (
 );
 
 const PoseLibraryPage = () => {
+  const [poses, setPoses] = useState<Pose[]>([]);
+  const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState('');
-  const [filteredPoses, setFilteredPoses] = useState(mockPoses);
 
-  // TODO: Implement actual filtering logic
+  useEffect(() => {
+    const fetchPoses = async () => {
+      setLoading(true);
+      const fetchedPoses = await getPoses();
+      setPoses(fetchedPoses);
+      setLoading(false);
+    };
+    fetchPoses();
+  }, []);
+
+  const filteredPoses = poses.filter(pose =>
+    pose.name.toLowerCase().includes(search.toLowerCase()) ||
+    pose.sanskritName.toLowerCase().includes(search.toLowerCase())
+  );
+
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearch(e.target.value);
   };
+
+  if (loading) {
+    return <div>Loading...</div>; // TODO: Replace with a proper loading skeleton
+  }
 
   return (
     <div className="container mx-auto p-4 md:p-8">
