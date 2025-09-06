@@ -1,131 +1,64 @@
-# Yoga Flow University
+# 🧘 Yoga University MVP
 
-AI-powered yoga platform for creating personalized flows, tracking practice, and developing teaching skills.
+# Yoga University MVP 🧘‍♂️
 
-## Quick Start
+Yoga University is a learning and practice companion app built with **Next.js** and **Supabase**.  
+It’s designed to help yoga teachers (and students) track their practice, journal insights, and build personalized flows.
 
-1. **Create Next.js project**
-```bash
-npx create-next-app@latest yoga-flow-university --typescript --tailwind --eslint --app --src-dir --import-alias "@/*"
-cd yoga-flow-university
-```
+---
 
-2. **Copy all files above into your project structure**
+## 🚀 Features
+- **Flows**: Create and save custom yoga flows.
+- **Journals**: Record reflections, insights, and goals for each practice.
+- **Reading List**: Track books, articles, and study materials with notes and tags.
+- **Supabase Integration**: Secure data storage and retrieval.
+- **Netlify Deployment**: Continuous deployment with GitHub.
 
-3. **Install dependencies**
-```bash
-npm install @supabase/auth-helpers-nextjs @supabase/auth-helpers-react @supabase/supabase-js framer-motion html2canvas jspdf lucide-react
-```
+---
 
-4. **Set up environment**
-```bash
-# Create .env.local with the Supabase credentials shown above
-```
+## 🛠️ Tech Stack
+- [Next.js 14](https://nextjs.org/) – React framework
+- [TypeScript](https://www.typescriptlang.org/) – Static typing
+- [Tailwind CSS](https://tailwindcss.com/) – Styling
+- [Supabase](https://supabase.com/) – Database & authentication
+- [Netlify](https://www.netlify.com/) – Hosting & CI/CD
 
-5. **Run development server**
-```bash
-npm run dev
-```
+---
 
-## Deployment to Netlify
+## 📂 Project Structure
 
-1. **Push to GitHub**
-```bash
-git init
-git add .
-git commit -m "Initial commit"
-git remote add origin https://github.com/yourusername/yoga-flow-university.git
-git push -u origin main
-```
+![Yoga Banner](./public/banner.png) <!-- Replace with your own banner image if you have one -->
 
-2. **Deploy to Netlify**
-- Go to netlify.com
-- "New site from Git" → Connect GitHub → Select repository
-- Build settings:
-  - Build command: `npm run build`
-  - Publish directory: `out`
-- Add environment variables in Netlify dashboard
-- Deploy!
+> **Yoga University** is a modern learning and practice companion app for yoga teachers and students.  
+> Built with **Next.js 14 + Supabase + TailwindCSS**, deployed on **Netlify**.  
+> Track your practice, journal insights, and build flows — all in one place.  
 
-## Features
+---
 
-- 🧘‍♀️ **Pose Library** - Comprehensive poses with instructions
-- 🤖 **AI Flow Builder** - Smart suggestions and safety checks
-- 📊 **Practice Analytics** - Track progress and balance
-- 📝 **Digital Journal** - Log practices and insights
-- 📱 **Mobile Responsive** - Works on all devices
-- 🔄 **Real-time Updates** - Supabase backend integration
+## 📊 Project Status
+[![Netlify Status](https://api.netlify.com/api/v1/badges/YOUR_BADGE/deploy-status)](https://app.netlify.com/sites/YOUR_SITE/deploys)
+![GitHub last commit](https://img.shields.io/github/last-commit/partsapiens/yoga-university-mvp)
+![GitHub issues](https://img.shields.io/github/issues/partsapiens/yoga-university-mvp)
+![License](https://img.shields.io/badge/license-MIT-green)
 
-## Tech Stack
+---
 
-- **Frontend**: Next.js 14, TypeScript, Tailwind CSS
-- **Backend**: Supabase (PostgreSQL, Auth, Real-time)
-- **Deployment**: Netlify
-- **AI**: Custom flow suggestion engine
+## ✨ Features
+- 🌀 **Flows** – Create and save custom yoga flows.  
+- 📓 **Journals** – Record reflections, insights, challenges, and goals.  
+- 📚 **Reading List** – Save resources with title, author, tags, and notes.  
+- 🔐 **Supabase Integration** – Secure storage for all user data.  
+- 🚀 **Netlify Deployment** – Automatic builds from GitHub pushes.  
 
-Visit your deployed site and start building yoga flows!
+---
 
-# INSTALLATION INSTRUCTIONS
+## 🛠️ Tech Stack
+- [Next.js 14](https://nextjs.org/) – React framework
+- [TypeScript](https://www.typescriptlang.org/) – Type safety
+- [Tailwind CSS](https://tailwindcss.com/) – Styling
+- [Supabase](https://supabase.com/) – Backend & Auth
+- [Netlify](https://www.netlify.com/) – Hosting & CI/CD
 
-## Step-by-Step Setup
+---
 
-1. **Create the project**
-```bash
-npx create-next-app@latest yoga-flow-university --typescript --tailwind --eslint --app --src-dir --import-alias "@/*"
-cd yoga-flow-university
-```
-
-2. **Replace/create each file above**
-   - Copy each section into the corresponding file path
-   - Make sure to create the folder structure in src/
-
-3. **Install additional packages**
-```bash
-npm install @supabase/auth-helpers-nextjs @supabase/auth-helpers-react @supabase/supabase-js framer-motion html2canvas jspdf lucide-react
-```
-
-4. **Create .env.local with your Supabase credentials**
-
-5. **Test locally**
-```bash
-npm run dev
-```
-
-6. **Deploy to Netlify**
-   - Push to GitHub
-   - Connect repository to Netlify
-   - Set environment variables
-   - Deploy!
-
-Your modern, framework-based Yoga Flow University platform will be live!
-
-## File Structure Should Look Like:
-```
-yoga-flow-university/
-├── package.json
-├── next.config.js
-├── tailwind.config.js
-├── tsconfig.json
-├── netlify.toml
-├── .env.local
-├── README.md
-└── src/
-    ├── app/
-    │   ├── layout.tsx
-    │   ├── page.tsx
-    │   └── globals.css
-    ├── components/
-    │   ├── layout/
-    │   │   └── Navigation.tsx
-    │   ├── poses/
-    │   │   ├── PoseLibrary.tsx
-    │   │   └── PoseCard.tsx
-    │   ├── flows/
-    │   │   └── FlowBuilder.tsx
-    │   └── journal/
-    │       └── Journal.tsx
-    ├── types/
-    │   └── index.ts
-    └── lib/
-        └── supabase.ts
-```
+## 📂 Project Structure
