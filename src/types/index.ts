@@ -22,37 +22,16 @@ export interface User {
 
 // 2. Pose and Flow Data Structures
 export interface Pose {
-  id: string; // uuid
-  slug: string; // text
-  name: string; // text
-  sanskrit?: string | null; // text
-  category?: string | null; // text
-  level?: 'beginner' | 'intermediate' | 'advanced' | null; // text
-  plane?: 'sagittal' | 'frontal' | 'transverse' | null; // text
-  thumbnail_url?: string | null; // text
-  icon?: string | null; // text
-  meta?: any; // jsonb
-  cues?: string[] | null; // text[]
-  benefits?: string[] | null; // text[]
-  created_at: string; // timestamp with time zone
-  hold_time?: number | null; // integer
-  image_url?: string | null; // text
-  instructions?: string | null; // text
-  modifications?: string | null; // text
-  contraindications?: string | null; // text
-  anatomical_focus?: string[] | null; // text[]
-  other_side_slug?: string | null; // text
-  intensity?: number | null; // 1-5
-}
-
-export type PoseRelationType = 'good_followup' | 'counterpose' | 'preparation';
-
-export interface PoseRelation {
-  id: string; // uuid
-  source_pose_id: string;
-  target_pose_id: string;
-  relation_type: PoseRelationType;
-  weight: number;
+  id: string;
+  name: string;
+  sanskritName: string;
+  description: string;
+  imageUrl: string;
+  videoUrl?: string;
+  difficulty: 'beginner' | 'intermediate' | 'advanced';
+  category: 'standing' | 'seated' | 'inversion' | 'restorative' | 'arm-balance' | 'back-bend';
+  benefits: string[];
+  contraindications: string[];
 }
 
 export interface FlowPose {

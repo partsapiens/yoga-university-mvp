@@ -8,10 +8,10 @@ import { Card } from '@/components/ui';
 
 const PoseCard = ({ pose }: { pose: Pose }) => (
     <div className="card">
-        <Image src={pose.image_url || '/placeholder.jpg'} alt={pose.name} width={300} height={200} className="w-full h-48 object-cover" />
+        <Image src={pose.imageUrl} alt={pose.name} width={300} height={200} className="w-full h-48 object-cover" />
         <div className="p-4">
             <h3 className="text-lg font-bold">{pose.name}</h3>
-            <p className="text-sm text-muted-foreground">{pose.sanskrit}</p>
+            <p className="text-sm text-muted-foreground">{pose.sanskritName}</p>
         </div>
     </div>
 );
@@ -33,7 +33,7 @@ const PoseLibraryPage = () => {
 
   const filteredPoses = poses.filter(pose =>
     pose.name.toLowerCase().includes(search.toLowerCase()) ||
-    (pose.sanskrit && pose.sanskrit.toLowerCase().includes(search.toLowerCase()))
+    pose.sanskritName.toLowerCase().includes(search.toLowerCase())
   );
 
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
