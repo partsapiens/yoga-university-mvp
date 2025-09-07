@@ -1,0 +1,20 @@
+{
+  "title": "CPYU 200HR Power Yoga",
+  "version": "v1",
+  "pages": 2,
+  "files": [
+    {
+      "i": 1,
+      "file": "pages/page_001.txt",
+      "chars": 60,
+      "sha1": "93e13dcfa42c3dd12c9d657669d9a4c8e7428f10"
+    },
+    {
+      "i": 2,
+      "file": "pages/page_002.txt",
+      "chars": 77,
+      "sha1": "92511db78135f7bad08a922dcfc33b01d398662d"
+    }
+  ],
+  "generatedAt": "2025-09-07T14:47:26.905Z"
+}
