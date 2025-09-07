@@ -1,27 +1,38 @@
-import { Pose } from "@/types";
+import { Pose, PoseRelation } from "@/types";
+import { createClient } from '@supabase/supabase-js'
 
 // This file will contain database-related functions.
 // For example, it could include functions for connecting to a database,
 // and for fetching and updating data.
 
-// Example with Supabase
-// import { createClient } from '@supabase/supabase-js'
-// const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!
-// const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-// export const supabase = createClient(supabaseUrl, supabaseAnonKey)
-
-const mockPoses: Pose[] = [
-    { id: '1', name: 'Downward-Facing Dog', sanskritName: 'Adho Mukha Svanasana', description: 'An inverted V-shape from your hands and feet on the floor.', imageUrl: 'https://via.placeholder.com/300', difficulty: 'beginner', category: 'standing', benefits: ['Stretches the hamstrings, calves, and spine', 'Builds strength in the arms and legs'], contraindications: ['Carpal tunnel syndrome', 'High blood pressure'] },
-    { id: '2', name: 'Warrior II', sanskritName: 'Virabhadrasana II', description: 'A standing pose that strengthens the legs and opens the hips and chest.', imageUrl: 'https://via.placeholder.com/300', difficulty: 'intermediate', category: 'standing', benefits: ['Strengthens the legs and ankles', 'Stretches the groins, chest, and shoulders'], contraindications: ['High blood pressure', 'Neck problems'] },
-    { id: '3', name: 'Tree Pose', sanskritName: 'Vrksasana', description: 'A balancing pose that improves focus and concentration.', imageUrl: 'https://via.placeholder.com/300', difficulty: 'beginner', category: 'standing', benefits: ['Improves balance and stability in the legs', 'Strengthens the thighs, calves, ankles, and spine'], contraindications: ['High blood pressure', 'Headache'] },
-    { id: '4', name: 'Triangle Pose', sanskritName: 'Trikonasana', description: 'A standing pose that stretches the hamstrings, groins, and hips.', imageUrl: 'https://via.placeholder.com/300', difficulty: 'beginner', category: 'standing', benefits: ['Stretches and strengthens the thighs, knees, and ankles', 'Stretches the hips, groins, hamstrings, and calves'], contraindications: ['Low blood pressure', 'Neck problems'] },
-];
+const supabaseUrl = 'https://mcoqofytqpjjjradpqfc.supabase.co'
+const supabaseAnonKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1jb3FvZnl0cXBqampyYWRwcWZjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTcwODgzNjcsImV4cCI6MjA3MjY2NDM2N30.Wm_RwyJs8pobxmQ-2M6or_50k-61y1SxpJX7CPE0to8'
+export const supabase = createClient(supabaseUrl, supabaseAnonKey)
 
 export const getPoses = async (): Promise<Pose[]> => {
-  // Simulate a network delay
-  await new Promise(resolve => setTimeout(resolve, 500));
-  return mockPoses;
+  const { data, error } = await supabase.from('poses').select('*');
+
+  if (error) {
+    console.error('Error fetching poses:', error);
+    return [];
+  }
+
+  return data as Pose[];
 };
+
+export const getPoseRelations = async (poseId: string): Promise<PoseRelation[]> => {
+  const { data, error } = await supabase
+    .from('pose_relations')
+    .select('*')
+    .eq('source_pose_id', poseId);
+
+  if (error) {
+    console.error('Error fetching pose relations:', error);
+    return [];
+  }
+
+  return data as PoseRelation[];
+}
 
 export const getFlows = async () => {
   // TODO: Implement actual data fetching
