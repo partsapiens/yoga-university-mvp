@@ -113,3 +113,20 @@ export interface Lesson {
   description: string;
   duration: number; // in minutes
 }
+
+// 6. Manual
+export type ManualPageContent =
+  | { type: 'h1'; text: string }
+  | { type: 'h3'; text: string }
+  | { type: 'p'; text: string }
+  | { type: 'ul'; items: string[] };
+
+export interface ManualPage {
+  pageNumber: number;
+  imageUrl: string;
+  content: ManualPageContent[];
+}
+
+export interface Manual {
+  pages: ManualPage[];
+}

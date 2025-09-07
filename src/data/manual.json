@@ -1,0 +1,233 @@
+{
+  "pages": [
+    {
+      "pageNumber": 1,
+      "imageUrl": "page_001.png",
+      "content": [
+        { "type": "h1", "text": "Power Yoga" },
+        { "type": "h1", "text": "200 Ho u r Teacher T r a i n i n g" },
+        { "type": "p", "text": "2025" }
+      ]
+    },
+    {
+      "pageNumber": 2,
+      "imageUrl": "page_002.png",
+      "content": [
+        { "type": "h1", "text": "T H I S B E L O N G S T O" },
+        { "type": "h1", "text": "© C O R E P O W E R Y O G A" }
+      ]
+    },
+    { "pageNumber": 3, "imageUrl": "page_003.png", "content": [] },
+    { "pageNumber": 4, "imageUrl": "page_004.png", "content": [] },
+    { "pageNumber": 5, "imageUrl": "page_005.png", "content": [] },
+    {
+      "pageNumber": 6,
+      "imageUrl": "page_006.png",
+      "content": [
+        { "type": "h1", "text": "Welcome" },
+        { "type": "p", "text": "Welcome to CorePower Yoga Teacher Training. This is the start of a powerful journey that will inspire and transform your relationship with yoga, with yourself, and with the world around you." },
+        { "type": "p", "text": "This is your Field Guide - a guiding tool for your TT journey. It is a collection of the knowledge, the findings and footprints of the teachers that have walked this path before you. This is a living document to take you through this process, ready for YOU to make it your own. Carry it with you, explore its pages during class, reference it outside class, mark it up, write all over it, let the contents inspire you, and lead you to new places." },
+        { "type": "p", "text": "You are officially part of our community of CorePower Yoga teachers. We’re so happy to have you with us, to guide you through this journey and watch you and your practice grow. Congrats on this commitment - you’ll never look back." },
+        { "type": "p", "text": "This document contains confidential or proprietary information owned by CorePower Yoga, LLC. Reproduction and/or disclosure through any means is prohibited without the express, written consent of an authorized representative of CorePower Yoga." }
+      ]
+    },
+    {
+      "pageNumber": 7,
+      "imageUrl": "page_007.png",
+      "content": [
+        { "type": "h1", "text": "Contents" },
+        { "type": "p", "text": "1.2 1 TT Intention" },
+        { "type": "p", "text": "setup For Success 1.3" },
+        { "type": "p", "text": "1.4 Journaling and CPYU" },
+        { "type": "p", "text": "TRAINING" },
+        { "type": "p", "text": "Final Exam Guide G rad 1.5" },
+        { "type": "p", "text": "Reqs and Reading Recos 1.6" },
+        { "type": "p", "text": "Business of Yoga 1.7" },
+        { "type": "p", "text": "Yoga Alliance 1.8" },
+        { "type": "p", "text": "2.2 Yoga Class Essentials" },
+        { "type": "p", "text": "2.3 Environment and Heat" },
+        { "type": "p", "text": "2.4 Blueprint Postures" },
+        { "type": "p", "text": "2.5 Fundamental Formulas" },
+        { "type": "p", "text": "2.8 Fundamental Formulas Practice" },
+        { "type": "p", "text": "Cue Efficiency TEACHER 2.9" },
+        { "type": "p", "text": "TOOLKIT Teaching and Class Essentials 2.10" },
+        { "type": "p", "text": "Theming 2.11" },
+        { "type": "p", "text": "Keys to Alignment 2.13" },
+        { "type": "p", "text": "Demos 2.14" },
+        { "type": "p", "text": "Music and Yoga 2.17" },
+        { "type": "p", "text": "Advanced Sequencing and Theming 2.18" },
+        { "type": "p", "text": "3.2 C1 Sequence" },
+        { "type": "p", "text": "In te g ra tio n Series 3.15" },
+        { "type": "p", "text": "In te n tio n Series 3.23" },
+        { "type": "p", "text": "Sun S a lu ta tio n A 3.27" },
+        { "type": "p", "text": "Sun S a lu ta tio n B 3.41" },
+        { "type": "p", "text": "3.51 Core Series" },
+        { "type": "p", "text": "POSTURES 3.59" },
+        { "type": "p", "text": "Crescent Series 3.75 Balancing Series" },
+        { "type": "p", "text": "3.83 Triangle Series" },
+        { "type": "p", "text": "3.91 Hip Series" },
+        { "type": "p", "text": "3.95 Spine Series" },
+        { "type": "p", "text": "3.107 Surrender Series" },
+        { "type": "p", "text": "3.118 C1 Script" },
+        { "type": "p", "text": "This document contains confidential or proprietary information owned by CorePower Yoga, LLC. Reproduction and/or disclosure through any means is prohibited without the express, written consent of an authorized representative of CorePower Yoga." }
+      ]
+    },
+    {
+      "pageNumber": 8,
+      "imageUrl": "page_008.png",
+      "content": [
+        { "type": "p", "text": "Power of Assists 4.2" },
+        { "type": "p", "text": "DAPP and Principles o f 4.3" },
+        { "type": "p", "text": "Assists 4.4 4" },
+        { "type": "p", "text": "4.5 Assists Formula" },
+        { "type": "p", "text": "ASSISTS and" },
+        { "type": "p", "text": "4.7 Prep for Student Success" },
+        { "type": "p", "text": "OPTIONS" },
+        { "type": "p", "text": "4.17 Assist Pictures" },
+        { "type": "p", "text": "4.18 Props" },
+        { "type": "p", "text": "4.19 C o m m o n Physical Challenges" },
+        { "type": "p", "text": "Contraindications 4.20" },
+        { "type": "p", "text": "O P TIO N S C h a rt" },
+        { "type": "p", "text": "5.2 A n a to m y in Yoga" },
+        { "type": "p", "text": "5.6 Bones" },
+        { "type": "p", "text": "5.8 Spine" },
+        { "type": "p", "text": "5.9 Joints" },
+        { "type": "p", "text": "5.9 Fascia, Ligam ents and ANATOMY" },
+        { "type": "p", "text": "Tendons" },
+        { "type": "p", "text": "5.9 Muscles" },
+        { "type": "p", "text": "5.19 Reading D iffe re n t Bodies" },
+        { "type": "p", "text": "5.22 Nervous System" },
+        { "type": "p", "text": "5.24 Breath" },
+        { "type": "p", "text": "Sankalpa 6.2" },
+        { "type": "p", "text": "Yoga S utras o f Patanjali 6.3" },
+        { "type": "p", "text": "The 8 Limbed Yogic Path 6.11" },
+        { "type": "p", "text": "Yamas and Niyamas 6.13" },
+        { "type": "p", "text": "HISTORY and" },
+        { "type": "p", "text": "Sanskrit 6.17" },
+        { "type": "p", "text": "PHILOSOPHY" },
+        { "type": "p", "text": "Pranayama 6.19" },
+        { "type": "p", "text": "Bandhas 6.27" },
+        { "type": "p", "text": "Chakras 6.28" },
+        { "type": "p", "text": "O m 6.40" },
+        { "type": "p", "text": "7.2 Brief History of Yoga" },
+        { "type": "p", "text": "7.4 Tra u m a -In fo rm e d Y o g a" },
+        { "type": "p", "text": "7.5 P ra n a ya m a" },
+        { "type": "p", "text": "7.9 K le sh a s" },
+        { "type": "p", "text": "7.10 Cultural Appreciation" },
+        { "type": "p", "text": "7.12 Implicit Bias and Inclusive Teaching" },
+        { "type": "p", "text": "SELF-PACED" },
+        { "type": "p", "text": "7.13 P re g n a n cy a n d S p e cia l P o p u la tio n s LECTURES" },
+        { "type": "p", "text": "7.17 Mythology" },
+        { "type": "p", "text": "7.18 A yu rve d a" },
+        { "type": "p", "text": "7.19 K o sh a s" },
+        { "type": "p", "text": "This document contains confidential or proprietary information owned by CorePower Yoga, LLC. Reproduction and/or disclosure through any means is prohibited without the express, written consent of an authorized representative of CorePower Yoga." }
+      ]
+    },
+    {
+      "pageNumber": 9,
+      "imageUrl": "page_009.png",
+      "content": [
+        { "type": "p", "text": "This document contains confidential or proprietary information owned by CorePower Yoga, LLC. Reproduction and/or disclosure through any means is prohibited without the express, written consent of an authorized representative of CorePower Yoga." }
+      ]
+    },
+    {
+      "pageNumber": 10,
+      "imageUrl": "page_010.png",
+      "content": [
+        { "type": "h1", "text": "P r o g r a m C o mmi t me n t" },
+        { "type": "h3", "text": "O U R C O M M IT M E N T" },
+        { "type": "p", "text": "C o reP o w e r Y o g a is co m m itte d to p ro vid in g yo u w ith a n e xce p tio n a l a n d p ra ctica l te a ch e r tra in in g p ro g ra m th a t fo llo w s th e sta n d a rd s o f Y o g a A llia n ce . W ith th e co m p le tio n o f yo u r ce rtifica tio n re q u ire m e n ts a n d a n o p tio n a l Y o g a A llia n ce R e g istra tio n yo u w ill b e q u a lifie d to m a rke t yo u rse lf a s a yo g a te a ch e r in th e g re a te r yo g a co m m u n ity. W e w ill te a ch yo u to b e co m e a d yn a m ic te a ch e r, w h ile a t th e sa m e tim e g ivin g yo u th e o p p o rtu n ity to e xp lo re a n d d isco ve r th e p o w e r w ith in yo u rse lf. W e a re co m m itte d to e d u ca tin g yo u o n h o w to u n d e rsta n d yo g a a n d te a ch yo g a a sa n a . In o rd e r to re ce ive yo u r ce rtifica tio n yo u m u st m e e t a ll te a ch e r tra in in g re q u ire m e n ts. If yo u w o u ld like to co n tin u e yo u r yo g a e d u ca tio n w ith C o re P o w e r Y o g a fo llo w in g g ra d u a tio n , yo u h a ve th e o p tio n o f e n ro llin g in o u r E xte n sio n s P ro g ra m ." },
+        { "type": "h3", "text": "Y O U R C O M M IT M E N T" },
+        { "type": "p", "text": "I co m m it to th is p ro g ra m a n d S vā d h yā ya se lf-stu d y in b o th m in d a n d b o d y. I a m co m m itte d to th e p ro ce ss o f g ro w th th ro u g h A p a rig ra h a o r n o n -a tta ch m e n t a n d a m o p e n to e xp lo rin g th e m a n y n e w d ire ctio n s th a t th is te a ch e r tra in in g w ill ta ke m e . I w ill ch a lle n g e m y cu rre n t p h ysica l a b ilitie s in th e p u rsu it o f e le va tin g m y a sa n a p ra ctice a n d w ill p ra ctice Ta p a s o r se lf-d iscip lin e w h ile se e kin g kn o w le d g e o f th e b o d y a n d its m o ve m e n ts. I w ill p ra ctice A ste ya o r n o n -ste a lin g a n d w ill b e o n tim e a n d p re se n t in m in d a n d b o d y fo r le ctu re s. I w ill le t m y te a ch e r tra in in g le a d , co a ch , a n d p e e rs kn o w in a d va n ce w h e n I ca n n o t a tte n d . I w ill co n tin u e to su p p o rt m y o w n g ro w th a s w e ll a s th e g ro w th o f th e C o re P o w e r Y o g a co m m u n ity. I w ill p ra ctice S a tya o r tru th a n d A h im sā o r n o n -ju d g m e n t/n o n -h a rm in g in m y fe e d b a ck a n d in g ro u p d iscu ssio n . I w ill p ra ctice B ra h m a ch a rya , m o d e ra tio n , Ś a u ch a , cla rity, a n d S a n to sh a , co n te n tm e n t, in th e p u rsu it o f m y g o a ls. I a ckn o w le d g e th a t th e sch e d u le is d e m a n d in g a n d I w ill p ra ctice se lf-ca re th ro u g h o u t th e p ro g ra m d u ra tio n . I re a lize th a t th is co n tra ct is so le ly w ith m e a n d I w ill h a ve n o a tta ch m e n t to th e o u tco m e . I w ill b e co m m itte d to th e jo u rn e y a n d m y g ro w th th a t w ill u n fo ld in th e p ro ce ss. I w ill g e t o u t o f th is tra in in g e xa ctly w h a t I p u t in to it." },
+        { "type": "h3", "text": "C E R T IF IC A T IO N R E Q U IR E M E N T S" },
+        { "type": "p", "text": "Y o u w ill re ce ive yo u r C o re P o w e r Y o g a 2 0 0 H o u r C e rtifica te u p o n co m p le tio n o f th e fo llo w in g ." },
+        { "type": "ul", "items": [
+            "A tte n d a ll re q u ire d P o w e r Y o g a 2 0 0 h r Te a ch e r Tra in in g se ssio n s a n d co m p le te a ll se lf-p a ce d p re - re co rd e d co n te n t",
+            "M e e t m in im u m a tte n d a n ce re q u ire m e n t a n d m a ke -u p w o rk",
+            "C o m p le te a ll p o st-se ssio n , p o st-le ctu re jo u rn a l a n d q u izze s in C o re P o w e r U n ive rsity (C P Y U )",
+            "A tte n d a n d jo u rn a l a b o u t 50 a sa n a s p ra ctice s, in clu d in g 2 o u tsid e cla sse s a n d a t le a st 1 e a ch o f C 1 , C 2 , Y S , H P F a n d C R",
+            "C o m p le te fin a l e xa m",
+            "C o m p le te o n lin e p ro g ra m su rve y",
+            "Tu itio n p a id in fu ll"
+          ]
+        }
+      ]
+    },
+    {
+      "pageNumber": 11,
+      "imageUrl": "page_011.png",
+      "content": [
+        { "type": "p", "text": "1 . W h y a r e y o u a t t e n d i n g t h i s t r a i n i n g ?" },
+        { "type": "p", "text": "2 . W h a t a r e t h r e e t h i n g s y o u h o p e t o a c h i e v e d u r i n g t h i s t r a i n i n g ?" },
+        { "type": "p", "text": "3 . W h a t d o y o u t h i n k w i l l b e t h e m o s t c h a l l e n g i n g p a r t o f t r a i n i n g ?" },
+        { "type": "p", "text": "4. H o w d o y o u t h i n k t h i s t r a i n i n g w i l l c h a n g e y o u r l i f e ?" },
+        { "type": "p", "text": "5. W h a t is y o g a t o y o u ? C o n s i d e r i n g t h a t y o g a m e a n s “ u n i o n ” o r “ c o n n e c t i o n , ” h o w w o u l d y o u d e s c r i b e w h a t w e a r e c o n n e c t i n g o u r s e l v e s t o ?" }
+      ]
+    },
+    {
+      "pageNumber": 12,
+      "imageUrl": "page_012.png",
+      "content": [
+        { "type": "h1", "text": "1" },
+        { "type": "h1", "text": "T r a i n i n g" }
+      ]
+    },
+    { "pageNumber": 13, "imageUrl": "page_013.png", "content": [] },
+    {
+      "pageNumber": 14,
+      "imageUrl": "page_014.png",
+      "content": [
+        { "type": "h1", "text": "T T Intention" },
+        { "type": "p", "text": "The intention of C oreP ow er Y oga Teacher Training is to take you on an inner journey of self-discovery, to strengthen your personal yoga practice and to share w ith you the skills to teach yoga and transform the lives of others." },
+        { "type": "p", "text": "O ur teaching m ethodology focuses on practical experience to drive accelerated results during this training. G et ready to dive in headfirst! W e use a form ulaic approach to teaching that translates to accessible learning for you now and for your students in the future. W e’ll prim arily study our foundational C 1 sequence for the first half and learn m ore about sequencing beyond in the second half- you’ll learn Y oga A sana, an A ccessible A pproach to custom izing poses, and Teaching Tools like sequencing and them ing. W e’ll explore lectures in A natom y, Y oga H istory, Y ogic P hilosophy and inclusive teaching tools. W e’ll spend tim e in lecture, group discussion, w orkshops and of course, plenty of practice teaching!" },
+        { "type": "p", "text": "W hether you decide to actually teach yoga or not, w e are all lifelong teachers. C ultivating these life skills and observing the m any other life lessons of yoga w ill heavily influence your life beyond your yoga asana practice, changing how you navigate situations, think, interact and connect w ith the w o rld around you." },
+        { "type": "p", "text": "Let’s nurture the physical, m ental and spiritual health that com e from a consistent yoga practice." },
+        { "type": "p", "text": "© C O R E P O W E R Y O G A 1.2" }
+      ]
+    },
+    {
+      "pageNumber": 15,
+      "imageUrl": "page_015.png",
+      "content": [
+        { "type": "h1", "text": "feedback setup for Success" },
+        { "type": "h3", "text": "EMBRACE the new learning" },
+        { "type": "p", "text": "Co reP o w er Y o g a thrives on feed b a c k because" },
+        { "type": "h3", "text": "opportunities and be an active participant." },
+        { "type": "p", "text": "it’s h o w w e lea rn a n d g r o w as teachers, students, a n d people. F eed b a c k is intended" },
+        { "type": "h3", "text": "PRACTICE more days than you don’t" },
+        { "type": "p", "text": "to create positive c h a n g e w ith o u t nega tivity or criticism . F eed b a c k c a n offer a n e w or" },
+        { "type": "h3", "text": "LEARN and use names" },
+        { "type": "p", "text": "different perspective." },
+        { "type": "h3", "text": "SPEAK to the group with kindness and" },
+        { "type": "p", "text": "GIVING" },
+        { "type": "h3", "text": "only when necessary" },
+        { "type": "ul", "items": [
+            "CHOOSE gender-inclusive language • L ea d w ith gra titu d e a nd na m e",
+            "”Team, everyone, friends” • B e c lea r w ith yo u r intentio n",
+            "• O f f e r s p e c i f i c o b s e r v a t i o n s",
+            "• A s k q u e s t i o n s"
+          ]
+        },
+        { "type": "h3", "text": "SHARE only after you’ve discerned what" },
+        { "type": "p", "text": "RECEIVING" },
+        { "type": "h3", "text": "you are sharing is needed now" },
+        { "type": "ul", "items": [
+            "• L isten",
+            "• B e O pen to new perspectives",
+            "• A sk q uestions",
+            "• U se feed b a c k as a ga te w a y for la r g e r",
+            "• Have a GROWTH MINDSET",
+            "conversations • Take what works and leave the rest",
+            "• S h a r e gra titude"
+          ]
+        },
+        { "type": "h3", "text": "• A teacher exists in everyone and" },
+        { "type": "h3", "text": "everything" },
+        { "type": "h3", "text": "• Become humble and learn from yourself" },
+        { "type": "h3", "text": "• You are your best teacher" },
+        { "type": "h3", "text": "• W hat you put in is what you get out" },
+        { "type": "p", "text": "© C O R E P O W E R Y O G A 1.3" }
+      ]
+    }
+  ]
+}
