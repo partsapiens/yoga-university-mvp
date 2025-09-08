@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
-import type { SavedFlow, PoseId } from "@/types/yoga";
+import type { SavedFlow } from "@/types/yoga";
+import { PoseId } from "@/types/yoga";
 
 export function useSavedFlows(persist: boolean) {
   const [saved, setSaved] = useState<SavedFlow[]>(() => {
