@@ -1,6 +1,3 @@
-// Types for the user-provided Flow Builder page.
-// These are based on the stub data and may differ from the main app types.
-
 export type Focus = "Full-Body" | "Hips" | "Hamstrings" | "Shoulders" | "Core" | "Spine" | "Balance";
 
 export enum PoseId {
@@ -16,7 +13,19 @@ export enum PoseId {
   Child = "child",
 }
 
-export type SecondsOverrides = Record<number, number>; // key: index in flow
+export type Pose = {
+  id: PoseId;
+  name: string;
+  sanskrit: string;
+  defaultSeconds: number;
+  icon: string;
+  intensity: 1 | 2 | 3 | 4 | 5;
+  groups: Focus[];
+  family: "Standing" | "Seated" | "Backbend" | "Twist" | "Inversion" | "Rest" | "Hip Opener" | "Core" | string;
+  description?: string;
+};
+
+export type SecondsOverrides = Record<number, number>;
 
 export type SavedFlow = {
   id: string;
@@ -29,4 +38,3 @@ export enum TimingMode {
   Seconds = "seconds",
   Breaths = "breaths",
 }
-

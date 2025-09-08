@@ -1,275 +1,136 @@
 "use client";
 
-import React, { useMemo, useState } from "react";
+import React, { useMemo, useState, useRef, useEffect, useCallback } from "react";
+import { Toaster } from 'react-hot-toast';
 
-interface Pose {
-  id: string;
-  name: string;
-  sanskrit: string;
-  defaultSeconds: number;
-  icon: string;
-}
+// Core imports
+import { useLocalStorage } from "@/hooks/useLocalStorage";
+import { useTimer } from "@/hooks/useTimer";
+import { Focus, TimingMode, PoseId, SavedFlow } from "@/types/yoga";
+import { POSES, PRESETS } from "@/lib/yoga-data";
+import * as Helpers from "@/lib/yoga-helpers";
 
-const POSES: Pose[] = [
-  { id: "butterfly", name: "Butterfly Pose", sanskrit: "Baddha Konasana", defaultSeconds: 60, icon: "🦋" },
-  { id: "forward_fold", name: "Standing Forward Fold", sanskrit: "Uttanāsana", defaultSeconds: 60, icon: "🧎" },
-  { id: "down_dog", name: "Downward Facing Dog", sanskrit: "Adho Mukha Svanasana", defaultSeconds: 45, icon: "🐶" },
-  { id: "warrior1_r", name: "Warrior I (Right)", sanskrit: "Virabhadrāsana I", defaultSeconds: 45, icon: "🛡️" },
-  { id: "high_lunge_r", name: "High Lunge (Right)", sanskrit: "Añjaneyāsana", defaultSeconds: 45, icon: "🏹" },
-  { id: "bridge", name: "Bridge Pose", sanskrit: "Setu Bandha Sarvāṅgāsana", defaultSeconds: 60, icon: "🌉" },
-  { id: "pigeon", name: "Sleeping Pigeon", sanskrit: "Eka Pada Rajakapotasana (prep)", defaultSeconds: 60, icon: "🕊️" },
-  { id: "boat", name: "Boat Pose", sanskrit: "Nāvāsana", defaultSeconds: 40, icon: "🚤" },
-  { id: "child", name: "Child's Pose", sanskrit: "Balasana", defaultSeconds: 75, icon: "🛏️" },
-];
+// Voice AI imports
+import { useSpeechRecognition } from '@/lib/voice/useSpeechRecognition';
+import { parseTranscript } from '@/lib/voice/nlu';
+import { executeIntent, AppContext } from '@/lib/voice/capability-registry';
+import { toastSuccess, toastError, speak } from '@/lib/voice/feedback';
+import { VoiceMicButton } from '@/components/flows/VoiceMicButton';
+import { CommandConsole, CommandLog } from '@/components/flows/CommandConsole';
+
+// UI Components
+import { ControlPanel } from "@/components/flows/ControlPanel";
+import { PoseGrid } from "@/components/flows/PoseGrid";
+import { SuggestionsGrid } from "@/components/flows/SuggestionsGrid";
+import { GeneratePreviewModal } from "@/components/flows/GeneratePreviewModal";
+import { Player } from "@/components/flows/Player";
+import { SavedFlows } from "@/components/flows/SavedFlows";
 
 const clamp = (n: number, min: number, max: number) => Math.max(min, Math.min(max, n));
 
-function HelpIcon({ text }: { text: string }) {
-  return (
-    <span className="relative ml-1 inline-flex items-center align-middle group">
-      <span
-        tabIndex={0}
-        className="inline-flex h-4 w-4 items-center justify-center rounded-full border border-neutral-300 text-[10px] leading-none text-neutral-500 outline-none focus:ring-2 focus:ring-neutral-300 cursor-help"
-      >
-        ?
-      </span>
-      <div
-        role="tooltip"
-        className="pointer-events-none absolute left-1/2 top-full z-20 mt-2 w-64 -translate-x-1/2 rounded-lg border border-neutral-200 bg-white p-3 text-xs text-neutral-700 opacity-0 shadow-lg transition duration-150 group-hover:opacity-100 group-focus-within:opacity-100"
-      >
-        {text}
-      </div>
-    </span>
-  );
-}
-
-export default function Page() {
+export default function CreateFlowPage() {
+  // --- STATE ---
+  const [flow, setFlow] = useState<PoseId[]>([PoseId.DownDog, PoseId.Warrior1Right, PoseId.ForwardFold, PoseId.Child, PoseId.Butterfly]);
+  const [overrides, setOverrides] = useState<Record<number, number>>({});
   const [minutes, setMinutes] = useState<number>(30);
   const [intensity, setIntensity] = useState<number>(3);
-  const [flow, setFlow] = useState<string[]>(["down_dog", "warrior1_r", "forward_fold", "child", "butterfly"]);
-  const [overrides, setOverrides] = useState<Record<number, number>>({});
-  const [preview, setPreview] = useState<string[] | null>(null);
+  const [focus, setFocus] = useState<Focus>("Full-Body");
+  const [breathingCues, setBreathingCues] = useState<boolean>(true);
+  const [saferSequencing, setSaferSequencing] = useState<boolean>(true);
+  const [saveToDevice, setSaveToDevice] = useState<boolean>(false);
+  const [voiceFeedback, setVoiceFeedback] = useState<boolean>(true);
+  const [timingMode, setTimingMode] = useState<TimingMode>(TimingMode.Seconds);
+  const [secPerBreath, setSecPerBreath] = useState<number>(5);
+  const [transitionSec, setTransitionSec] = useState<number>(5);
+  const [cooldownMin, setCooldownMin] = useState<number>(2);
+  const [preview, setPreview] = useState<PoseId[] | null>(null);
+  const [flowName, setFlowName] = useState('');
+  const [localSaved, setLocalSaved] = useLocalStorage<SavedFlow[]>('yoga_saved_flows', []);
+  const [sessionSaved, setSessionSaved] = useState<SavedFlow[]>([]);
+  const [playbackState, setPlaybackState] = useState<'idle' | 'playing' | 'paused'>('idle');
+  const [currentPoseIndex, setCurrentPoseIndex] = useState(0);
+  const [timeInPose, setTimeInPose] = useState(0);
+  const [playbackRate, setPlaybackRate] = useState(1.0);
+  const [commandLogs, setCommandLogs] = useState<CommandLog[]>([]);
 
-  const openPreview = () => {
-    const next = [...flow].sort(() => Math.random() - 0.5);
-    setPreview(next);
-  };
-  const acceptPreview = () => {
-    if (!preview) return;
-    setFlow(preview);
-    setOverrides({});
-    setPreview(null);
-  };
-  const shufflePreview = () => {
-    if (preview) setPreview([...preview].sort(() => Math.random() - 0.5));
+  // --- REFS & DERIVED STATE ---
+  const dragIndex = useRef<number | null>(null);
+  const spokenForIndex = useRef<number | null>(null);
+  const savedFlows = saveToDevice ? localSaved : sessionSaved;
+  const setSavedFlows = saveToDevice ? setLocalSaved : setSessionSaved;
+  const secondsPerPose = useMemo(() => Helpers.applyOverridesByIndex(Helpers.baseDurationsFromTable(flow), overrides), [flow, overrides]);
+  const totalSeconds = useMemo(() => { const pS = secondsPerPose.reduce((a, b) => a + b, 0); const tS = Math.max(0, flow.length - 1) * transitionSec; return pS + tS + (cooldownMin * 60); }, [secondsPerPose, flow.length, transitionSec, cooldownMin]);
+
+  // --- PLAYER LOGIC ---
+  const handlePlay = useCallback(() => { if (flow.length === 0) return; setCurrentPoseIndex(0); setTimeInPose(0); setPlaybackState('playing'); }, [flow.length]);
+  const handlePause = useCallback(() => setPlaybackState('paused'), []);
+  const handleResume = useCallback(() => setPlaybackState('playing'), []);
+  const handleStop = useCallback(() => { setPlaybackState('idle'); setCurrentPoseIndex(0); setTimeInPose(0); }, []);
+  const handleNext = useCallback(() => { if (currentPoseIndex < flow.length - 1) { setCurrentPoseIndex(i => i + 1); setTimeInPose(0); } else { handleStop(); } }, [currentPoseIndex, flow.length, handleStop]);
+  const handlePrev = useCallback(() => { if (currentPoseIndex > 0) { setCurrentPoseIndex(i => i - 1); setTimeInPose(0); } }, [currentPoseIndex]);
+  const adjustRate = useCallback((adj: number) => setPlaybackRate(rate => clamp(rate + adj, 0.5, 2.0)), []);
+  useTimer(() => { if (playbackState !== 'playing') return; const d = Helpers.tempoAdjust(secondsPerPose[currentPoseIndex] ?? 0, playbackRate); if (timeInPose < d) { setTimeInPose(t => t + 1); } else { handleNext(); } }, 1000);
+
+  // --- VOICE AI ---
+  const speech = useSpeechRecognition();
+  const appContext: AppContext = useMemo(() => ({
+    player: { play: handlePlay, pause: handlePause, stop: handleStop, next: handleNext, prev: handlePrev, restart: handlePlay, setRate: setPlaybackRate, adjustRate },
+    flow: { setMinutes, setIntensity, setFocus, setTransition, setCooldown, setTimingMode, toggle: (k) => { if (k === 'breathingCues') setBreathingCues(p => !p); if (k === 'saferSequencing') setSaferSequencing(p => !p); if (k === 'saveToDevice') setSaveToDevice(p => !p); }, applyPreset: (f) => { setFlow(f); setOverrides({}); }, setName: setFlowName, save: () => { if (!flowName.trim()) return; setSavedFlows([...savedFlows, { id: new Date().toISOString(), name: flowName.trim(), flow, overrides }]); setFlowName(''); } }
+  }), [handlePlay, handlePause, handleStop, handleNext, handlePrev, adjustRate, focus, flowName, savedFlows, flow, overrides]);
+
+  const processCommand = async (transcript: string) => {
+    const intent = parseTranscript(transcript);
+    if (!intent) {
+      toastError("I didn't understand that command.");
+      return;
+    }
+    const feedback = await executeIntent(intent, appContext);
+    speak(feedback, voiceFeedback);
+    toastSuccess(feedback);
+    setCommandLogs(prev => [{ id: new Date().toISOString(), transcript, feedback }, ...prev].slice(0, 10));
   };
 
-  const secondsPerPose = useMemo(
-    () =>
-      flow.map(
-        (id, i) =>
-          overrides[i] ?? (POSES.find((p) => p.id === id)?.defaultSeconds ?? 45)
-      ),
-    [flow, overrides]
-  );
-  const totalSeconds = useMemo(() => secondsPerPose.reduce((a, b) => a + b, 0), [secondsPerPose]);
-  const suggestions = POSES;
+  useEffect(() => {
+    if (speech.transcript) {
+      processCommand(speech.transcript);
+    }
+  }, [speech.transcript]);
+
+  // --- Other Handlers & Effects ---
+  const handleGenerate = () => setPreview(Helpers.smartGenerate(minutes, intensity, focus));
+  const acceptPreview = () => { if (preview) { setFlow(preview); setOverrides({}); setPreview(null); } };
+  const removePose = (i: number) => { setFlow(f => f.filter((_, idx) => idx !== i)); setOverrides(o => Helpers.reindexOverridesAfterRemoval(o, i)); };
+  const addPose = (id: PoseId) => setFlow(f => [...f, id]);
+  const updatePoseDuration = (i: number, d: number) => setOverrides(o => ({ ...o, [i]: d }));
+  const movePose = (from: number, to: number) => { setFlow(f => { const a = [...f]; const [i] = a.splice(from, 1); a.splice(to, 0, i); return a; }); setOverrides(o => Helpers.moveOverrides(o, from, to)); };
+  const handleLoadPreset = (f: PoseId[]) => { setFlow(f); setOverrides({}); };
+  const handleSaveFlow = () => { if (!flowName.trim()) return toastError("Please enter a flow name."); setSavedFlows([...savedFlows, { id: new Date().toISOString(), name: flowName.trim(), flow, overrides }]); setFlowName(''); toastSuccess("Flow saved!"); };
+  const handleLoadFlow = (id: string) => { const f = savedFlows.find(x => x.id === id); if (f) { setFlow(f.flow); setOverrides(f.overrides); setFlowName(f.name); toastSuccess(`Loaded "${f.name}"`); } };
+  const handleDeleteFlow = (id: string) => { setSavedFlows(savedFlows.filter(f => f.id !== id)); toastSuccess("Flow deleted."); };
+
+  useEffect(() => { const k = (e: KeyboardEvent) => { if (e.metaKey || e.ctrlKey || e.altKey || document.activeElement?.tagName === 'INPUT') return; if (e.key === ' ') { e.preventDefault(); if (playbackState === 'playing') handlePause(); else if (playbackState === 'paused') handleResume(); else handlePlay(); } if (e.key === 'ArrowRight') handleNext(); if (e.key === 'ArrowLeft') handlePrev(); if (e.key === '[') adjustRate(-0.25); if (e.key === ']') adjustRate(0.25); }; window.addEventListener('keydown', k); return () => window.removeEventListener('keydown', k); }, [playbackState, handlePause, handleResume, handlePlay, handleNext, handlePrev, adjustRate]);
+  useEffect(() => { if (playbackState !== 'playing' || spokenForIndex.current === currentPoseIndex) { if (playbackState !== 'playing') { spokenForIndex.current = null; window.speechSynthesis?.cancel(); } return; } if (typeof window === 'undefined' || !window.speechSynthesis) return; const poseId = flow[currentPoseIndex]; const text = Helpers.buildCues(poseId, breathingCues); const utter = new SpeechSynthesisUtterance(text); window.speechSynthesis.cancel(); window.speechSynthesis.speak(utter); spokenForIndex.current = currentPoseIndex; }, [currentPoseIndex, playbackState, breathingCues, flow]);
+
+  const sessionTimeRemaining = useMemo(() => { const d = Helpers.tempoAdjust(secondsPerPose[currentPoseIndex] ?? 0, playbackRate); return Helpers.computeTotalRemaining(currentPoseIndex, d - timeInPose, secondsPerPose.map(s => Helpers.tempoAdjust(s, playbackRate)), transitionSec, flow.length, cooldownMin * 60, false); }, [playbackState, currentPoseIndex, timeInPose, secondsPerPose, flow.length, transitionSec, cooldownMin, playbackRate]);
 
   return (
-    <div className="min-h-screen bg-neutral-50 text-neutral-900">
-      <header className="mx-auto max-w-5xl px-4 py-6">
-        <h1 className="text-3xl font-semibold text-center tracking-tight">Create your sequence</h1>
-        <div className="mx-auto mt-4 rounded-2xl border border-neutral-200 bg-white/90 p-4 shadow-sm overflow-hidden">
-          <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
-            <div className="flex flex-1 flex-wrap items-center gap-4">
-              <label className="flex items-center gap-3">
-                <span className="w-16 text-sm text-neutral-600">Time</span>
-                <HelpIcon text="Planned length (minutes)" />
-                <input
-                  type="range"
-                  min={10}
-                  max={90}
-                  step={5}
-                  value={minutes}
-                  onChange={(e) => setMinutes(Number(e.target.value))}
-                />
-                <span className="w-14 text-right text-sm font-medium tabular-nums">{minutes}m</span>
-              </label>
-              <label className="flex items-center gap-3">
-                <span className="text-sm text-neutral-600">Intensity</span>
-                <HelpIcon text="How strong the practice feels (1–5)." />
-                <input
-                  type="range"
-                  min={1}
-                  max={5}
-                  value={intensity}
-                  step={1}
-                  onChange={(e) => setIntensity(Number(e.target.value))}
-                />
-              </label>
-            </div>
-            <div className="flex flex-wrap items-center gap-3">
-              <button
-                onClick={openPreview}
-                className="h-9 rounded-full px-3 py-2 text-sm text-white bg-indigo-600 hover:bg-indigo-500"
-              >
-                Auto-generate
-              </button>
-              <HelpIcon text="Shows a proposed sequence in a preview you can accept or shuffle." />
-              <div className="flex items-center gap-2">
-                <input
-                  className="h-9 w-36 max-w-full rounded-md border border-neutral-300 px-2 py-1 text-sm"
-                  placeholder="Flow name"
-                />
-                <button className="h-9 rounded-full border px-3 py-1 text-xs hover:bg-neutral-50">Save</button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </header>
-
-      <main className="mx-auto max-w-5xl px-4 pb-16">
-        <section>
-          <h2 className="mb-1 text-lg font-medium">Your Flow</h2>
-          <div className="mb-3 flex flex-wrap gap-2 text-sm text-neutral-600">
-            <span className="rounded-full border border-neutral-300 px-2 py-0.5">
-              Total: <strong className="tabular-nums">{Math.round(totalSeconds / 60)}m</strong>
-            </span>
-            <span className="rounded-full border border-neutral-300 px-2 py-0.5">
-              Poses: <strong className="tabular-nums">{flow.length}</strong>
-            </span>
-          </div>
-          <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
-            {flow.map((id, i) => {
-              const p = POSES.find((x) => x.id === id);
-              const dur = secondsPerPose[i] || 0;
-              const tip = "Balances sequence based on intensity.";
-              return (
-                <div
-                  key={`${id}-${i}`}
-                  className="group relative rounded-2xl border border-neutral-200 bg-white p-3 shadow-sm transition hover:shadow-md"
-                >
-                  <div className="flex items-start justify-between">
-                    <div className="text-xs text-neutral-500 flex items-center gap-2">
-                      <span className="cursor-grab select-none" title="Drag to reorder" aria-hidden>≡</span>
-                      {i + 1}
-                    </div>
-                    <div className="flex items-center gap-2 shrink-0">
-                      <div className="relative">
-                        <div className="text-[11px] text-neutral-500">Why?</div>
-                        <div className="invisible absolute right-0 z-20 mt-1 w-56 rounded-xl border border-neutral-200 bg-white p-3 text-xs text-neutral-700 opacity-0 shadow-lg transition group-hover:visible group-hover:opacity-100">
-                          {tip}
-                        </div>
-                      </div>
-                      <button
-                        aria-label="Remove pose"
-                        onClick={() => setFlow((prev) => prev.filter((_, idx) => idx !== i))}
-                        className="rounded-full border px-2 py-0.5 text-xs hover:bg-neutral-50"
-                      >
-                        Remove
-                      </button>
-                    </div>
-                  </div>
-                  <div className="mt-2 flex items-center gap-2">
-                    <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-neutral-100 text-lg">
-                      {p?.icon || "🧘"}
-                    </div>
-                    <div>
-                      <div className="font-medium leading-tight">{p?.name || id}</div>
-                      <div className="text-xs text-neutral-500">{p?.sanskrit || ""}</div>
-                    </div>
-                  </div>
-                  <label className="mt-2 block text-xs text-neutral-600">
-                    Seconds
-                    <input
-                      type="number"
-                      min={5}
-                      max={600}
-                      step={5}
-                      value={dur}
-                      onChange={(e) =>
-                        setOverrides((prev) => ({ ...prev, [i]: clamp(Number(e.target.value) || 5, 5, 600) }))
-                      }
-                      className="ml-2 w-24 rounded-md border border-neutral-300 px-2 py-1 text-xs"
-                    />
-                  </label>
-                  <div className="mt-2 h-1 w-full overflow-hidden rounded-full bg-neutral-100">
-                    <div className="h-full bg-neutral-900" style={{ width: `100%` }} />
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-        </section>
-
-        <section className="mt-10">
-          <div className="mb-3 flex items-center justify-between">
-            <h2 className="text-lg font-medium">Suggestions</h2>
-            <div className="text-xs text-neutral-500">Click to add</div>
-          </div>
-          <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4">
-            {suggestions.map((p) => (
-              <button
-                key={p.id}
-                onClick={() => setFlow((prev) => [...prev, p.id])}
-                className="group rounded-2xl border border-neutral-200 bg-white p-4 text-left shadow-sm transition hover:shadow-md"
-              >
-                <div className="mb-2 flex h-24 w-full items-center justify-center rounded-xl bg-neutral-100 text-3xl">
-                  {p.icon}
-                </div>
-                <div className="font-medium group-hover:underline">{p.name}</div>
-                <div className="text-xs text-neutral-500">{p.sanskrit}</div>
-              </button>
-            ))}
-          </div>
-        </section>
-      </main>
-
-      {preview && (
-        <div
-          role="dialog"
-          aria-modal
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black/30 p-4"
-          onClick={() => setPreview(null)}
-        >
-          <div
-            className="w-full max-w-lg rounded-2xl border border-neutral-200 bg-white p-4 shadow-xl"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <div className="mb-2 flex items-center justify-between">
-              <div className="text-lg font-medium">Proposed sequence</div>
-              <button
-                aria-label="Close preview"
-                onClick={() => setPreview(null)}
-                className="rounded-full border px-2 py-1 text-sm"
-              >
-                ✕
-              </button>
-            </div>
-            <ol className="mb-3 max-h-[60vh] list-decimal space-y-1 overflow-auto pl-5 text-sm">
-              {preview.map((id, i) => {
-                const p = POSES.find((x) => x.id === id);
-                return <li key={`${id}-${i}`}>{p?.name || id}</li>;
-              })}
-            </ol>
-            <div className="flex items-center justify-end gap-2">
-              <button onClick={shufflePreview} className="rounded-full border px-3 py-1 text-sm">
-                Shuffle
-              </button>
-              <button onClick={() => setPreview(null)} className="rounded-full border px-3 py-1 text-sm">
-                Cancel
-              </button>
-              <button
-                onClick={acceptPreview}
-                className="rounded-full bg-neutral-900 px-3 py-1 text-sm text-white"
-              >
-                Use this
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
-    </div>
+    <>
+      <Toaster />
+      <div className="min-h-screen bg-background text-foreground pb-40">
+        <header className="mx-auto max-w-5xl px-4 py-6">
+          <h1 className="text-3xl font-semibold text-center tracking-tight">Create your sequence</h1>
+          <ControlPanel {...{ minutes, setMinutes, intensity, setIntensity, focus, setFocus, breathingCues, setBreathingCues, saferSequencing, setSaferSequencing, saveToDevice, setSaveToDevice, voiceFeedback, setVoiceFeedback, timingMode, setTimingMode, secPerBreath, setSecPerBreath, transitionSec, setTransitionSec, cooldownMin, setCooldownMin, onAutoGenerate: handleGenerate, flowName, setFlowName, onSaveFlow: handleSaveFlow, onLoadPreset: handleLoadPreset }} />
+        </header>
+        <main className="mx-auto max-w-5xl px-4 pb-16">
+          <SavedFlows flows={savedFlows} onLoad={handleLoadFlow} onDelete={handleDeleteFlow} />
+          <div className="mt-6"><PoseGrid {...{ flow, secondsPerPose, totalSeconds, onRemovePose: removePose, onUpdatePoseDuration: updatePoseDuration, timingMode, secPerBreath, onMovePose: movePose, dragIndexRef: dragIndex, activePoseIndex: playbackState !== 'idle' ? currentPoseIndex : -1, timeInPose }} /></div>
+          <SuggestionsGrid onAddPose={addPose} />
+        </main>
+        <div className="fixed bottom-24 right-4 z-20"><VoiceMicButton listening={speech.listening} error={speech.error} onStart={speech.start} onStop={speech.stop} /></div>
+        {flow.length > 0 && <Player {...{ isPlaying: playbackState === 'playing', isPaused: playbackState === 'paused', currentPoseId: flow[currentPoseIndex], nextPoseId: flow[currentPoseIndex + 1], timeInPose, currentPoseDuration: Helpers.tempoAdjust(secondsPerPose[currentPoseIndex] ?? 0, playbackRate), sessionTotalSeconds: totalSeconds, sessionTimeRemaining, onPlay: handlePlay, onPause: handlePause, onResume: handleResume, onStop: handleStop, playbackRate, adjustRate }} />}
+        <CommandConsole show={!speech.supported} logs={commandLogs} onCommand={processCommand} />
+        <GeneratePreviewModal isOpen={!!preview} onClose={() => setPreview(null)} preview={preview} onShuffle={handleGenerate} onAccept={acceptPreview} />
+      </div>
+    </>
   );
 }
-
