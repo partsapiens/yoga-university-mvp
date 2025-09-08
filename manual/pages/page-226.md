@@ -1,9 +1,0 @@
-# Page 226
-
-ACTIVITYBend forward. This is lumbar flexion followed by forward tilting of thepelvis at the hip joints (“duck butt” movement). Stand upright and bend forward again. Notice that theseare two separate movements of the body, low back forward folding and forward tilting of the pelvis. These motions must happen at the sametime in any forward fold to be safe on the low back, otherwise we unsafely put pressure on the lumbar spinaldiscs. If there is not enough length in the hamstrings, the knees mustbe bent to create slack for the pelvis to tilt forward. Initiate a return tothe standing posture by the reverse movement - the backwards tiltingof the pelvis at the hips followed by extension (opposite of a forwardfold) of the lumbar spine to return to neutral.
-lumbarsacrum
-hip jointmore reading recosIf you want to dive deeper, try these...Yoga Anatomy, 2nd Edition Leslie Kaminoff and Amy MatthewsThe Anatomy of Hatha Yoga: A Manual for Students, Teachers and Practitioners H. David CoulterAnatomy Trains Thomas MyersYogabody: Anatomy, Kinesiology, and AsanaJudith Hanson LasaterThe Key Muscles of Yoga: Scientific Keys, Vol 1Ray Long and Chris MacivorThe Anatomy Coloring Book Wynn Kapit and Lawrence Elsonwatch Anatomy for Yoga with Paul Grilley DVDvisit getbodysmart.com
-
-
----
-[← Prev](/pages/page-225.md) &nbsp; [Top](/index.md) &nbsp; [Next →](/pages/page-227.md)
