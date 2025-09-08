@@ -1,0 +1,7 @@
+# Page 199
+
+4 .11 © COREPOWER YOGA // YOUR ASSISTSReverseWarriorBringfrontkneetoa90°angleandlengthenside bodyStudent Directed Depth CueBend your front knee as you lift your front hip tip up to lengthen your side bodySoften the front shoulder to encourage external rotationStudentDirectedDepthCueReach arms forward and back and bring shoulders over hipsRevolved Crescent LungeBrace the hips to level the pelvisStudent Directed Depth CueFire the muscles of your hips and bring your front ribs in and down to support lengthening your spine as you twistRevolved Crescent LungeKneel and support the back leg as you level the pelvisStudent Directed Depth CueLift your back leg to level your pelvis and spin your chest left
+
+
+---
+[← Prev](/pages/page-198.md) &nbsp; [Top](/index.md) &nbsp; [Next →](/pages/page-200.md)
