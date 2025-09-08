@@ -14,7 +14,10 @@ import {
   reindexOverridesAfterRemoval,
   smartGenerate,
 } from "@/lib/yoga-helpers";
-import type { Focus, SavedFlow, SecondsOverrides, TimingMode } from "@/types/yoga";
+import { useSpeechSynthesis } from "@/hooks/useSpeechSynthesis";
+import { useSavedFlows } from "@/hooks/useSavedFlows";
+import { useVoiceCommands } from "@/hooks/useVoiceCommands";
+import type { Focus, PoseId, SecondsOverrides, TimingMode } from "@/types/yoga";
 
 // Yoga Flow Builder — Minimal, polished UI with safety + visuals
 // ✅ Controls bar aligned (Auto‑generate + Save inside container)
@@ -35,7 +38,7 @@ export default function Page() {
   const [focus, setFocus] = useState<Focus>("Full-Body");
 
   // Timing controls
-  const [timingMode, setTimingMode] = useState<TimingMode>("seconds");
+  const [timingMode, setTimingMode] = useState<TimingMode>(TimingMode.Seconds);
   const [breathSeconds, setBreathSeconds] = useState<number>(5); // sec per breath
   const [transitionSec, setTransitionSec] = useState<number>(5);
   const [cooldownMin, setCooldownMin] = useState<number>(2); // Savasana length (minutes)
@@ -45,53 +48,16 @@ export default function Page() {
   const [persistLocal, setPersistLocal] = useState<boolean>(false);
 
   // Builder state
-  const [flow, setFlow] = useState<string[]>([]); // duplicates allowed
+  const [flow, setFlow] = useState<PoseId[]>([]); // duplicates allowed
   const [overrides, setOverrides] = useState<SecondsOverrides>({});
   const [breathingOn, setBreathingOn] = useState(true);
 
   // Save/Load (in‑memory + optional localStorage)
-  const [saved, setSaved] = useState<SavedFlow[]>(() => {
-    try {
-      if (typeof window === "undefined") return [];
-      const raw = localStorage.getItem("yoga_saved_flows");
-      return raw ? JSON.parse(raw) : [];
-    } catch (e) {
-      console.error("Failed to load saved flows from localStorage", e);
-      return [];
-    }
-  });
+  const { saved, setSaved } = useSavedFlows(persistLocal);
   const [saveName, setSaveName] = useState("");
-  useEffect(() => {
-    if (!persistLocal || typeof window === "undefined") return;
-    try {
-      localStorage.setItem("yoga_saved_flows", JSON.stringify(saved));
-    } catch (e) {
-      console.error("Failed to save flows to localStorage", e);
-    }
-  }, [persistLocal, saved]);
 
   // Voice selection
-  const [voices, setVoices] = useState<SpeechSynthesisVoice[]>([]);
-  const [voiceName, setVoiceName] = useState<string>("");
-  useEffect(() => {
-    if (typeof window === "undefined" || !window.speechSynthesis) return;
-    const synth = window.speechSynthesis;
-    const load = () => {
-      const v = synth.getVoices();
-      setVoices(v);
-      if (!voiceName && v.length) {
-        const preferred = [/Samantha/i, /Google UK English Female/i, /Google US English/i, /Microsoft Aria/i, /Microsoft Jenny/i, /English Female/i];
-        let pick = v.find((vv) => preferred.some((rx) => rx.test(vv.name)));
-        pick = pick || v.find((vv) => /en-/i.test(vv.lang)) || v[0];
-        setVoiceName(pick?.name || "");
-      }
-    };
-    load();
-    synth.onvoiceschanged = load;
-    return () => {
-      synth.onvoiceschanged = null;
-    };
-  }, [voiceName]);
+  const { voices, voiceName, setVoiceName, speak } = useSpeechSynthesis();
 
   // Suggestions (placeholder until Supabase)
   const suggestions = useMemo(() => {
@@ -106,7 +72,7 @@ export default function Page() {
     return base.slice(0, 12);
   }, [intensity, focus]);
 
-  function addToFlow(id: string) {
+  function addToFlow(id: PoseId) {
     setFlow((prev) => [...prev, id]);
   }
   function removeFromFlow(idx: number) {
@@ -169,7 +135,17 @@ export default function Page() {
 
   // Auto‑generate preview
   const [isGeneratingSeq, setIsGeneratingSeq] = useState(false);
-  const [preview, setPreview] = useState<string[] | null>(null);
+  const [preview, setPreview] = useState<PoseId[] | null>(null);
+  const previewTriggerRef = useRef<HTMLButtonElement>(null);
+  const previewCloseRef = useRef<HTMLButtonElement>(null);
+  useEffect(() => {
+    if (preview) {
+      previewCloseRef.current?.focus();
+    } else {
+      previewTriggerRef.current?.focus();
+    }
+  }, [preview]);
+
   const openPreview = () => {
     setIsGeneratingSeq(true);
     try {
@@ -197,7 +173,7 @@ export default function Page() {
   const baseDurationsSec = useMemo(() => baseDurationsFromTable(flow), [flow]);
   const secondsPerPoseRaw = useMemo(() => applyOverridesByIndex(baseDurationsSec, overrides), [baseDurationsSec, overrides]);
   const secondsPerPose = useMemo(() => {
-    if (timingMode === "seconds") return secondsPerPoseRaw;
+    if (timingMode === TimingMode.Seconds) return secondsPerPoseRaw;
     return secondsPerPoseRaw.map((sec) => {
       const breaths = Math.max(1, Math.round(sec / Math.max(1, breathSeconds)));
       return breaths * Math.max(1, breathSeconds);
@@ -211,24 +187,6 @@ export default function Page() {
     const d = secondsPerPose[index] ?? 0;
     if (!inCooldown && remaining > d) setRemaining(d);
   }, [secondsPerPose, index, remaining, inCooldown]);
-
-  // Speech
-  const speak = (text: string) => {
-    try {
-      if (typeof window === "undefined" || !window.speechSynthesis) return;
-      const synth = window.speechSynthesis;
-      const u = new SpeechSynthesisUtterance(text);
-      u.rate = 0.9;
-      u.pitch = 0.95;
-      u.volume = 0.95;
-      const v = voices.find((vv) => vv.name === voiceName) || voices.find((vv) => /en-/i.test(vv.lang));
-      if (v) u.voice = v;
-      synth.cancel();
-      synth.speak(u);
-    } catch (e) {
-      console.error("Speech synthesis failed", e);
-    }
-  };
 
   // Controls
   const startPractice = React.useCallback(() => {
@@ -270,6 +228,28 @@ export default function Page() {
       console.error("Speech synthesis cancel failed", e);
     }
   };
+
+  const voiceActions = React.useMemo(() => ({
+    pause: pausePractice,
+    resume: () => (remaining ? resumePractice() : startPractice()),
+    stop: stopPractice,
+    next: () => {
+      if (flow.length && !inCooldown) {
+        const next = Math.min(flow.length - 1, index + 1);
+        setIndex(next);
+        setRemaining(secondsPerPose[next] ?? 30);
+      }
+    },
+    previous: () => {
+      if (flow.length && !inCooldown) {
+        const prev = Math.max(0, index - 1);
+        setIndex(prev);
+        setRemaining(secondsPerPose[prev] ?? 30);
+      }
+    },
+  }), [pausePractice, remaining, resumePractice, startPractice, stopPractice, flow.length, inCooldown, index, secondsPerPose]);
+
+  const { isListening, toggle: toggleMic, supportsSpeechInput } = useVoiceCommands(voiceActions);
 
   // Timer loop
   useEffect(() => {
@@ -359,8 +339,8 @@ export default function Page() {
 
   // Save/Load helpers
   function saveCurrent() {
-    const id = Math.random().toString(36).slice(2, 8);
-    const name = saveName.trim() || `Flow ${saved.length + 1}`;
+    const id = crypto.randomUUID();
+    const name = saveName.trim().replace(/[^\w\s-]/g, "") || `Flow ${saved.length + 1}`;
     setSaved((s) => [{ id, name, flow: [...flow], overrides: { ...overrides } }, ...s]);
     setSaveName("");
   }
@@ -412,11 +392,11 @@ export default function Page() {
                 <label className="flex items-center gap-2" aria-label="Timing mode">
                   <span className="text-sm text-neutral-600">Timing</span>
                   <select className="rounded-md border border-neutral-300 bg-white px-2 py-1 text-sm" value={timingMode} onChange={(e)=>setTimingMode(e.target.value as TimingMode)}>
-                    <option value="seconds">Seconds</option>
-                    <option value="breaths">Breaths</option>
+                    <option value={TimingMode.Seconds}>Seconds</option>
+                    <option value={TimingMode.Breaths}>Breaths</option>
                   </select>
                 </label>
-                {timingMode === "breaths" && (
+                {timingMode === TimingMode.Breaths && (
                   <label className="flex items-center gap-2" aria-label="Breath seconds">
                     <span className="text-sm text-neutral-600">sec/breath</span>
                     <input type="number" min={3} max={10} step={1} value={breathSeconds} onChange={(e)=>setBreathSeconds(Math.max(1, Number(e.target.value)||5))} className="h-9 w-20 rounded-md border border-neutral-300 px-2 py-1 text-sm" />
@@ -440,7 +420,7 @@ export default function Page() {
                 </label>
               </div>
               <div className="flex flex-wrap items-center gap-3">
-                <button disabled={isGeneratingSeq} onClick={openPreview} className={`h-9 rounded-full px-3 py-2 text-sm text-white ${isGeneratingSeq?"bg-indigo-300":"bg-indigo-600 hover:bg-indigo-500"}`}>{isGeneratingSeq?"Generating…":"Auto‑generate"}</button>
+                <button ref={previewTriggerRef} disabled={isGeneratingSeq} onClick={openPreview} className={`h-9 rounded-full px-3 py-2 text-sm text-white ${isGeneratingSeq?"bg-indigo-300":"bg-indigo-600 hover:bg-indigo-500"}`}>{isGeneratingSeq?"Generating…":"Auto‑generate"}</button>
                 <div className="flex items-center gap-2">
                   <input value={saveName} onChange={(e)=>setSaveName(e.target.value)} placeholder="Flow name" className="h-9 w-36 md:w-40 max-w-full rounded-md border border-neutral-300 px-2 py-1 text-sm" />
                   <button onClick={saveCurrent} className="h-9 rounded-full border px-3 py-1 text-xs hover:bg-neutral-50">Save</button>
@@ -479,6 +459,11 @@ export default function Page() {
                 </select>
               </div>
               <div className="flex items-center gap-2">
+                {supportsSpeechInput ? (
+                  <button onClick={toggleMic} className={`rounded-full border px-3 py-2 text-sm ${isListening ? "bg-neutral-900 text-white" : "hover:bg-neutral-50"}`}>{isListening ? "🎙️ Listening" : "🎙️ Voice control"}</button>
+                ) : (
+                  <span className="text-xs text-neutral-500">🎙️ Voice not supported</span>
+                )}
                 {!isPlaying && remaining === 0 && (<button className="rounded-full bg-neutral-900 px-4 py-2 text-white" onClick={startPractice}>▶ Play</button>)}
                 {isPlaying && (<button className="rounded-full border px-4 py-2" onClick={pausePractice}>⏸ Pause</button>)}
                 {!isPlaying && remaining > 0 && (<button className="rounded-full bg-neutral-900 px-4 py-2 text-white" onClick={resumePractice}>⏵ Resume</button>)}
@@ -513,7 +498,7 @@ export default function Page() {
                 return (
                   <div key={`${id}-${i}`} draggable onDragStart={onDragStart(i)} onDragOver={onDragOver(i)} onDrop={onDrop(i)} className={`group relative rounded-2xl border ${active ? "border-neutral-900 bg-neutral-50 shadow-lg ring-1 ring-neutral-900/10 scale-[1.015]" : "border-neutral-200 shadow-sm"} bg-white p-3 transition transform-gpu hover:shadow-md duration-200`}>
                     <div className="flex items-start justify-between">
-                      <div className="text-xs text-neutral-500 flex items-center gap-2"><span className="cursor-grab select-none" title="Drag to reorder" aria-hidden>≡</span>{i + 1}</div>
+                      <div className="text-xs text-neutral-500 flex items-center gap-2"><span className="cursor-grab select-none" title="Drag to reorder" role="button" tabIndex={0} aria-label="Drag to reorder">≡</span>{i + 1}</div>
                       {/* Hovercard */}
                       <div className="relative">
                         <div className="text-[11px] text-neutral-500">Why?</div>
@@ -527,10 +512,10 @@ export default function Page() {
                         <div className="text-xs text-neutral-500">{p.sanskrit}</div>
                       </div>
                     </div>
-                    <label className="mt-2 block text-xs text-neutral-600">{timingMode === "breaths" ? "Breaths" : "Seconds"}
-                      <input type="number" min={timingMode === "breaths" ? 1 : 5} max={timingMode === "breaths" ? 20 : 600} step={timingMode === "breaths" ? 1 : 5}
-                        value={timingMode === "breaths" ? Math.max(1, Math.round((secondsPerPose[i]||0)/Math.max(1, breathSeconds))) : dur}
-                        onChange={(e)=>{ const val = Math.max(1, Number(e.target.value)||0); const sec = timingMode === "breaths" ? val * Math.max(1, breathSeconds) : Math.max(5, Math.min(600, val)); setOverrides((prev)=>({ ...prev, [i]: sec })); }}
+                    <label className="mt-2 block text-xs text-neutral-600">{timingMode === TimingMode.Breaths ? "Breaths" : "Seconds"}
+                      <input type="number" min={timingMode === TimingMode.Breaths ? 1 : 5} max={timingMode === TimingMode.Breaths ? 20 : 600} step={timingMode === TimingMode.Breaths ? 1 : 5}
+                        value={timingMode === TimingMode.Breaths ? Math.max(1, Math.round((secondsPerPose[i]||0)/Math.max(1, breathSeconds))) : dur}
+                        onChange={(e)=>{ const val = Math.max(1, Number(e.target.value)||0); const sec = timingMode === TimingMode.Breaths ? val * Math.max(1, breathSeconds) : Math.max(5, Math.min(600, val)); setOverrides((prev)=>({ ...prev, [i]: sec })); }}
                         disabled={isPlaying}
                         className="ml-2 w-24 rounded-md border border-neutral-300 px-2 py-1 text-xs" />
                     </label>
@@ -571,11 +556,11 @@ export default function Page() {
 
       {/* Preview Modal */}
       {preview && (
-        <div role="dialog" aria-modal className="fixed inset-0 z-50 flex items-center justify-center bg-black/30 p-4" onClick={()=>setPreview(null)}>
+        <div role="dialog" aria-modal="true" aria-labelledby="preview-title" className="fixed inset-0 z-50 flex items-center justify-center bg-black/30 p-4" onClick={()=>setPreview(null)}>
           <div className="w-full max-w-lg rounded-2xl border border-neutral-200 bg-white p-4 shadow-xl" onClick={(e)=>e.stopPropagation()}>
             <div className="mb-2 flex items-center justify-between">
-              <div className="text-lg font-medium">Proposed sequence</div>
-              <button aria-label="Close preview" onClick={()=>setPreview(null)} className="rounded-full border px-2 py-1 text-sm">✕</button>
+              <div id="preview-title" className="text-lg font-medium">Proposed sequence</div>
+              <button ref={previewCloseRef} aria-label="Close preview" onClick={()=>setPreview(null)} className="rounded-full border px-2 py-1 text-sm">✕</button>
             </div>
             <ol className="mb-3 max-h-[60vh] list-decimal space-y-1 overflow-auto pl-5 text-sm">
               {preview.map((id, i)=>{ const p = POSES.find(x=>x.id===id); return <li key={`${id}-${i}`}>{p?.name||id}</li>; })}
@@ -603,7 +588,7 @@ function Tests() {
       // Unicode strings compile
       const u = "Uttanāsana"; const v = "Virabhadrāsana I"; console.assert(u && v, "Unicode strings not parsed");
       // Defaults mapping
-      const ids = ["forward_fold","down_dog","warrior1_r"]; const out = baseDurationsFromTable(ids); console.assert(out[0]===60 && out[1]===45 && out[2]===45, "Defaults mapping wrong", out);
+      const ids = [PoseId.ForwardFold, PoseId.DownDog, PoseId.Warrior1Right]; const out = baseDurationsFromTable(ids); console.assert(out[0]===60 && out[1]===45 && out[2]===45, "Defaults mapping wrong", out);
       // Reindex overrides after removal
       const before = {0:30,2:50} as SecondsOverrides; const after = reindexOverridesAfterRemoval(before,1); console.assert(after[0]===30 && after[1]===50 && (after as any)[2]===undefined, "Reindex after removal failed", after);
       // Move overrides with reorder
@@ -611,7 +596,7 @@ function Tests() {
       // Session remaining with transitions + cooldown
       const rem = computeTotalRemaining(1, 10, [60,45,45], 5, 4, 120, false); console.assert(rem===185, "Session remaining wrong", rem);
       // Safety rule sanity: twist↔backbend not adjacent
-      const safer = applySafetyAdjustments(["twist_low","bridge"]); console.assert(safer.join(",").indexOf("twist_low,bridge")==-1, "Safety rule not applied");
+      const safer = applySafetyAdjustments([PoseId.TwistLow, PoseId.Bridge]); console.assert(safer.join(",").indexOf("twist_low,bridge")==-1, "Safety rule not applied");
       console.log("Tests passed ✅");
     } catch (e) { console.error("Tests failed ❌", e); }
   }, []);
