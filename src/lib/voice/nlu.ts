@@ -24,6 +24,8 @@ export type Intent =
   | { name: "clarify"; message: string }
   | null;
 
+type IntentObject = Exclude<Intent, null>;
+
 // --- Normalization & Helpers ---
 const normalize = (text: string): string => {
   return text.toLowerCase().replace(/[,.?!]/g, '');
@@ -47,7 +49,7 @@ const findPoseId = (text: string): PoseId | null => {
 }
 
 // --- Regex & Keyword Definitions ---
-const INTENT_REGEX: { regex: RegExp, name: Intent['name'], slots?: (match: RegExpMatchArray) => any }[] = [
+const INTENT_REGEX: { regex: RegExp, name: IntentObject['name'], slots?: (match: RegExpMatchArray) => any }[] = [
   { regex: /\b(play|start|begin|resume)\b/, name: 'play' },
   { regex: /\b(pause|hold)\b/, name: 'pause' },
   { regex: /\b(stop|end)\b/, name: 'stop' },
