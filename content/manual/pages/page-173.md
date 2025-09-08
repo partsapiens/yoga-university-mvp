@@ -1,0 +1,8 @@
+# HightoLowPlankDemoReturntoDownwardFacingDog2xflow
+
+Sun A INMountainPoseSetup Cue: 1. Reach your arms up2. Turn your pinkies inward Disengage the BreathDeepening Cue: 1. Pin your inner ankles to center your balance2. Close the gap between your hip pointers and ribs to engage your coreEXForwardFoldSetup Cue: 1. Bring your hands through heart and fold forward2. Bend your knees any amount for support Deepening Cue: 1. Shift weight forward to stack your hips and ankles2. Tuckyourchinintoyourchesttostretchyourupper backHigh to Low Plank Demo“Come down to your knees. I’ll demonstrate options to help you feel successful and supported during your High to Low Plank transitions. Each posture has its own breath and alignment. Pick the option that supports you today or try all three…From Halfway Lift demo High to Low plank with 1-2 basic cues for:•High Plank, Low Plank, and Upward Facing Dog•High to Low Plank from knees•Verbally offer layer of holding High Plank to personalize•Add your cues to the flow when they fit into your breath rhythmposesSUNAINMountainPoseEXForwardFoldINHalfwayLiftEXHightoLowPlankINUpwardFacingDogEXDownwardFacingDogINLookforwardEXForwardFoldINHalfwayLiftEXForwardFold
+HightoLowPlankDemoReturntoDownwardFacingDog2xflow
+
+
+---
+[← Prev](/pages/page-172.md) &nbsp; [Top](/index.md) &nbsp; [Next →](/pages/page-174.md)
