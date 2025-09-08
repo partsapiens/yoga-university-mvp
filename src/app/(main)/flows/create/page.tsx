@@ -65,7 +65,11 @@ export default function Page() {
   };
 
   const secondsPerPose = useMemo(
-    () => flow.map((id, i) => overrides[i] ?? POSES.find((p) => p.id === id)?.defaultSeconds || 45),
+    () =>
+      flow.map(
+        (id, i) =>
+          overrides[i] ?? (POSES.find((p) => p.id === id)?.defaultSeconds ?? 45)
+      ),
     [flow, overrides]
   );
   const totalSeconds = useMemo(() => secondsPerPose.reduce((a, b) => a + b, 0), [secondsPerPose]);
