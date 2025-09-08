@@ -1,7 +1,8 @@
-# Page 1
+# Power Yoga200 Hour Teacher Training
 
-This is the first page of the manual.
+Power Yoga200 Hour Teacher Training
+2025
 
-Here is an image:
 
-![Sample Image](/manual/assets/images/sample.png)
+---
+[Top](/index.md) &nbsp; [Next →](/pages/page-002.md)
