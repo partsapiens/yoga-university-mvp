@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Manual</title>
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="brand">Manual</div>
+    <nav class="controls">
+      <button id="prevBtn" aria-label="Previous page">← Prev</button>
+      <div class="jump">
+        <input id="pageInput" type="number" min="1" inputmode="numeric" />
+        <span id="pageTotal"></span>
+      </div>
+      <button id="nextBtn" aria-label="Next page">Next →</button>
+    </nav>
+  </header>
+
+  <main id="viewer" class="viewer" aria-live="polite">
+    <article id="page" class="page-content"></article>
+  </main>
+
+  <footer class="site-footer">
+    <div class="toc" id="toc"></div>
+  </footer>
+
+  <script src="./viewer.js" type="module"></script>
+</body>
+</html>
