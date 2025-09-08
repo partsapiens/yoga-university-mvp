@@ -3,7 +3,17 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import { Input } from '@/components/ui/Input';
 
-const ManualIndexPageClient = ({ toc, pages }) => {
+interface ManualPage {
+  id: string;
+  [key: string]: unknown;
+}
+
+interface ManualIndexPageClientProps {
+  toc: string;
+  pages: ManualPage[];
+}
+
+const ManualIndexPageClient = ({ toc, pages }: ManualIndexPageClientProps) => {
   const [searchTerm, setSearchTerm] = useState('');
 
   const filteredPages = pages.filter(page =>
