@@ -1,0 +1,9 @@
+# Page 311
+
+Mythology of the PosesAs you are learning in your teacher training experience, the Sanskritlanguage helps us to identify our poses, also known as asanas, during a class experience. Some poses are named from nature, Mountain Pose is Tadasana,“Tad” refers to the word “mountain.” Others are names from body parts, Hands to Feet Pose (Gorilla Pose) is Padahastasana. “Pada” is feet and ”hasta” is hands. Others are named after deities, sages, warriors and other characters from Hindu mythology. Virabhadrasanais named after one of the great warrior Virabhadraand his story is quite the epic!It is important to note that in our experience of an asana practice, we may use English primary and Sanskrit secondarily and study mythology from the context of enjoyment and storytelling. However, as you were introduced in the history of yoga lecture, there is a historical and cultural significance to these stories and many of the characters are revered in a religious context to this day.The three main gods (the trimurti“three forms”) in Hindu mythology are Brahma “the creator”, Vishnu “the preserver” and Shiva “the destroyer.” They are also represented in other forms, such as Nataraja (Shiva) and Rama and Krishna (Vishnu) and have several important other figures connected to them like Sati, Parvati (Shiva’s female counterparts) or Garuda (Vishnu’s mount).The pages that follow share just a few of examples of mythology stories.
+VishnuPictures sourced from the public domain
+Shiva, Parvati, Ganesha, and SkandaForm EnergyBrahmaknowledge/learningViṣṇu/Vishnusustainer/preservationŚiva/Shiva destruction/ transformationSarasvatī/Saraswatiknowledge/learningLakṣmi/Lakshmi abundance/prosperityPārvatīpower/nourishment
+
+
+---
+[← Prev](/pages/page-310.md) &nbsp; [Top](/index.md) &nbsp; [Next →](/pages/page-312.md)
