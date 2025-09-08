@@ -17,7 +17,7 @@ import {
 import { useSpeechSynthesis } from "@/hooks/useSpeechSynthesis";
 import { useSavedFlows } from "@/hooks/useSavedFlows";
 import { useVoiceCommands } from "@/hooks/useVoiceCommands";
-import { TimingMode, type Focus, type PoseId, type SecondsOverrides } from "@/types/yoga";
+import { TimingMode, type Focus, PoseId, type SecondsOverrides } from "@/types/yoga";
 
 // Yoga Flow Builder — Minimal, polished UI with safety + visuals
 // ✅ Controls bar aligned (Auto‑generate + Save inside container)
