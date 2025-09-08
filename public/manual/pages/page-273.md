@@ -1,0 +1,8 @@
+# Page 273
+
+ExperienceMeditation For High PerformanceThe Z Technique by Emily FletcherSENSE CHECK INMANTRAGRATITUDEINTENTION1-2 minutes•Eyes closed•Strongest and most subtle•Sight•Sound•Taste•Smell•Touch•Feel them all at once•2X breath10-12 minutes•Start with your own mantra•When you notice thatthoughts arise,come back to your mantra and simply begin again1 minute•Any gratitude practice you would like•What are three new things you are grateful for?1-2 minutes•Focus on what you would like to have/achieve/accomplish•Visualize the results and what it would feel like•Expand your intention to the ripple effect on others: community: worldreflectionHow did you feel immediately after your meditation?What did you notice about your breath or body?
+What resonated with you in this experience and what may have not?
+
+
+---
+[← Prev](/pages/page-272.md) &nbsp; [Top](/index.md) &nbsp; [Next →](/pages/page-274.md)
