@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "test": "vitest run"
+    "test": "vitest run",
+    "build:manual": "node scripts/build-manual.js"
   },
   "dependencies": {
     "@radix-ui/react-dialog": "^1.0.5",
