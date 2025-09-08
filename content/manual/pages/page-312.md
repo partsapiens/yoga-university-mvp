@@ -1,0 +1,12 @@
+# 7.21
+
+Asana MythsMOUNTAIN TADASANA ACharacters: Brahma, Vishnu, Shiva, GańgāThemes:Attention, Grounding, FoundationStory:•Great drought upon the earth and the creatures were parched.•Vishnu askedforhelpfrom Brahma,who suggestedto descend to earth the great celestial river, Gańgā.•Shiva positioned himself to receive the might of Gańgāupon his head before continuing down the Himālayasto hydrate the earth.Shiva, with Gańgā, the river Ganges, flowing into his hair picturedEAGLE GARUDASANA BCharacters Garuda, VishnuThemes:Balance, Strength, FocusStory:•Garuda was born of the radiance of fire itself, ablaze with a luster that rivalled that of the sun.•His motherwas tricked intoservitudeof the snakesand onlyway free wasGaruda todeliver theimmortal elixir,Amrita.•Threeobstacles stood in the way;wall of fire,doorway ofspinning metal blades, and two greatserpents.•VishnugrantedGarudaa boon for his courageous andheroicjourney.Vishnu, Lakshmi riding Garuda picturedWARRIOR POSE VIRABHADRASANA CCharacters:Shiva, Sati/Parvati, Daksa, and VirabhadraThemes:Power, Assertion, ConfidenceStory:•Sati and Shiva’s marriage begrudgingly approved by Sati’s father, Daksa.•Daksahosts agrandceremonial fire sacrifice and invites everyone, EXCEPT Shiva.•Sati becomes upset withher father's actions and leaps into thefire•Enraged ShivasendsVirabhadratoavengewife•Virabhadraraisesfrom the earth, battlesDaksa, and deliverstrophyto Shiva•Sati comes back tolifeand becomes Parvati
+Yoga Philosophy and History ResourcesHistory and Tradition:•The Yoga Tradition, Georg Feuerstein•Selling Yoga, Andrea Jain•Yoga Body, Mark Singleton•Original Yoga, Richard Rosen•Light on Yoga, BKS Iyengar•Awakening Shakti, Sally KemptonPodcasts:•The Yoga History Podcast•Yogaland•Let’s Talk Yoga•Finding RefugePhilosophy:•Skill in Action, Michelle C Johnson•Meditations from the Mat, Rolf Gates•Yoga and the Path of the Urban Mystic, Darren Main•The Inner Tradition of Yoga, Michael Stone•Core of the Yoga Sūtras, BKS Iyengar•Living the Sūtras, Kell DiNardo and Amy Pearce-HaydenSacred Story:•Bhagavad Gita, edited by Stephen Mitchell•The Mahabharata, edited by RK Narayan•The Ramayana, edited by RK Narayan•The Palace of Illusions, by Chitra Banerjee•Myths of the Asanas, Alanna Kaivalya and Arjuna von der Kooij•365 Tales from Indian Mythology •Ganesha Goes to Lunch by Kalma K. KapurA
+B
+C
+Pictures sourced from the public domain
+7.21
+
+
+---
+[← Prev](/pages/page-311.md) &nbsp; [Top](/index.md) &nbsp; [Next →](/pages/page-313.md)
