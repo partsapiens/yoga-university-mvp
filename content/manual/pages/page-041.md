@@ -1,0 +1,8 @@
+# Page 41
+
+Series Intention1 Minute Intro3Minute IntegrationWelcome and thank youIntegrate from off the mat to on the mat, introduce breath, begin gentle warm up of spine and muscle focus, assist waiver, no more than 3-5 posesIntentionLaunch your themeSun AWarm up the spine, warm the body through breath to movement flow. 1 X slow, 2 times flowSun BContinue warm up of all major muscle groups, big joint movements, complete warm up with breath to movement flow. (option for 1 or 2 flows after slow setup if adding B+, be mindful of time)Sun B+Optional | Add onto Sun B for added enduranceCoreGive the arms and legs a break, connect with eye contact, isolate core muscles in belly up drills, option to add plank core for more intensityArm Balance| InversionOffer an arm balance progressive optionStandingMost complex standing poses, held for longer duration, complete all movements of the spine (if not already done)HipsOpen your hip flexors and rotators before deep backbendsSpineDeep backbends that require proper prep, counter daily seated postureSurrender1 min ClosingCounter poses, neutralizing poses, conscious rest, no cuing for minimum of 2 minClose seated facing students, Offer your translation of Namaste, Land your theme by sharing why it matters to you, Invite students to next steps, End with Thank youSeries Intention
+Series between Sun B+ and Surrender are moveable
+
+
+---
+[← Prev](/pages/page-040.md) &nbsp; [Top](/index.md) &nbsp; [Next →](/pages/page-042.md)

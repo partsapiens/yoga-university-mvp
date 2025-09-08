@@ -1,0 +1,9 @@
+# FEET + LEGSPELVIS + SPINEARMS + HEADMUSCLESJOINTACTIONS
+
+Reverse Warrior PoseParivrtta Virabhadrasana[ parr-vree-tah VEE-ruh-buh-huh-DRA-suh-nuh ]INHALE
+BPC// TRANSITIONTo exit pose”Inhale, Exhale High to LowPlank...”What setup cues will mov e your students into the pose? In what order? What deepening cues will help their pose? Where do you feel this pose? How does it benefit you?
+FEET + LEGSPELVIS + SPINEARMS + HEADMUSCLESJOINTACTIONS
+
+
+---
+[← Prev](/pages/page-098.md) &nbsp; [Top](/index.md) &nbsp; [Next →](/pages/page-100.md)

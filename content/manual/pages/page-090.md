@@ -1,0 +1,10 @@
+# 3. 3 9
+
+3. 3 9
+CUESVerb » Your » Body Part » Direction// FEET + LEGSBring the tops of your feet to the mat Press all your toes into the matLift your knees and thighs up// PELVIS + SPINEOpen and pull your chest forward Lift your hipsEngage your abdominalsLift your front hip points up to activate your core// ARMS + HEADStraighten your armsStack your shoulders over your wristsPress your thumbs and forefingers into the mat Send your gaze forwardSend your gaze forward to lengthen the back of your neck
+OPTIONSStay in High PlankLOOK FOR Shoulders up Gaze too far upThighs to the matLower body not engagedBENEFITSImproves posture by strengthening backline muscles and improves breath by lengthening the frontline. Cultivates energy and opening to balance your mind and heart indaily life.
+PERSONALIZE YOUR PRACTICEDepth | Angle | Prop | Pose
+
+
+---
+[← Prev](/pages/page-089.md) &nbsp; [Top](/index.md) &nbsp; [Next →](/pages/page-091.md)
