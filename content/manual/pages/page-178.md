@@ -1,7 +1,0 @@
-# Page 178
-
-Balancing Series”INChairEXEaglePoseSetup Cue: 1. Hug your right arm under your left and join your elbows, wrists and palms2. Lift your right leg and wrap it over your leftDeepening Cue: 1. Choose a bear hug to free space in your shoulders and chest2. Line up your knees and belly button to align your spineRepeat left sideIN Mountain PoseEXDancer’sPoseSetup Cue: 1. Lower your right arm to your hip and reach back to capture your right foot2. Stretch your left arm up and lift your gaze Deepening Cue: 1. Draw your inner knees towards center to stabilize your backbend2. Kick into your hand to open your chestRepeat left sideINTreePoseSetup Cue: 1. Place your right foot into your left ankle, calf or inner thigh avoiding the knee2. Guide your palms to heartDisengage the BreathDeepening Cue: 1. Reciprocate the press of your foot into your leg to firm up your standing leg2. Extend your lifted knee to the side to open your hip Repeat left side*Theme Action Cue: Invite the quality of reciprocity as you balance. Gratitude does not diminish the more you share it. In fact, the more it is shared, the more opportunity for it to regenerate. posesBALANCINGSERIESINChairEXEaglePoseRINChairEXEaglePoseLINMountainEXDancer’sPoseRINMountainEXDancer’sPoseLINMountainPoseEXStandatAttentionINTreePoseREXStandatAttentionINTreePoseREXStandatAttentionINTreePoseRINMountainPoseEXForwardFoldINHalfwayLiftEXHightoLowPlankINUpwardFacingDogEXDownwardFacingDog
-
-
----
-[← Prev](/pages/page-177.md) &nbsp; [Top](/index.md) &nbsp; [Next →](/pages/page-179.md)

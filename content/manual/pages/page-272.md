@@ -1,9 +1,0 @@
-# Experience
-
-Experience
-271Breath MeditationFind a sitting position that allows you to be stable and grounded yet open and at ease. Close your eyes and establish a simple sense of presence. Now, allowing your awareness to scan through your body and, wherever possible, softening and releasing obvious areas of physical tension. You might take a few very full breaths, and then allow your breath to be natural. Bringing your attention to where you most easily detect the breath, or perhaps where it’s most pleasurable … letting this place of experiencing the breath be your home base, an anchor to the present moment. Noticing your breath … right here. Each time you notice that your mind has wandered off is a moment of mindfulness. Gently bringing your attention back to the inflow and outflow of the breath, offering a relaxed, wakeful presence. Continuing with this relaxed and calming attention on the breath … Each time the attention wanders and you notice, gently bringing it back. Like training the puppy … no judgment. Simply a kindly return. Sit. Stay. This breath, just now. If it’s helpful, you can notice the beginning, and middle, and ending of the in-breath or rise … and the beginning, and middle, and end of the out-breath or the fall … Notice the space between breaths … rest yourself … relaxing with the breathing. Sensing the breath in the foreground, still aware of the field of sensations in the background. You are learning to be centered, balanced, and present for the breath and the living world of sensation … wisely aware of this changing life. Take one more breath. Be aware of your whole body as best you can. Take a breath. And then when you’re ready, you can open your eyes. reflectionHow did you feel immediately after your meditation?What did you notice about your breath or body?
-What resonated with you in this experience and what may have not?
-
-
----
-[← Prev](/pages/page-271.md) &nbsp; [Top](/index.md) &nbsp; [Next →](/pages/page-273.md)

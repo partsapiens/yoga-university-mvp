@@ -1,9 +1,0 @@
-# FEET + LEGSPELVIS + SPINEARMS + HEADMUSCLESJOINTACTIONS
-
-Boat PoseNavasana[ nuh-VA-suh-nuh ]EXHALE
-// TRANSITION“Draw yourknees into your chest, Roll up to a seat...”To exit pose, “Cross your ankles, Place your handson the floor, Inhale step back to High Plank...”BPCDEMOWhat setup cues will mov e your students into the pose? In what order? What deepening cues will help their pose? Where do you feel this pose? How does it benefit you?
-FEET + LEGSPELVIS + SPINEARMS + HEADMUSCLESJOINTACTIONS
-
-
----
-[← Prev](/pages/page-106.md) &nbsp; [Top](/index.md) &nbsp; [Next →](/pages/page-108.md)
