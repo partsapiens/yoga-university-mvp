@@ -1,0 +1,8 @@
+# Page 281
+
+The Point of BalanceTHE HEART BRIDGE4th chakra -AnāhataChakra(ah-naa-huh-tuhchuck-ruh)The heart (the home of love and compassion) is the bridge between where experience shifts from me to we.The symbol of this chakra –two intersecting triangles, one pointing up and one pointing down --shows that it is the balance between the lower three chakras that represent our basic needs, and the higher chakras, that refer to the subtler energy chakras. THE UPPER THREE The upper three chakras correspond to thetranscendent nature of the human being:spoken truth or power of theword (throat chakra), intuition and wisdom (third eye chakra),and humilityand divinity (crown chakra
+The lower triangle: Our need to feel seen, connected, have agency.The upper triangle:How we bring to life our higher level of consciousness and connection to our Self.The lower three: Our need to feel seen, connected, have agency, represented bythe first three chakras.The upper three:How we bring to life our higher level of consciousness and connection to our Self, represented by the upper three chakras
+
+
+---
+[← Prev](/pages/page-280.md) &nbsp; [Top](/index.md) &nbsp; [Next →](/pages/page-282.md)

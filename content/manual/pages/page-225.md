@@ -1,0 +1,10 @@
+# Cervical Vertebrae C1 - C7
+
+5 .8 © COREPOWER YOGA SpineCENTRAL AXIS OF THE BODYThe Central Axis is usually composed of 33 Vertebrae with the coccyx is at the very tip•7 Cervical Vertebrae (C1-C7)•12 Thoracic Vertebrae (T1-T12)•5 Lumbar (L1-L5)•5 sacral vertebrae fused together (S1-S5)•4 frequently fused Coccygeal Vertebrae, also known as the tailbone4 NATURAL CURVESTogether these four curves provide balance and fluid movement. They act as shock absorbers;transferring and dispersing energy. Without the curves, our movements would be rigid and tight and we would not be able to twist, bend, and extend like we do in our yoga postures.1.Cervical Lordosis curve toward front body2.Thoracic Kyphosis curve toward back body3.Lumbar Lordosis curve toward front body4.Sacral Kyphosis curve toward back bodyWEAK LINKSWe tend to move in these areas more because of the ease compared to the rest of the spine. Asa result, these areas become more mobile while other parts of the spine become tighter which can lead to injury. In yoga, we tend to:•Hinge at the lower neck C7-T1•Flare ribs T12-L1•Overarch through the lower back L5-S1SPINAL MOTION•Flexion Sagittal Plane, in a Forward Fold•Extension Sagittal Plane, in a Backbend•Lateral Flexion Frontal Plane Bends right and left, in a Side Bend•Rotation Transverse Plane rotates right and left, in a Twist•Axial Extension Elevate each vertebrae for maximum disc space, when you sit up as straight as you canLUMBAR PELVIC RHYTHMIn Yoga, it is important to lead from the spine with the head in neutral alignment and to bend theknees as needed to maintain the natural Lumbar-Pelvic Rhythm. If hamstrings are tight, it willprevent this movement so a bend in the knees is necessary and will help support the proper form and alignment. The natural lumbar-pelvic rhythm is the simultaneous action of lumbar flexion and forward tilt of the pelvis in the sagittal planeduring trunk flexion.
+Cervical Vertebrae C1 - C7
+Thoracic Vertebrae T1 - T12
+Lumbar Vertebrae I1 - I5Sacral Vertebrae S1 - S5Coccyx
+
+
+---
+[← Prev](/pages/page-224.md) &nbsp; [Top](/index.md) &nbsp; [Next →](/pages/page-226.md)

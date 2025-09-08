@@ -1,0 +1,8 @@
+# Page 229
+
+5.12 © COREPOWER YOGA MusclesMuscles are elastic tissue fibers organized in bundled shapes throughout the body. Smallmovements don’t require every muscle fiber to be working, whereas bigger movements require many or all of the muscle fibers. The more you practice a pose, the more muscle fibers are engaged tostrengthen a muscle group.STRUCTURE and FUNCTION A•Muscle fibers are what cause a muscle to contract.•Muscle fibers contract in response to nervestimuli from the central nervous system sent from the brain.•This is a process involving the release of Calcium from the bones to the muscle.•The release of Calcium causes an effect which results in the shortening or contraction of theindividual muscle fiber which in turn affects the contraction of the entire muscle.•The force of the contraction transmits the force to the bones and moves the joint.Gastocnemius # Soleus # Tibialis Anterior # Quadriceps # Hamstrings # Gluteals # Adductors # Rectus Abdominis # Obliques # Transverse Abdominis # Erector Spinae # Latissimus Dorsi # Trapezius # Rhomboids # Serratus Anterior # Deltoids # Rotator Cuff # Pectoralis # Biceps # Triceps #
+Amuscle fiber bundlewrapped in fascia muscle fiber bundleindividual muscle fibersGastocnemius 8, Soleus 10, Tibialis Anterior 1, Quadriceps 14,Hamstrings 17, Gluteals 18, Adductors 19, Rectus Abdominis 3, Obliques20, Transverse Abdominis 15, Erector Spinae 9, Lattisimus Dorsi 6,Trapezius 5, Rhomboids 4, Serratus Anterior 2, Deltoids 12, RotatorCuff 7. Pectoralis 13, Biceps 16, Triceps 11
+
+
+---
+[← Prev](/pages/page-228.md) &nbsp; [Top](/index.md) &nbsp; [Next →](/pages/page-230.md)
