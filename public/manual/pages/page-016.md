@@ -1,0 +1,8 @@
+# Class Journals
+
+1 .4 © COREPOWER YOGA Quiz and JournalsDuring training, as part of your requirements you are expected to journal about every yoga practice, lecture and sessionin CorePower University (CPYU). Journaling is a great way to extend the classroom experience.Reflecting on your yoga practice will allow you to see how it relates to the content of your training.Journaling is part of Svadhyaya (self-study) and is required to complete your certification.You will journal about each class where youpractice, each class you observe, each outside class and each large group lecture or classroom session. Keep a running class count and you have unlimited yoga during the program. We encourage you to start on these requirements as soon as you can. The following are examples of your journal entries for both yoga practices and large group sessions.JOURNAL TIPS•Reflect on your overall experience. How do you feel? What did you learn about your practice? What new things did you learn about guiding a class effectively?•How did the instructor use energy, voice, their playlist or the environment (light, music, heat if applicable) to support their class?•What cues were effective and why?•What did the teacher speak to outside of the physical aspects of yoga (theme)? •What is at least one learning you are taking away from this class experience?•How did your teacher weave their theme into class? •Didyoureceiveanyadjustments?Whatdidthey helpyoulearn?•DescribetheInstructor’sdemonstrations.Whatwaseffective?Wasanythinglessthan effectiveor missedthemarkaccordingtoyour observation?
+Class Journals
+
+
+---
+[← Prev](/pages/page-015.md) &nbsp; [Top](/index.md) &nbsp; [Next →](/pages/page-017.md)
