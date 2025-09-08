@@ -1,0 +1,10 @@
+# 3 .105
+
+3 .105
+CUESVerb » Your » Body Part » Direction// FEET + LEGSKeep your feet close to your hips with your knees bent Bring the soles of your feet togetherRelax your knees to the sides to externally rotate (open) your hips // PELVIS + SPINELengthen your spineRelease your abdominalsDraw your shoulder blades together down your back// ARMS + HEADRest your arms on the mat with palms face up Release the muscles of your face and neckDraw your gaze up
+OPTIONSBring your feet to the floor Point your knees upwardBring your feet further away from your hipsLOOK FOR Arched lower backShoulders up toward earsBENEFITSStretches the adductors/inner thighs and opens the hips.Slight low back flexion promotes a neutralizing effect afterlarger backbends in preparation for lying flat on the ground for Savasana, Allows the body to begin to rest at the end of thepractice.
+PERSONALIZE YOUR PRACTICEDepth | Angle | Prop | Pose
+
+
+---
+[← Prev](/pages/page-155.md) &nbsp; [Top](/index.md) &nbsp; [Next →](/pages/page-157.md)
