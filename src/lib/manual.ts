@@ -15,9 +15,12 @@ export function getManualPages() {
     const fullPath = path.join(pagesDirectory, filename);
     const fileContents = fs.readFileSync(fullPath, 'utf8');
     const matterResult = matter(fileContents);
+    const match = matterResult.content.trim().match(/^#\s+(.*)/);
+    const title = match ? match[1].trim() : id;
 
     return {
       id,
+      title,
       ...matterResult.data,
     };
   });
@@ -37,6 +40,8 @@ export async function getManualPage(id: string) {
 
   // Use gray-matter to parse the post metadata section
   const matterResult = matter(fileContents);
+  const match = matterResult.content.trim().match(/^#\s+(.*)/);
+  const title = match ? match[1].trim() : id;
 
   // Use remark to convert markdown into HTML string
   const processedContent = await remark()
@@ -47,6 +52,7 @@ export async function getManualPage(id: string) {
   // Combine the data with the id and contentHtml
   return {
     id,
+    title,
     contentHtml,
     ...matterResult.data,
   };

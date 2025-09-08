@@ -28,7 +28,7 @@ const ManualPage = async ({ params }: { params: { slug: string[] } }) => {
           {prevPage && (
             <Link href={`/manual/${prevPage.id}`}>
               <Button>
-                &larr; Previous
+                &larr; {prevPage.title}
               </Button>
             </Link>
           )}
@@ -37,7 +37,7 @@ const ManualPage = async ({ params }: { params: { slug: string[] } }) => {
           {nextPage && (
             <Link href={`/manual/${nextPage.id}`}>
               <Button>
-                Next &rarr;
+                {nextPage.title} &rarr;
               </Button>
             </Link>
           )}
