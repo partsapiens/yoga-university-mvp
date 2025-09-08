@@ -1,0 +1,7 @@
+# Page 179
+
+Triangle Series“INWarrior1Setup Cue: 1. Plant your back heel down2. Rise to stand and bring arms your overheadDisengage the BreathDeepening Cue: 1. Press the pinky edge of your back foot down to activate your back leg2. Lift your front hip points up to lengthen your lower backEXWarrior2INExtendyourfrontkneeEXTrianglePoseSetup Cue: 1. Hinge forward and bring your front hand to your front shin or a block2. Reach your back hand upDeepening Cue: 1. Soften through your front knee and draw your legs towards each other to connect to your inner thighs and core2. Lift your torso away from your front thigh to activate your obliquesINStarPoseEXParallelyourfeetandbringyourarmstoaTINLiftyourchestEXWideLegFoldSetup Cue: 1. Hinge forward from your hips2. Bring your hands to the floor or to a block Deepening Cue: 1. Turn your toes in and soften your knees to create space your low back2.Hang your head heavy and relax your neck to decompress your spineposesTRIANGLESERIESINThreeLegDogRightLegEXLowLungeINWarrior1EXWarrior2INStraightenyourlegEXTriangleINStarEXWide-legFoldINThreeLegDogLeftLegEXLowLungeINWarrior1EXWarrior2INStraightenyourlegEXTriangleINStarEXWide-legFold,optionforchestexpansion
+
+
+---
+[← Prev](/pages/page-178.md) &nbsp; [Top](/index.md) &nbsp; [Next →](/pages/page-180.md)

@@ -1,0 +1,8 @@
+# Page 145
+
+3. 9 4© COREPOWER YOGA Backbend when your body is most warm and readyFocused on poses that move against gravity - these are safe for beginners Requires established core strength and open hipsStrengthens your back body Opens your front bodyAvoid alternating deep forward folds with deep backbends
+THE SPINEThe spine series moves the spine into extension. In normal daily life, the spine is often in flexion and rarely in extension. Notice the energetic effect on your bodynot just in the physical aspect, but also in the energetic. Moving the spine in all directions is the key to spinal health.
+
+
+---
+[← Prev](/pages/page-144.md) &nbsp; [Top](/index.md) &nbsp; [Next →](/pages/page-146.md)
