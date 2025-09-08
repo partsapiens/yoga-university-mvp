@@ -25,11 +25,13 @@ export type Pose = {
   description?: string;
 };
 
+export type SecondsOverrides = Record<number, number>;
+
 export type SavedFlow = {
   id: string;
   name: string;
   flow: PoseId[];
-  overrides: Record<number, number>;
+  overrides: SecondsOverrides;
 };
 
 export enum TimingMode {
