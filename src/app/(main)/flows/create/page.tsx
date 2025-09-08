@@ -75,7 +75,7 @@ export default function CreateFlowPage() {
   const speech = useSpeechRecognition();
   const appContext: AppContext = useMemo(() => ({
     player: { play: handlePlay, pause: handlePause, stop: handleStop, next: handleNext, prev: handlePrev, restart: handlePlay, setRate: setPlaybackRate, adjustRate },
-    flow: { setMinutes, setIntensity, setFocus, setTransition, setCooldown, setTimingMode, toggle: (k) => { if (k === 'breathingCues') setBreathingCues(p => !p); if (k === 'saferSequencing') setSaferSequencing(p => !p); if (k === 'saveToDevice') setSaveToDevice(p => !p); }, applyPreset: (f) => { setFlow(f); setOverrides({}); }, setName: setFlowName, save: () => { if (!flowName.trim()) return; setSavedFlows([...savedFlows, { id: new Date().toISOString(), name: flowName.trim(), flow, overrides }]); setFlowName(''); } }
+    flow: { setMinutes, setIntensity, setFocus, setTransition: setTransitionSec, setCooldown: setCooldownMin, setTimingMode, toggle: (k) => { if (k === 'breathingCues') setBreathingCues(p => !p); if (k === 'saferSequencing') setSaferSequencing(p => !p); if (k === 'saveToDevice') setSaveToDevice(p => !p); }, applyPreset: (f) => { setFlow(f); setOverrides({}); }, setName: setFlowName, save: () => { if (!flowName.trim()) return; setSavedFlows([...savedFlows, { id: new Date().toISOString(), name: flowName.trim(), flow, overrides }]); setFlowName(''); } }
   }), [handlePlay, handlePause, handleStop, handleNext, handlePrev, adjustRate, focus, flowName, savedFlows, flow, overrides]);
 
   const processCommand = async (transcript: string) => {
