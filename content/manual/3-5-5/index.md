@@ -1,0 +1,15 @@
+---
+title: '3. 5 5'
+slug: '3-5-5'
+group: 'Teacher Toolkit'
+order: 44
+summary: '3. 5 5 CUESVerb » Your » Body Part » Direction// FEET + LEGSStack your right knee over your hip Extend your left leg forwardBend your right knee to a 90 degree anglePress your heel'
+tags: []
+---
+
+3. 5 5
+CUESVerb » Your » Body Part » Direction// FEET + LEGSStack your right knee over your hip Extend your left leg forwardBend your right knee to a 90 degree anglePress your heels back to activate your legs// PELVIS + SPINETwist to your rightLengthen and stabilize your spineEngage your abdominals and lift your chest// ARMS + HEADBring your L/R elbow to the outside of your opposite thigh Bring your hands behind your headKeep your gaze in the direction of your twist
+OPTIONSKeep your knees bent, feet on floor and twist your L/R elbow to the outside of your opposite thighLOOK FOR Legs upShoulders on matHips rolling from side to sideBENEFITSSupports healthy spine mobility and hydration (discs compress with twist and elongate with return to neutral allowing water/ nutrients in). Challenges your breath and creates a change in perspective or point of view.
+PERSONALIZE YOUR PRACTICEDepth | Angle | Prop | Pose
+
+---

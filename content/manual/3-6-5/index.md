@@ -1,0 +1,15 @@
+---
+title: '3. 6 5'
+slug: '3-6-5'
+group: 'Teacher Toolkit'
+order: 51
+summary: '3. 6 5 CUESVerb » Your » Body Part » Direction// FEET + LEGSMove your front foot up and outStack your front knee over your ankle Press through your back heelHug your legs towards e'
+tags: []
+---
+
+3. 6 5
+CUESVerb » Your » Body Part » Direction// FEET + LEGSMove your front foot up and outStack your front knee over your ankle Press through your back heelHug your legs towards each other to stabilize your pelvis// PELVIS + SPINELower your hips downEngage your abdominals Lengthen your spine// ARMS + HEADBring your hands to the inside of your front foot Press into your hands or forearmsLengthen the back of your neck
+OPTIONSBring your back knee to the floorKeep your hips levelLOOK FOR Hips too highRounded upper backHips and thigh to floorBENEFITSOpens the hip flexors and encourages mobility on the frontline of your body. Relaxes your mind and nervous system.
+PERSONALIZE YOUR PRACTICEDepth | Angle | Prop | Pose
+
+---

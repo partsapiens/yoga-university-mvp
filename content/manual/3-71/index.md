@@ -1,0 +1,15 @@
+---
+title: '3 .71'
+slug: '3-71'
+group: 'Teacher Toolkit'
+order: 56
+summary: '3 .71 CUESVerb » Your » Body Part » Direction// FEET + LEGSStep your feet hips width distance Bend your kneesBegin to straighten your legs// PELVIS + SPINEBring your hips up and ov'
+tags: []
+---
+
+3 .71
+CUESVerb » Your » Body Part » Direction// FEET + LEGSStep your feet hips width distance Bend your kneesBegin to straighten your legs// PELVIS + SPINEBring your hips up and over your heels Engage your abdominalsLengthen your spineShift your weight towards your toes to line up your heels over your heels and increase your hamstring stretch// ARMS + HEADSlide your hands palms face up under your feet Bring your toes to your wristsBend your elbows outRelax your neck and gaze back
+OPTIONSBend your knees moreLOOK FOR Fingers only touching toes Hips behind heelsGaze forwardBENEFITSLengthens and relaxes the muscles on the backline of your body. Relaxes your mind and nervous system.
+PERSONALIZE YOUR PRACTICEDepth | Angle | Prop | Pose
+
+---

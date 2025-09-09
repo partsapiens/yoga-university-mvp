@@ -1,0 +1,46 @@
+---
+title: 'Class Journals'
+slug: 'class-journals'
+group: 'Training'
+order: 5
+summary: '1 .4 © Yoga Flow YOGA Quiz and JournalsDuring training, as part of your requirements you are expected to journal about every yoga practice, lecture and sessionin Yoga Flow Universi'
+tags: []
+---
+
+1 .4 © Yoga Flow YOGA Quiz and JournalsDuring training, as part of your requirements you are expected to journal about every yoga practice, lecture and sessionin Yoga Flow University (YFU). Journaling is a great way to extend the classroom experience.Reflecting on your yoga practice will allow you to see how it relates to the content of your training.Journaling is part of Svadhyaya (self-study) and is required to complete your certification.You will journal about each class where youpractice, each class you observe, each outside class and each large group lecture or classroom session. Keep a running class count and you have unlimited yoga during the program. We encourage you to start on these requirements as soon as you can. The following are examples of your journal entries for both yoga practices and large group sessions.JOURNAL TIPS-Reflect on your overall experience. How do you feel? What did you learn about your practice? What new things did you learn about guiding a class effectively?-How did the instructor use energy, voice, their playlist or the environment (light, music, heat if applicable) to support their class?-What cues were effective and why?-What did the teacher speak to outside of the physical aspects of yoga (theme)? -What is at least one learning you are taking away from this class experience?-How did your teacher weave their theme into class? -Didyoureceiveanyadjustments?Whatdidthey helpyoulearn?-DescribetheInstructor’sdemonstrations.Whatwaseffective?Wasanythinglessthan effectiveor missedthemarkaccordingtoyour observation?
+Class Journals
+
+---
+
+# Page 17
+
+1 .5 © Yoga Flow YOGA Do the best you can to cover the material but be patient with yourself as these terms and concepts begin to soak in. Remember yoga is a lifelongpractice.Review the posture breakdowns for allpostures. Pay special attention to the key points of alignment, OPTIONS and benefits of each posture.Review your notes and handouts from each session including the Philosophy, Anatomy,Contraindications and Pregnancy and Business of Yoga lectures as well as the hands-on Assistssessions.Understand the 10 Yoga Class Essentials, 8 Limbs of Yoga, 5 Yamas, 5 Niyamas and 7 Chakras.Familiarize yourself with the list of terms provided.Final Exam GuideAhimsaAparigraha AsanaAsteya BandhaBrahmacharya ChakraDharana DhyanaIsvara-pranidhana NamasteOmPatanjaliPranayama Pratyahara Samadhi Santosha SatyaSaucha Svadhyaya TapasUddiyana UjjayiVinyasa Yoga
+
+---
+
+# Page 18
+
+reading recosEverything you need for this program is covered in the manual, but you might want more to explore. Here’s some texts we love...Journey Into Power by Baron BaptisteYoga Sutras Commentary by Swami SatchidanandaMeditations from the Mat Rolf Gates40 Days to Personal Revolution Baron BaptisteJivamukti Yoga David Life and Sharon GannonThe Yoga Tradition George FeursteinThe Yoga Masters Mark ForstaterHatha Yoga Pradipika Bihar School of YogaLight on Yoga B.K.S. IyengarTree of Yoga B.K.S. IyengarStructural Yoga Therapy Mukunda StilesAnatomy of the Spirit Caroline MyssPower of Now Eckhart TolleThe Four Agreements Don Miguel LuizAutobiography of a Yogi Paramahansa YoganandaThe Anatomy Coloring Book Wynn Kapi, LawrenceM. ElsonThe Anatomy of Hatha Yoga David H. CoulterFrom the River of Heaven David FrawleyAshtanga Yoga “The Practice Manual”David SwensonYoga and the Path of the Urban MysticDarren MainYoga and the Quest for the True SelfStephen CopeThe Wisdom of No Escape Pema ChodronWhen Things Fall Apart Pema ChodronYoga Posture Adjustments and AssistingStephanie PappasLiving Your Yoga Judith LasaterGrad ReqsSELF-PACED LECTURESqYF Teaching FormulasqHistory of Yoga, Sanskrit, SūtrasqYoga Philosophy and Subtle Body: -Kleshas-Ayurveda and Koshas-MythologyqAnatomy ReviewqC1Class Experience and Assists qTrauma-Informed YogaqDAPP, Special PopulationsqCultural Appreciation and Implicit Bias CLASSES and JOURNALINGTake and journal: q1 each of: C1, C2, YS, HPF, CRqOutside Class 1qOutside Class 2q33 other 1-hour classesTT LECTURES, QUIZ and JOURNALSqLearn all postures, sequencing, themingq8 Limb Path, AUM, SanskritqAnatomy, AssistsqChakrasqCultural Appreciation, Implicit Bias and Inclusive TeachingqAttend All Sessions (can miss up to 3 sessions/10.5 hrs)TEACHING and TESTINGqTeach on Beginner Guest Dayand Partner TeachingqFinal Written ExamqComplete all content in YFUqProgram SurveyqTuition Paid in Full1.6 © Yoga Flow YOGA
+
+---
+
+# Page 19
+
+Business of YogaYOUR YOGA RESUME What to include:Other relevant experience such as customer service, marketing, public speaking.Yoga Certifications-200HR Teacher Training-Continuing Education-Specialized trainings-300HR Teacher Training-Previous teaching experience-Contact information -Social media/website linksPRIOR TO TEACHINGAudition Prep: Present, Pleasant, Patient Consider your audience (beginners, age groups, at-risk groups, gyms vs. studios) and teach approrpriatelyto that group. There are different kinds of auditions: Round Robin, 1:1, Invited classes, Virtual or video auditionCPR and AED, Personal Liability Insurance-Local Red Cross or American Heart Association-Check out Yoga Alliance and Yoga Journal resources https//teachersplus.yogajournal.com/~$150-$250 for initial enrollment-Student teacher rates are now available from $25-$169 while you are in training. NACAMS and Alternative Balance are two insurance providers that offer those plans. While we don’t recommend any provider specifically, these types of policies are available.WHAT’S NEXTTEACHCONTINUING EDUCATIONSELF-STUDY-Offer a free or donation-based class-Teach to your community, workplace, church-Audition for YF studio or a studio in your area-Teach your family, friends, apartment building -300hour TT –YF has a program yearly -Take a workshop –YF studios will offer one a quarter next year (lots of virtual offerings and Yoga Alliance has ton of free content)-Get another certification –what topic interests you? Pre-natal, Kids Yoga, Yoga Therapy, Trauma-Informed, Anatomy, -Dive into your yoga asana practice –get on your mat more! -Listen to a yoga podcast -Learn from more yoga teachers beyond YF-Join a meditation group in your city-Join/start a book club and read the Bhagavad Gita, Yoga Sutras, + more!-Look out for a resource coming soon on recommended books, podcasts, and spiritual teachers!your missionJournal on your highest purpose that supports your yoga journeyWhat inspires your yoga journey?
+What did it feel like when you took your first yoga class?
+What would you like to give to others to inspire them to live their power?
+
+---
+
+# Page 20
+
+Yoga AllianceProfessional Organization for Yoga Teachers in USA http://www.yogaalliance.org-Not a requirement to be a teacher, optional to join-~$50 registration fee + ~$65 annual renewal (~$115 first year, $65/year after) as of this publishing-Upgrades ~$50 each (E for experienced and/or increasing to 500-hour)-3-year Continuing Education requirement of 45 hours teaching yoga + 30-hour yoga-related education (10 contact and 20 non-contact hours)-$40 annually for YACEP (Yoga Alliance Continuing Education Provider)Perks-Discounts on personal liability insurance-Discounts on other products or services-Online workshops/continuing education-Resources on Code of Conduct-Visibility in RYT registry-Advocacy alertsYoga Alliance Code of ConductAs a Registered Yoga School with Yoga Alliance, we adhere to the Yoga Alliance Code of Conduct and conduct our trainings inadherence to standards set out by Yoga Alliance.Excerpt from Yoga Alliance’s Code of Conduct:Guidance for the Code of Conduct-Code Principle 1 —Adhere to Applicable Law-Code Principle 2 —Follow the Yoga Alliance™Scope of Practice-Code Principle 3 —Follow the Yoga Alliance Anti-Harassment Policy-Code Principle 4 —Follow the Yoga Alliance Sexual Misconduct Policy-Code Principle 5 —Do No Harm-Code Principle 6 —Actively Include All Individuals-Code Principle 7 —Respect Student-Teacher Relationships-Code Principle 8 —Maintain Honesty in Communications”https://www.yogaalliance.org/aboutya/ourpolicies/codeofconduct#principle-2Beyond and Continuing EducationSpecialized training-Pre-natal -Kids-Special populations-Trauma-Informed-Yin/Restorative-Other fitness modalities
+1.8 © Yoga Flow YOGA © Yoga Flow YOGA What words or concepts stick out to you when reading the YogaAlliance Code of Conduct and Scope of Practice?Why is ethics in the yoga community important?© Yoga Flow YOGA
+
+---
+
+# Page 21
+
+1.WhataretheYogaClass Essentials? 2.Whatare fivegreatverbal cues thatcouldapplyto almostanypostureandkeep studentsontrack? 3.Whyisbreathingso importantinyoga? 4.Whatshouldthebreathing belikethroughoutthe class?Howdoweencourage studentstodothistypeof breathing? 5.Whatdoyoudowhenyou seeastudentstruggling withaposture? 6.ProvidethreeOPTIONS/ variationsforSunSalutation B.7.Whatmakesagreatteacher? 8.Whenhasmusictouched youinapractice?Where wasthisinclass,what pose?Howdiditimpactyour experience?
+
+---

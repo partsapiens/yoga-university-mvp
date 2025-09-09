@@ -1,70 +1,44 @@
 import fs from 'fs';
 import path from 'path';
 import matter from 'gray-matter';
-import { remark } from 'remark';
-import html from 'remark-html';
 
-const manualDirectory = path.join(process.cwd(), 'content/manual');
-
-export function getManualPages() {
-  const pagesDirectory = path.join(manualDirectory, 'pages');
-  const filenames = fs.readdirSync(pagesDirectory);
-
-  const pages = filenames.map(filename => {
-    const id = filename.replace(/\.md$/, '');
-    const fullPath = path.join(pagesDirectory, filename);
-    const fileContents = fs.readFileSync(fullPath, 'utf8');
-    const matterResult = matter(fileContents);
-
-    return {
-      id,
-      ...matterResult.data,
-    };
-  });
-
-  return pages.sort((a, b) => {
-    if (a.id < b.id) {
-      return -1;
-    } else {
-      return 1;
-    }
-  });
+export interface ChapterMeta {
+  slug: string;
+  title: string;
+  group: string;
+  order: number;
+  summary: string;
 }
 
-export async function getManualPage(id: string) {
-  const fullPath = path.join(manualDirectory, 'pages', `${id}.md`);
-  const fileContents = fs.readFileSync(fullPath, 'utf8');
+export interface Manifest {
+  title: string;
+  version: string;
+  chapters: ChapterMeta[];
+}
 
-  // Use gray-matter to parse the post metadata section
-  const matterResult = matter(fileContents);
+export function getManifest(): Manifest {
+  const file = path.join(process.cwd(), 'content/manual/manifest.json');
+  return JSON.parse(fs.readFileSync(file, 'utf8')) as Manifest;
+}
 
-  // Use remark to convert markdown into HTML string
-  const processedContent = await remark()
-    .use(html)
-    .process(matterResult.content);
-  const contentHtml = processedContent.toString();
+export function listGroups(): string[] {
+  const manifest = getManifest();
+  return Array.from(new Set(manifest.chapters.map((c) => c.group)));
+}
 
-  // Combine the data with the id and contentHtml
+export function readChapter(slug: string) {
+  const file = path.join(process.cwd(), 'content/manual', slug, 'index.md');
+  const raw = fs.readFileSync(file, 'utf8');
+  return matter(raw);
+}
+
+export function neighborSlugs(manifest: Manifest, slug: string) {
+  const idx = manifest.chapters.findIndex((c) => c.slug === slug);
   return {
-    id,
-    contentHtml,
-    ...matterResult.data,
+    prev: idx > 0 ? manifest.chapters[idx - 1].slug : null,
+    next: idx < manifest.chapters.length - 1 ? manifest.chapters[idx + 1].slug : null,
+    index: idx + 1,
+    total: manifest.chapters.length,
   };
 }
 
-export async function getTableOfContents() {
-    const fullPath = path.join(manualDirectory, 'index.md');
-    const fileContents = fs.readFileSync(fullPath, 'utf8');
-
-    const matterResult = matter(fileContents);
-
-    const processedContent = await remark()
-        .use(html)
-        .process(matterResult.content);
-
-    const contentHtml = processedContent.toString();
-
-    return {
-        contentHtml,
-    };
-}
