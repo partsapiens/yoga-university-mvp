@@ -38,17 +38,24 @@ export const Navigation = ({ userRole }: NavigationProps) => {
               </div>
             </div>
 
-            <div className="flex md:hidden items-center justify-between w-full">
-              <button onClick={toggleMobileMenu} className="p-2 -ml-2">
-                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" /></svg>
-              </button>
-              <Link href="/flows/create" className="font-semibold text-primary">Create Flow</Link>
-              {/* Placeholder for a right-side icon if needed in the future */}
-              <div className="w-6" />
+            <div className="flex md:hidden justify-center items-center w-full h-16 relative">
+              {/* Left: Hamburger Menu (Absolutely Positioned) */}
+              <div className="absolute left-2">
+                <button onClick={toggleMobileMenu} className="p-2 text-foreground">
+                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" /></svg>
+                </button>
+              </div>
+
+              {/* Center: Create Flow Link */}
+              <Link href="/flows/create" className="font-semibold text-primary whitespace-nowrap">Create Flow</Link>
+
+              {/* Right side can have another absolute element if needed, e.g., for a settings icon */}
             </div>
 
             <div className="hidden md:flex items-center gap-4">
-              <button className="btn btn-primary">Log In</button>
+              <Link href="/login" className="px-4 py-2 rounded-md text-sm font-medium text-foreground bg-secondary hover:bg-secondary/80">
+                Log In
+              </Link>
             </div>
           </div>
         </div>

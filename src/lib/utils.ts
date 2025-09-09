@@ -13,6 +13,11 @@ export function toArray(v: unknown): string[] {
   return [];
 }
 
+export function stripHtml(html: string | null | undefined): string {
+  if (!html) return '';
+  return html.replace(/<[^>]*>?/gm, '');
+}
+
 export function toastSuccess(message: string) {
   toast.success(message, {
     duration: 2000,

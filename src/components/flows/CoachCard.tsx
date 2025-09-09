@@ -1,6 +1,7 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import { useCycler } from "@/hooks/useCycler";
-import { toArray } from "@/lib/utils";
+import { toArray, stripHtml } from "@/lib/utils";
+import { cn } from "@/lib/utils";
 
 // --- Types ---
 export type Pose = {
@@ -10,6 +11,7 @@ export type Pose = {
   cues: string[]
   focus?: string[]
   intensity?: 1 | 2 | 3 | 4 | 5
+  description?: string;
 }
 export type Flow = { id: string; title: string; poses: Pose[] }
 
@@ -26,13 +28,12 @@ export const demoFlow: Flow = {
   ]
 }
 
-
 // --- Helpers & Guards ---
 const hasWindow = typeof window !== "undefined";
 const canSpeak = hasWindow && "speechSynthesis" in window;
 export function resolveFlow(flow?: Flow): Flow { if (!flow || !Array.isArray(flow.poses) || flow.poses.length === 0) return demoFlow; return flow; }
 export function getInitialSeconds(flow?: Flow) { const rf = resolveFlow(flow); return rf.poses[0]?.durationSec ?? 30; }
-export function speak(text: string) { if (!canSpeak) return; try { window.speechSynthesis.cancel(); const utter = new SpeechSynthesisUtterance(text); const voices = window.speechSynthesis.getVoices?.() || []; const preferred = voices.find(v => /female|samantha|google uk english female|zira|jenny/i.test(v.name)); if (preferred) utter.voice = preferred; utter.rate = 1.0; utter.pitch = 1.02; window.speechSynthesis.speak(utter); } catch {} }
+export function speak(text: string) { if (!canSpeak) return; try { window.speechSynthesis.cancel(); const utter = new SpeechSynthesisUtterance(stripHtml(text)); const voices = window.speechSynthesis.getVoices?.() || []; const preferred = voices.find(v => /female|samantha|google uk english female|zira|jenny/i.test(v.name)); if (preferred) utter.voice = preferred; utter.rate = 1.0; utter.pitch = 1.02; window.speechSynthesis.speak(utter); } catch {} }
 function timeFmt(s: number) { const m = Math.floor(s / 60), ss = s % 60; return `${m}:${ss.toString().padStart(2, "0")}` }
 
 // --- Intent parsing (very lightweight) ---
@@ -60,15 +61,64 @@ export default function CoachCard({ flow }: { flow?: Flow }) {
   useEffect(() => { if (paused || !hasWindow) return; const step = () => { setSecondsLeft(s => { if (s <= 1) { nextPose(); return poses[Math.min(idx + 1, poses.length - 1)]?.durationSec ?? 0 } return s - 1 }); tickRef.current = window.setTimeout(step, Math.max(750, 1000 / rate)) }; tickRef.current = window.setTimeout(step, 1000); return () => { if (tickRef.current) window.clearTimeout(tickRef.current) } }, [paused, rate, idx, poses]);
 
   const pose = poses[idx] as Pose | undefined;
-  const cuesList = toArray(pose?.cues);
+  const cuesList = toArray(pose?.cues).map(c => stripHtml(c));
   const [isHovered, setIsHovered] = useState(false);
   const cueText = useCycler(cuesList.length ? cuesList : [' '], 3500, !paused && !isHovered);
 
-  function nextPose() { /* ... as before ... */ }
-  function prevPose() { /* ... as before ... */ }
-  function handleIntent(raw: string) { /* ... as before ... */ }
-  function startListening() { /* ... as before ... */ }
-  function stopListening() { /* ... as before ... */ }
+  function nextPose() {
+    setIdx(i => {
+      const next = Math.min(i + 1, poses.length - 1);
+      if (next !== i) speak(poses[next].name);
+      return next;
+    });
+  }
+
+  function prevPose() {
+    setIdx(i => {
+      const prev = Math.max(0, i - 1);
+      if (prev !== i) speak(poses[prev].name);
+      return prev;
+    });
+  }
+
+  function handleIntent(raw: string) {
+    const intent = parseIntent(raw);
+    switch (intent.type) {
+      case "NEXT": nextPose(); break;
+      case "PREV": prevPose(); break;
+      case "PAUSE": setPaused(true); speak("Paused."); break;
+      case "RESUME": setPaused(false); speak("Resuming."); break;
+      case "REPEAT": setSecondsLeft(poses[idx]?.durationSec ?? 30); speak("Repeating from the beginning of this pose."); break;
+      case "SLOWER": setRate(r => Math.max(0.5, r - 0.15)); speak("Slowing down the pace."); break;
+      case "FASTER": setRate(r => Math.min(2, r + 0.15)); speak("Speeding up the pace."); break;
+      case "TIME": speak(`There are ${timeFmt(secondsLeft)} remaining.`); break;
+      case "EXPLAIN":
+      case "CHAT":
+        speak(stripHtml(pose?.description || "I can only respond to simple commands like next, previous, or pause."));
+        break;
+    }
+  }
+
+  function startListening() {
+    if (!supportedASR || listening) return;
+    setListening(true);
+    setAsrError(null);
+    const SpeechRecognition = (window as any).webkitSpeechRecognition;
+    recRef.current = new SpeechRecognition();
+    recRef.current.continuous = false;
+    recRef.current.interimResults = false;
+    recRef.current.onresult = (event: any) => {
+      const transcript = event.results[0][0].transcript;
+      handleIntent(transcript);
+    };
+    recRef.current.onerror = (event: any) => setAsrError(event.error);
+    recRef.current.onend = () => setListening(false);
+    recRef.current.start();
+  }
+
+  function stopListening() {
+    if (recRef.current) recRef.current.stop();
+  }
 
   return (
     <div className="p-4 rounded-2xl border bg-card">
@@ -80,7 +130,7 @@ export default function CoachCard({ flow }: { flow?: Flow }) {
         <>
           <div className="grid grid-cols-3 gap-3 items-center mb-4">
             <div className="col-span-2">
-              <div className="text-lg font-medium">{pose?.name}</div>
+              <div className="text-lg font-medium">{stripHtml(pose?.name)}</div>
               <div className="text-gray-600 text-sm line-clamp-1 min-h-[1.25rem]" onMouseEnter={() => setIsHovered(true)} onMouseLeave={() => setIsHovered(false)}>{cueText}</div>
             </div>
             <div className="text-right">

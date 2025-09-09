@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import { POSES } from '@/lib/yoga-data';
 import { TimingMode, PoseId, Pose } from '@/types/yoga';
-import { cn, toArray } from '@/lib/utils';
+import { cn, toArray, stripHtml } from '@/lib/utils';
 import { useCycler } from '@/hooks/useCycler';
 import { PlaneIcon } from './PlaneIcon';
 
@@ -88,8 +88,8 @@ export function PoseCard({
 
       {/* Dynamic Benefits and Cues */}
       <div className="mt-2 text-sm text-foreground min-h-[3em]" onMouseEnter={() => setIsHovered(true)} onMouseLeave={() => setIsHovered(false)}>
-        <div className="line-clamp-2 font-medium">{benefitText}</div>
-        <div className="text-muted-foreground line-clamp-1 italic">{cueText}</div>
+        <div className="line-clamp-2 font-medium">{stripHtml(benefitText)}</div>
+        <div className="text-muted-foreground line-clamp-1 italic">{stripHtml(cueText)}</div>
       </div>
 
       <div className="flex items-center justify-between mt-2">

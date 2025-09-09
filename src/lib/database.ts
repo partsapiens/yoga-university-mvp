@@ -24,10 +24,26 @@ export const getPoses = async ({ page = 0, searchQuery = '' }: { page?: number, 
   const from = page * POSES_PER_PAGE;
   const to = from + POSES_PER_PAGE - 1;
 
-  // Select all columns to see what we get from the DB
-  let query = client.from('poses').select('*').range(from, to);
+  // Select only the columns required by the Pose type, aliasing snake_case to camelCase
+  const selectColumns = `
+    id,
+    name,
+    sanskrit:sanskrit_name,
+    defaultSeconds:default_seconds,
+    icon,
+    intensity,
+    groups,
+    family,
+    description,
+    benefits,
+    cues,
+    plane
+  `;
+
+  let query = client.from('poses').select(selectColumns).range(from, to);
 
   if (searchQuery) {
+    // Apply search filter on the 'name' column
     query = query.ilike('name', `%${searchQuery}%`);
   }
 
@@ -38,25 +54,9 @@ export const getPoses = async ({ page = 0, searchQuery = '' }: { page?: number, 
     return [];
   }
 
-  // Manually map the data to our application's Pose type
-  // This handles potential snake_case vs. camelCase mismatches
-  // and ensures the returned data conforms to the type.
-  const mappedPoses: Pose[] = data.map((p: any) => ({
-    id: p.id as PoseId,
-    name: p.name,
-    sanskrit: p.sanskrit_name || p.sanskrit, // Handle potential DB column names
-    defaultSeconds: p.default_seconds || p.defaultSeconds,
-    icon: p.icon,
-    intensity: p.intensity,
-    groups: p.groups || [],
-    family: p.family,
-    description: p.description,
-    benefits: p.benefits,
-    cues: p.cues,
-    plane: p.plane,
-  }));
-
-  return mappedPoses;
+  // The data returned by Supabase should now match the Pose[] type directly
+  // thanks to the column aliasing in the select statement.
+  return data as Pose[];
 };
 
 export const getFlows = async () => {
