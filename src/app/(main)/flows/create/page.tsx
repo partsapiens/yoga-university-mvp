@@ -5,6 +5,7 @@ import { Toaster } from 'react-hot-toast';
 
 // Core imports
 import { useLocalStorage } from "@/hooks/useLocalStorage";
+import { toastError, toastSuccess } from "@/lib/utils";
 import { Focus, TimingMode, PoseId, SavedFlow } from "@/types/yoga";
 import { POSES, PRESETS } from "@/lib/yoga-data";
 import * as Helpers from "@/lib/yoga-helpers";
