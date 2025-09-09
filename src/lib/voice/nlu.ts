@@ -88,7 +88,7 @@ export function parseTranscript(transcript: string): Intent {
         }
         return { name: intent.name, ...slots };
       }
-      return { name: intent.name };
+      return { name: intent.name } as Intent;
     }
   }
 
