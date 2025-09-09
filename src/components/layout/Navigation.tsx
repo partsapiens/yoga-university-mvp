@@ -1,12 +1,17 @@
+"use client"; // Required to use hooks like useVoiceUI
+
 import React from 'react';
 import Link from 'next/link';
 import { UserRole } from '@/types';
+import { useVoiceUI } from '@/context/VoiceUIContext';
 
 interface NavigationProps {
   userRole?: UserRole;
 }
 
 export const Navigation = ({ userRole }: NavigationProps) => {
+  const { setIsVoicePopupOpen } = useVoiceUI();
+
   const navItems = [
     { href: '/', label: 'Home' },
     { href: '/dashboard', label: 'Dashboard' },
@@ -17,12 +22,8 @@ export const Navigation = ({ userRole }: NavigationProps) => {
     { href: '/reading/add', label: 'Add Reading' },
   ];
 
-  // TODO: Implement role-based navigation items
-  // TODO: Implement user dropdown with profile management
-  // TODO: Implement mobile-friendly hamburger menu
-
   return (
-    <nav className="bg-background shadow-sm">
+    <nav className="bg-background shadow-sm sticky top-0 z-40">
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-16">
           <Link href="/" className="text-2xl font-bold text-primary">
@@ -35,11 +36,16 @@ export const Navigation = ({ userRole }: NavigationProps) => {
               </Link>
             ))}
           </div>
-          {/* Placeholder for user dropdown/auth buttons */}
-          <div className="hidden md:block">
+          <div className="hidden md:flex items-center gap-4">
+            <button
+              onClick={() => setIsVoicePopupOpen(true)}
+              className="h-10 w-10 flex items-center justify-center rounded-full hover:bg-accent"
+              title="Open Voice Assistant"
+            >
+              <span className="text-2xl">🤖</span>
+            </button>
             <button className="btn btn-primary">Log In</button>
           </div>
-          {/* Placeholder for hamburger menu button */}
           <div className="md:hidden">
             <button className="btn btn-outline">Menu</button>
           </div>

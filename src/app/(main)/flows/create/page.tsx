@@ -6,6 +6,7 @@ import { Toaster } from 'react-hot-toast';
 // Core imports
 import { useLocalStorage } from "@/hooks/useLocalStorage";
 import { useTimer } from "@/hooks/useTimer";
+import { useVoiceUI } from "@/context/VoiceUIContext";
 import { Focus, TimingMode, PoseId, SavedFlow } from "@/types/yoga";
 import { POSES, PRESETS } from "@/lib/yoga-data";
 import * as Helpers from "@/lib/yoga-helpers";
@@ -52,7 +53,9 @@ export default function CreateFlowPage() {
   const [timeInPose, setTimeInPose] = useState(0);
   const [playbackRate, setPlaybackRate] = useState(1.0);
   const [commandLogs, setCommandLogs] = useState<CommandLog[]>([]);
-  const [isVoicePopupOpen, setIsVoicePopupOpen] = useState(false);
+
+  // Use the global context for the voice popup state
+  const { isVoicePopupOpen, setIsVoicePopupOpen } = useVoiceUI();
 
   // --- REFS & DERIVED STATE ---
   const dragIndex = useRef<number | null>(null);
