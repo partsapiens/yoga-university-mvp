@@ -1,31 +1,3 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="utf-8" />
-  <title>Yoga Flow Builder (Generate Flow) — README</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <style>
-    :root { --fg:#0b1320; --muted:#5b6472; --accent:#2563eb; --bg:#ffffff; }
-    body { font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif; color: var(--fg); background: var(--bg); line-height: 1.6; margin: 0; padding: 2.5rem 1.25rem; }
-    main { max-width: 920px; margin: 0 auto; }
-    h1 { font-size: 2.2rem; margin: 0 0 0.75rem; }
-    h2 { font-size: 1.4rem; margin-top: 2rem; }
-    p.lead { color: var(--muted); font-size: 1.05rem; margin-top: 0.25rem; }
-    ul { padding-left: 1.2rem; }
-    code, kbd { background: #f5f7fb; border: 1px solid #e7ebf3; border-radius: 6px; padding: 0.1rem 0.35rem; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
-    table { border-collapse: collapse; width: 100%; max-width: 640px; }
-    th, td { border: 1px solid #e7ebf3; padding: 0.5rem 0.6rem; text-align: left; }
-    th { background: #f8fafc; }
-    .muted { color: var(--muted); }
-    .checklist li { list-style: "✔  "; margin-left: 0.25rem; }
-    .pill { display: inline-block; padding: .2rem .55rem; border: 1px solid #e7ebf3; border-radius: 999px; font-size: .8rem; color: var(--muted); }
-    .kbd-note { font-size: .9rem; color: var(--muted); }
-    hr { border: none; border-top: 1px solid #edf2f7; margin: 2rem 0; }
-    a { color: var(--accent); text-decoration: none; }
-  </style>
-</head>
-<body>
-<main>
 
   <header>
     <h1>Yoga Flow Builder (Generate Flow)</h1>
