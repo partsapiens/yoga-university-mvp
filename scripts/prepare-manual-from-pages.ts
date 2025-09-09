@@ -1,239 +1,103 @@
-import fs from 'fs';
-import path from 'path';
+/* eslint-disable no-console */
+import fs from "fs";
+import path from "path";
+import matter from "gray-matter";
 
-function normalize(text: string): string {
-  return text
-    .replace(/\r\n/g, '\n')
-    .replace(/\u2022/g, '-')
-    .split('\n')
-    .filter((line) => !/\[(Top|Next|Prev)/i.test(line))
-    .join('\n')
-    .replace(/[ \t]+/g, ' ')
-    .replace(/\n{2,}/g, '\n\n');
-}
+const PAGES_DIR = path.join(process.cwd(), "content/manual/pages");
+const OUT_DIR   = path.join(process.cwd(), "content/manual");
+const TOC_PATH  = path.join(process.cwd(), "content/manual/toc.json");
 
-function brandReplace(text: string): string {
-  return text
-    .replace(/CorePower University/gi, 'Yoga Flow University')
-    .replace(/CorePower/gi, 'Yoga Flow')
-    .replace(/CPYU/gi, 'YFU')
-    .replace(/CPY/gi, 'YF');
-}
-
-function isTitleCase(line: string): boolean {
-  const words = line.trim().split(/\s+/);
-  if (words.length === 0 || words.length > 12) return false;
-  return words.every((w) => /[A-Za-z]/.test(w) && w[0] === w[0].toUpperCase());
-}
-
-function detectHeading(line: string): string | null {
-  const h = line.match(/^#{1,2}\s+(.+)/);
-  if (h) {
-    const title = h[1].trim();
-    if (/^Page\s+\d+/i.test(title)) return null;
-    return title;
-  }
-  if (/^[0-9]+$/.test(line.trim())) return null;
-  if (
-    line.trim().length > 0 &&
-    line === line.toUpperCase() &&
-    /[A-Z]/.test(line) &&
-    !/PAGE\s+\d+/i.test(line)
-  )
-    return line.trim();
-  return null;
-}
-
-function slugify(str: string): string {
-  return str
-    .toLowerCase()
-    .replace(/[^a-z0-9]+/g, '-')
-    .replace(/^-+|-+$/g, '');
-}
-
-const groups: [string, string[]][] = [
-  ['Training', ['intention', 'journaling', 'exam', 'business', 'alliance', 'setup']],
-  [
-    'Teacher Toolkit',
-    [
-      'essentials',
-      'environment',
-      'blueprint',
-      'formula',
-      'cue',
-      'theme',
-      'alignment',
-      'demo',
-      'music',
-      'sequencing',
-      'teaching',
-    ],
-  ],
-  [
-    'Postures',
-    [
-      'sequence',
-      'series',
-      'salutation',
-      'script',
-      'integration',
-      'triangle',
-      'hip',
-      'spine',
-      'surrender',
-      'crescent',
-      'balancing',
-    ],
-  ],
-  ['Assists and Options', ['assist', 'props', 'contraindications', 'options', 'challenges']],
-  [
-    'Anatomy',
-    [
-      'anatomy',
-      'bones',
-      'spine',
-      'joints',
-      'fascia',
-      'ligaments',
-      'tendons',
-      'muscles',
-      'nervous',
-      'breath',
-    ],
-  ],
-  [
-    'History and Philosophy',
-    [
-      'sankalpa',
-      'sutra',
-      '8 limb',
-      'yamas',
-      'niyamas',
-      'sanskrit',
-      'pranayama',
-      'bandhas',
-      'chakras',
-      'om',
-    ],
-  ],
-  [
-    'Self-Paced Lectures',
-    [
-      'history',
-      'trauma',
-      'kleshas',
-      'cultural',
-      'implicit',
-      'pregnancy',
-      'mythology',
-      'ayurveda',
-      'koshas',
-    ],
-  ],
+const BRAND_REPLACEMENTS: Array<[RegExp, string]> = [
+  [/\bCorePower University\b/gi, "Yoga Flow University"],
+  [/\bCorePower\b/gi,            "Yoga Flow"],
+  [/\bCPYU\b/gi,                 "YFU"],
+  [/\bCPY\b/gi,                  "YF"],
 ];
 
-function inferGroup(title: string, body: string): string {
-  const haystack = `${title} ${body}`.toLowerCase();
-  for (const [group, keywords] of groups) {
-    if (keywords.some((k) => haystack.includes(k))) return group;
-  }
-  return 'Training';
+function kebab(s:string){ return s.toLowerCase().replace(/[^\w\s-]/g,"").trim().replace(/\s+/g,"-"); }
+
+function clean(s:string){
+  let t = s;
+  t = t.replace(/\u00A0/g," ").replace(/[ \t]+/g," ").replace(/[ ]+\n/g,"\n");
+  t = t.replace(/\b\d{1,2}:\d{2}\s*[-–]\s*\d{1,2}:\d{2}\b/g, ""); // remove timecodes like 1:05–1:10
+  t = t.replace(/^\s*[A-Za-z]?\s*\d{1,3}\s*$/gm, "");            // lone page/line numbers
+  t = t.replace(/([A-Z]{2,})([A-Z][a-z])/g, "$1 $2");            // smashed CAPSWORDS
+  t = t.replace(/•\s*/g, "- ");                                  // bullets
+  for (const [re, repl] of BRAND_REPLACEMENTS) t = t.replace(re, repl);
+  t = t.replace(/\n{3,}/g, "\n\n").trim();
+  return t;
 }
 
-const pagesDir = path.join(process.cwd(), 'content/manual/pages');
-const manualDir = path.join(process.cwd(), 'content/manual');
+type Toc = { title:string; chapters: { title:string; group?:string }[] };
 
-const files = fs
-  .readdirSync(pagesDir)
-  .filter((f) => f.startsWith('page-'))
-  .sort();
-
-const joined = files
-  .map((f) => fs.readFileSync(path.join(pagesDir, f), 'utf8'))
-  .join('\n');
-
-let text = brandReplace(normalize(joined));
-
-const lines = text.split('\n');
-const chapterMap = new Map<string, { title: string; body: string[] }>();
-const orderKeys: string[] = [];
-let currentKey: string | null = null;
-
-for (const line of lines) {
-  const heading = detectHeading(line);
-  if (heading) {
-    const key = heading.toLowerCase();
-    if (!chapterMap.has(key)) {
-      chapterMap.set(key, { title: heading, body: [] });
-      orderKeys.push(key);
-    }
-    currentKey = key;
-  } else if (currentKey) {
-    chapterMap.get(currentKey)!.body.push(line);
-  }
+function readAllPages(): string {
+  if (!fs.existsSync(PAGES_DIR)) { console.error(`❌ Not found: ${PAGES_DIR}`); process.exit(1); }
+  const files = fs.readdirSync(PAGES_DIR).filter(f => /\.md$/i.test(f)).sort((a,b)=> a.localeCompare(b));
+  const parts = files.map(f => fs.readFileSync(path.join(PAGES_DIR,f),"utf8"));
+  return parts.join("\n\n");
 }
 
-const chapters = orderKeys.map((key) => ({
-  title: chapterMap.get(key)!.title,
-  body: chapterMap.get(key)!.body.join('\n').trim(),
-}));
-
-const manifestChapters: any[] = [];
-let order = 1;
-const usedSlugs = new Set<string>();
-
-for (const ch of chapters) {
-  let slug = slugify(ch.title);
-  if (!slug) slug = `section-${order}`;
-  while (usedSlugs.has(slug)) {
-    slug = `${slug}-${order}`;
+function splitByTOC(full:string, toc: Toc){
+  const text = "\n" + clean(full) + "\n";
+  const idxs: { title:string; start:number }[] = [];
+  for (const ch of toc.chapters) {
+    const title = ch.title.trim();
+    const re = new RegExp(`\\n(?:#{1,3}\\s+)?${title.replace(/[.*+?^${}()|[\\]\\\\]/g, "\\$&")}\\s*\\n`, "i");
+    const m = re.exec(text);
+    if (m) idxs.push({ title, start: m.index + 1 });
   }
-  usedSlugs.add(slug);
-  const dir = path.join(manualDir, slug);
-  if (fs.existsSync(dir)) {
-    const backupDir = path.join(
-      manualDir,
-      '_backup',
-      `${slug}-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`
-    );
-    fs.mkdirSync(path.dirname(backupDir), { recursive: true });
-    fs.renameSync(dir, backupDir);
+  idxs.sort((a,b)=> a.start - b.start);
+  const chunks: { title:string; body:string }[] = [];
+  for (let i=0;i<idxs.length;i++){
+    const cur = idxs[i], next = idxs[i+1];
+    const slice = text.slice(cur.start, next ? next.start : undefined).trim();
+    chunks.push({ title: cur.title, body: slice });
   }
-  fs.mkdirSync(dir, { recursive: true });
-
-  const group = inferGroup(ch.title, ch.body);
-  const summary = ch.body.replace(/\s+/g, ' ').slice(0, 180);
-  const frontMatter =
-    '---\n' +
-    `title: '${ch.title.replace(/'/g, "''")}'\n` +
-    `slug: '${slug}'\n` +
-    `group: '${group}'\n` +
-    `order: ${order}\n` +
-    `summary: '${summary.replace(/'/g, "''")}'\n` +
-    'tags: []\n' +
-    '---\n\n';
-  fs.writeFileSync(path.join(dir, 'index.md'), frontMatter + ch.body.trim() + '\n');
-  manifestChapters.push({ slug, title: ch.title, group, order, summary });
-  order++;
+  return chunks;
 }
 
-const manifest = {
-  title: 'Yoga Teacher Training Manual',
-  version: 'v1',
-  chapters: manifestChapters,
-};
+function writeChapters(chunks: {title:string; body:string}[], toc:Toc){
+  fs.mkdirSync(OUT_DIR, { recursive: true });
+  const backupDir = path.join(OUT_DIR, `_backup_${Date.now()}`);
+  const existing = fs.readdirSync(OUT_DIR).filter(d => d !== "pages" && d !== "toc.json" && d !== "manifest.json");
+  if (existing.length){
+    fs.mkdirSync(backupDir, { recursive: true });
+    for (const d of existing){ fs.renameSync(path.join(OUT_DIR, d), path.join(backupDir, d)); }
+    console.log(`🗄️  Moved existing chapters to ${path.basename(backupDir)}`);
+  }
 
-fs.writeFileSync(
-  path.join(manualDir, 'manifest.json'),
-  JSON.stringify(manifest, null, 2)
-);
+  const manifest = {
+    title: toc.title || "Yoga Teacher Training Manual",
+    version: "v1",
+    chapters: [] as { slug:string; title:string; group:string; order:number; summary?:string }[]
+  };
 
-const rawDir = path.join(manualDir, '_pages_raw');
-if (fs.existsSync(rawDir)) {
-  const backup = `${rawDir}-${Date.now()}`;
-  fs.renameSync(rawDir, backup);
+  chunks.forEach((ch, i)=>{
+    const group = (toc.chapters.find(c => c.title === ch.title)?.group) || "Training";
+    const slug  = kebab(ch.title);
+    const body  = ch.body.trim();
+    const plain = body.replace(/[#>*_`]/g,"").replace(/\s+/g," ").trim();
+    const summary = plain.slice(0, 180) + (plain.length>180 ? "…" : "");
+
+    const dir = path.join(OUT_DIR, slug);
+    fs.mkdirSync(dir, { recursive: true });
+
+    const md = matter.stringify(`# ${ch.title}\n\n${body}\n`, {
+      title: ch.title, slug, group, order: i+1, summary, tags: []
+    });
+    fs.writeFileSync(path.join(dir, "index.md"), md, "utf8");
+    manifest.chapters.push({ slug, title: ch.title, group, order: i+1, summary });
+  });
+
+  fs.writeFileSync(path.join(OUT_DIR, "manifest.json"), JSON.stringify(manifest, null, 2), "utf8");
+  console.log(`✅ Wrote ${manifest.chapters.length} chapters + manifest.json`);
 }
-fs.renameSync(pagesDir, rawDir);
 
-console.log(`Generated ${chapters.length} chapters.`);
-
+(function main(){
+  if (!fs.existsSync(TOC_PATH)) { console.error(`❌ Missing TOC file: ${TOC_PATH}`); process.exit(1); }
+  const toc = JSON.parse(fs.readFileSync(TOC_PATH,"utf8")) as Toc;
+  const full = readAllPages();
+  const chunks = splitByTOC(full, toc);
+  if (!chunks.length) { console.error("❌ No chapters found. Check toc titles match the text exactly."); process.exit(1); }
+  writeChapters(chunks, toc);
+})();

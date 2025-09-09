@@ -1,37 +1,19 @@
-import fs from 'fs';
-import path from 'path';
-import matter from 'gray-matter';
-import { remark } from 'remark';
-import strip from 'strip-markdown';
+/* eslint-disable no-console */
+import fs from "fs";
+import path from "path";
+import matter from "gray-matter";
 
-async function build() {
-  const base = path.join(process.cwd(), 'content/manual');
-  const dirs = fs
-    .readdirSync(base, { withFileTypes: true })
-    .filter((d) => d.isDirectory() && !d.name.startsWith('_'))
-    .map((d) => d.name);
+const CONTENT = path.join(process.cwd(), "content/manual");
+const OUT = path.join(process.cwd(), "public/manual/search-index.json");
 
-  const items: any[] = [];
+const manifest = JSON.parse(fs.readFileSync(path.join(CONTENT, "manifest.json"), "utf8"));
+const entries = manifest.chapters.map((ch:any) => {
+  const md = fs.readFileSync(path.join(CONTENT, ch.slug, "index.md"), "utf8");
+  const { content } = matter(md);
+  const plain = content.replace(/[\#>*_`]/g, "").replace(/\s+/g, " ").trim();
+  return { slug: ch.slug, title: ch.title, group: ch.group, summary: ch.summary, content: plain };
+});
 
-  for (const dir of dirs) {
-    const file = path.join(base, dir, 'index.md');
-    if (!fs.existsSync(file)) continue;
-    const raw = fs.readFileSync(file, 'utf8');
-    const { data, content } = matter(raw);
-    const plain = (await remark().use(strip).process(content)).toString().replace(/\s+/g, ' ').trim();
-    items.push({
-      slug: data.slug,
-      title: data.title,
-      group: data.group,
-      summary: data.summary,
-      content: plain,
-    });
-  }
-
-  const outDir = path.join(process.cwd(), 'public/manual');
-  fs.mkdirSync(outDir, { recursive: true });
-  fs.writeFileSync(path.join(outDir, 'search-index.json'), JSON.stringify(items, null, 2));
-}
-
-build();
-
+fs.mkdirSync(path.dirname(OUT), { recursive: true });
+fs.writeFileSync(OUT, JSON.stringify(entries), "utf8");
+console.log(`✅ search-index.json (${entries.length})`);

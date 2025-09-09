@@ -1,10 +1,13 @@
 ---
-title: 'INTENTION SERIES'
-slug: 'intention-series'
-group: 'Training'
-order: 15
-summary: ''
+title: Intention Series
+slug: intention-series
+group: Postures
+order: 1
+summary: INTENTION SERIES INTENTION SERIES
 tags: []
 ---
+# Intention Series
 
+# INTENTION SERIES
 
+INTENTION SERIES
