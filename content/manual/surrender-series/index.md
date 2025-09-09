@@ -2,7 +2,7 @@
 title: Surrender Series
 slug: surrender-series
 group: Postures
-order: 5
+order: 6
 summary: >-
   SURRENDER SERIES 3. 7 --- [← Prev](/pages/page-057.md) &nbsp; [Top](/index.md)
   &nbsp; [Next →](/pages/page-059.md) Page 59 3. 8© Yoga Flow YOGA C1 Transition

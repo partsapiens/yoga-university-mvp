@@ -2,7 +2,7 @@
 title: Core Series
 slug: core-series
 group: Postures
-order: 3
+order: 4
 summary: >-
   CORE SERIES CRESCENT LUNGE SERIESPART 1[ both sides ] CRESCENT LUNGE
   SERIESPART 2 3. 5 --- [← Prev](/pages/page-055.md) &nbsp; [Top](/index.md)

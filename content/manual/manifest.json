@@ -7,35 +7,42 @@
       "title": "TT Intention",
       "group": "Training",
       "order": 1,
-      "summary": "Welcome to the Yoga Flow 200 Hour Teacher Training. This program is designed to immerse you fully into the practice, philosophy, and teaching of power yoga. As you move through the…"
+      "summary": "The intention of Yoga Flow Teacher Training is to immerse you in practice, philosophy, and teaching while guiding you to find your authentic voice."
+    },
+    {
+      "slug": "intention-series",
+      "title": "Intention Series",
+      "group": "Postures",
+      "order": 2,
+      "summary": "INTENTION SERIES INTENTION SERIES"
     },
     {
       "slug": "integration-series",
       "title": "Integration Series",
       "group": "Postures",
-      "order": 2,
-      "summary": "INTEGRATION SERIES SUNSALUTATION B[ both sides, 3 sets ] --- [← Prev](/pages/page-054.md) &nbsp; [Top](/index.md) &nbsp; [Next →](/pages/page-056.md) 3. 5 3. 5 SUNSALUTATION A[ 3 s…"
+      "order": 3,
+      "summary": "INTEGRATION SERIES SUNSALUTATION B[ both sides, 3 sets ] --- [\u2190 Prev](/pages/page-054.md) \u00a0 [Top](/index.md) \u00a0 [Next \u2192](/pages/page-056.md) 3. 5 3. 5 SUNSALUTATION A[ 3 s\u2026"
     },
     {
       "slug": "core-series",
       "title": "Core Series",
       "group": "Postures",
-      "order": 3,
-      "summary": "CORE SERIES CRESCENT LUNGE SERIESPART 1[ both sides ] CRESCENT LUNGE SERIESPART 2 3. 5 --- [← Prev](/pages/page-055.md) &nbsp; [Top](/index.md) &nbsp; [Next →](/pages/page-057.md)"
+      "order": 4,
+      "summary": "CORE SERIES CRESCENT LUNGE SERIESPART 1[ both sides ] CRESCENT LUNGE SERIESPART 2 3. 5 --- [\u2190 Prev](/pages/page-055.md) \u00a0 [Top](/index.md) \u00a0 [Next \u2192](/pages/page-057.md)"
     },
     {
       "slug": "spine-series",
       "title": "Spine Series",
       "group": "Postures",
-      "order": 4,
-      "summary": "SPINE SERIES BALANCING SERIES[ both sides ] SPINE SERIES --- [← Prev](/pages/page-056.md) &nbsp; [Top](/index.md) &nbsp; [Next →](/pages/page-058.md) 3. 7 3. 7 TRIANGLE SERIES[ bot…"
+      "order": 5,
+      "summary": "SPINE SERIES BALANCING SERIES[ both sides ] SPINE SERIES --- [\u2190 Prev](/pages/page-056.md) \u00a0 [Top](/index.md) \u00a0 [Next \u2192](/pages/page-058.md) 3. 7 3. 7 TRIANGLE SERIES[ bot\u2026"
     },
     {
       "slug": "surrender-series",
       "title": "Surrender Series",
       "group": "Postures",
-      "order": 5,
-      "summary": "SURRENDER SERIES 3. 7 --- [← Prev](/pages/page-057.md) &nbsp; [Top](/index.md) &nbsp; [Next →](/pages/page-059.md) Page 59 3. 8© Yoga Flow YOGA C1 Transition ChartINTEGRATION SERIE…"
+      "order": 6,
+      "summary": "SURRENDER SERIES 3. 7 --- [\u2190 Prev](/pages/page-057.md) \u00a0 [Top](/index.md) \u00a0 [Next \u2192](/pages/page-059.md) Page 59 3. 8\u00a9 Yoga Flow YOGA C1 Transition ChartINTEGRATION SERIE\u2026"
     }
   ]
 }

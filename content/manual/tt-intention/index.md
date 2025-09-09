@@ -3,16 +3,14 @@ title: "TT Intention"
 slug: "tt-intention"
 group: "Training"
 order: 1
-summary: "Welcome to the Yoga Flow 200 Hour Teacher Training. This program is designed to immerse you fully into the practice, philosophy, and teaching of power yoga. As you move through the…"
+summary: "The intention of Yoga Flow Teacher Training is to immerse you in practice, philosophy, and teaching while guiding you to find your authentic voice."
 tags: []
 ---
 # TT Intention
 
-Welcome to the Yoga Flow 200 Hour Teacher Training.
-This program is designed to immerse you fully into the practice, philosophy, and teaching of power yoga. As you move through these weeks, you will not only deepen your own practice but also learn how to guide others safely and effectively.
+Welcome to the Yoga Flow 200 Hour Teacher Training. This program is designed to immerse you fully into the practice, philosophy, and teaching of power yoga. As you move through these weeks, you will not only deepen your own practice but also learn how to guide others safely and effectively.
 
 ## Purpose of Training
-
 - Build a strong foundation in yoga postures, breath, and alignment.
 - Explore the principles of sequencing and cueing.
 - Gain confidence in leading classes with presence and clarity.
@@ -20,7 +18,6 @@ This program is designed to immerse you fully into the practice, philosophy, and
 - Create community and connection through shared practice.
 
 ## What You Will Experience
-
 - Daily practice of asana, meditation, and pranayama.
 - Anatomy and alignment workshops.
 - Teaching labs with feedback and peer support.
@@ -28,9 +25,7 @@ This program is designed to immerse you fully into the practice, philosophy, and
 - Journaling and reflection to connect your learning to your personal growth.
 
 ## Intention Setting
-
 Take a moment to ask yourself:
-
 - Why am I here?
 - What do I hope to discover or transform?
 - How do I want to show up for myself and for others during this training?

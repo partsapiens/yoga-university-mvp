@@ -2,7 +2,7 @@
 title: Spine Series
 slug: spine-series
 group: Postures
-order: 4
+order: 5
 summary: >-
   SPINE SERIES BALANCING SERIES[ both sides ] SPINE SERIES --- [←
   Prev](/pages/page-056.md) &nbsp; [Top](/index.md) &nbsp; [Next
