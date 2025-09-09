@@ -5,16 +5,9 @@ import { Focus, TimingMode, PoseId } from '@/types/yoga';
 import { FOCI, PRESETS } from '@/lib/yoga-data';
 import { dotBar } from '@/lib/yoga-helpers';
 import { cn } from '@/lib/utils';
+import { FieldGroup } from './FieldGroup';
 
-// Updated FieldGroup to be more compact
-const FieldGroup = ({ title, className, children }: { title: string; className?: string; children: React.ReactNode }) => (
-    <div className={cn("flex flex-col gap-1", className)}>
-      <label className="text-sm font-medium text-gray-900">{title}</label>
-      <div className="min-h-[36px] flex items-center">{children}</div>
-    </div>
-);
-
-// Minimal UI components for styling
+// Minimal UI components to match the brief's style
 const Card = ({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) => <div className={cn("rounded-2xl border bg-card text-card-foreground shadow-sm h-full", className)} {...props} />;
 const CardContent = ({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) => <div className={cn("p-4 sm:p-6", className)} {...props} />;
 const Button = ({ className, ...props }: React.ButtonHTMLAttributes<HTMLButtonElement>) => <button className={cn("h-9 px-3 inline-flex items-center justify-center rounded-xl text-sm font-medium", className)} {...props} />;
@@ -64,7 +57,12 @@ export function SettingsCard({
         </div>
 
         <div className="grid gap-3 sm:gap-4 mb-4 grid-cols-1 lg:grid-cols-6">
-          <FieldGroup title="Timing Mode" className="lg:col-span-2"><UiSelect value={timingMode} onValueChange={(v: TimingMode) => setTimingMode(v)}>{/* ... */}</UiSelect></FieldGroup>
+          <FieldGroup title="Timing Mode" className="lg:col-span-2">
+            <UiSelect value={timingMode} onValueChange={(v: TimingMode) => setTimingMode(v)}>
+              <UiSelectItem value={TimingMode.Seconds}>Seconds</UiSelectItem>
+              <UiSelectItem value={TimingMode.Breaths}>Breaths</UiSelectItem>
+            </UiSelect>
+          </FieldGroup>
           <FieldGroup title="Transition (s)"><input type="number" min={0} max={20} value={transitionSec} onChange={e => setTransitionSec(clamp(Number(e.target.value), 0, 20))} className="h-9 w-full rounded-md border border-input px-3" /></FieldGroup>
           <FieldGroup title="Cooldown (min)"><input type="number" min={0} max={10} value={cooldownMin} onChange={e => setCooldownMin(clamp(Number(e.target.value), 0, 10))} className="h-9 w-full rounded-md border border-input px-3" /></FieldGroup>
           <FieldGroup title="Breathing Cues"><div className="w-full flex justify-center"><Toggle checked={breathingCues} onCheckedChange={setBreathingCues} /></div></FieldGroup>
