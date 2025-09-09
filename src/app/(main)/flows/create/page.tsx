@@ -11,12 +11,12 @@ import { POSES, PRESETS } from "@/lib/yoga-data";
 import * as Helpers from "@/lib/yoga-helpers";
 
 // Voice AI imports
-import { useSpeechRecognition } from '@/lib/voice/useSpeechRecognition';
+import { AppContext, executeIntent } from '@/lib/voice/capability-registry';
 import { parseTranscript } from '@/lib/voice/nlu';
-import { executeIntent, AppContext } from '@/lib/voice/capability-registry';
-import { toastSuccess, toastError, speak } from '@/lib/voice/feedback';
+import { speak, toastError, toastSuccess } from '@/lib/voice/feedback';
+import { CommandLog } from '@/components/flows/CommandConsole';
+import { VoiceAssistantPopup } from "@/components/flows/VoiceAssistantPopup";
 import { VoiceMicButton } from '@/components/flows/VoiceMicButton';
-import { CommandConsole, CommandLog } from '@/components/flows/CommandConsole';
 
 // UI Components
 import { ControlPanel } from "@/components/flows/ControlPanel";
@@ -52,6 +52,7 @@ export default function CreateFlowPage() {
   const [timeInPose, setTimeInPose] = useState(0);
   const [playbackRate, setPlaybackRate] = useState(1.0);
   const [commandLogs, setCommandLogs] = useState<CommandLog[]>([]);
+  const [isVoicePopupOpen, setIsVoicePopupOpen] = useState(false);
 
   // --- REFS & DERIVED STATE ---
   const dragIndex = useRef<number | null>(null);
@@ -61,7 +62,7 @@ export default function CreateFlowPage() {
   const secondsPerPose = useMemo(() => Helpers.applyOverridesByIndex(Helpers.baseDurationsFromTable(flow), overrides), [flow, overrides]);
   const totalSeconds = useMemo(() => { const pS = secondsPerPose.reduce((a, b) => a + b, 0); const tS = Math.max(0, flow.length - 1) * transitionSec; return pS + tS + (cooldownMin * 60); }, [secondsPerPose, flow.length, transitionSec, cooldownMin]);
 
-  // --- PLAYER LOGIC ---
+  // --- HANDLERS ---
   const handlePlay = useCallback(() => { if (flow.length === 0) return; setCurrentPoseIndex(0); setTimeInPose(0); setPlaybackState('playing'); }, [flow.length]);
   const handlePause = useCallback(() => setPlaybackState('paused'), []);
   const handleResume = useCallback(() => setPlaybackState('playing'), []);
@@ -69,34 +70,6 @@ export default function CreateFlowPage() {
   const handleNext = useCallback(() => { if (currentPoseIndex < flow.length - 1) { setCurrentPoseIndex(i => i + 1); setTimeInPose(0); } else { handleStop(); } }, [currentPoseIndex, flow.length, handleStop]);
   const handlePrev = useCallback(() => { if (currentPoseIndex > 0) { setCurrentPoseIndex(i => i - 1); setTimeInPose(0); } }, [currentPoseIndex]);
   const adjustRate = useCallback((adj: number) => setPlaybackRate(rate => clamp(rate + adj, 0.5, 2.0)), []);
-  useTimer(() => { if (playbackState !== 'playing') return; const d = Helpers.tempoAdjust(secondsPerPose[currentPoseIndex] ?? 0, playbackRate); if (timeInPose < d) { setTimeInPose(t => t + 1); } else { handleNext(); } }, 1000);
-
-  // --- VOICE AI ---
-  const speech = useSpeechRecognition();
-  const appContext: AppContext = useMemo(() => ({
-    player: { play: handlePlay, pause: handlePause, stop: handleStop, next: handleNext, prev: handlePrev, restart: handlePlay, setRate: setPlaybackRate, adjustRate },
-    flow: { setMinutes, setIntensity, setFocus, setTransition: setTransitionSec, setCooldown: setCooldownMin, setTimingMode, toggle: (k) => { if (k === 'breathingCues') setBreathingCues(p => !p); if (k === 'saferSequencing') setSaferSequencing(p => !p); if (k === 'saveToDevice') setSaveToDevice(p => !p); }, applyPreset: (f) => { setFlow(f); setOverrides({}); }, setName: setFlowName, save: () => { if (!flowName.trim()) return; setSavedFlows([...savedFlows, { id: new Date().toISOString(), name: flowName.trim(), flow, overrides }]); setFlowName(''); } }
-  }), [handlePlay, handlePause, handleStop, handleNext, handlePrev, adjustRate, focus, flowName, savedFlows, flow, overrides]);
-
-  const processCommand = async (transcript: string) => {
-    const intent = parseTranscript(transcript);
-    if (!intent) {
-      toastError("I didn't understand that command.");
-      return;
-    }
-    const feedback = await executeIntent(intent, appContext);
-    speak(feedback, voiceFeedback);
-    toastSuccess(feedback);
-    setCommandLogs(prev => [{ id: new Date().toISOString(), transcript, feedback }, ...prev].slice(0, 10));
-  };
-
-  useEffect(() => {
-    if (speech.transcript) {
-      processCommand(speech.transcript);
-    }
-  }, [speech.transcript]);
-
-  // --- Other Handlers & Effects ---
   const handleGenerate = () => setPreview(Helpers.smartGenerate(minutes, intensity, focus));
   const acceptPreview = () => { if (preview) { setFlow(preview); setOverrides({}); setPreview(null); } };
   const removePose = (i: number) => { setFlow(f => f.filter((_, idx) => idx !== i)); setOverrides(o => Helpers.reindexOverridesAfterRemoval(o, i)); };
@@ -107,7 +80,25 @@ export default function CreateFlowPage() {
   const handleSaveFlow = () => { if (!flowName.trim()) return toastError("Please enter a flow name."); setSavedFlows([...savedFlows, { id: new Date().toISOString(), name: flowName.trim(), flow, overrides }]); setFlowName(''); toastSuccess("Flow saved!"); };
   const handleLoadFlow = (id: string) => { const f = savedFlows.find(x => x.id === id); if (f) { setFlow(f.flow); setOverrides(f.overrides); setFlowName(f.name); toastSuccess(`Loaded "${f.name}"`); } };
   const handleDeleteFlow = (id: string) => { setSavedFlows(savedFlows.filter(f => f.id !== id)); toastSuccess("Flow deleted."); };
+  const addLog = (log: CommandLog) => setCommandLogs(prev => [log, ...prev].slice(0, 10));
 
+  // --- APP CONTEXT FOR VOICE AI ---
+  const appContext: AppContext = useMemo(() => ({
+    player: { play: handlePlay, pause: handlePause, stop: handleStop, next: handleNext, prev: handlePrev, restart: handlePlay, setRate: setPlaybackRate, adjustRate },
+    flow: { setMinutes, setIntensity, setFocus, setTransition: setTransitionSec, setCooldown: setCooldownMin, setTimingMode, toggle: (k) => { if (k === 'breathingCues') setBreathingCues(p => !p); if (k === 'saferSequencing') setSaferSequencing(p => !p); if (k === 'saveToDevice') setSaveToDevice(p => !p); }, applyPreset: handleLoadPreset, setName: setFlowName, save: handleSaveFlow }
+  }), [handlePlay, handlePause, handleStop, handleNext, handlePrev, adjustRate, setPlaybackRate, setMinutes, setIntensity, setFocus, setTransitionSec, setCooldownMin, setTimingMode, setBreathingCues, setSaferSequencing, setSaveToDevice, handleLoadPreset, setFlowName, handleSaveFlow]);
+
+  const processTextCommand = async (transcript: string) => {
+    const intent = parseTranscript(transcript);
+    if (!intent) { toastError("I didn't understand that command."); return; }
+    const feedback = await executeIntent(intent, appContext);
+    speak(feedback, voiceFeedback);
+    toastSuccess(feedback);
+    addLog({ id: new Date().toISOString(), transcript, feedback });
+  };
+
+  // --- EFFECTS ---
+  useTimer(() => { if (playbackState !== 'playing') return; const d = Helpers.tempoAdjust(secondsPerPose[currentPoseIndex] ?? 0, playbackRate); if (timeInPose < d) { setTimeInPose(t => t + 1); } else { handleNext(); } }, 1000);
   useEffect(() => { const k = (e: KeyboardEvent) => { if (e.metaKey || e.ctrlKey || e.altKey || document.activeElement?.tagName === 'INPUT') return; if (e.key === ' ') { e.preventDefault(); if (playbackState === 'playing') handlePause(); else if (playbackState === 'paused') handleResume(); else handlePlay(); } if (e.key === 'ArrowRight') handleNext(); if (e.key === 'ArrowLeft') handlePrev(); if (e.key === '[') adjustRate(-0.25); if (e.key === ']') adjustRate(0.25); }; window.addEventListener('keydown', k); return () => window.removeEventListener('keydown', k); }, [playbackState, handlePause, handleResume, handlePlay, handleNext, handlePrev, adjustRate]);
   useEffect(() => { if (playbackState !== 'playing' || spokenForIndex.current === currentPoseIndex) { if (playbackState !== 'playing') { spokenForIndex.current = null; window.speechSynthesis?.cancel(); } return; } if (typeof window === 'undefined' || !window.speechSynthesis) return; const poseId = flow[currentPoseIndex]; const text = Helpers.buildCues(poseId, breathingCues); const utter = new SpeechSynthesisUtterance(text); window.speechSynthesis.cancel(); window.speechSynthesis.speak(utter); spokenForIndex.current = currentPoseIndex; }, [currentPoseIndex, playbackState, breathingCues, flow]);
 
@@ -126,9 +117,11 @@ export default function CreateFlowPage() {
           <div className="mt-6"><PoseGrid {...{ flow, secondsPerPose, totalSeconds, onRemovePose: removePose, onUpdatePoseDuration: updatePoseDuration, timingMode, secPerBreath, onMovePose: movePose, dragIndexRef: dragIndex, activePoseIndex: playbackState !== 'idle' ? currentPoseIndex : -1, timeInPose }} /></div>
           <SuggestionsGrid onAddPose={addPose} />
         </main>
-        <div className="fixed bottom-24 right-4 z-20"><VoiceMicButton listening={speech.listening} error={speech.error} onStart={speech.start} onStop={speech.stop} /></div>
+
+        <div className="fixed bottom-24 right-4 z-20"><VoiceMicButton listening={false} error={null} onStart={() => setIsVoicePopupOpen(true)} onStop={() => {}} /></div>
+        <VoiceAssistantPopup isOpen={isVoicePopupOpen} onClose={() => setIsVoicePopupOpen(false)} appContext={appContext} voiceFeedbackOn={voiceFeedback} logs={commandLogs} addLog={addLog} onCommand={processTextCommand} />
+
         {flow.length > 0 && <Player {...{ isPlaying: playbackState === 'playing', isPaused: playbackState === 'paused', currentPoseId: flow[currentPoseIndex], nextPoseId: flow[currentPoseIndex + 1], timeInPose, currentPoseDuration: Helpers.tempoAdjust(secondsPerPose[currentPoseIndex] ?? 0, playbackRate), sessionTotalSeconds: totalSeconds, sessionTimeRemaining, onPlay: handlePlay, onPause: handlePause, onResume: handleResume, onStop: handleStop, playbackRate, adjustRate }} />}
-        <CommandConsole show={!speech.supported} logs={commandLogs} onCommand={processCommand} />
         <GeneratePreviewModal isOpen={!!preview} onClose={() => setPreview(null)} preview={preview} onShuffle={handleGenerate} onAccept={acceptPreview} />
       </div>
     </>

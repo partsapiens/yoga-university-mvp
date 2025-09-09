@@ -1,10 +1,11 @@
 import { useState, useEffect, useRef } from 'react';
 
-const DEBOUNCE_TIME = 600; // ms
+const DEBOUNCE_TIME = 800; // ms
 
 export function useSpeechRecognition() {
   const [listening, setListening] = useState(false);
-  const [transcript, setTranscript] = useState<string | null>(null);
+  const [finalTranscript, setFinalTranscript] = useState<string | null>(null);
+  const [interimTranscript, setInterimTranscript] = useState('');
   const [error, setError] = useState<string | null>(null);
 
   const recognitionRef = useRef<SpeechRecognition | null>(null);
@@ -12,7 +13,6 @@ export function useSpeechRecognition() {
 
   useEffect(() => {
     if (typeof window === 'undefined') return;
-
     const SpeechRecognitionAPI = window.SpeechRecognition || window.webkitSpeechRecognition;
     if (!SpeechRecognitionAPI) {
       setError("Speech recognition is not supported in this browser.");
@@ -27,41 +27,37 @@ export function useSpeechRecognition() {
     recognition.onresult = (event) => {
       if (debounceTimer.current) clearTimeout(debounceTimer.current);
 
-      let finalTranscript = '';
+      let final = '';
+      let interim = '';
       for (let i = event.resultIndex; i < event.results.length; ++i) {
         if (event.results[i].isFinal) {
-          finalTranscript += event.results[i][0].transcript;
+          final += event.results[i][0].transcript;
+        } else {
+          interim += event.results[i][0].transcript;
         }
       }
 
-      if (finalTranscript) {
-        setTranscript(finalTranscript.trim());
+      setInterimTranscript(interim);
+      if (final) {
+        setFinalTranscript(final.trim());
       }
 
-      // Debounce to treat a pause as the end of an utterance
       debounceTimer.current = setTimeout(() => {
         stop();
       }, DEBOUNCE_TIME);
     };
 
-    recognition.onerror = (event) => {
-      setError(event.error);
-      setListening(false);
-    };
+    recognition.onerror = (event) => { setError(event.error); setListening(false); };
+    recognition.onend = () => { setListening(false); };
 
-    recognition.onend = () => {
-      setListening(false);
-    };
-
-    return () => {
-      recognition.stop();
-    };
+    return () => { recognition.stop(); };
   }, []);
 
   const start = () => {
     if (recognitionRef.current && !listening) {
       try {
-        setTranscript(null);
+        setFinalTranscript(null);
+        setInterimTranscript('');
         setError(null);
         recognitionRef.current.start();
         setListening(true);
@@ -82,7 +78,8 @@ export function useSpeechRecognition() {
   return {
     supported: !!recognitionRef.current,
     listening,
-    transcript,
+    transcript: finalTranscript, // renamed for clarity
+    interimTranscript,
     start,
     stop,
     error,
