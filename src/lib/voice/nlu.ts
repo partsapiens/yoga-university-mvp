@@ -1,5 +1,5 @@
 import { Focus, PoseId } from '@/types/yoga';
-import { POSES, PRESETS } from '@/lib/yoga-data';
+import { FOCI, POSES, PRESETS } from '@/lib/yoga-data';
 
 // --- Type Definitions ---
 export type Intent =
