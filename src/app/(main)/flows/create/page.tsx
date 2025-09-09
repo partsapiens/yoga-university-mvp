@@ -75,19 +75,23 @@ export default function CreateFlowPage() {
   return (
     <>
       <Toaster />
-      <div className="min-h-screen bg-background text-foreground pb-10">
-        <header className="mx-auto max-w-5xl px-4 py-6">
-          <h1 className="text-3xl font-semibold text-center tracking-tight">Create your sequence</h1>
-          <ControlPanel {...{ minutes, setMinutes, intensity, setIntensity, focus, setFocus, saferSequencing, setSaferSequencing, saveToDevice, setSaveToDevice, timingMode, setTimingMode, secPerBreath, setSecPerBreath, onAutoGenerate: handleGenerate, flowName, setFlowName, onSaveFlow: handleSaveFlow, onLoadPreset: handleLoadPreset, breathingCues:true, setBreathingCues:()=>{}, voiceFeedback:true, setVoiceFeedback:()=>{}, transitionSec:0, setTransitionSec:()=>{}, cooldownMin:0, setCooldownMin:()=>{} }} />
-        </header>
-        <main className="mx-auto max-w-5xl px-4 pb-16">
-          <div className="my-6">
-            <VoiceCoach flow={flowForWidget} />
+      <div className="mx-auto max-w-screen-2xl px-4 sm:px-6 lg:px-8 py-6">
+        <div className="grid gap-6 lg:gap-8 grid-cols-1 lg:grid-cols-[minmax(560px,1fr)_minmax(520px,1fr)] items-start">
+
+          {/* Left Column */}
+          <div className="flex flex-col gap-6">
+            <ControlPanel {...{ minutes, setMinutes, intensity, setIntensity, focus, setFocus, saferSequencing, setSaferSequencing, saveToDevice, setSaveToDevice, timingMode, setTimingMode, secPerBreath, setSecPerBreath, onAutoGenerate: handleGenerate, flowName, setFlowName, onSaveFlow: handleSaveFlow, onLoadPreset: handleLoadPreset, breathingCues:true, setBreathingCues:()=>{}, voiceFeedback:true, setVoiceFeedback:()=>{}, transitionSec:0, setTransitionSec:()=>{}, cooldownMin:0, setCooldownMin:()=>{} }} />
+            <SavedFlows flows={savedFlows} onLoad={handleLoadFlow} onDelete={handleDeleteFlow} />
+            <PoseGrid {...{ flow, secondsPerPose, totalSeconds, onRemovePose: removePose, onUpdatePoseDuration: updatePoseDuration, timingMode, secPerBreath, onMovePose: movePose, dragIndexRef: dragIndex, activePoseIndex: -1, timeInPose: 0 }} />
+            <SuggestionsGrid onAddPose={addPose} />
           </div>
-          <SavedFlows flows={savedFlows} onLoad={handleLoadFlow} onDelete={handleDeleteFlow} />
-          <div className="mt-6"><PoseGrid {...{ flow, secondsPerPose, totalSeconds, onRemovePose: removePose, onUpdatePoseDuration: updatePoseDuration, timingMode, secPerBreath, onMovePose: movePose, dragIndexRef: dragIndex, activePoseIndex: -1, timeInPose: 0 }} /></div>
-          <SuggestionsGrid onAddPose={addPose} />
-        </main>
+
+          {/* Right Column */}
+          <section className="h-full lg:sticky lg:top-6">
+            <VoiceCoach flow={flowForWidget} />
+          </section>
+
+        </div>
         <GeneratePreviewModal isOpen={!!preview} onClose={() => setPreview(null)} preview={preview} onShuffle={handleGenerate} onAccept={acceptPreview} />
       </div>
     </>
