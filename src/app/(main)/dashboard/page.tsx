@@ -1,5 +1,6 @@
 import React from 'react';
 import { AIFlowGenerator } from '@/components/flows/AIFlowGenerator';
+import './dashboard.css';
 
 const DashboardPage = () => {
   return (
