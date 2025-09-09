@@ -5,7 +5,6 @@ import { Toaster } from 'react-hot-toast';
 
 // Core imports
 import { useLocalStorage } from "@/hooks/useLocalStorage";
-import { useTimer } from "@/hooks/useTimer";
 import { useVoiceUI } from "@/context/VoiceUIContext";
 import { Focus, TimingMode, PoseId, SavedFlow } from "@/types/yoga";
 import { POSES, PRESETS } from "@/lib/yoga-data";
@@ -18,14 +17,13 @@ import { speak, toastError, toastSuccess } from '@/lib/voice/feedback';
 import { CommandLog } from '@/components/flows/CommandConsole';
 import { VoiceAssistantPopup } from "@/components/flows/VoiceAssistantPopup";
 import { VoiceMicButton } from '@/components/flows/VoiceMicButton';
-import { VoiceCoachWidget } from "@/components/flows/VoiceCoachWidget";
+import VoiceCoachWidget, { Flow as CoachFlow } from "@/components/flows/VoiceCoachWidget"; // Import new widget and its types
 
 // UI Components
 import { ControlPanel } from "@/components/flows/ControlPanel";
 import { PoseGrid } from "@/components/flows/PoseGrid";
 import { SuggestionsGrid } from "@/components/flows/SuggestionsGrid";
 import { GeneratePreviewModal } from "@/components/flows/GeneratePreviewModal";
-import { Player } from "@/components/flows/Player";
 import { SavedFlows } from "@/components/flows/SavedFlows";
 
 const clamp = (n: number, min: number, max: number) => Math.max(min, Math.min(max, n));
@@ -49,29 +47,17 @@ export default function CreateFlowPage() {
   const [flowName, setFlowName] = useState('');
   const [localSaved, setLocalSaved] = useLocalStorage<SavedFlow[]>('yoga_saved_flows', []);
   const [sessionSaved, setSessionSaved] = useState<SavedFlow[]>([]);
-  const [playbackState, setPlaybackState] = useState<'idle' | 'playing' | 'paused'>('idle');
-  const [currentPoseIndex, setCurrentPoseIndex] = useState(0);
-  const [timeInPose, setTimeInPose] = useState(0);
-  const [playbackRate, setPlaybackRate] = useState(1.0);
   const [commandLogs, setCommandLogs] = useState<CommandLog[]>([]);
   const { isVoicePopupOpen, setIsVoicePopupOpen } = useVoiceUI();
+  const [showCoach, setShowCoach] = useState(false); // New state to show the coach widget
 
   // --- REFS & DERIVED STATE ---
   const dragIndex = useRef<number | null>(null);
-  const spokenForIndex = useRef<number | null>(null);
   const savedFlows = saveToDevice ? localSaved : sessionSaved;
-  const setSavedFlows = saveToDevice ? setLocalSaved : setSessionSaved;
   const secondsPerPose = useMemo(() => Helpers.applyOverridesByIndex(Helpers.baseDurationsFromTable(flow), overrides), [flow, overrides]);
   const totalSeconds = useMemo(() => { const pS = secondsPerPose.reduce((a, b) => a + b, 0); const tS = Math.max(0, flow.length - 1) * transitionSec; return pS + tS + (cooldownMin * 60); }, [secondsPerPose, flow.length, transitionSec, cooldownMin]);
 
   // --- HANDLERS ---
-  const handlePlay = useCallback(() => { if (flow.length === 0) return; setCurrentPoseIndex(0); setTimeInPose(0); setPlaybackState('playing'); }, [flow.length]);
-  const handlePause = useCallback(() => setPlaybackState('paused'), []);
-  const handleResume = useCallback(() => setPlaybackState('playing'), []);
-  const handleStop = useCallback(() => { setPlaybackState('idle'); setCurrentPoseIndex(0); setTimeInPose(0); }, []);
-  const handleNext = useCallback(() => { if (currentPoseIndex < flow.length - 1) { setCurrentPoseIndex(i => i + 1); setTimeInPose(0); } else { handleStop(); } }, [currentPoseIndex, flow.length, handleStop]);
-  const handlePrev = useCallback(() => { if (currentPoseIndex > 0) { setCurrentPoseIndex(i => i - 1); setTimeInPose(0); } }, [currentPoseIndex]);
-  const adjustRate = useCallback((adj: number) => setPlaybackRate(rate => clamp(rate + adj, 0.5, 2.0)), []);
   const handleGenerate = () => setPreview(Helpers.smartGenerate(minutes, intensity, focus));
   const acceptPreview = () => { if (preview) { setFlow(preview); setOverrides({}); setPreview(null); } };
   const removePose = (i: number) => { setFlow(f => f.filter((_, idx) => idx !== i)); setOverrides(o => Helpers.reindexOverridesAfterRemoval(o, i)); };
@@ -83,15 +69,31 @@ export default function CreateFlowPage() {
   const handleLoadFlow = (id: string) => { const f = savedFlows.find(x => x.id === id); if (f) { setFlow(f.flow); setOverrides(f.overrides); setFlowName(f.name); toastSuccess(`Loaded "${f.name}"`); } };
   const handleDeleteFlow = (id: string) => { setSavedFlows(savedFlows.filter(f => f.id !== id)); toastSuccess("Flow deleted."); };
   const addLog = (log: CommandLog) => setCommandLogs(prev => [log, ...prev].slice(0, 10));
-  const appContext: AppContext = useMemo(() => ({ player: { play: handlePlay, pause: handlePause, stop: handleStop, next: handleNext, prev: handlePrev, restart: handlePlay, setRate: setPlaybackRate, adjustRate }, flow: { setMinutes, setIntensity, setFocus, setTransition: setTransitionSec, setCooldown: setCooldownMin, setTimingMode, toggle: (k) => { if (k === 'breathingCues') setBreathingCues(p => !p); if (k === 'saferSequencing') setSaferSequencing(p => !p); if (k === 'saveToDevice') setSaveToDevice(p => !p); }, applyPreset: handleLoadPreset, setName: setFlowName, save: handleSaveFlow } }), [handlePlay, handlePause, handleStop, handleNext, handlePrev, adjustRate, setPlaybackRate, setMinutes, setIntensity, setFocus, setTransitionSec, setCooldownMin, setTimingMode, setBreathingCues, setSaferSequencing, setSaveToDevice, handleLoadPreset, setFlowName, handleSaveFlow]);
+
+  // --- APP CONTEXT FOR VOICE PAGE-CONTROL ---
+  const appContext: AppContext = useMemo(() => ({
+      player: { play: () => setShowCoach(true), /* Other player controls are now in the widget */ } as any, // Simplified context
+      flow: { setMinutes, setIntensity, setFocus, setTransition: setTransitionSec, setCooldown: setCooldownMin, setTimingMode, toggle: (k) => { if (k === 'breathingCues') setBreathingCues(p => !p); if (k === 'saferSequencing') setSaferSequencing(p => !p); if (k === 'saveToDevice') setSaveToDevice(p => !p); }, applyPreset: handleLoadPreset, setName: setFlowName, save: handleSaveFlow }
+  }), [setMinutes, setIntensity, setFocus, setTransitionSec, setCooldownMin, setTimingMode, setBreathingCues, setSaferSequencing, setSaveToDevice, handleLoadPreset, setFlowName, handleSaveFlow]);
+
   const processTextCommand = async (transcript: string) => { const intent = parseTranscript(transcript); if (!intent) { toastError("I didn't understand that command."); return; } const feedback = await executeIntent(intent, appContext); speak(feedback, voiceFeedback); toastSuccess(feedback); addLog({ id: new Date().toISOString(), transcript, feedback }); };
 
-  // --- EFFECTS ---
-  useTimer(() => { if (playbackState !== 'playing') return; const d = Helpers.tempoAdjust(secondsPerPose[currentPoseIndex] ?? 0, playbackRate); if (timeInPose < d) { setTimeInPose(t => t + 1); } else { handleNext(); } }, 1000);
-  useEffect(() => { const k = (e: KeyboardEvent) => { if (e.metaKey || e.ctrlKey || e.altKey || document.activeElement?.tagName === 'INPUT') return; if (e.key === ' ') { e.preventDefault(); if (playbackState === 'playing') handlePause(); else if (playbackState === 'paused') handleResume(); else handlePlay(); } if (e.key === 'ArrowRight') handleNext(); if (e.key === 'ArrowLeft') handlePrev(); if (e.key === '[') adjustRate(-0.25); if (e.key === ']') adjustRate(0.25); }; window.addEventListener('keydown', k); return () => window.removeEventListener('keydown', k); }, [playbackState, handlePause, handleResume, handlePlay, handleNext, handlePrev, adjustRate]);
-  useEffect(() => { if (playbackState !== 'playing' || spokenForIndex.current === currentPoseIndex) { if (playbackState !== 'playing') { spokenForIndex.current = null; window.speechSynthesis?.cancel(); } return; } if (typeof window === 'undefined' || !window.speechSynthesis) return; const poseId = flow[currentPoseIndex]; const text = Helpers.buildCues(poseId, breathingCues); const utter = new SpeechSynthesisUtterance(text); window.speechSynthesis.cancel(); window.speechSynthesis.speak(utter); spokenForIndex.current = currentPoseIndex; }, [currentPoseIndex, playbackState, breathingCues, flow]);
-
-  const sessionTimeRemaining = useMemo(() => { const d = Helpers.tempoAdjust(secondsPerPose[currentPoseIndex] ?? 0, playbackRate); return Helpers.computeTotalRemaining(currentPoseIndex, d - timeInPose, secondsPerPose.map(s => Helpers.tempoAdjust(s, playbackRate)), transitionSec, flow.length, cooldownMin * 60, false); }, [playbackState, currentPoseIndex, timeInPose, secondsPerPose, flow.length, transitionSec, cooldownMin, playbackRate]);
+  // --- DATA TRANSFORMATION FOR WIDGET ---
+  const flowForWidget: CoachFlow = useMemo(() => ({
+    id: 'current-flow',
+    title: flowName || 'My Custom Flow',
+    poses: flow.map((poseId, index) => {
+      const poseDetails = POSES.find(p => p.id === poseId);
+      return {
+        id: poseId,
+        name: poseDetails?.name || 'Unknown Pose',
+        durationSec: secondsPerPose[index],
+        cues: [Helpers.buildCues(poseId, breathingCues)],
+        focus: poseDetails?.groups,
+        intensity: poseDetails?.intensity as any,
+      };
+    }),
+  }), [flow, flowName, secondsPerPose, breathingCues]);
 
   return (
     <>
@@ -103,21 +105,27 @@ export default function CreateFlowPage() {
         </header>
         <main className="mx-auto max-w-5xl px-4 pb-16">
           <SavedFlows flows={savedFlows} onLoad={handleLoadFlow} onDelete={handleDeleteFlow} />
-          <div className="mt-6"><PoseGrid {...{ flow, secondsPerPose, totalSeconds, onRemovePose: removePose, onUpdatePoseDuration: updatePoseDuration, timingMode, secPerBreath, onMovePose: movePose, dragIndexRef: dragIndex, activePoseIndex: playbackState !== 'idle' ? currentPoseIndex : -1, timeInPose }} /></div>
+          <div className="mt-6"><PoseGrid {...{ flow, secondsPerPose, totalSeconds, onRemovePose: removePose, onUpdatePoseDuration: updatePoseDuration, timingMode, secPerBreath, onMovePose: movePose, dragIndexRef: dragIndex, activePoseIndex: -1, timeInPose: 0 }} /></div>
           <SuggestionsGrid onAddPose={addPose} />
         </main>
 
-        {/* Voice and Player UI */}
-        <div className="fixed bottom-24 right-4 z-20"><VoiceMicButton listening={false} error={null} onStart={() => setIsVoicePopupOpen(true)} onStop={() => {}} /></div>
+        {/* Floating Action Buttons & Popups */}
+        <div className="fixed bottom-4 right-4 z-20 flex flex-col items-center gap-3">
+            <button onClick={() => setShowCoach(true)} className="h-16 w-16 flex items-center justify-center rounded-full bg-primary text-white shadow-lg text-2xl" title="Start Practice with Voice Coach">▶️</button>
+            <VoiceMicButton listening={false} error={null} onStart={() => setIsVoicePopupOpen(true)} onStop={() => {}} />
+        </div>
+
         <VoiceAssistantPopup isOpen={isVoicePopupOpen} onClose={() => setIsVoicePopupOpen(false)} appContext={appContext} voiceFeedbackOn={voiceFeedback} logs={commandLogs} addLog={addLog} onCommand={processTextCommand} />
 
-        {/* The new Voice Coach Widget */}
-        {flow.length > 0 && playbackState !== 'idle' && (
-          <VoiceCoachWidget initialFlow={flow.map((id, i) => ({ id, duration: secondsPerPose[i] }))} />
+        {/* The new Voice Coach Widget now lives in a modal-like overlay */}
+        {showCoach && (
+            <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4" onClick={() => setShowCoach(false)}>
+                <div onClick={e => e.stopPropagation()}>
+                    <VoiceCoachWidget flow={flowForWidget} />
+                </div>
+            </div>
         )}
 
-        {/* The old player is now redundant if the widget is used, but we'll keep it for now */}
-        {flow.length > 0 && <Player {...{ isPlaying: playbackState === 'playing', isPaused: playbackState === 'paused', currentPoseId: flow[currentPoseIndex], nextPoseId: flow[currentPoseIndex + 1], timeInPose, currentPoseDuration: Helpers.tempoAdjust(secondsPerPose[currentPoseIndex] ?? 0, playbackRate), sessionTotalSeconds: totalSeconds, sessionTimeRemaining, onPlay: handlePlay, onPause: handlePause, onResume: handleResume, onStop: handleStop, playbackRate, adjustRate }} />}
         <GeneratePreviewModal isOpen={!!preview} onClose={() => setPreview(null)} preview={preview} onShuffle={handleGenerate} onAccept={acceptPreview} />
       </div>
     </>

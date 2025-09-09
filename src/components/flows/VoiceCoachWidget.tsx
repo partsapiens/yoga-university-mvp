@@ -1,110 +1,338 @@
-"use client";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 
-import React, { useState, useEffect, useMemo, useCallback } from 'react';
-import { useTimer } from '@/hooks/useTimer';
-import { useSpeechRecognition } from '@/lib/voice/useSpeechRecognition';
-import { useInterruptibleTTS } from '@/hooks/useInterruptibleTTS';
-import { parseCoachTranscript } from '@/lib/voice/coach-nlu';
-import { POSES } from '@/lib/yoga-data';
-import { PoseId } from '@/types/yoga';
-import { cn } from '@/lib/utils';
+/**
+ * YogaFlow Voice Coach (MVP) — Robust
+ * Fixes:
+ *  - Handles undefined/empty `flow` prop safely (falls back to demoFlow)
+ *  - Guards all `window`/speech APIs for SSR
+ *  - Defensive timers & index bounds
+ *  - Adds lightweight self-tests (runVoiceCoachTests())
+ *
+ * Usage:
+ *   <VoiceCoach flow={yourFlow || undefined} />
+ *
+ * To run tests in the browser console:
+ *   import { runVoiceCoachTests } from "./VoiceCoach";
+ *   runVoiceCoachTests();
+ */
 
-interface FlowItem {
-  id: PoseId;
-  duration: number;
+// --- Types ---
+export type Pose = {
+  id: string
+  name: string
+  durationSec: number
+  cues: string[]
+  focus?: string[] // e.g., ["hips", "hamstrings"]
+  intensity?: 1 | 2 | 3 | 4 | 5
 }
 
-interface VoiceCoachWidgetProps {
-  initialFlow: FlowItem[];
+export type Flow = {
+  id: string
+  title: string
+  poses: Pose[]
 }
 
-const formatTime = (seconds: number) => {
-  const mins = Math.floor(seconds / 60);
-  const secs = Math.floor(seconds % 60);
-  return `${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
-};
+// --- Demo fallback ---
+export const demoFlow: Flow = {
+  id: "demo-hpf",
+  title: "Gentle HPF Sampler",
+  poses: [
+    { id: "breath", name: "Seated Breath", durationSec: 30, cues: ["Close your eyes. Inhale through your nose, exhale with a soft sigh."], focus: ["breath", "parasympathetic"], intensity: 1 },
+    { id: "child", name: "Child’s Pose", durationSec: 45, cues: ["Sink your hips to heels, lengthen through fingertips."], focus: ["hips", "spine"], intensity: 1 },
+    { id: "ddog", name: "Downward Facing Dog", durationSec: 45, cues: ["Spread your fingers; press through palms; soften your knees; long spine."], focus: ["hamstrings", "shoulders"], intensity: 2 },
+    { id: "rag", name: "Ragdoll", durationSec: 30, cues: ["Shake your head yes and no; release your jaw; bend knees generously."], focus: ["hamstrings", "erector spinae"], intensity: 1 },
+    { id: "mt", name: "Mountain", durationSec: 30, cues: ["Root your feet; lift your chest; soften your ribs; lengthen the back of your neck."], focus: ["postural core"], intensity: 1 },
+  ]
+}
 
-export function VoiceCoachWidget({ initialFlow }: VoiceCoachWidgetProps) {
-  const [flow, setFlow] = useState(initialFlow);
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const [timeRemaining, setTimeRemaining] = useState(flow[0]?.duration ?? 0);
-  const [isPaused, setIsPaused] = useState(true);
-  const [pace, setPace] = useState(1.0); // 1.0 is normal speed
+// --- Helpers & Guards ---
+const hasWindow = typeof window !== "undefined";
+const canSpeak = hasWindow && "speechSynthesis" in window;
 
-  const speech = useSpeechRecognition();
-  const tts = useInterruptibleTTS();
+export function resolveFlow(flow?: Flow): Flow {
+  if (!flow || !Array.isArray(flow.poses) || flow.poses.length === 0) return demoFlow;
+  return flow;
+}
 
-  const currentPoseId = useMemo(() => flow[currentIndex]?.id, [flow, currentIndex]);
-  const currentPoseInfo = useMemo(() => POSES.find(p => p.id === currentPoseId), [currentPoseId]);
+export function getInitialSeconds(flow?: Flow) {
+  const rf = resolveFlow(flow);
+  return rf.poses[0]?.durationSec ?? 30;
+}
 
-  const advanceToNextPose = useCallback(() => {
-    if (currentIndex < flow.length - 1) {
-      const nextIndex = currentIndex + 1;
-      setCurrentIndex(nextIndex);
-      setTimeRemaining(flow[nextIndex].duration);
-      tts.speak(POSES.find(p => p.id === flow[nextIndex].id)?.name || "Next pose");
-    } else {
-      tts.speak("Practice complete. Nice work.");
-      setIsPaused(true);
-    }
-  }, [currentIndex, flow, tts]);
+export function speak(text: string) {
+  if (!canSpeak) return; // SSR or unsupported
+  try {
+    window.speechSynthesis.cancel(); // interruptible
+    const utter = new SpeechSynthesisUtterance(text);
+    const voices = window.speechSynthesis.getVoices?.() || [];
+    const preferred = voices.find(v => /female|samantha|google uk english female|zira|jenny/i.test(v.name));
+    if (preferred) utter.voice = preferred;
+    utter.rate = 1.0;
+    utter.pitch = 1.02;
+    window.speechSynthesis.speak(utter);
+  } catch {}
+}
 
-  useTimer(() => {
-    if (isPaused) return;
-    if (timeRemaining > 1) {
-      setTimeRemaining(t => t - 1);
-    } else {
-      advanceToNextPose();
-    }
-  }, isPaused ? null : 1000 / pace);
+function timeFmt(s: number) {
+  const m = Math.floor(s / 60), ss = s % 60
+  return `${m}:${ss.toString().padStart(2, "0")}`
+}
 
-  // Effect to process voice commands
+// --- Intent parsing (very lightweight) ---
+export function parseIntent(input: string) {
+  const t = input.toLowerCase();
+  if (/\b(next|continue|go on|what\'s next)\b/.test(t)) return { type: "NEXT" as const }
+  if (/\b(prev(ious)?|back|go back)\b/.test(t)) return { type: "PREV" as const }
+  if (/\b(pa(u)?se|hold up|stop for a sec)\b/.test(t)) return { type: "PAUSE" as const }
+  if (/\b(resume|play|start)\b/.test(t)) return { type: "RESUME" as const }
+  if (/\brepeat|again|one more time\b/.test(t)) return { type: "REPEAT" as const }
+  if (/\bslower|slow down|too fast\b/.test(t)) return { type: "SLOWER" as const }
+  if (/\bfaster|speed up\b/.test(t)) return { type: "FASTER" as const }
+  if (/\bhow long|time left|timer\b/.test(t)) return { type: "TIME" as const }
+  const explain = t.match(/(why|what|how).*?(pose|muscle|alignment|benefit|engage|stretch|compress)/);
+  if (explain) return { type: "EXPLAIN" as const, query: t }
+  return { type: "CHAT" as const, text: input }
+}
+
+// --- Main Component ---
+export default function VoiceCoach({ flow }: { flow?: Flow }) {
+  const resolved = useMemo(() => resolveFlow(flow), [flow]);
+  const poses = resolved.poses;
+
+  const [supportedASR, setSupportedASR] = useState<boolean>(false)
+  const [listening, setListening] = useState(false)
+  const [asrError, setAsrError] = useState<string | null>(null)
+  const [hypothesis, setHypothesis] = useState("")
+
+  const [rate, setRate] = useState(1) // playback speed 0.75–1.25
+  const [idx, setIdx] = useState(0)
+  const [secondsLeft, setSecondsLeft] = useState<number>(getInitialSeconds(resolved))
+  const [paused, setPaused] = useState(true)
+
+  const recRef = useRef<any>(null)
+  const tickRef = useRef<number | null>(null)
+
   useEffect(() => {
-    if (speech.transcript) {
-      const intent = parseCoachTranscript(speech.transcript);
-      if (intent) {
-        switch (intent.name) {
-          case 'pause': setIsPaused(true); tts.speak("Paused."); break;
-          case 'resume': setIsPaused(false); tts.speak("Resuming."); break;
-          case 'next_pose': advanceToNextPose(); break;
-          case 'repeat_pose': setTimeRemaining(flow[currentIndex].duration); tts.speak(`Repeating ${currentPoseInfo?.name}`); break;
-          case 'slower': setPace(p => Math.max(0.5, p - 0.25)); tts.speak("Slowing down."); break;
-          case 'faster': setPace(p => Math.min(2.0, p + 0.25)); tts.speak("Speeding up."); break;
-          case 'how_long': tts.speak(`There are ${formatTime(timeRemaining)} remaining for ${currentPoseInfo?.name}.`); break;
-          case 'explain_pose': tts.speak(currentPoseInfo?.description || `I do not have a description for ${currentPoseInfo?.name}.`); break;
+    const ok = hasWindow && ("webkitSpeechRecognition" in (window as any))
+    setSupportedASR(ok)
+  }, [])
+
+  useEffect(() => {
+    // Ensure secondsLeft resets when idx changes (e.g., when external flow swaps)
+    setSecondsLeft(poses[idx]?.durationSec ?? 30)
+  }, [idx, poses])
+
+  useEffect(() => {
+    // Timer loop (client only)
+    if (paused || !hasWindow) return;
+    const step = () => {
+      setSecondsLeft(s => {
+        if (s <= 1) {
+          // auto next
+          nextPose();
+          return poses[Math.min(idx + 1, poses.length - 1)]?.durationSec ?? 0
         }
-      } else {
-        tts.speak("Sorry, I didn't understand that.");
-      }
+        return s - 1
+      })
+      tickRef.current = window.setTimeout(step, Math.max(750, 1000 / rate))
     }
-  }, [speech.transcript]);
+    tickRef.current = window.setTimeout(step, 1000)
+    return () => {
+      if (tickRef.current) window.clearTimeout(tickRef.current)
+    }
+  }, [paused, rate, idx, poses])
 
-  const handleMicPress = () => {
-    tts.cancel();
-    setIsPaused(true);
-    speech.start();
-  };
-  const handleMicRelease = () => speech.stop();
+  const pose = poses[idx] as Pose | undefined;
 
+  function nextPose() {
+    if (!poses.length) return;
+    const n = Math.min(idx + 1, poses.length - 1)
+    if (n !== idx) {
+      setIdx(n)
+      const p = poses[n]
+      setSecondsLeft(p?.durationSec ?? 30)
+      if (p) speak(`Next: ${p.name}. ${p.cues?.[0] ?? "Find your breath."}`)
+    } else {
+      setPaused(true)
+      speak("You’ve reached the end of your flow. Take a breath and notice how you feel.")
+    }
+  }
+
+  function prevPose() {
+    if (!poses.length) return;
+    const pIndex = Math.max(idx - 1, 0)
+    setIdx(pIndex)
+    const prev = poses[pIndex]
+    setSecondsLeft(prev?.durationSec ?? 30)
+    if (prev) speak(`Back to ${prev.name}. ${prev.cues?.[0] ?? "Return to a steady breath."}`)
+  }
+
+  function handleIntent(raw: string) {
+    const intent = parseIntent(raw)
+    switch (intent.type) {
+      case "NEXT":
+        nextPose(); break
+      case "PREV":
+        prevPose(); break
+      case "PAUSE":
+        setPaused(true); if (canSpeak) window.speechSynthesis.cancel(); speak("Paused. Say resume when you’re ready."); break
+      case "RESUME":
+        setPaused(false); speak(`Resuming ${pose?.name ?? "your practice"}. ${pose?.cues?.[0] ?? "Stay with your breath."}`); break
+      case "REPEAT":
+        speak(`${pose?.name ?? "This segment"}. ${pose?.cues?.join(" ") || "Inhale length, exhale soften."}`); break
+      case "SLOWER":
+        setRate(r => Math.max(0.75, r - 0.1)); speak("Okay, slowing down."); break
+      case "FASTER":
+        setRate(r => Math.min(1.25, r + 0.1)); speak("Okay, a touch quicker."); break
+      case "TIME":
+        speak(`${timeFmt(secondsLeft)} remaining in ${pose?.name ?? "this segment"}.`); break
+      case "EXPLAIN": {
+        const focus = pose?.focus?.join(", ") || "breath and alignment"
+        const msg = `${pose?.name ?? "This pose"} focuses on ${focus}. Keep joints stacked, engage your core, and spread weight evenly. `+
+          `Benefits include mobility and steadier balance. If something pinches, back out and breathe.`
+        speak(msg)
+        break
+      }
+      case "CHAT":
+        speak(`I hear you. ${intent.text}`)
+    }
+  }
+
+  // --- ASR setup ---
+  function startListening() {
+    if (!supportedASR || !hasWindow) return
+    const Rec = (window as any).webkitSpeechRecognition
+    if (!Rec) return
+    const rec = new Rec()
+    recRef.current = rec
+    rec.continuous = false
+    rec.lang = "en-US" // TODO: detect
+    rec.interimResults = true
+
+    rec.onresult = (e: any) => {
+      let interim = "", final = ""
+      for (let i = e.resultIndex; i < e.results.length; i++) {
+        const r = e.results[i]
+        if (r.isFinal) final += r[0].transcript
+        else interim += r[0].transcript
+      }
+      setHypothesis(interim || final)
+      if (final) handleIntent(final)
+    }
+    rec.onerror = (e: any) => {
+      setAsrError(e.error || "speech error")
+      setListening(false)
+    }
+    rec.onend = () => setListening(false)
+
+    setHypothesis("")
+    setAsrError(null)
+    setListening(true)
+    try { rec.start() } catch {}
+  }
+
+  function stopListening() {
+    setListening(false)
+    try { recRef.current?.stop?.() } catch {}
+  }
+
+  // --- UI ---
   return (
-    <div className="fixed bottom-8 right-8 z-50 p-4 bg-card border border-border rounded-lg shadow-xl w-80">
-      <div className="text-center">
-        <h3 className="font-bold text-lg">{currentPoseInfo?.name ?? "Ready"}</h3>
-        <p className="text-5xl font-mono my-2">{formatTime(timeRemaining)}</p>
-        <div className="flex items-center justify-center gap-4">
-          <button
-            className={cn("h-16 w-16 rounded-full text-white text-3xl flex items-center justify-center shadow-lg active:scale-95 transition-all", speech.listening ? "bg-red-500 animate-pulse" : "bg-primary")}
-            onMouseDown={handleMicPress}
-            onMouseUp={handleMicRelease}
-            onTouchStart={handleMicPress}
-            onTouchEnd={handleMicRelease}
-          >
-            🎤
-          </button>
+    <div className="w-full max-w-xl mx-auto p-4 rounded-2xl shadow-lg bg-white/70 backdrop-blur border">
+      <header className="mb-3">
+        <h2 className="text-xl font-semibold">🎧 Voice Coach — {resolved.title}</h2>
+        <p className="text-sm opacity-70">Push and speak: “pause”, “next”, “repeat”, “slower”, “how long?”, or ask about alignment.</p>
+      </header>
+
+      {poses.length === 0 ? (
+        <div className="p-4 rounded-xl bg-amber-50 border border-amber-200 text-amber-900">
+          No poses in this flow yet. Add poses, or omit the <code>flow</code> prop to preview the demo.
         </div>
-        <p className="text-xs text-muted-foreground mt-2">{speech.listening ? "Listening..." : "Hold to Speak"}</p>
-        <p className="text-sm h-6 mt-2">{speech.interimTranscript}</p>
-      </div>
+      ) : (
+        <>
+          <div className="grid grid-cols-3 gap-3 items-center mb-4">
+            <div className="col-span-2">
+              <div className="text-lg font-medium">{pose?.name}</div>
+              <div className="text-sm opacity-70">{pose?.cues?.[0] || "Find a steady breath."}</div>
+            </div>
+            <div className="text-right">
+              <div className="text-2xl font-bold tabular-nums">{timeFmt(secondsLeft)}</div>
+              <div className="text-xs opacity-60">rate × {rate.toFixed(2)}</div>
+            </div>
+          </div>
+
+          <div className="flex gap-2 mb-3">
+            <button onClick={() => { setPaused(p => !p); if (!paused && canSpeak) { window.speechSynthesis.cancel() } else { speak(`Resuming ${pose?.name ?? "your practice"}.`) } }}
+                    className="px-4 py-2 rounded-xl border shadow-sm hover:shadow">{paused ? "▶️ Resume" : "⏸ Pause"}</button>
+            <button onClick={prevPose} className="px-4 py-2 rounded-xl border shadow-sm hover:shadow">⟵ Prev</button>
+            <button onClick={nextPose} className="px-4 py-2 rounded-xl border shadow-sm hover:shadow">Next ⟶</button>
+            <input type="range" min={0.75} max={1.25} step={0.05} value={rate} onChange={e => setRate(parseFloat((e.target as HTMLInputElement).value))}
+                   className="flex-1"/>
+          </div>
+
+          <div className="mb-3 p-3 rounded-xl bg-gray-50 border">
+            <div className="text-xs uppercase tracking-wide opacity-60 mb-1">Coach says</div>
+            <div className="text-sm leading-relaxed min-h-[2lh]" id="coach-log">Use the mic and talk to me. Try: “slow down” or “repeat that”.</div>
+          </div>
+
+          <div className="flex items-center gap-2">
+            {supportedASR ? (
+              <button onMouseDown={startListening} onTouchStart={startListening}
+                      onMouseUp={stopListening} onTouchEnd={stopListening}
+                      className={`px-4 py-3 rounded-full border shadow-sm hover:shadow ${listening ? "bg-red-50 border-red-300" : "bg-white"}`}>
+                {listening ? "🎙️ Listening… release to send" : "🎤 Hold to talk"}
+              </button>
+            ) : (
+              <div className="text-sm opacity-70">Mic not supported. Use chat:</div>
+            )}
+            <input
+              className="flex-1 px-3 py-2 rounded-xl border"
+              placeholder="Type here if you prefer…"
+              onKeyDown={e => {
+                if (e.key === "Enter") {
+                  const v = (e.target as HTMLInputElement).value.trim()
+                  if (!v) return
+                  ;(e.target as HTMLInputElement).value = ""
+                  handleIntent(v)
+                }
+              }}
+            />
+          </div>
+
+          {asrError && <p className="text-xs text-red-500 mt-2">Speech error: {asrError}</p>}
+        </>
+      )}
     </div>
-  );
+  )
+}
+
+// --- Lightweight tests ---
+export function runVoiceCoachTests() {
+  const results: { name: string; pass: boolean; details?: string }[] = [];
+  const assert = (name: string, pass: boolean, details?: string) => results.push({ name, pass, details });
+
+  // 1) Fallback behavior
+  const f1 = resolveFlow(undefined);
+  assert("fallback: undefined flow uses demoFlow", f1.id === "demo-hpf" && f1.poses.length > 0);
+
+  const f2 = resolveFlow({ id: "x", title: "x", poses: [] });
+  assert("fallback: empty poses uses demoFlow", f2.id === "demo-hpf");
+
+  // 2) Initial seconds
+  const f3: Flow = { id: "f3", title: "T", poses: [{ id: "p", name: "Pose", durationSec: 42, cues: [] }] };
+  assert("initial seconds from first pose duration", getInitialSeconds(f3) === 42, String(getInitialSeconds(f3)));
+
+  // 3) Intent parsing
+  assert("intent NEXT", parseIntent("what's next").type === "NEXT");
+  assert("intent PREV", parseIntent("go back").type === "PREV");
+  assert("intent PAUSE", parseIntent("pause please").type === "PAUSE");
+  assert("intent RESUME", parseIntent("resume").type === "RESUME");
+  assert("intent REPEAT", parseIntent("repeat that").type === "REPEAT");
+  assert("intent SLOWER", parseIntent("too fast, slow down").type === "SLOWER");
+  assert("intent FASTER", parseIntent("speed up").type === "FASTER");
+  assert("intent TIME", parseIntent("how long left?").type === "TIME");
+  assert("intent EXPLAIN", parseIntent("why does this pose engage hamstrings?").type === "EXPLAIN");
+  assert("intent CHAT fallback", parseIntent("i feel tight today").type === "CHAT");
+
+  return results;
 }
