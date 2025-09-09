@@ -17,12 +17,16 @@ export type Pose = {
   id: PoseId;
   name: string;
   sanskrit: string;
-  defaultSeconds: number;
+  defaultSeconds: number; // Renaming to duration_sec can be done in a follow-up if needed to avoid breaking changes
   icon: string;
   intensity: 1 | 2 | 3 | 4 | 5;
   groups: Focus[];
   family: "Standing" | "Seated" | "Backbend" | "Twist" | "Inversion" | "Rest" | "Hip Opener" | "Core" | string;
   description?: string;
+  // New fields from the data contract
+  benefits?: string | string[] | null;
+  cues?: string | string[] | null;
+  plane?: 'sagittal' | 'frontal' | 'transverse' | null;
 };
 
 export type SecondsOverrides = Record<number, number>;

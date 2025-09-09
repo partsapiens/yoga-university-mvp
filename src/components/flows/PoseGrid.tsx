@@ -44,8 +44,6 @@ export function PoseGrid({
             isLast={i === flow.length - 1}
             isActive={i === activePoseIndex}
             timeInPose={i === activePoseIndex ? timeInPose : 0}
-            prevPoseId={flow[i-1]}
-            nextPoseId={flow[i+1]}
           />
         ))}
       </div>
