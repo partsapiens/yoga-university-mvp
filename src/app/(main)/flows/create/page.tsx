@@ -17,7 +17,7 @@ import { speak, toastError, toastSuccess } from '@/lib/voice/feedback';
 import { CommandLog } from '@/components/flows/CommandConsole';
 import { VoiceAssistantPopup } from "@/components/flows/VoiceAssistantPopup";
 import { VoiceMicButton } from '@/components/flows/VoiceMicButton';
-import VoiceCoachWidget, { Flow as CoachFlow } from "@/components/flows/VoiceCoachWidget"; // Import new widget and its types
+import VoiceCoachWidget, { Flow as CoachFlow } from "@/components/flows/VoiceCoachWidget";
 
 // UI Components
 import { ControlPanel } from "@/components/flows/ControlPanel";
@@ -49,11 +49,12 @@ export default function CreateFlowPage() {
   const [sessionSaved, setSessionSaved] = useState<SavedFlow[]>([]);
   const [commandLogs, setCommandLogs] = useState<CommandLog[]>([]);
   const { isVoicePopupOpen, setIsVoicePopupOpen } = useVoiceUI();
-  const [showCoach, setShowCoach] = useState(false); // New state to show the coach widget
+  const [showCoach, setShowCoach] = useState(false);
 
   // --- REFS & DERIVED STATE ---
   const dragIndex = useRef<number | null>(null);
   const savedFlows = saveToDevice ? localSaved : sessionSaved;
+  const setSavedFlows = saveToDevice ? setLocalSaved : setSessionSaved; // Moved up
   const secondsPerPose = useMemo(() => Helpers.applyOverridesByIndex(Helpers.baseDurationsFromTable(flow), overrides), [flow, overrides]);
   const totalSeconds = useMemo(() => { const pS = secondsPerPose.reduce((a, b) => a + b, 0); const tS = Math.max(0, flow.length - 1) * transitionSec; return pS + tS + (cooldownMin * 60); }, [secondsPerPose, flow.length, transitionSec, cooldownMin]);
 
@@ -72,9 +73,9 @@ export default function CreateFlowPage() {
 
   // --- APP CONTEXT FOR VOICE PAGE-CONTROL ---
   const appContext: AppContext = useMemo(() => ({
-      player: { play: () => setShowCoach(true), /* Other player controls are now in the widget */ } as any, // Simplified context
+      player: { play: () => setShowCoach(true) } as any,
       flow: { setMinutes, setIntensity, setFocus, setTransition: setTransitionSec, setCooldown: setCooldownMin, setTimingMode, toggle: (k) => { if (k === 'breathingCues') setBreathingCues(p => !p); if (k === 'saferSequencing') setSaferSequencing(p => !p); if (k === 'saveToDevice') setSaveToDevice(p => !p); }, applyPreset: handleLoadPreset, setName: setFlowName, save: handleSaveFlow }
-  }), [setMinutes, setIntensity, setFocus, setTransitionSec, setCooldownMin, setTimingMode, setBreathingCues, setSaferSequencing, setSaveToDevice, handleLoadPreset, setFlowName, handleSaveFlow]);
+  }), [setMinutes, setIntensity, setFocus, setTransitionSec, setCooldownMin, setTimingMode, setBreathingCues, setSaferSequencing, setSaveToDevice, handleLoadPreset, setFlowName, handleSaveFlow, savedFlows]); // added savedFlows to dependency array
 
   const processTextCommand = async (transcript: string) => { const intent = parseTranscript(transcript); if (!intent) { toastError("I didn't understand that command."); return; } const feedback = await executeIntent(intent, appContext); speak(feedback, voiceFeedback); toastSuccess(feedback); addLog({ id: new Date().toISOString(), transcript, feedback }); };
 
@@ -109,7 +110,6 @@ export default function CreateFlowPage() {
           <SuggestionsGrid onAddPose={addPose} />
         </main>
 
-        {/* Floating Action Buttons & Popups */}
         <div className="fixed bottom-4 right-4 z-20 flex flex-col items-center gap-3">
             <button onClick={() => setShowCoach(true)} className="h-16 w-16 flex items-center justify-center rounded-full bg-primary text-white shadow-lg text-2xl" title="Start Practice with Voice Coach">▶️</button>
             <VoiceMicButton listening={false} error={null} onStart={() => setIsVoicePopupOpen(true)} onStop={() => {}} />
@@ -117,7 +117,6 @@ export default function CreateFlowPage() {
 
         <VoiceAssistantPopup isOpen={isVoicePopupOpen} onClose={() => setIsVoicePopupOpen(false)} appContext={appContext} voiceFeedbackOn={voiceFeedback} logs={commandLogs} addLog={addLog} onCommand={processTextCommand} />
 
-        {/* The new Voice Coach Widget now lives in a modal-like overlay */}
         {showCoach && (
             <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4" onClick={() => setShowCoach(false)}>
                 <div onClick={e => e.stopPropagation()}>
