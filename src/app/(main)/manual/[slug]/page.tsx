@@ -7,6 +7,11 @@ interface Props {
   params: { slug: string };
 }
 
+export function generateStaticParams() {
+  const manifest = getManifest();
+  return manifest.chapters.map((c) => ({ slug: c.slug }));
+}
+
 export default function ManualChapter({ params }: Props) {
   const { slug } = params;
   const chapter = readChapter(slug);
