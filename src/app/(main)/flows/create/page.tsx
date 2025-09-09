@@ -42,7 +42,7 @@ export default function CreateFlowPage() {
   // --- REFS & DERIVED STATE ---
   const dragIndex = useRef<number | null>(null);
   const savedFlows = saveToDevice ? localSaved : sessionSaved;
-  const setSavedFlows = saveToDevice ? setLocalSaved : setSessionSaved;
+  const setSavedFlows = saveToDevice ? setLocalSaved : setSessionSaved; // Moved up
   const secondsPerPose = useMemo(() => Helpers.applyOverridesByIndex(Helpers.baseDurationsFromTable(flow), overrides), [flow, overrides]);
   const totalSeconds = useMemo(() => secondsPerPose.reduce((a, b) => a + b, 0), [secondsPerPose]);
 
@@ -73,7 +73,7 @@ export default function CreateFlowPage() {
         intensity: poseDetails?.intensity as any,
       };
     }),
-  }), [flow, flowName, secondsPerPose]);
+  }), [flow, flowName, secondsPerPose, breathingCues]);
 
   return (
     <>
@@ -81,7 +81,6 @@ export default function CreateFlowPage() {
       <div className="mx-auto max-w-screen-2xl px-4 sm:px-6 lg:px-8 py-6">
         <div className="grid gap-6 lg:gap-8 grid-cols-1 lg:grid-cols-[minmax(620px,1fr)_minmax(460px,0.9fr)] items-start">
 
-          {/* Left Column */}
           <div className="flex flex-col gap-6">
             <SettingsCard {...{ minutes, setMinutes, intensity, setIntensity, focus, setFocus, saferSequencing, setSaferSequencing, saveToDevice, setSaveToDevice, timingMode, setTimingMode, secPerBreath, setSecPerBreath, onAutoGenerate: handleGenerate, flowName, setFlowName, onSaveFlow: handleSaveFlow, onLoadPreset: handleLoadPreset, breathingCues, setBreathingCues, voiceFeedback: false, setVoiceFeedback: ()=>{}, transitionSec, setTransitionSec, cooldownMin, setCooldownMin }} />
             <SavedFlows flows={savedFlows} onLoad={handleLoadFlow} onDelete={handleDeleteFlow} />
@@ -89,7 +88,6 @@ export default function CreateFlowPage() {
             <SuggestionsGrid onAddPose={addPose} />
           </div>
 
-          {/* Right Column */}
           <section className="h-full lg:sticky lg:top-6">
             <CoachCard flow={flowForWidget} />
           </section>
