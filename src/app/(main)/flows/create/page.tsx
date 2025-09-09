@@ -18,6 +18,7 @@ import { speak, toastError, toastSuccess } from '@/lib/voice/feedback';
 import { CommandLog } from '@/components/flows/CommandConsole';
 import { VoiceAssistantPopup } from "@/components/flows/VoiceAssistantPopup";
 import { VoiceMicButton } from '@/components/flows/VoiceMicButton';
+import { VoiceCoachWidget } from "@/components/flows/VoiceCoachWidget";
 
 // UI Components
 import { ControlPanel } from "@/components/flows/ControlPanel";
@@ -53,8 +54,6 @@ export default function CreateFlowPage() {
   const [timeInPose, setTimeInPose] = useState(0);
   const [playbackRate, setPlaybackRate] = useState(1.0);
   const [commandLogs, setCommandLogs] = useState<CommandLog[]>([]);
-
-  // Use the global context for the voice popup state
   const { isVoicePopupOpen, setIsVoicePopupOpen } = useVoiceUI();
 
   // --- REFS & DERIVED STATE ---
@@ -84,21 +83,8 @@ export default function CreateFlowPage() {
   const handleLoadFlow = (id: string) => { const f = savedFlows.find(x => x.id === id); if (f) { setFlow(f.flow); setOverrides(f.overrides); setFlowName(f.name); toastSuccess(`Loaded "${f.name}"`); } };
   const handleDeleteFlow = (id: string) => { setSavedFlows(savedFlows.filter(f => f.id !== id)); toastSuccess("Flow deleted."); };
   const addLog = (log: CommandLog) => setCommandLogs(prev => [log, ...prev].slice(0, 10));
-
-  // --- APP CONTEXT FOR VOICE AI ---
-  const appContext: AppContext = useMemo(() => ({
-    player: { play: handlePlay, pause: handlePause, stop: handleStop, next: handleNext, prev: handlePrev, restart: handlePlay, setRate: setPlaybackRate, adjustRate },
-    flow: { setMinutes, setIntensity, setFocus, setTransition: setTransitionSec, setCooldown: setCooldownMin, setTimingMode, toggle: (k) => { if (k === 'breathingCues') setBreathingCues(p => !p); if (k === 'saferSequencing') setSaferSequencing(p => !p); if (k === 'saveToDevice') setSaveToDevice(p => !p); }, applyPreset: handleLoadPreset, setName: setFlowName, save: handleSaveFlow }
-  }), [handlePlay, handlePause, handleStop, handleNext, handlePrev, adjustRate, setPlaybackRate, setMinutes, setIntensity, setFocus, setTransitionSec, setCooldownMin, setTimingMode, setBreathingCues, setSaferSequencing, setSaveToDevice, handleLoadPreset, setFlowName, handleSaveFlow]);
-
-  const processTextCommand = async (transcript: string) => {
-    const intent = parseTranscript(transcript);
-    if (!intent) { toastError("I didn't understand that command."); return; }
-    const feedback = await executeIntent(intent, appContext);
-    speak(feedback, voiceFeedback);
-    toastSuccess(feedback);
-    addLog({ id: new Date().toISOString(), transcript, feedback });
-  };
+  const appContext: AppContext = useMemo(() => ({ player: { play: handlePlay, pause: handlePause, stop: handleStop, next: handleNext, prev: handlePrev, restart: handlePlay, setRate: setPlaybackRate, adjustRate }, flow: { setMinutes, setIntensity, setFocus, setTransition: setTransitionSec, setCooldown: setCooldownMin, setTimingMode, toggle: (k) => { if (k === 'breathingCues') setBreathingCues(p => !p); if (k === 'saferSequencing') setSaferSequencing(p => !p); if (k === 'saveToDevice') setSaveToDevice(p => !p); }, applyPreset: handleLoadPreset, setName: setFlowName, save: handleSaveFlow } }), [handlePlay, handlePause, handleStop, handleNext, handlePrev, adjustRate, setPlaybackRate, setMinutes, setIntensity, setFocus, setTransitionSec, setCooldownMin, setTimingMode, setBreathingCues, setSaferSequencing, setSaveToDevice, handleLoadPreset, setFlowName, handleSaveFlow]);
+  const processTextCommand = async (transcript: string) => { const intent = parseTranscript(transcript); if (!intent) { toastError("I didn't understand that command."); return; } const feedback = await executeIntent(intent, appContext); speak(feedback, voiceFeedback); toastSuccess(feedback); addLog({ id: new Date().toISOString(), transcript, feedback }); };
 
   // --- EFFECTS ---
   useTimer(() => { if (playbackState !== 'playing') return; const d = Helpers.tempoAdjust(secondsPerPose[currentPoseIndex] ?? 0, playbackRate); if (timeInPose < d) { setTimeInPose(t => t + 1); } else { handleNext(); } }, 1000);
@@ -121,9 +107,16 @@ export default function CreateFlowPage() {
           <SuggestionsGrid onAddPose={addPose} />
         </main>
 
+        {/* Voice and Player UI */}
         <div className="fixed bottom-24 right-4 z-20"><VoiceMicButton listening={false} error={null} onStart={() => setIsVoicePopupOpen(true)} onStop={() => {}} /></div>
         <VoiceAssistantPopup isOpen={isVoicePopupOpen} onClose={() => setIsVoicePopupOpen(false)} appContext={appContext} voiceFeedbackOn={voiceFeedback} logs={commandLogs} addLog={addLog} onCommand={processTextCommand} />
 
+        {/* The new Voice Coach Widget */}
+        {flow.length > 0 && playbackState !== 'idle' && (
+          <VoiceCoachWidget initialFlow={flow.map((id, i) => ({ id, duration: secondsPerPose[i] }))} />
+        )}
+
+        {/* The old player is now redundant if the widget is used, but we'll keep it for now */}
         {flow.length > 0 && <Player {...{ isPlaying: playbackState === 'playing', isPaused: playbackState === 'paused', currentPoseId: flow[currentPoseIndex], nextPoseId: flow[currentPoseIndex + 1], timeInPose, currentPoseDuration: Helpers.tempoAdjust(secondsPerPose[currentPoseIndex] ?? 0, playbackRate), sessionTotalSeconds: totalSeconds, sessionTimeRemaining, onPlay: handlePlay, onPause: handlePause, onResume: handleResume, onStop: handleStop, playbackRate, adjustRate }} />}
         <GeneratePreviewModal isOpen={!!preview} onClose={() => setPreview(null)} preview={preview} onShuffle={handleGenerate} onAccept={acceptPreview} />
       </div>
