@@ -14,7 +14,6 @@ export type Pose = {
 export type Flow = { id: string; title: string; poses: Pose[] }
 
 // --- Demo fallback ---
-export const demoFlow: Flow = { /* ... as before ... */ };
 export const demoFlow: Flow = {
   id: "demo-hpf",
   title: "Gentle HPF Sampler",
