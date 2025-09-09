@@ -9,10 +9,10 @@ import { toastError, toastSuccess } from "@/lib/utils";
 import { Focus, TimingMode, PoseId, SavedFlow } from "@/types/yoga";
 import { POSES, PRESETS } from "@/lib/yoga-data";
 import * as Helpers from "@/lib/yoga-helpers";
-import VoiceCoach, { Flow as CoachFlow } from "@/components/flows/VoiceCoachWidget";
+import CoachCard, { Flow as CoachFlow } from "@/components/flows/CoachCard";
 
 // UI Components
-import { ControlPanel } from "@/components/flows/ControlPanel";
+import { SettingsCard } from "@/components/flows/SettingsCard";
 import { PoseGrid } from "@/components/flows/PoseGrid";
 import { SuggestionsGrid } from "@/components/flows/SuggestionsGrid";
 import { GeneratePreviewModal } from "@/components/flows/GeneratePreviewModal";
@@ -28,8 +28,11 @@ export default function CreateFlowPage() {
   const [intensity, setIntensity] = useState<number>(3);
   const [focus, setFocus] = useState<Focus>("Full-Body");
   const [saferSequencing, setSaferSequencing] = useState<boolean>(true);
+  const [breathingCues, setBreathingCues] = useState<boolean>(true);
   const [timingMode, setTimingMode] = useState<TimingMode>(TimingMode.Seconds);
   const [secPerBreath, setSecPerBreath] = useState<number>(5);
+  const [transitionSec, setTransitionSec] = useState<number>(5);
+  const [cooldownMin, setCooldownMin] = useState<number>(2);
   const [preview, setPreview] = useState<PoseId[] | null>(null);
   const [flowName, setFlowName] = useState('');
   const [localSaved, setLocalSaved] = useLocalStorage<SavedFlow[]>('yoga_saved_flows', []);
@@ -65,7 +68,7 @@ export default function CreateFlowPage() {
         id: poseId,
         name: poseDetails?.name || 'Unknown Pose',
         durationSec: secondsPerPose[index],
-        cues: [Helpers.buildCues(poseId, true)],
+        cues: toArray(poseDetails?.cues),
         focus: poseDetails?.groups,
         intensity: poseDetails?.intensity as any,
       };
@@ -76,11 +79,11 @@ export default function CreateFlowPage() {
     <>
       <Toaster />
       <div className="mx-auto max-w-screen-2xl px-4 sm:px-6 lg:px-8 py-6">
-        <div className="grid gap-6 lg:gap-8 grid-cols-1 lg:grid-cols-[minmax(560px,1fr)_minmax(520px,1fr)] items-start">
+        <div className="grid gap-6 lg:gap-8 grid-cols-1 lg:grid-cols-[minmax(620px,1fr)_minmax(460px,0.9fr)] items-start">
 
           {/* Left Column */}
           <div className="flex flex-col gap-6">
-            <ControlPanel {...{ minutes, setMinutes, intensity, setIntensity, focus, setFocus, saferSequencing, setSaferSequencing, saveToDevice, setSaveToDevice, timingMode, setTimingMode, secPerBreath, setSecPerBreath, onAutoGenerate: handleGenerate, flowName, setFlowName, onSaveFlow: handleSaveFlow, onLoadPreset: handleLoadPreset, breathingCues:true, setBreathingCues:()=>{}, voiceFeedback:true, setVoiceFeedback:()=>{}, transitionSec:0, setTransitionSec:()=>{}, cooldownMin:0, setCooldownMin:()=>{} }} />
+            <SettingsCard {...{ minutes, setMinutes, intensity, setIntensity, focus, setFocus, saferSequencing, setSaferSequencing, saveToDevice, setSaveToDevice, timingMode, setTimingMode, secPerBreath, setSecPerBreath, onAutoGenerate: handleGenerate, flowName, setFlowName, onSaveFlow: handleSaveFlow, onLoadPreset: handleLoadPreset, breathingCues, setBreathingCues, voiceFeedback: false, setVoiceFeedback: ()=>{}, transitionSec, setTransitionSec, cooldownMin, setCooldownMin }} />
             <SavedFlows flows={savedFlows} onLoad={handleLoadFlow} onDelete={handleDeleteFlow} />
             <PoseGrid {...{ flow, secondsPerPose, totalSeconds, onRemovePose: removePose, onUpdatePoseDuration: updatePoseDuration, timingMode, secPerBreath, onMovePose: movePose, dragIndexRef: dragIndex, activePoseIndex: -1, timeInPose: 0 }} />
             <SuggestionsGrid onAddPose={addPose} />
@@ -88,7 +91,7 @@ export default function CreateFlowPage() {
 
           {/* Right Column */}
           <section className="h-full lg:sticky lg:top-6">
-            <VoiceCoach flow={flowForWidget} />
+            <CoachCard flow={flowForWidget} />
           </section>
 
         </div>
