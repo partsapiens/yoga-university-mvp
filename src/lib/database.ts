@@ -1,10 +1,4 @@
 import { Pose } from "@/types";
-
-// This file will contain database-related functions.
-// For example, it could include functions for connecting to a database,
-// and for fetching and updating data.
-
-// Example with Supabase
 import { createClient, type SupabaseClient } from '@supabase/supabase-js';
 
 let supabase: SupabaseClient | null = null;
@@ -21,10 +15,24 @@ export const getSupabase = (): SupabaseClient | null => {
   return supabase;
 };
 
-export const getPoses = async (): Promise<Pose[]> => {
+const POSES_PER_PAGE = 20;
+
+export const getPoses = async ({ page = 0, searchQuery = '' }: { page?: number, searchQuery?: string }): Promise<Pose[]> => {
   const client = getSupabase();
   if (!client) return [];
-  const { data, error } = await client.from('poses').select('*');
+
+  const from = page * POSES_PER_PAGE;
+  const to = from + POSES_PER_PAGE - 1;
+
+  let query = client.from('poses').select('*').range(from, to);
+
+  if (searchQuery) {
+    // Use ilike for case-insensitive search on the 'name' column
+    query = query.ilike('name', `%${searchQuery}%`);
+  }
+
+  const { data, error } = await query;
+
   if (error) {
     console.error('Error fetching poses:', error);
     return [];
