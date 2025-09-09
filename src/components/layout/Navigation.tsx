@@ -13,7 +13,6 @@ export const Navigation = ({ userRole }: NavigationProps) => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const mainNavItems = [
-    { href: '/', label: 'Home' },
     { href: '/dashboard', label: 'Dashboard' },
     { href: '/poses', label: 'Pose Library' },
     { href: '/manual', label: 'Manual' },

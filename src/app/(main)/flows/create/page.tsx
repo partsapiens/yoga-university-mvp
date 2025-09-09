@@ -42,7 +42,7 @@ export default function CreateFlowPage() {
   // --- REFS & DERIVED STATE ---
   const dragIndex = useRef<number | null>(null);
   const savedFlows = saveToDevice ? localSaved : sessionSaved;
-  const setSavedFlows = saveToDevice ? setLocalSaved : setSessionSaved; // Moved up
+  const setSavedFlows = saveToDevice ? setLocalSaved : setSessionSaved;
   const secondsPerPose = useMemo(() => Helpers.applyOverridesByIndex(Helpers.baseDurationsFromTable(flow), overrides), [flow, overrides]);
   const totalSeconds = useMemo(() => secondsPerPose.reduce((a, b) => a + b, 0), [secondsPerPose]);
 
@@ -78,23 +78,21 @@ export default function CreateFlowPage() {
   return (
     <>
       <Toaster />
-      <div className="mx-auto max-w-screen-2xl px-4 sm:px-6 lg:px-8 py-6">
-        <div className="grid gap-6 lg:gap-8 grid-cols-1 lg:grid-cols-[minmax(620px,1fr)_minmax(460px,0.9fr)] items-start">
-
-          <div className="flex flex-col gap-6">
-            <SettingsCard {...{ minutes, setMinutes, intensity, setIntensity, focus, setFocus, saferSequencing, setSaferSequencing, saveToDevice, setSaveToDevice, timingMode, setTimingMode, secPerBreath, setSecPerBreath, onAutoGenerate: handleGenerate, flowName, setFlowName, onSaveFlow: handleSaveFlow, onLoadPreset: handleLoadPreset, breathingCues, setBreathingCues, voiceFeedback: false, setVoiceFeedback: ()=>{}, transitionSec, setTransitionSec, cooldownMin, setCooldownMin }} />
-            <SavedFlows flows={savedFlows} onLoad={handleLoadFlow} onDelete={handleDeleteFlow} />
-            <PoseGrid {...{ flow, secondsPerPose, totalSeconds, onRemovePose: removePose, onUpdatePoseDuration: updatePoseDuration, timingMode, secPerBreath, onMovePose: movePose, dragIndexRef: dragIndex, activePoseIndex: -1, timeInPose: 0 }} />
-            <SuggestionsGrid onAddPose={addPose} />
-          </div>
-
-          <section className="h-full lg:sticky lg:top-6">
-            <CoachCard flow={flowForWidget} />
-          </section>
-
+      <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 py-6 pb-48"> {/* Added padding-bottom for footer */}
+        <div className="flex flex-col gap-6">
+          <SettingsCard {...{ minutes, setMinutes, intensity, setIntensity, focus, setFocus, saferSequencing, setSaferSequencing, saveToDevice, setSaveToDevice, timingMode, setTimingMode, secPerBreath, setSecPerBreath, onAutoGenerate: handleGenerate, flowName, setFlowName, onSaveFlow: handleSaveFlow, onLoadPreset: handleLoadPreset, breathingCues, setBreathingCues, transitionSec, setTransitionSec, cooldownMin, setCooldownMin }} />
+          <SavedFlows flows={savedFlows} onLoad={handleLoadFlow} onDelete={handleDeleteFlow} />
+          <PoseGrid {...{ flow, secondsPerPose, totalSeconds, onRemovePose: removePose, onUpdatePoseDuration: updatePoseDuration, timingMode, secPerBreath, onMovePose: movePose, dragIndexRef: dragIndex, activePoseIndex: -1, timeInPose: 0 }} />
+          <SuggestionsGrid onAddPose={addPose} />
         </div>
+
         <GeneratePreviewModal isOpen={!!preview} onClose={() => setPreview(null)} preview={preview} onShuffle={handleGenerate} onAccept={acceptPreview} />
       </div>
+
+      {/* Footer Voice Coach */}
+      <footer className="fixed bottom-0 left-0 right-0 z-10 p-2 bg-background/80 backdrop-blur-sm border-t">
+          <CoachCard flow={flowForWidget} />
+      </footer>
     </>
   );
 }
