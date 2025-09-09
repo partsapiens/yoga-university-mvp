@@ -21,10 +21,24 @@ export const getSupabase = (): SupabaseClient | null => {
   return supabase;
 };
 
-export const getPoses = async (): Promise<Pose[]> => {
+export const getPoses = async (page: number, pageSize: number, search: string = ''): Promise<Pose[]> => {
   const client = getSupabase();
   if (!client) return [];
-  const { data, error } = await client.from('poses').select('*');
+
+  const from = page * pageSize;
+  const to = from + pageSize - 1;
+
+  let query = client
+    .from('poses')
+    .select('*')
+    .range(from, to);
+
+  if (search) {
+    query = query.or(`name.ilike.%${search}%,sanskritName.ilike.%${search}%`);
+  }
+
+  const { data, error } = await query;
+
   if (error) {
     console.error('Error fetching poses:', error);
     return [];
