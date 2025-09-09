@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useMemo, useState, useRef, useCallback } from "react";
+import React, { useMemo, useState, useRef } from "react";
 import { Toaster } from 'react-hot-toast';
 
 // Core imports
@@ -35,7 +35,6 @@ export default function CreateFlowPage() {
   const [localSaved, setLocalSaved] = useLocalStorage<SavedFlow[]>('yoga_saved_flows', []);
   const [sessionSaved, setSessionSaved] = useState<SavedFlow[]>([]);
   const [saveToDevice, setSaveToDevice] = useState<boolean>(false);
-  const [showCoach, setShowCoach] = useState(false);
 
   // --- REFS & DERIVED STATE ---
   const dragIndex = useRef<number | null>(null);
@@ -66,7 +65,7 @@ export default function CreateFlowPage() {
         id: poseId,
         name: poseDetails?.name || 'Unknown Pose',
         durationSec: secondsPerPose[index],
-        cues: [Helpers.buildCues(poseId, true)], // Simplified cues
+        cues: [Helpers.buildCues(poseId, true)],
         focus: poseDetails?.groups,
         intensity: poseDetails?.intensity as any,
       };
@@ -76,32 +75,19 @@ export default function CreateFlowPage() {
   return (
     <>
       <Toaster />
-      <div className="min-h-screen bg-background text-foreground pb-40">
+      <div className="min-h-screen bg-background text-foreground pb-10">
         <header className="mx-auto max-w-5xl px-4 py-6">
           <h1 className="text-3xl font-semibold text-center tracking-tight">Create your sequence</h1>
-          {/* Removed props that are no longer used by the simplified page */}
           <ControlPanel {...{ minutes, setMinutes, intensity, setIntensity, focus, setFocus, saferSequencing, setSaferSequencing, saveToDevice, setSaveToDevice, timingMode, setTimingMode, secPerBreath, setSecPerBreath, onAutoGenerate: handleGenerate, flowName, setFlowName, onSaveFlow: handleSaveFlow, onLoadPreset: handleLoadPreset, breathingCues:true, setBreathingCues:()=>{}, voiceFeedback:true, setVoiceFeedback:()=>{}, transitionSec:0, setTransitionSec:()=>{}, cooldownMin:0, setCooldownMin:()=>{} }} />
         </header>
         <main className="mx-auto max-w-5xl px-4 pb-16">
+          <div className="my-6">
+            <VoiceCoach flow={flowForWidget} />
+          </div>
           <SavedFlows flows={savedFlows} onLoad={handleLoadFlow} onDelete={handleDeleteFlow} />
           <div className="mt-6"><PoseGrid {...{ flow, secondsPerPose, totalSeconds, onRemovePose: removePose, onUpdatePoseDuration: updatePoseDuration, timingMode, secPerBreath, onMovePose: movePose, dragIndexRef: dragIndex, activePoseIndex: -1, timeInPose: 0 }} /></div>
           <SuggestionsGrid onAddPose={addPose} />
         </main>
-
-        {/* Button to launch the Voice Coach */}
-        <div className="fixed bottom-4 right-4 z-20">
-            <button onClick={() => setShowCoach(c => !c)} className="h-16 w-16 flex items-center justify-center rounded-full bg-primary text-white shadow-lg text-3xl" title="Start Practice with Voice Coach">
-                {showCoach ? '✕' : '▶️'}
-            </button>
-        </div>
-
-        {/* The new Voice Coach Widget is now fixed on the page when active */}
-        {showCoach && (
-            <div className="fixed bottom-24 right-4 z-50">
-                <VoiceCoach flow={flowForWidget} />
-            </div>
-        )}
-
         <GeneratePreviewModal isOpen={!!preview} onClose={() => setPreview(null)} preview={preview} onShuffle={handleGenerate} onAccept={acceptPreview} />
       </div>
     </>

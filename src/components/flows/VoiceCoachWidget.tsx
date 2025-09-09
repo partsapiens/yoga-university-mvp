@@ -238,7 +238,7 @@ export default function VoiceCoach({ flow }: { flow?: Flow }) {
 
   // --- UI ---
   return (
-    <div className="w-full max-w-xl mx-auto p-4 rounded-2xl shadow-lg bg-white/70 backdrop-blur border">
+    <div className="p-4 rounded-2xl border bg-card">
       <header className="mb-3">
         <h2 className="text-xl font-semibold">🎧 Voice Coach — {resolved.title}</h2>
         <p className="text-sm opacity-70">Push and speak: “pause”, “next”, “repeat”, “slower”, “how long?”, or ask about alignment.</p>
