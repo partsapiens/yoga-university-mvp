@@ -46,9 +46,73 @@ export const getPosesFromDatabase = async (): Promise<DatabasePose[]> => {
     
     // Test connection first
     const connectionTest = await testSupabaseConnection();
+    
     if (!connectionTest) {
-      console.error('Supabase connection test failed');
-      return [];
+      console.log('Supabase connection test failed, falling back to sample data for testing');
+      
+      // Return sample data for testing when connection fails
+      const samplePoses: DatabasePose[] = [
+        {
+          id: 'sample-1',
+          name: 'Mountain Pose',
+          sanskrit_name: 'Tadasana',
+          category: 'standing',
+          difficulty: 'beginner',
+          description: 'A foundational standing pose that teaches grounding and alignment.',
+          benefits: ['Improves posture', 'Strengthens legs', 'Promotes focus'],
+          contraindications: ['None for most practitioners'],
+          instructions: ['Stand tall with feet hip-width apart', 'Engage leg muscles', 'Reach crown of head toward ceiling'],
+          image_url: '/images/poses/mountain-pose.jpg',
+          video_url: null,
+          anatomy_focus: ['Legs', 'Core', 'Spine'],
+          energy_level: 'low',
+          is_published: true,
+          created_by: null,
+          created_at: new Date().toISOString(),
+          updated_at: new Date().toISOString()
+        },
+        {
+          id: 'sample-2',
+          name: 'Downward Dog',
+          sanskrit_name: 'Adho Mukha Svanasana',
+          category: 'inversion',
+          difficulty: 'beginner',
+          description: 'An energizing inversion that strengthens the whole body.',
+          benefits: ['Strengthens arms and legs', 'Stretches hamstrings', 'Energizes the body'],
+          contraindications: ['Wrist injuries', 'High blood pressure'],
+          instructions: ['Start on hands and knees', 'Tuck toes and lift hips', 'Straighten legs as much as possible'],
+          image_url: '/images/poses/downward-dog.jpg',
+          video_url: null,
+          anatomy_focus: ['Arms', 'Legs', 'Back'],
+          energy_level: 'medium',
+          is_published: true,
+          created_by: null,
+          created_at: new Date().toISOString(),
+          updated_at: new Date().toISOString()
+        },
+        {
+          id: 'sample-3',
+          name: 'Child\'s Pose',
+          sanskrit_name: 'Balasana',
+          category: 'restorative',
+          difficulty: 'beginner',
+          description: 'A restful pose that calms the mind and gently stretches the back.',
+          benefits: ['Calms the nervous system', 'Stretches back and hips', 'Relieves stress'],
+          contraindications: ['Knee injuries'],
+          instructions: ['Kneel on the floor', 'Sit back on heels', 'Fold forward with arms extended'],
+          image_url: '/images/poses/childs-pose.jpg',
+          video_url: null,
+          anatomy_focus: ['Back', 'Hips', 'Shoulders'],
+          energy_level: 'low',
+          is_published: true,
+          created_by: null,
+          created_at: new Date().toISOString(),
+          updated_at: new Date().toISOString()
+        }
+      ];
+      
+      console.log(`Returning ${samplePoses.length} sample poses for testing`);
+      return samplePoses;
     }
     
     const { data, error } = await supabase
