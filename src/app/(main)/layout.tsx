@@ -1,4 +1,5 @@
 import { Navigation } from '@/components/layout/Navigation';
+import { Footer } from '@/components/layout/Footer';
 import React from 'react';
 
 export default function MainLayout({
@@ -7,11 +8,12 @@ export default function MainLayout({
   children: React.ReactNode
 }) {
   return (
-    <div>
+    <div className="min-h-screen flex flex-col">
       <Navigation />
-      <main>
+      <main className="flex-grow">
         {children}
       </main>
+      <Footer />
     </div>
   );
 }
