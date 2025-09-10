@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import { useCycler } from "@/hooks/useCycler";
+import { useSpeechSynthesis } from "@/hooks/useSpeechSynthesis";
 import { toArray, stripHtml } from "@/lib/utils";
-import { cn } from "@/lib/utils";
 
 // --- Types ---
 export type Pose = {
@@ -30,10 +30,8 @@ export const demoFlow: Flow = {
 
 // --- Helpers & Guards ---
 const hasWindow = typeof window !== "undefined";
-const canSpeak = hasWindow && "speechSynthesis" in window;
 export function resolveFlow(flow?: Flow): Flow { if (!flow || !Array.isArray(flow.poses) || flow.poses.length === 0) return demoFlow; return flow; }
 export function getInitialSeconds(flow?: Flow) { const rf = resolveFlow(flow); return rf.poses[0]?.durationSec ?? 30; }
-export function speak(text: string) { if (!canSpeak) return; try { window.speechSynthesis.cancel(); const utter = new SpeechSynthesisUtterance(stripHtml(text)); const voices = window.speechSynthesis.getVoices?.() || []; const preferred = voices.find(v => /female|samantha|google uk english female|zira|jenny/i.test(v.name)); if (preferred) utter.voice = preferred; utter.rate = 1.0; utter.pitch = 1.02; window.speechSynthesis.speak(utter); } catch {} }
 function timeFmt(s: number) { const m = Math.floor(s / 60), ss = s % 60; return `${m}:${ss.toString().padStart(2, "0")}` }
 
 // --- Intent parsing (very lightweight) ---
@@ -53,6 +51,8 @@ export default function CoachCard({ flow }: { flow?: Flow }) {
   const [secondsLeft, setSecondsLeft] = useState<number>(getInitialSeconds(resolved));
   const [paused, setPaused] = useState(true);
 
+  const { voices, voiceName, setVoiceName, speak } = useSpeechSynthesis();
+
   const recRef = useRef<any>(null);
   const tickRef = useRef<number | null>(null);
 
@@ -61,6 +61,7 @@ export default function CoachCard({ flow }: { flow?: Flow }) {
   useEffect(() => { if (paused || !hasWindow) return; const step = () => { setSecondsLeft(s => { if (s <= 1) { nextPose(); return poses[Math.min(idx + 1, poses.length - 1)]?.durationSec ?? 0 } return s - 1 }); tickRef.current = window.setTimeout(step, Math.max(750, 1000 / rate)) }; tickRef.current = window.setTimeout(step, 1000); return () => { if (tickRef.current) window.clearTimeout(tickRef.current) } }, [paused, rate, idx, poses]);
 
   const pose = poses[idx] as Pose | undefined;
+  const next = poses[idx + 1] as Pose | undefined;
   const cuesList = toArray(pose?.cues).map(c => stripHtml(c));
   const [isHovered, setIsHovered] = useState(false);
   const cueText = useCycler(cuesList.length ? cuesList : [' '], 3500, !paused && !isHovered);
@@ -68,7 +69,7 @@ export default function CoachCard({ flow }: { flow?: Flow }) {
   function nextPose() {
     setIdx(i => {
       const next = Math.min(i + 1, poses.length - 1);
-      if (next !== i) speak(poses[next].name);
+      if (next !== i) speak(stripHtml(poses[next].name));
       return next;
     });
   }
@@ -76,7 +77,7 @@ export default function CoachCard({ flow }: { flow?: Flow }) {
   function prevPose() {
     setIdx(i => {
       const prev = Math.max(0, i - 1);
-      if (prev !== i) speak(poses[prev].name);
+      if (prev !== i) speak(stripHtml(poses[prev].name));
       return prev;
     });
   }
@@ -132,11 +133,24 @@ export default function CoachCard({ flow }: { flow?: Flow }) {
             <div className="col-span-2">
               <div className="text-lg font-medium">{stripHtml(pose?.name)}</div>
               <div className="text-gray-600 text-sm line-clamp-1 min-h-[1.25rem]" onMouseEnter={() => setIsHovered(true)} onMouseLeave={() => setIsHovered(false)}>{cueText}</div>
+              {next && (
+                <div className="text-xs text-gray-500 mt-1">Next up: {stripHtml(next.name)} - {next.durationSec}s</div>
+              )}
             </div>
             <div className="text-right">
               <div className="font-mono tabular-nums text-2xl leading-none">{timeFmt(secondsLeft)}</div>
               <div className="text-[11px] text-gray-500">rate × {rate.toFixed(2)}</div>
             </div>
+          </div>
+
+          <div className="flex items-center justify-end gap-2 mb-3">
+            <label htmlFor="voice-select" className="text-sm text-gray-500">Voice</label>
+            <select id="voice-select" value={voiceName} onChange={e => setVoiceName((e.target as HTMLSelectElement).value)} className="text-sm border rounded-md px-2 py-1">
+              {voices.length === 0 && <option value="">System default</option>}
+              {voices.map(v => (
+                <option key={v.name} value={v.name}>{v.name}</option>
+              ))}
+            </select>
           </div>
 
           <div className="flex items-center gap-2 mb-3">
