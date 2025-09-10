@@ -44,7 +44,6 @@ const DashboardPage = async () => {
             <SectionHeader title="Practice Snapshot" />
             <div className="grid gap-4">
               <Suspense fallback={<StatsSkeleton />}>
-                {/* @ts-expect-error Async Server Component */}
                 <StatsCards />
               </Suspense>
               <CalendarStreak sessions={data.practiceSessions} />
