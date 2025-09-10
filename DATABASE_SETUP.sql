@@ -85,8 +85,8 @@ CREATE TABLE sessions (
 CREATE TABLE poses (
     id TEXT PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
-    sanskrit VARCHAR(255),
-    "defaultSeconds" INTEGER DEFAULT 30,
+    sanskrit_name VARCHAR(255),
+    default_seconds INTEGER DEFAULT 30,
     icon TEXT,
     intensity INTEGER,
     groups TEXT[] DEFAULT '{}',
@@ -412,7 +412,7 @@ GROUP BY p.id;
 -- SEED DATA
 -- ========================================
 
-INSERT INTO poses (id, name, sanskrit, "defaultSeconds", icon, intensity, groups, family, description, benefits, cues, plane) VALUES
+INSERT INTO poses (id, name, sanskrit_name, default_seconds, icon, intensity, groups, family, description, benefits, cues, plane) VALUES
 ('child', 'Child''s Pose', 'Balasana', 60, '🧘', 1, '{"Full-Body", "Restorative"}', 'Rest', 'A resting pose that can be taken at any time.', '{"Stretches the hips, thighs, and ankles", "Relieves back and neck pain"}', '{"Knees together or wide apart", "Fold forward, resting your forehead on the mat"}', 'sagittal'),
 ('down_dog', 'Downward-Facing Dog', 'Adho Mukha Svanasana', 30, '🤸', 2, '{"Full-Body", "Hamstrings", "Shoulders"}', 'Inversion', 'An inversion that stretches the entire body.', '{"Strengthens the arms and legs", "Stretches the shoulders, hamstrings, calves, arches, and hands"}', '{"Press firmly through your palms", "Lift your hips up and back"}', 'sagittal'),
 ('warrior1_r', 'Warrior 1 (Right)', 'Virabhadrasana I', 30, '🚶', 3, '{"Full-Body", "Hips", "Shoulders"}', 'Standing', 'A powerful standing pose that builds strength and confidence.', '{"Stretches the chest, lungs, shoulders, neck, belly, and groin", "Strengthens the shoulders, arms, and back muscles"}', '{"Front knee bent to 90 degrees", "Back foot flat on the floor at a 45-degree angle", "Arms extended overhead"}', 'sagittal'),

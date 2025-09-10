@@ -24,24 +24,8 @@ export const getPoses = async ({ page = 0, searchQuery = '' }: { page?: number, 
   const from = page * POSES_PER_PAGE;
   const to = from + POSES_PER_PAGE - 1;
 
-  // Select only the columns required by the Pose type.
-  // The database schema is assumed to match the camelCase fields of the Pose type.
-  const selectColumns = `
-    id,
-    name,
-    sanskrit,
-    defaultSeconds,
-    icon,
-    intensity,
-    groups,
-    family,
-    description,
-    benefits,
-    cues,
-    plane
-  `;
-
-  let query = client.from('poses').select(selectColumns).range(from, to);
+  // Select all columns. Supabase client will handle snake_case to camelCase conversion.
+  let query = client.from('poses').select('*').range(from, to);
 
   if (searchQuery) {
     // Apply search filter on the 'name' column
