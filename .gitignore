@@ -17,3 +17,6 @@
 .DS_Store
 *.pem
 *.log
+
+# typescript build artifacts
+tsconfig.tsbuildinfo
