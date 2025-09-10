@@ -1,4 +1,5 @@
-import React from 'react';
+"use client";
+import React, { useState } from 'react';
 import Link from 'next/link';
 import { UserRole } from '@/types';
 
@@ -19,7 +20,7 @@ export const Navigation = ({ userRole }: NavigationProps) => {
 
   // TODO: Implement role-based navigation items
   // TODO: Implement user dropdown with profile management
-  // TODO: Implement mobile-friendly hamburger menu
+  const [mobileOpen, setMobileOpen] = useState(false);
 
   return (
     <nav className="bg-background shadow-sm">
@@ -39,11 +40,35 @@ export const Navigation = ({ userRole }: NavigationProps) => {
           <div className="hidden md:block">
             <button className="btn btn-primary">Log In</button>
           </div>
-          {/* Placeholder for hamburger menu button */}
+          {/* Mobile hamburger button */}
           <div className="md:hidden">
-            <button className="btn btn-outline">Menu</button>
+            <button
+              className="btn btn-outline"
+              aria-label="Toggle menu"
+              aria-expanded={mobileOpen}
+              onClick={() => setMobileOpen(!mobileOpen)}
+            >
+              Menu
+            </button>
           </div>
         </div>
+        {mobileOpen && (
+          <div className="md:hidden pb-4 space-y-2">
+            {navItems.map((item) => (
+              <Link
+                key={item.href}
+                href={item.href}
+                className="block text-foreground hover:text-primary"
+                onClick={() => setMobileOpen(false)}
+              >
+                {item.label}
+              </Link>
+            ))}
+            <button className="btn btn-primary w-full" onClick={() => setMobileOpen(false)}>
+              Log In
+            </button>
+          </div>
+        )}
       </div>
     </nav>
   );
