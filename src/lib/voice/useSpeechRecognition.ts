@@ -8,12 +8,13 @@ export function useSpeechRecognition() {
   const [interimTranscript, setInterimTranscript] = useState('');
   const [error, setError] = useState<string | null>(null);
 
-  const recognitionRef = useRef<SpeechRecognition | null>(null);
+  // Using `any` as the Web Speech API types may not be available in all environments
+  const recognitionRef = useRef<any>(null);
   const debounceTimer = useRef<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
     if (typeof window === 'undefined') return;
-    const SpeechRecognitionAPI = window.SpeechRecognition || window.webkitSpeechRecognition;
+    const SpeechRecognitionAPI = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition;
     if (!SpeechRecognitionAPI) {
       setError("Speech recognition is not supported in this browser.");
       return;
@@ -24,7 +25,7 @@ export function useSpeechRecognition() {
     recognition.interimResults = true;
     recognitionRef.current = recognition;
 
-    recognition.onresult = (event) => {
+    recognition.onresult = (event: any) => {
       if (debounceTimer.current) clearTimeout(debounceTimer.current);
 
       let final = '';
@@ -47,7 +48,7 @@ export function useSpeechRecognition() {
       }, DEBOUNCE_TIME);
     };
 
-    recognition.onerror = (event) => { setError(event.error); setListening(false); };
+    recognition.onerror = (event: any) => { setError(event.error); setListening(false); };
     recognition.onend = () => { setListening(false); };
 
     return () => { recognition.stop(); };

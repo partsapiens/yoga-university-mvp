@@ -1,4 +1,4 @@
-import { Pose, PoseId } from "@/types/yoga"; // Corrected import path
+import { Pose } from "@/types/yoga"; // Corrected import path
 import { createClient, type SupabaseClient } from '@supabase/supabase-js';
 
 let supabase: SupabaseClient | null = null;
@@ -24,23 +24,8 @@ export const getPoses = async ({ page = 0, searchQuery = '' }: { page?: number, 
   const from = page * POSES_PER_PAGE;
   const to = from + POSES_PER_PAGE - 1;
 
-  // Select only the columns required by the Pose type, aliasing snake_case to camelCase
-  const selectColumns = `
-    id,
-    name,
-    sanskrit:sanskrit_name,
-    defaultSeconds:default_seconds,
-    icon,
-    intensity,
-    groups,
-    family,
-    description,
-    benefits,
-    cues,
-    plane
-  `;
-
-  let query = client.from('poses').select(selectColumns).range(from, to);
+  // Fetch all columns to avoid mismatches with the Supabase schema
+  let query = client.from('poses').select('*').range(from, to);
 
   if (searchQuery) {
     // Apply search filter on the 'name' column
@@ -49,14 +34,26 @@ export const getPoses = async ({ page = 0, searchQuery = '' }: { page?: number, 
 
   const { data, error } = await query;
 
-  if (error) {
+  if (error || !data) {
     console.error('Error fetching poses:', error);
     return [];
   }
 
-  // The data returned by Supabase should now match the Pose[] type directly
-  // thanks to the column aliasing in the select statement.
-  return data as Pose[];
+  // Map raw rows to the Pose type, providing fallbacks for optional fields
+  return data.map((p: any) => ({
+    id: p.id,
+    name: p.name,
+    sanskrit: p.sanskrit ?? p.sanskrit_name ?? '',
+    defaultSeconds: p.default_seconds ?? p.defaultSeconds ?? 60,
+    icon: p.icon ?? '🧘',
+    intensity: p.intensity ?? 1,
+    groups: p.groups ?? [],
+    family: p.family ?? '',
+    description: p.description ?? '',
+    benefits: p.benefits ?? [],
+    cues: p.cues ?? [],
+    plane: p.plane ?? null,
+  })) as Pose[];
 };
 
 export const getFlows = async () => {
