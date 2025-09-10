@@ -39,6 +39,7 @@ export interface NotificationItem {
   message: string;
   createdAt: string; // ISO date string
   read: boolean;
+  snoozed?: boolean;
 }
 
 export interface DashboardData {

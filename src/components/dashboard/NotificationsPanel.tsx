@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/Card';
 import { EmptyState } from '@/components/ui/EmptyState';
 import { Button } from '@/components/ui/Button';
+import { Badge } from '@/components/ui/Badge';
 import type { NotificationItem } from '@/types/dashboard';
 import { track } from '@/lib/telemetry';
 
@@ -15,20 +16,29 @@ const MAX_ITEMS = 50;
 export const NotificationsPanel: React.FC<NotificationsPanelProps> = ({ notifications }) => {
   const [items, setItems] = useState(notifications.slice(0, MAX_ITEMS));
 
+  const unreadCount = items.filter((n) => !n.read).length;
+
   const markDone = (id: string) => {
-    setItems((prev) => prev.map((n) => (n.id === id ? { ...n, read: true } : n)));
+    setItems((prev) => prev.filter((n) => n.id !== id));
     track('notification_action', { id, action: 'done' });
   };
 
   const snooze = (id: string) => {
-    setItems((prev) => prev.filter((n) => n.id !== id));
+    setItems((prev) =>
+      prev.map((n) => (n.id === id ? { ...n, read: true, snoozed: true } : n))
+    );
     track('notification_action', { id, action: 'snooze' });
   };
 
   return (
     <Card className="flex flex-col">
       <CardHeader>
-        <CardTitle>Notifications</CardTitle>
+        <div className="flex items-center justify-between">
+          <CardTitle>Notifications</CardTitle>
+          <Badge variant="secondary" aria-label="Unread notifications">
+            {unreadCount}
+          </Badge>
+        </div>
       </CardHeader>
       <CardContent>
         {items.length === 0 ? (
@@ -36,7 +46,10 @@ export const NotificationsPanel: React.FC<NotificationsPanelProps> = ({ notifica
         ) : (
           <ul className="space-y-2 text-sm" aria-label="Notifications">
             {items.map((n) => (
-              <li key={n.id} className="flex items-center justify-between gap-2">
+              <li
+                key={n.id}
+                className={`flex items-center justify-between gap-2 ${n.snoozed ? 'opacity-50' : ''}`}
+              >
                 <div>
                   <span>{n.message}</span>
                   <div className="text-xs text-muted-foreground">
