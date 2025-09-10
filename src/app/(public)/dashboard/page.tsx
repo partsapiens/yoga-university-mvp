@@ -2,7 +2,7 @@ import React, { Suspense } from 'react';
 import { PageLayout } from '@/components/layout/PageLayout';
 import { HeaderBar } from '@/components/dashboard/HeaderBar';
 import HeroQuickStart from '@/components/dashboard/HeroQuickStart';
-import { AIRecommendation } from '@/components/dashboard/AIRecommendation';
+import { AIRecommendation } from '@/components/dashboard/AIZone/AIRecommendation';
 import { AIFormChecker } from '@/components/dashboard/AIFormChecker';
 import { CalendarStreak } from '@/components/dashboard/CalendarStreak';
 import { SectionHeader } from '@/components/ui/SectionHeader';

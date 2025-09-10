@@ -1,26 +1,59 @@
 "use client";
 
 import { useState } from 'react';
-import { Card, CardHeader, CardTitle, CardContent, Button, Input, Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from '@/components/ui';
+import {
+  Card,
+  CardHeader,
+  CardTitle,
+  CardContent,
+  Button,
+  Input,
+  Select,
+  SelectTrigger,
+  SelectValue,
+  SelectContent,
+  SelectItem,
+} from '@/components/ui';
 import { fetchRecommendations } from '@/lib/api/ai';
 import type { Recommendation } from '@/types/ai';
 import { useApplyToFlow } from '@/hooks/useApplyToFlow';
 import { track } from '@/lib/telemetry';
 
 export const AIRecommendation = () => {
-  const [form, setForm] = useState({ duration: '', intensity: '1', focus: '', mood: '', injuries: '' });
+  const [form, setForm] = useState({
+    duration: '',
+    intensity: '1',
+    mood: '',
+    focuses: [] as string[],
+  });
   const [results, setResults] = useState<Recommendation[]>([]);
   const { applyToFlow } = useApplyToFlow();
 
+  const focusOptions = ['hips', 'hamstrings', 'core', 'back', 'shoulders', 'balance'];
+
+  const toggleFocus = (tag: string) => {
+    setForm((prev) => {
+      const focuses = prev.focuses.includes(tag)
+        ? prev.focuses.filter((t) => t !== tag)
+        : [...prev.focuses, tag];
+      return { ...prev, focuses };
+    });
+  };
+
   const handleGenerate = async () => {
     const recs = await fetchRecommendations({
-      focus: form.focus,
       duration: Number(form.duration),
       intensity: Number(form.intensity),
       mood: form.mood,
-      injuries: form.injuries,
+      focuses: form.focuses,
     });
     setResults(recs);
+    track('generate_recommendations', {
+      duration: form.duration,
+      intensity: form.intensity,
+      mood: form.mood,
+      focuses: form.focuses,
+    });
   };
 
   return (
@@ -36,12 +69,6 @@ export const AIRecommendation = () => {
             value={form.duration}
             onChange={(e) => setForm({ ...form, duration: e.target.value })}
           />
-          <Input
-            placeholder="Focus"
-            aria-label="Focus"
-            value={form.focus}
-            onChange={(e) => setForm({ ...form, focus: e.target.value })}
-          />
           <Select value={form.intensity} onValueChange={(v) => setForm({ ...form, intensity: v })}>
             <SelectTrigger aria-label="Intensity">
               <SelectValue placeholder="Intensity" />
@@ -54,19 +81,37 @@ export const AIRecommendation = () => {
               ))}
             </SelectContent>
           </Select>
-          <Input
-            placeholder="Mood"
-            aria-label="Mood"
-            value={form.mood}
-            onChange={(e) => setForm({ ...form, mood: e.target.value })}
-          />
-          <Input
-            placeholder="Injuries (optional)"
-            aria-label="Injuries"
-            value={form.injuries}
-            onChange={(e) => setForm({ ...form, injuries: e.target.value })}
-          />
-          <Button onClick={handleGenerate}>Go</Button>
+          <Select value={form.mood} onValueChange={(v) => setForm({ ...form, mood: v })}>
+            <SelectTrigger aria-label="Mood">
+              <SelectValue placeholder="Mood" />
+            </SelectTrigger>
+            <SelectContent>
+              {['calm', 'energized', 'neutral'].map((m) => (
+                <SelectItem key={m} value={m}>
+                  {m}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+          <div className="sm:col-span-2 flex flex-wrap gap-2" role="group" aria-label="Focus">
+            {focusOptions.map((f) => {
+              const selected = form.focuses.includes(f);
+              return (
+                <Button
+                  key={f}
+                  type="button"
+                  variant={selected ? 'default' : 'outline'}
+                  onClick={() => toggleFocus(f)}
+                  aria-pressed={selected}
+                >
+                  {f}
+                </Button>
+              );
+            })}
+          </div>
+          <Button className="sm:col-span-2" onClick={handleGenerate}>
+            Go
+          </Button>
         </div>
         <div className="grid gap-2">
           {results.map((rec, idx) => (

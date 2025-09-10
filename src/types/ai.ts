@@ -1,11 +1,10 @@
 import { PoseId } from './yoga';
 
 export interface RecommendationInput {
-  focus: string;
   duration: number;
   intensity: number;
   mood: string;
-  injuries?: string;
+  focuses: string[];
 }
 
 export interface Recommendation {
