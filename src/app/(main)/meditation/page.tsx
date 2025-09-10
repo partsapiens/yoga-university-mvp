@@ -1,0 +1,312 @@
+"use client";
+
+import React, { useState, useEffect } from 'react';
+import { useLocalStorage } from '@/hooks/useLocalStorage';
+
+// Types for meditation features
+interface MeditationSession {
+  id: string;
+  name: string;
+  duration: number; // in minutes
+  type: 'guided' | 'timer' | 'breathing';
+  description: string;
+}
+
+interface SessionStats {
+  streak: number;
+  lastSession: string | null;
+  totalSessions: number;
+}
+
+// Sample meditation techniques
+const MEDITATION_TECHNIQUES: MeditationSession[] = [
+  {
+    id: 'mindfulness-5',
+    name: 'Mindfulness Meditation',
+    duration: 5,
+    type: 'guided',
+    description: 'A gentle introduction to mindfulness practice with breath awareness.'
+  },
+  {
+    id: 'breathing-box',
+    name: 'Box Breathing',
+    duration: 10,
+    type: 'breathing',
+    description: 'Systematic 4-4-4-4 breathing pattern for stress relief and focus.'
+  },
+  {
+    id: 'body-scan',
+    name: 'Body Scan Meditation',
+    duration: 15,
+    type: 'guided',
+    description: 'Progressive relaxation through mindful body awareness.'
+  },
+  {
+    id: 'loving-kindness',
+    name: 'Loving Kindness',
+    duration: 12,
+    type: 'guided',
+    description: 'Cultivate compassion and positive emotions toward self and others.'
+  }
+];
+
+export default function MeditationPage() {
+  const [selectedSession, setSelectedSession] = useState<MeditationSession | null>(null);
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [timeRemaining, setTimeRemaining] = useState(0);
+  const [customDuration, setCustomDuration] = useState(10);
+  
+  // Local storage for session tracking
+  const [sessionStats, setSessionStats] = useLocalStorage<SessionStats>('meditation_stats', {
+    streak: 0,
+    lastSession: null,
+    totalSessions: 0
+  });
+
+  // Timer logic
+  useEffect(() => {
+    let interval: NodeJS.Timeout | null = null;
+    
+    if (isPlaying && timeRemaining > 0) {
+      interval = setInterval(() => {
+        setTimeRemaining(time => {
+          if (time <= 1) {
+            setIsPlaying(false);
+            handleSessionComplete();
+            return 0;
+          }
+          return time - 1;
+        });
+      }, 1000);
+    } else if (!isPlaying && interval) {
+      clearInterval(interval);
+    }
+    
+    return () => {
+      if (interval) clearInterval(interval);
+    };
+  }, [isPlaying, timeRemaining]);
+
+  const handleSessionComplete = () => {
+    const today = new Date().toDateString();
+    const lastSessionDate = sessionStats.lastSession;
+    
+    // Calculate streak
+    let newStreak = sessionStats.streak;
+    if (lastSessionDate) {
+      const yesterday = new Date();
+      yesterday.setDate(yesterday.getDate() - 1);
+      
+      if (lastSessionDate === yesterday.toDateString()) {
+        newStreak += 1; // Continue streak
+      } else if (lastSessionDate !== today) {
+        newStreak = 1; // Start new streak
+      }
+    } else {
+      newStreak = 1; // First session
+    }
+    
+    setSessionStats({
+      streak: newStreak,
+      lastSession: today,
+      totalSessions: sessionStats.totalSessions + 1
+    });
+  };
+
+  const startSession = (session: MeditationSession) => {
+    setSelectedSession(session);
+    setTimeRemaining(session.duration * 60);
+    setIsPlaying(true);
+  };
+
+  const startCustomTimer = () => {
+    const customSession: MeditationSession = {
+      id: 'custom-timer',
+      name: 'Custom Timer',
+      duration: customDuration,
+      type: 'timer',
+      description: 'Personal meditation timer'
+    };
+    startSession(customSession);
+  };
+
+  const togglePlayPause = () => {
+    setIsPlaying(!isPlaying);
+  };
+
+  const resetTimer = () => {
+    setIsPlaying(false);
+    setTimeRemaining(selectedSession?.duration ? selectedSession.duration * 60 : 0);
+  };
+
+  const formatTime = (seconds: number) => {
+    const mins = Math.floor(seconds / 60);
+    const secs = seconds % 60;
+    return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+  };
+
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-purple-50 via-blue-50 to-indigo-50 py-8">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Header */}
+        <div className="text-center mb-8">
+          <h1 className="text-4xl font-bold text-gray-900 mb-4">Meditation Center</h1>
+          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+            Find inner peace and enhance your yoga practice with guided meditations and breathing exercises.
+          </p>
+        </div>
+
+        {/* Session Stats */}
+        <div className="bg-white/70 backdrop-blur-sm rounded-lg p-6 mb-8 shadow-lg">
+          <h2 className="text-xl font-semibold mb-4">Your Practice</h2>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div className="text-center">
+              <div className="text-2xl font-bold text-purple-600">{sessionStats.streak}</div>
+              <div className="text-sm text-gray-600">Day Streak</div>
+            </div>
+            <div className="text-center">
+              <div className="text-2xl font-bold text-blue-600">{sessionStats.totalSessions}</div>
+              <div className="text-sm text-gray-600">Total Sessions</div>
+            </div>
+            <div className="text-center">
+              <div className="text-sm font-medium text-gray-800">
+                {sessionStats.lastSession ? `Last: ${sessionStats.lastSession}` : 'No sessions yet'}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          {/* Meditation Techniques List */}
+          <div className="bg-white/70 backdrop-blur-sm rounded-lg p-6 shadow-lg">
+            <h2 className="text-2xl font-semibold mb-6">Guided Sessions</h2>
+            <div className="space-y-4">
+              {MEDITATION_TECHNIQUES.map((session) => (
+                <div
+                  key={session.id}
+                  className="border border-gray-200 rounded-lg p-4 hover:shadow-md transition-shadow cursor-pointer"
+                  onClick={() => startSession(session)}
+                >
+                  <div className="flex justify-between items-start mb-2">
+                    <h3 className="font-semibold text-lg">{session.name}</h3>
+                    <span className="bg-purple-100 text-purple-800 text-sm px-2 py-1 rounded">
+                      {session.duration} min
+                    </span>
+                  </div>
+                  <p className="text-gray-600 text-sm mb-3">{session.description}</p>
+                  <div className="flex justify-between items-center">
+                    <span className="text-xs text-gray-500 capitalize">{session.type}</span>
+                    <button className="bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-md text-sm transition-colors">
+                      Start Session
+                    </button>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            {/* Custom Timer */}
+            <div className="mt-8 border-t pt-6">
+              <h3 className="text-lg font-semibold mb-4">Custom Timer</h3>
+              <div className="flex items-center gap-4">
+                <input
+                  type="number"
+                  min="1"
+                  max="60"
+                  value={customDuration}
+                  onChange={(e) => setCustomDuration(parseInt(e.target.value) || 10)}
+                  className="border border-gray-300 rounded-md px-3 py-2 w-20 text-center"
+                />
+                <span className="text-gray-600">minutes</span>
+                <button
+                  onClick={startCustomTimer}
+                  className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md transition-colors"
+                >
+                  Start Timer
+                </button>
+              </div>
+            </div>
+          </div>
+
+          {/* Timer and Breathing Visualizer */}
+          <div className="bg-white/70 backdrop-blur-sm rounded-lg p-6 shadow-lg">
+            <h2 className="text-2xl font-semibold mb-6">
+              {selectedSession ? selectedSession.name : 'Select a Session'}
+            </h2>
+            
+            {selectedSession ? (
+              <div className="text-center">
+                {/* Timer Display */}
+                <div className="mb-8">
+                  <div className="text-6xl font-mono font-bold text-purple-600 mb-4">
+                    {formatTime(timeRemaining)}
+                  </div>
+                  <div className="text-gray-600">
+                    {selectedSession.duration} minute session
+                  </div>
+                </div>
+
+                {/* Breathing Visualizer for breathing exercises */}
+                {selectedSession.type === 'breathing' && (
+                  <div className="mb-8">
+                    <div className="relative mx-auto w-32 h-32">
+                      <div className={`absolute inset-0 rounded-full border-4 border-blue-300 ${
+                        isPlaying ? 'animate-pulse' : ''
+                      }`}></div>
+                      <div className="absolute inset-4 rounded-full bg-blue-200 flex items-center justify-center">
+                        <span className="text-sm font-medium text-blue-800">
+                          {isPlaying ? 'Breathe' : 'Paused'}
+                        </span>
+                      </div>
+                    </div>
+                    <p className="mt-4 text-sm text-gray-600">
+                      Inhale for 4 • Hold for 4 • Exhale for 4 • Hold for 4
+                    </p>
+                  </div>
+                )}
+
+                {/* Control Buttons */}
+                <div className="flex justify-center gap-4">
+                  <button
+                    onClick={togglePlayPause}
+                    className={`px-6 py-3 rounded-lg font-semibold text-white transition-colors ${
+                      isPlaying 
+                        ? 'bg-orange-500 hover:bg-orange-600' 
+                        : 'bg-green-500 hover:bg-green-600'
+                    }`}
+                  >
+                    {isPlaying ? 'Pause' : 'Play'}
+                  </button>
+                  <button
+                    onClick={resetTimer}
+                    className="bg-gray-500 hover:bg-gray-600 text-white px-6 py-3 rounded-lg font-semibold transition-colors"
+                  >
+                    Reset
+                  </button>
+                </div>
+              </div>
+            ) : (
+              <div className="text-center text-gray-500 py-16">
+                <p className="text-lg mb-4">Choose a meditation session to begin</p>
+                <p className="text-sm">
+                  Select from guided meditations, breathing exercises, or set a custom timer
+                </p>
+              </div>
+            )}
+          </div>
+        </div>
+
+        {/* TODO: Add more features */}
+        <div className="mt-8 bg-yellow-50 border border-yellow-200 rounded-lg p-4">
+          <h3 className="font-semibold text-yellow-800 mb-2">Coming Soon</h3>
+          <ul className="text-sm text-yellow-700 space-y-1">
+            <li>• Audio-guided meditation tracks</li>
+            <li>• Progress visualization and insights</li>
+            <li>• Meditation challenges and programs</li>
+            <li>• Community meditation sessions</li>
+            <li>• Integration with practice journal</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  );
+}
