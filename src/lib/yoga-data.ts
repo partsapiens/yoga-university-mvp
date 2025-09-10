@@ -21,6 +21,8 @@ export const FOCI: readonly Focus[] = ["Full-Body", "Hips", "Hamstrings", "Shoul
 export const PRESETS: { name: string; flow: PoseId[] }[] = [
   { name: "Quick Core 15", flow: [PoseId.Boat, PoseId.Boat, PoseId.Bridge, PoseId.DownDog, PoseId.Child] },
   { name: "Hip Opener 30", flow: [PoseId.Butterfly, PoseId.Pigeon, PoseId.Pigeon, PoseId.TwistLow, PoseId.ForwardFold, PoseId.Child] },
-  { name: "Morning Wake Up", flow: [PoseId.Child, PoseId.ForwardFold, PoseId.DownDog, PoseId.Warrior1Right, PoseId.HighLungeRight, PoseId.Bridge, PoseId.Child] },
-  { name: "Evening Cool Down", flow: [PoseId.Butterfly, PoseId.ForwardFold, PoseId.Pigeon, PoseId.TwistLow, PoseId.Child] },
+  { name: "Morning Wake-Up", flow: [PoseId.Child, PoseId.ForwardFold, PoseId.DownDog, PoseId.Warrior1Right, PoseId.HighLungeRight, PoseId.Bridge, PoseId.Child] },
+  { name: "Evening Unwind", flow: [PoseId.Butterfly, PoseId.ForwardFold, PoseId.Pigeon, PoseId.TwistLow, PoseId.Child] },
+  { name: "Restorative 20", flow: [PoseId.Butterfly, PoseId.ForwardFold, PoseId.Child, PoseId.Child] },
+  { name: "Power 45", flow: [PoseId.DownDog, PoseId.Warrior1Right, PoseId.HighLungeRight, PoseId.Boat, PoseId.Bridge, PoseId.TwistLow, PoseId.Child] },
 ];
