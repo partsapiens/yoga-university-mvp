@@ -18,6 +18,7 @@ import { PoseId } from '@/types/yoga';
 import { checkForm } from '@/lib/api/ai';
 import type { FormFeedback } from '@/types/ai';
 import { track } from '@/lib/telemetry';
+import { toast } from 'react-hot-toast';
 
 export const AIFormChecker = () => {
   const [pose, setPose] = useState<PoseId | undefined>();
@@ -34,6 +35,8 @@ export const AIFormChecker = () => {
   const handleCopy = () => {
     const text = feedback.map((f) => f.message).join('\n');
     navigator.clipboard.writeText(text);
+    toast.success('Feedback copied');
+    track('copy_form_feedback');
   };
 
   return (
@@ -69,7 +72,7 @@ export const AIFormChecker = () => {
               ))}
             </ul>
             <Button variant="outline" size="sm" onClick={handleCopy}>
-              Copy to Clipboard
+              Copy feedback
             </Button>
           </div>
         )}
