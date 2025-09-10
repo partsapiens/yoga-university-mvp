@@ -24,19 +24,15 @@ export const getPoses = async ({ page = 0, searchQuery = '' }: { page?: number, 
   const from = page * POSES_PER_PAGE;
   const to = from + POSES_PER_PAGE - 1;
 
-  // Select only the columns required by the Pose type, aliasing snake_case to camelCase
+  // Select only columns that exist in the poses table
   const selectColumns = `
     id,
     name,
-    sanskrit:sanskrit_name,
-    defaultSeconds:default_seconds,
+    sanskrit,
     icon,
     intensity,
     groups,
     family,
-    description,
-    benefits,
-    cues,
     plane
   `;
 
