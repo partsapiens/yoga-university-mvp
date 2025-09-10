@@ -19,25 +19,36 @@ const PoseLibraryPage = () => {
   const [hasMore, setHasMore] = useState(true);
   const [loading, setLoading] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
+  const [error, setError] = useState<string | null>(null);
 
   const debouncedSearchQuery = useDebounce(searchQuery, 300);
   const loaderRef = useRef<HTMLDivElement | null>(null);
 
-  const loadPoses = useCallback(async (isNewSearch: boolean) => {
-    if (loading || (!hasMore && !isNewSearch)) return;
-    setLoading(true);
+  const loadPoses = useCallback(
+    async (isNewSearch: boolean) => {
+      if (loading || (!hasMore && !isNewSearch)) return;
+      setLoading(true);
+      setError(null);
 
-    const currentPage = isNewSearch ? 0 : page;
-    const fetchedPoses = await getPoses({ page: currentPage, searchQuery: debouncedSearchQuery });
+      try {
+        const currentPage = isNewSearch ? 0 : page;
+        const fetchedPoses = await getPoses({ page: currentPage, searchQuery: debouncedSearchQuery });
 
-    if (fetchedPoses.length === 0) {
-      setHasMore(false);
-    } else {
-      setPoses(prevPoses => isNewSearch ? fetchedPoses : [...prevPoses, ...fetchedPoses]);
-      setPage(prevPage => currentPage + 1);
-    }
-    setLoading(false);
-  }, [loading, hasMore, page, debouncedSearchQuery]);
+        if (fetchedPoses.length === 0) {
+          setHasMore(false);
+        } else {
+          setPoses(prevPoses => (isNewSearch ? fetchedPoses : [...prevPoses, ...fetchedPoses]));
+          setPage(currentPage + 1);
+        }
+      } catch {
+        setError('Failed to load poses.');
+        setHasMore(false);
+      } finally {
+        setLoading(false);
+      }
+    },
+    [loading, hasMore, page, debouncedSearchQuery]
+  );
 
   // Effect for initial load and search changes
   useEffect(() => {
@@ -89,8 +100,9 @@ const PoseLibraryPage = () => {
 
       <div ref={loaderRef} className="flex justify-center items-center p-8">
         {loading && <p>Loading more poses...</p>}
-        {!hasMore && poses.length > 0 && <p>You've reached the end of the list.</p>}
-        {!hasMore && poses.length === 0 && !loading && <p>No poses found for your search.</p>}
+        {error && !loading && poses.length === 0 && <p className="text-destructive">{error}</p>}
+        {!error && !hasMore && poses.length > 0 && <p>You've reached the end of the list.</p>}
+        {!error && !hasMore && poses.length === 0 && !loading && <p>No poses found for your search.</p>}
       </div>
     </div>
   );

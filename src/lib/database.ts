@@ -1,4 +1,4 @@
-import { Pose } from "@/types/yoga"; // Corrected import path
+import { Pose } from '@/types/yoga';
 import { createClient, type SupabaseClient } from '@supabase/supabase-js';
 
 let supabase: SupabaseClient | null = null;
@@ -17,9 +17,9 @@ export const getSupabase = (): SupabaseClient | null => {
 
 const POSES_PER_PAGE = 20;
 
-export const getPoses = async ({ page = 0, searchQuery = '' }: { page?: number, searchQuery?: string }): Promise<Pose[]> => {
+export const getPoses = async ({ page = 0, searchQuery = '' }: { page?: number; searchQuery?: string }): Promise<Pose[]> => {
   const client = getSupabase();
-  if (!client) return [];
+  if (!client) throw new Error('Supabase client not configured');
 
   const from = page * POSES_PER_PAGE;
   const to = from + POSES_PER_PAGE - 1;
@@ -34,10 +34,12 @@ export const getPoses = async ({ page = 0, searchQuery = '' }: { page?: number, 
 
   const { data, error } = await query;
 
-  if (error || !data) {
+  if (error) {
     console.error('Error fetching poses:', error);
-    return [];
+    throw error;
   }
+
+  if (!data) return [];
 
   // Map raw rows to the Pose type, providing fallbacks for optional fields
   return data.map((p: any) => ({
