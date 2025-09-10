@@ -86,18 +86,18 @@ CREATE TABLE poses (
     id TEXT PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
     sanskrit_name VARCHAR(255),
-    default_seconds INTEGER DEFAULT 30,
+    default_seconds INTEGER,
     icon TEXT,
     intensity INTEGER,
-    groups TEXT[] DEFAULT '{}',
+    groups TEXT[],
     family TEXT,
     description TEXT,
-    benefits TEXT[] DEFAULT '{}',
-    cues TEXT[] DEFAULT '{}',
+    benefits TEXT[],
+    cues TEXT[],
     plane TEXT,
     is_published BOOLEAN DEFAULT TRUE,
-    created_at TIMESTAMP DEFAULT NOW(),
-    updated_at TIMESTAMP DEFAULT NOW()
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT now(),
+    updated_at TIMESTAMP WITH TIME ZONE DEFAULT now()
 );
 
 -- Flows table
@@ -312,6 +312,8 @@ CREATE INDEX idx_users_role ON users(role);
 CREATE INDEX idx_users_active ON users(is_active);
 
 -- Pose indexes
+CREATE INDEX idx_poses_category ON poses(category);
+CREATE INDEX idx_poses_difficulty ON poses(difficulty);
 CREATE INDEX idx_poses_published ON poses(is_published);
 
 -- Flow indexes

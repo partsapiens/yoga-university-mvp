@@ -16,7 +16,7 @@ export enum PoseId {
 export type Pose = {
   id: PoseId;
   name: string;
-  sanskritName: string;
+  sanskrit: string;
   defaultSeconds: number; // Renaming to duration_sec can be done in a follow-up if needed to avoid breaking changes
   icon: string;
   intensity: 1 | 2 | 3 | 4 | 5;
