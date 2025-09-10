@@ -1,21 +1,44 @@
-import React from 'react';
+"use client";
+
+import React, { useState } from 'react';
 import { AIFlowGenerator } from '@/components/flows/AIFlowGenerator';
+import { PresetFlowsRow } from '@/components/flows/PresetFlowsRow';
+import { SaveFlowButton } from '@/components/flows/SaveFlowButton';
 
 const DashboardPage = () => {
+  const [flowName, setFlowName] = useState("");
+
   return (
     <div className="container mx-auto p-4 md:p-8">
       <h1 className="text-4xl font-bold mb-8">Your Dashboard</h1>
+
+      <PresetFlowsRow />
+
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
+        <div className="card p-6 flex flex-col">
+          <label className="block text-sm font-medium mb-2" htmlFor="flowName">
+            Flow Name
+          </label>
+          <input
+            id="flowName"
+            className="input"
+            placeholder="Evening Unwind"
+            value={flowName}
+            onChange={(e) => setFlowName(e.target.value)}
+          />
+        </div>
+
+        <AIFlowGenerator />
+
+        <div className="card p-6 flex items-center justify-center">
+          <SaveFlowButton flowName={flowName} />
+        </div>
+      </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         {/* Main column */}
         <div className="lg:col-span-2">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {/* Quick Actions */}
-            <div className="card p-6">
-              <h2 className="text-2xl font-bold mb-4">Quick Actions</h2>
-              <AIFlowGenerator />
-            </div>
-
             {/* Practice Statistics */}
             <div className="card p-6">
               <h2 className="text-2xl font-bold mb-4">Practice Statistics</h2>
@@ -23,6 +46,13 @@ const DashboardPage = () => {
               <p>Total Sessions: 0</p>
               <p>Time Practiced: 0 mins</p>
               <p>Current Streak: 0 days</p>
+            </div>
+
+            {/* Quick Actions / Placeholder */}
+            <div className="card p-6">
+              <h2 className="text-2xl font-bold mb-4">Quick Actions</h2>
+              {/* Additional quick actions can go here */}
+              <p className="text-muted-foreground">Select a preset or generate a flow.</p>
             </div>
           </div>
 
