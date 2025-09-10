@@ -9,6 +9,7 @@ import { SuggestionsGrid } from "@/components/flows/SuggestionsGrid";
 import { GeneratePreviewModal } from "@/components/flows/GeneratePreviewModal";
 import { Player } from "@/components/flows/Player";
 import { SavedFlows } from "@/components/flows/SavedFlows";
+import { PoseLibrarySidebar } from "@/components/flows/PoseLibrarySidebar";
 import { Focus, TimingMode, PoseId, SavedFlow, Pose } from "@/types/yoga";
 import { POSES } from "@/lib/yoga-data";
 import {
@@ -139,15 +140,35 @@ export default function CreateFlowPage() {
 
   return (
     <div className="min-h-screen bg-background text-foreground pb-40">
-      <header className="mx-auto max-w-5xl px-4 py-6">
+      <header className="mx-auto max-w-7xl px-4 py-6">
         <h1 className="text-3xl font-semibold text-center tracking-tight">Create your sequence</h1>
         <ControlPanel {...{ minutes, setMinutes, intensity, setIntensity, focus, setFocus, breathingCues, setBreathingCues, saferSequencing, setSaferSequencing, saveToDevice, setSaveToDevice, timingMode, setTimingMode, secPerBreath, setSecPerBreath, transitionSec, setTransitionSec, cooldownMin, setCooldownMin, onAutoGenerate: handleGenerate, flowName, setFlowName, onSaveFlow: handleSaveFlow, onLoadPreset: handleLoadPreset }} />
       </header>
-      <main className="mx-auto max-w-5xl px-4 pb-16">
+      
+      {/* Main content area with sidebar */}
+      <div className="mx-auto max-w-7xl px-4 pb-16">
         <SavedFlows flows={savedFlows} onLoad={handleLoadFlow} onDelete={handleDeleteFlow} />
-        <div className="mt-6"><PoseGrid {...{ flow, secondsPerPose, totalSeconds, onRemovePose: removePose, onUpdatePoseDuration: updatePoseDuration, timingMode, secPerBreath, onMovePose: movePose, dragIndexRef: dragIndex, activePoseIndex: playbackState !== 'idle' ? currentPoseIndex : -1, timeInPose }} /></div>
-        <SuggestionsGrid onAddPose={addPose} />
-      </main>
+        
+        <div className="space-y-6 mt-6">
+          {/* Main Flow Canvas */}
+          <div>
+            <PoseGrid {...{ flow, secondsPerPose, totalSeconds, onRemovePose: removePose, onUpdatePoseDuration: updatePoseDuration, timingMode, secPerBreath, onMovePose: movePose, dragIndexRef: dragIndex, activePoseIndex: playbackState !== 'idle' ? currentPoseIndex : -1, timeInPose }} />
+          </div>
+          
+          {/* Pose Library Section */}
+          <div className="bg-card border border-border rounded-lg">
+            <div className="h-96">
+              <PoseLibrarySidebar onAddPose={addPose} />
+            </div>
+          </div>
+          
+          {/* Keep suggestions as additional fallback */}
+          <div>
+            <SuggestionsGrid onAddPose={addPose} />
+          </div>
+        </div>
+      </div>
+      
       {flow.length > 0 && <Player {...{ isPlaying: playbackState === 'playing', isPaused: playbackState === 'paused', currentPoseId: flow[currentPoseIndex], nextPoseId: flow[currentPoseIndex + 1], timeInPose, currentPoseDuration: tempoAdjust(secondsPerPose[currentPoseIndex] ?? 0, playbackRate), sessionTotalSeconds: totalSeconds, sessionTimeRemaining, onPlay: handlePlay, onPause: handlePause, onResume: handleResume, onStop: handleStop, playbackRate, adjustRate }} />}
       <GeneratePreviewModal isOpen={!!preview} onClose={() => setPreview(null)} preview={preview} onShuffle={handleGenerate} onAccept={acceptPreview} />
     </div>
