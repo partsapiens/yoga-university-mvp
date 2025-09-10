@@ -29,15 +29,16 @@ export function listGroups(): string[] {
 export function readChapter(slug: string) {
   const file = path.join(process.cwd(), 'content/manual', slug, 'index.md');
   const raw = fs.readFileSync(file, 'utf8');
-  return matter(raw);
+  const { data, content } = matter(raw);
+  return { frontMatter: data as any, content };
 }
 
 export function neighborSlugs(manifest: Manifest, slug: string) {
   const idx = manifest.chapters.findIndex((c) => c.slug === slug);
   return {
-    prev: idx > 0 ? manifest.chapters[idx - 1].slug : null,
-    next: idx < manifest.chapters.length - 1 ? manifest.chapters[idx + 1].slug : null,
-    index: idx + 1,
+    prev: idx > 0 ? manifest.chapters[idx - 1] : null,
+    next: idx < manifest.chapters.length - 1 ? manifest.chapters[idx + 1] : null,
+    index: idx,
     total: manifest.chapters.length,
   };
 }
