@@ -1,11 +1,13 @@
 import { useState, useEffect } from 'react';
+import { analytics } from '../../utils/analytics';
 
 interface FavoriteButtonProps {
   poseId: string;
+  poseName?: string;
   className?: string;
 }
 
-export default function FavoriteButton({ poseId, className = "" }: FavoriteButtonProps) {
+export default function FavoriteButton({ poseId, poseName = '', className = "" }: FavoriteButtonProps) {
   const [isFavorite, setIsFavorite] = useState(false);
 
   useEffect(() => {
@@ -17,6 +19,7 @@ export default function FavoriteButton({ poseId, className = "" }: FavoriteButto
   const toggleFavorite = () => {
     const favorites = JSON.parse(localStorage.getItem('yogaFavorites') || '[]');
     let newFavorites;
+    const willBeFavorite = !isFavorite;
     
     if (isFavorite) {
       newFavorites = favorites.filter((id: string) => id !== poseId);
@@ -25,7 +28,10 @@ export default function FavoriteButton({ poseId, className = "" }: FavoriteButto
     }
     
     localStorage.setItem('yogaFavorites', JSON.stringify(newFavorites));
-    setIsFavorite(!isFavorite);
+    setIsFavorite(willBeFavorite);
+
+    // Track analytics
+    analytics.trackPoseFavorite(poseId, poseName, willBeFavorite);
   };
 
   return (
