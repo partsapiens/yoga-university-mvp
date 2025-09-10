@@ -24,7 +24,7 @@ export interface User {
 export interface Pose {
   id: string;
   name:string;
-  sanskritName: string;
+  sanskrit: string;
   description: string;
   imageUrl: string;
   videoUrl?: string;
