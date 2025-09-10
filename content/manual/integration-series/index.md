@@ -12,9 +12,8 @@ tags: []
 # Integration Series
 
 SUNSALUTATION B[ both sides, 3 sets ]
-
----
-[← Prev](/pages/page-054.md) &nbsp; [Top](/index.md) &nbsp; [Next →](/pages/page-056.md)
+- --
+[← Prev](/pages/page-054. md) &nbsp; [Top](/index. md) &nbsp; [Next →](/pages/page-056. md)
 
 # 3. 5
 
@@ -24,17 +23,15 @@ CORE SERIES
 CRESCENT LUNGE SERIESPART 1[ both sides ]
 CRESCENT LUNGE SERIESPART 2
 3. 5
-
----
-[← Prev](/pages/page-055.md) &nbsp; [Top](/index.md) &nbsp; [Next →](/pages/page-057.md)
+- --
+[← Prev](/pages/page-055. md) &nbsp; [Top](/index. md) &nbsp; [Next →](/pages/page-057. md)
 
 # SPINE SERIES
 
 BALANCING SERIES[ both sides ]
 SPINE SERIES
-
----
-[← Prev](/pages/page-056.md) &nbsp; [Top](/index.md) &nbsp; [Next →](/pages/page-058.md)
+- --
+[← Prev](/pages/page-056. md) &nbsp; [Top](/index. md) &nbsp; [Next →](/pages/page-058. md)
 
 # 3. 7
 
@@ -43,9 +40,8 @@ TRIANGLE SERIES[ both sides ]
 HIP SERIES[ both sides ]
 SURRENDER SERIES
 3. 7
-
----
-[← Prev](/pages/page-057.md) &nbsp; [Top](/index.md) &nbsp; [Next →](/pages/page-059.md)
+- --
+[← Prev](/pages/page-057. md) &nbsp; [Top](/index. md) &nbsp; [Next →](/pages/page-059. md)
 
 # Page 59
 
