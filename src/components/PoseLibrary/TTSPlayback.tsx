@@ -1,11 +1,14 @@
 import { useState } from 'react';
+import { analytics } from '../../utils/analytics';
 
 interface TTSPlaybackProps {
   text: string;
+  poseId?: string;
+  poseName?: string;
   className?: string;
 }
 
-export default function TTSPlayback({ text, className = "" }: TTSPlaybackProps) {
+export default function TTSPlayback({ text, poseId, poseName, className = "" }: TTSPlaybackProps) {
   const [isPlaying, setIsPlaying] = useState(false);
 
   const handlePlay = () => {
@@ -29,6 +32,11 @@ export default function TTSPlayback({ text, className = "" }: TTSPlaybackProps) 
     utterance.onerror = () => setIsPlaying(false);
 
     window.speechSynthesis.speak(utterance);
+
+    // Track analytics
+    if (poseId && poseName) {
+      analytics.trackTTSPlayback(poseId, poseName);
+    }
   };
 
   return (

@@ -2,6 +2,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import FavoriteButton from './FavoriteButton';
 import AddToFlowButton from './AddToFlowButton';
+import { analytics } from '../../utils/analytics';
 
 interface Pose {
   id: string;
@@ -28,6 +29,9 @@ export default function PoseCard({ pose }: PoseCardProps) {
       ].slice(0, 10); // Keep only last 10
       
       localStorage.setItem('recentPoses', JSON.stringify(updatedRecent));
+      
+      // Track analytics
+      analytics.trackPoseView(pose.id, pose.name_en);
     }
   };
 
@@ -48,7 +52,7 @@ export default function PoseCard({ pose }: PoseCardProps) {
     >
       {/* Favorite button - appears on hover */}
       <div className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 transition-opacity">
-        <FavoriteButton poseId={pose.id} className="text-yellow-500" />
+        <FavoriteButton poseId={pose.id} poseName={pose.name_en} className="text-yellow-500" />
       </div>
       
       <Link href={`/pose/${pose.slug}`} onClick={handleViewPose} tabIndex={-1}>
