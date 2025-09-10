@@ -10,6 +10,7 @@ import { GeneratePreviewModal } from "@/components/flows/GeneratePreviewModal";
 import { Player } from "@/components/flows/Player";
 import { SavedFlows } from "@/components/flows/SavedFlows";
 import { PoseLibrarySidebar } from "@/components/flows/PoseLibrarySidebar";
+import { ExportFlow } from "@/components/flows/ExportFlow";
 import { Focus, TimingMode, PoseId, SavedFlow, Pose } from "@/types/yoga";
 import { POSES } from "@/lib/yoga-data";
 import {
@@ -22,6 +23,12 @@ import {
   tempoAdjust,
   buildCues,
 } from "@/lib/yoga-helpers";
+import { 
+  downloadFlowAsJSON, 
+  printFlowAsPDF, 
+  generateShareableURL,
+  FlowExportData 
+} from "@/lib/flowExport";
 
 const clamp = (n: number, min: number, max: number) => Math.max(min, Math.min(max, n));
 
@@ -43,6 +50,9 @@ export default function CreateFlowPage() {
   const [cooldownMin, setCooldownMin] = useState<number>(2);
   const [preview, setPreview] = useState<PoseId[] | null>(null);
   const [flowName, setFlowName] = useState('');
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [userId, setUserId] = useState<string | null>(null);
+  const [saveToDatabase, setSaveToDatabase] = useState(false);
 
   // --- Persistence State ---
   const [localSaved, setLocalSaved] = useLocalStorage<SavedFlow[]>('yoga_saved_flows', []);
@@ -84,8 +94,102 @@ export default function CreateFlowPage() {
     }
   }, 1000); // Timer runs every second, tempo is handled by adjusting duration
 
-  // --- Handlers ---
-  const handleGenerate = () => setPreview(smartGenerate(minutes, intensity, focus));
+  // --- AI Flow Generation Handler ---
+  const handleGenerate = async () => {
+    try {
+      const requestData = {
+        duration: minutes,
+        difficulty: intensity <= 2 ? 'beginner' : intensity <= 4 ? 'intermediate' : 'advanced',
+        focus_areas: [focus.toLowerCase().replace('-', ' ')],
+        mood: intensity <= 2 ? 'calming' : intensity <= 4 ? 'balanced' : 'energizing'
+      };
+
+      const response = await fetch('/api/ai/generateFlow', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(requestData)
+      });
+
+      if (response.ok) {
+        const result = await response.json();
+        // Map database poses back to PoseId enum for compatibility
+        const generatedPoseIds = result.flow.map((item: any) => {
+          // This is a simplified mapping - in a real app, you'd want a more robust system
+          const poseName = item.pose?.name?.toLowerCase() || '';
+          if (poseName.includes('downward') && poseName.includes('dog')) return PoseId.DownDog;
+          if (poseName.includes('warrior') && poseName.includes('i')) return PoseId.Warrior1Right;
+          if (poseName.includes('forward') && poseName.includes('fold')) return PoseId.ForwardFold;
+          if (poseName.includes('child')) return PoseId.Child;
+          if (poseName.includes('butterfly')) return PoseId.Butterfly;
+          return PoseId.DownDog; // fallback
+        });
+        setPreview(generatedPoseIds);
+      } else {
+        // Fallback to legacy generation
+        setPreview(smartGenerate(minutes, intensity, focus));
+      }
+    } catch (error) {
+      console.error('Error generating AI flow:', error);
+      // Fallback to legacy generation
+      setPreview(smartGenerate(minutes, intensity, focus));
+    }
+  };
+
+  // --- Export Handlers ---
+  const createExportData = (): FlowExportData => ({
+    id: new Date().toISOString(),
+    name: flowName || 'Untitled Flow',
+    description: `A ${intensity <= 2 ? 'beginner' : intensity <= 4 ? 'intermediate' : 'advanced'} ${focus} yoga flow`,
+    poses: flow.map((poseId, index) => {
+      const pose = POSES.find(p => p.id === poseId);
+      return {
+        pose_id: poseId,
+        order_index: index,
+        duration: secondsPerPose[index] || 30,
+        pose: pose ? {
+          name: pose.name,
+          sanskrit_name: pose.sanskrit,
+          category: pose.family.toLowerCase(),
+          image_url: pose.icon || '',
+          description: `Practice ${pose.name} with awareness and proper alignment.`
+        } : undefined
+      };
+    }),
+    totalDuration: totalSeconds,
+    difficulty: intensity <= 2 ? 'beginner' : intensity <= 4 ? 'intermediate' : 'advanced',
+    focus_areas: [focus.toLowerCase().replace('-', ' ')],
+    created_at: new Date().toISOString()
+  });
+
+  const handleExportPDF = () => {
+    const exportData = createExportData();
+    printFlowAsPDF(exportData);
+  };
+
+  const handleGenerateShareLink = async () => {
+    const exportData = createExportData();
+    const shareableURL = generateShareableURL(exportData);
+    
+    // Copy to clipboard
+    try {
+      await navigator.clipboard.writeText(shareableURL);
+      alert('Share link copied to clipboard!');
+    } catch (error) {
+      // Fallback for browsers that don't support clipboard API
+      const textArea = document.createElement('textarea');
+      textArea.value = shareableURL;
+      document.body.appendChild(textArea);
+      textArea.select();
+      document.execCommand('copy');
+      document.body.removeChild(textArea);
+      alert('Share link copied to clipboard!');
+    }
+  };
+
+  const handleSaveAsJSON = () => {
+    const exportData = createExportData();
+    downloadFlowAsJSON(exportData);
+  };
   const acceptPreview = () => { if (preview) { setFlow(preview); setOverrides({}); setPreview(null); } };
   const removePose = (index: number) => { setFlow(flow.filter((_, i) => i !== index)); setOverrides(reindexOverridesAfterRemoval(overrides, index)); };
   const addPose = (id: PoseId) => setFlow([...flow, id]);
@@ -93,8 +197,85 @@ export default function CreateFlowPage() {
   const movePose = (from: number, to: number) => { setFlow(f => { const a = [...f]; const [i] = a.splice(from, 1); a.splice(to, 0, i); return a; }); setOverrides(moveOverrides(overrides, from, to)); };
   const handleLoadPreset = (presetFlow: PoseId[]) => { setFlow(presetFlow); setOverrides({}); };
 
-  // --- Persistence Handlers ---
-  const handleSaveFlow = () => { if (!flowName.trim()) return; setSavedFlows([...savedFlows, { id: new Date().toISOString(), name: flowName.trim(), flow, overrides }]); setFlowName(''); };
+  // Check authentication status
+  useEffect(() => {
+    // Simple check for authentication - in a real app, this would check actual auth state
+    const checkAuth = () => {
+      // Placeholder auth check - replace with actual authentication logic
+      const mockUserId = 'user-' + Math.random().toString(36).substr(2, 9);
+      setUserId(mockUserId);
+      setIsLoggedIn(true); // For demo purposes, assume user is logged in
+    };
+    
+    checkAuth();
+  }, []);
+
+  // --- Enhanced Persistence Handlers ---
+  const handleSaveFlow = async () => { 
+    if (!flowName.trim()) return; 
+    
+    if (saveToDatabase && isLoggedIn && userId) {
+      try {
+        // Save to database
+        const flowData = {
+          user_id: userId,
+          name: flowName.trim(),
+          description: `A ${intensity <= 2 ? 'beginner' : intensity <= 4 ? 'intermediate' : 'advanced'} ${focus} yoga flow`,
+          duration: Math.round(totalSeconds / 60),
+          difficulty: intensity <= 2 ? 'beginner' : intensity <= 4 ? 'intermediate' : 'advanced',
+          style: 'vinyasa', // Default style
+          focus_areas: [focus.toLowerCase().replace('-', ' ')],
+          is_public: false,
+          is_ai_generated: false,
+          tags: [],
+          poses: flow.map((poseId, index) => ({
+            pose_id: poseId,
+            order_index: index,
+            duration: secondsPerPose[index] || 30,
+            instructions: `Practice ${POSES.find(p => p.id === poseId)?.name || 'pose'} mindfully`
+          }))
+        };
+
+        const response = await fetch('/api/flows', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(flowData)
+        });
+
+        if (response.ok) {
+          console.log('Flow saved to database successfully');
+        } else {
+          console.error('Failed to save flow to database');
+          // Fall back to local storage
+          setSavedFlows([...savedFlows, { 
+            id: new Date().toISOString(), 
+            name: flowName.trim(), 
+            flow, 
+            overrides 
+          }]);
+        }
+      } catch (error) {
+        console.error('Error saving flow to database:', error);
+        // Fall back to local storage
+        setSavedFlows([...savedFlows, { 
+          id: new Date().toISOString(), 
+          name: flowName.trim(), 
+          flow, 
+          overrides 
+        }]);
+      }
+    } else {
+      // Save to local storage
+      setSavedFlows([...savedFlows, { 
+        id: new Date().toISOString(), 
+        name: flowName.trim(), 
+        flow, 
+        overrides 
+      }]);
+    }
+    
+    setFlowName(''); 
+  };
   const handleLoadFlow = (id: string) => { const f = savedFlows.find(x => x.id === id); if (f) { setFlow(f.flow); setOverrides(f.overrides); setFlowName(f.name); } };
   const handleDeleteFlow = (id: string) => setSavedFlows(savedFlows.filter(f => f.id !== id));
 
@@ -143,6 +324,18 @@ export default function CreateFlowPage() {
       <header className="mx-auto max-w-7xl px-4 py-6">
         <h1 className="text-3xl font-semibold text-center tracking-tight">Create your sequence</h1>
         <ControlPanel {...{ minutes, setMinutes, intensity, setIntensity, focus, setFocus, breathingCues, setBreathingCues, saferSequencing, setSaferSequencing, saveToDevice, setSaveToDevice, timingMode, setTimingMode, secPerBreath, setSecPerBreath, transitionSec, setTransitionSec, cooldownMin, setCooldownMin, onAutoGenerate: handleGenerate, flowName, setFlowName, onSaveFlow: handleSaveFlow, onLoadPreset: handleLoadPreset }} />
+        
+        {/* Authentication notice for saving */}
+        {!isLoggedIn && (
+          <div className="mt-4 p-3 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg text-center">
+            <p className="text-sm text-blue-800 dark:text-blue-200">
+              <strong>Note:</strong> You can create flows without logging in, but saving and exporting requires authentication.
+              <a href="/login" className="ml-2 text-blue-600 dark:text-blue-400 hover:underline">
+                Sign in here
+              </a>
+            </p>
+          </div>
+        )}
       </header>
       
       {/* Main content area with sidebar */}
@@ -166,6 +359,18 @@ export default function CreateFlowPage() {
           <div>
             <SuggestionsGrid onAddPose={addPose} />
           </div>
+
+          {/* Export Flow Section */}
+          {flow.length > 0 && isLoggedIn && (
+            <ExportFlow
+              flow={flow}
+              flowName={flowName}
+              totalDuration={totalSeconds}
+              onExportPDF={handleExportPDF}
+              onGenerateShareLink={handleGenerateShareLink}
+              onSaveAsJSON={handleSaveAsJSON}
+            />
+          )}
         </div>
       </div>
       
