@@ -32,11 +32,22 @@ async function fetchPracticeSessions(): Promise<PracticeSession[]> {
     return await res.json();
   } catch {
     const today = new Date();
-    return Array.from({ length: 5 }, (_, i) => ({
+    const flowTypes = ['vinyasa', 'hatha', 'restorative', 'power', 'yin'];
+    const difficulties: ('beginner' | 'intermediate' | 'advanced')[] = ['beginner', 'intermediate', 'advanced'];
+    const flowNames = [
+      'Morning Energizer', 'Evening Wind Down', 'Core Strength', 
+      'Hip Opener', 'Heart Opener', 'Stress Relief', 
+      'Power Flow', 'Gentle Stretch', 'Flow 9', 'Flow 10'
+    ];
+    
+    return Array.from({ length: 10 }, (_, i) => ({
       id: `${i}`,
-      flowName: `Flow ${i + 1}`,
-      duration: 30,
+      flowName: flowNames[i] || `Flow ${i + 1}`,
+      duration: 20 + Math.floor(Math.random() * 40), // 20-60 minutes
       completedAt: new Date(today.getFullYear(), today.getMonth(), today.getDate() - i).toISOString(),
+      type: flowTypes[i % flowTypes.length],
+      difficulty: difficulties[i % difficulties.length],
+      completed: Math.random() > 0.1, // 90% completion rate
     }));
   }
 }
@@ -56,11 +67,16 @@ async function fetchRecommendations(): Promise<RecommendationItem[]> {
 }
 
 async function fetchIntegrations(): Promise<IntegrationStatus[]> {
+  const now = new Date();
+  const lastWeek = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
+  const yesterday = new Date(now.getTime() - 24 * 60 * 60 * 1000);
+  const hourAgo = new Date(now.getTime() - 60 * 60 * 1000);
+  
   return [
-    { id: 'supabase', name: 'Supabase', connected: false },
-    { id: 'google-drive', name: 'Google Drive', connected: false },
+    { id: 'supabase', name: 'Supabase', connected: true, lastSyncedAt: hourAgo.toISOString() },
+    { id: 'google-drive', name: 'Google Drive', connected: true, lastSyncedAt: yesterday.toISOString() },
     { id: 'google-calendar', name: 'Google Calendar', connected: false },
-    { id: 'apple-health', name: 'Apple Health', connected: false },
+    { id: 'apple-health', name: 'Apple Health', connected: true, lastSyncedAt: lastWeek.toISOString() },
     { id: 'strava', name: 'Strava', connected: false },
     { id: 'notion', name: 'Notion', connected: false },
     { id: 'instagram', name: 'Instagram', connected: false },
@@ -70,8 +86,42 @@ async function fetchIntegrations(): Promise<IntegrationStatus[]> {
 }
 
 async function fetchNotifications(): Promise<NotificationItem[]> {
+  const now = new Date();
+  const today = new Date(now.getTime());
+  const yesterday = new Date(now.getTime() - 24 * 60 * 60 * 1000);
+  const weekAgo = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
+  
   return [
-    { id: 'note1', message: 'Welcome to Yoga Flow University!', createdAt: new Date().toISOString(), read: false },
+    { 
+      id: 'note1', 
+      message: 'Welcome to Yoga Flow University! Start your journey with a beginner flow.', 
+      createdAt: weekAgo.toISOString(), 
+      read: false 
+    },
+    { 
+      id: 'note2', 
+      message: 'Daily practice reminder: Take 15 minutes for yourself today.', 
+      createdAt: today.toISOString(), 
+      read: false 
+    },
+    { 
+      id: 'note3', 
+      message: 'Congratulations! You reached a 3-day practice streak milestone.', 
+      createdAt: yesterday.toISOString(), 
+      read: true 
+    },
+    { 
+      id: 'note4', 
+      message: 'New achievement unlocked: First Warrior Pose mastered!', 
+      createdAt: new Date(now.getTime() - 2 * 24 * 60 * 60 * 1000).toISOString(), 
+      read: false 
+    },
+    { 
+      id: 'note5', 
+      message: 'Weekly progress update: You practiced 4 sessions this week.', 
+      createdAt: new Date(now.getTime() - 3 * 24 * 60 * 60 * 1000).toISOString(), 
+      read: true 
+    },
   ];
 }
 
