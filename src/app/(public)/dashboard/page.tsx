@@ -1,6 +1,5 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import { PageLayout } from '@/components/layout/PageLayout';
-import { Suspense } from 'react';
 import { HeaderBar } from '@/components/dashboard/HeaderBar';
 import { HeroQuickStart } from '@/components/dashboard/HeroQuickStart';
 import { AIRecommendation } from '@/components/dashboard/AIRecommendation';
