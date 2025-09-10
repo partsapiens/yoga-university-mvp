@@ -149,22 +149,22 @@ export default function CreateFlowPage() {
       <div className="mx-auto max-w-7xl px-4 pb-16">
         <SavedFlows flows={savedFlows} onLoad={handleLoadFlow} onDelete={handleDeleteFlow} />
         
-        <div className="grid grid-cols-1 lg:grid-cols-4 gap-6 mt-6">
-          {/* Main Flow Canvas - Takes up 3/4 on large screens */}
-          <div className="lg:col-span-3">
+        <div className="space-y-6 mt-6">
+          {/* Main Flow Canvas */}
+          <div>
             <PoseGrid {...{ flow, secondsPerPose, totalSeconds, onRemovePose: removePose, onUpdatePoseDuration: updatePoseDuration, timingMode, secPerBreath, onMovePose: movePose, dragIndexRef: dragIndex, activePoseIndex: playbackState !== 'idle' ? currentPoseIndex : -1, timeInPose }} />
-            
-            {/* Keep suggestions as fallback below main content on small screens */}
-            <div className="mt-8 lg:hidden">
-              <SuggestionsGrid onAddPose={addPose} />
+          </div>
+          
+          {/* Pose Library Section */}
+          <div className="bg-card border border-border rounded-lg">
+            <div className="h-96">
+              <PoseLibrarySidebar onAddPose={addPose} />
             </div>
           </div>
           
-          {/* Pose Library Sidebar - Takes up 1/4 on large screens */}
-          <div className="lg:col-span-1 hidden lg:block">
-            <div className="sticky top-4 h-[calc(100vh-8rem)]">
-              <PoseLibrarySidebar onAddPose={addPose} />
-            </div>
+          {/* Keep suggestions as additional fallback */}
+          <div>
+            <SuggestionsGrid onAddPose={addPose} />
           </div>
         </div>
       </div>

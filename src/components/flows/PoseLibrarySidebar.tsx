@@ -4,6 +4,7 @@ import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { Search, Filter, ChevronDown, Heart, Plus } from 'lucide-react';
 import { supabase } from '@/utils/supabaseClient';
 import { PoseId } from '@/types/yoga';
+import { POSES } from '@/lib/yoga-data';
 
 interface Pose {
   id: string;
@@ -114,6 +115,21 @@ export function PoseLibrarySidebar({ onAddPose, className = '' }: PoseLibrarySid
     onAddPose(legacyPoseId);
   };
 
+  // Map existing POSES data to database format as fallback
+  const mapLegacyPoses = () => {
+    return POSES.map(pose => ({
+      id: pose.id,
+      name: pose.name,
+      sanskrit_name: pose.sanskrit,
+      category: pose.family.toLowerCase().replace(' ', '_'),
+      difficulty: pose.intensity <= 2 ? 'beginner' as const : pose.intensity <= 4 ? 'intermediate' as const : 'advanced' as const,
+      energy_level: pose.intensity <= 2 ? 'low' as const : pose.intensity <= 4 ? 'medium' as const : 'high' as const,
+      benefits: [],
+      anatomy_focus: pose.groups || [],
+      description: pose.description || `Practice ${pose.name} with awareness.`
+    }));
+  };
+
   const fetchPoses = useCallback(async (reset = false) => {
     setLoading(true);
     
@@ -167,8 +183,73 @@ export function PoseLibrarySidebar({ onAddPose, className = '' }: PoseLibrarySid
 
       const { data, error } = await query;
 
-      if (error) {
+      if (error && error.code !== 'PGRST116') { // PGRST116 is "table not found" error
         console.error('Error fetching poses:', error);
+        // Fall back to legacy poses
+        const legacyPoses = mapLegacyPoses();
+        if (reset) {
+          setPoses(legacyPoses);
+        } else {
+          setPoses(prev => [...prev, ...legacyPoses]);
+        }
+        setHasMore(false);
+        setLoading(false);
+        return;
+      }
+
+      // If no data from database, use legacy poses as fallback
+      if (!data || data.length === 0) {
+        const legacyPoses = mapLegacyPoses();
+        
+        // Apply filters to legacy poses
+        let filteredPoses = legacyPoses;
+        
+        if (searchTerm) {
+          filteredPoses = filteredPoses.filter(pose => 
+            pose.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            pose.sanskrit_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            pose.category.toLowerCase().includes(searchTerm.toLowerCase())
+          );
+        }
+        
+        if (filters.category.length > 0) {
+          filteredPoses = filteredPoses.filter(pose => 
+            filters.category.includes(pose.category)
+          );
+        }
+        
+        if (filters.difficulty.length > 0) {
+          filteredPoses = filteredPoses.filter(pose => 
+            filters.difficulty.includes(pose.difficulty)
+          );
+        }
+        
+        if (filters.energy_level.length > 0) {
+          filteredPoses = filteredPoses.filter(pose => 
+            filters.energy_level.includes(pose.energy_level)
+          );
+        }
+        
+        // Apply sorting
+        switch (sortBy) {
+          case 'alphabetical':
+            filteredPoses.sort((a, b) => a.name.localeCompare(b.name));
+            break;
+          case 'difficulty':
+            const difficultyOrder = { beginner: 1, intermediate: 2, advanced: 3 };
+            filteredPoses.sort((a, b) => difficultyOrder[a.difficulty] - difficultyOrder[b.difficulty]);
+            break;
+          case 'energy':
+            const energyOrder = { low: 1, medium: 2, high: 3 };
+            filteredPoses.sort((a, b) => energyOrder[a.energy_level] - energyOrder[b.energy_level]);
+            break;
+        }
+        
+        if (reset) {
+          setPoses(filteredPoses);
+        }
+        setHasMore(false);
+        setLoading(false);
         return;
       }
 
@@ -181,10 +262,24 @@ export function PoseLibrarySidebar({ onAddPose, className = '' }: PoseLibrarySid
       setHasMore((data || []).length === 20);
     } catch (error) {
       console.error('Error in fetchPoses:', error);
+      // Fall back to legacy poses on any error
+      const legacyPoses = mapLegacyPoses();
+      if (reset) {
+        setPoses(legacyPoses);
+      }
+      setHasMore(false);
     } finally {
       setLoading(false);
     }
   }, [searchTerm, filters, sortBy, page]);
+
+  // Debug effect
+  useEffect(() => {
+    console.log('PoseLibrarySidebar: poses loaded:', poses.length);
+    if (poses.length > 0) {
+      console.log('First pose:', poses[0]);
+    }
+  }, [poses]);
 
   // Reset and fetch when filters change
   useEffect(() => {
