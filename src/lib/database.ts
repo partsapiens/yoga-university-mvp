@@ -24,19 +24,26 @@ export const getSupabase = (): SupabaseClient | null => {
 
 // Transform database pose to legacy pose format for backward compatibility
 function transformDatabasePoseToLegacy(dbPose: DatabasePose): Pose {
+  // Map level to difficulty
+  const difficulty = dbPose.level === 'beginner' ? 'beginner' : 
+                    dbPose.level === 'advanced' ? 'advanced' : 'intermediate';
+  
+  // Map intensity to a scale of 1-10 (default to 5 if not set)
+  const intensity = dbPose.intensity || 5;
+  
   return {
     id: dbPose.id,
     name: dbPose.name,
-    sanskritName: dbPose.sanskrit_name || '',
-    description: dbPose.description,
-    imageUrl: dbPose.image_url || '',
-    videoUrl: dbPose.video_url || undefined,
-    difficulty: dbPose.difficulty,
-    categories: [dbPose.category as any], // Map category to categories array
-    intensity: dbPose.energy_level === 'low' ? 3 : dbPose.energy_level === 'medium' ? 5 : 7,
-    isUnilateral: false, // Default value
-    benefits: dbPose.benefits,
-    contraindications: dbPose.contraindications,
+    sanskritName: dbPose.sanskrit || '',
+    description: dbPose.instructions || '',
+    imageUrl: dbPose.image_url || dbPose.thumbnail_url || '',
+    videoUrl: undefined, // Not in current schema
+    difficulty,
+    categories: dbPose.category ? [dbPose.category as any] : ['standing'], // Default category
+    intensity,
+    isUnilateral: dbPose.sides === 'left' || dbPose.sides === 'right', // Check if unilateral
+    benefits: dbPose.benefits || [],
+    contraindications: dbPose.contraindications ? [dbPose.contraindications] : [],
   };
 }
 
@@ -50,64 +57,100 @@ export const getPosesFromDatabase = async (): Promise<DatabasePose[]> => {
     if (!connectionTest) {
       console.log('Supabase connection test failed, falling back to sample data for testing');
       
-      // Return sample data for testing when connection fails
+      // Return sample data for testing when connection fails, using correct schema
       const samplePoses: DatabasePose[] = [
         {
           id: 'sample-1',
+          slug: 'mountain-pose',
           name: 'Mountain Pose',
-          sanskrit_name: 'Tadasana',
+          sanskrit: 'Tadasana',
           category: 'standing',
-          difficulty: 'beginner',
-          description: 'A foundational standing pose that teaches grounding and alignment.',
+          level: 'beginner',
+          plane: 'frontal',
+          thumbnail_url: '/images/poses/mountain-pose.jpg',
+          icon: '🏔️',
+          meta: {},
+          cues: ['Stand tall', 'Ground through feet', 'Reach crown up'],
           benefits: ['Improves posture', 'Strengthens legs', 'Promotes focus'],
-          contraindications: ['None for most practitioners'],
-          instructions: ['Stand tall with feet hip-width apart', 'Engage leg muscles', 'Reach crown of head toward ceiling'],
-          image_url: '/images/poses/mountain-pose.jpg',
-          video_url: null,
-          anatomy_focus: ['Legs', 'Core', 'Spine'],
-          energy_level: 'low',
-          is_published: true,
-          created_by: null,
           created_at: new Date().toISOString(),
-          updated_at: new Date().toISOString()
+          hold_time: 30,
+          image_url: '/images/poses/mountain-pose.jpg',
+          instructions: 'Stand tall with feet hip-width apart. Engage leg muscles. Reach crown of head toward ceiling.',
+          modifications: 'Use wall for support if needed',
+          contraindications: 'None for most practitioners',
+          anatomical_focus: ['Legs', 'Core', 'Spine'],
+          other_side_slug: null,
+          intensity: 2,
+          sort_order: 1,
+          family: 'standing',
+          sides: 'both',
+          aka: ['Samasthiti'],
+          related_next_slugs: ['forward-fold'],
+          counterpose_slugs: ['childs-pose'],
+          transitions_in: [],
+          transitions_out: ['forward-fold']
         },
         {
           id: 'sample-2',
+          slug: 'downward-dog',
           name: 'Downward Dog',
-          sanskrit_name: 'Adho Mukha Svanasana',
+          sanskrit: 'Adho Mukha Svanasana',
           category: 'inversion',
-          difficulty: 'beginner',
-          description: 'An energizing inversion that strengthens the whole body.',
+          level: 'beginner',
+          plane: 'sagittal',
+          thumbnail_url: '/images/poses/downward-dog.jpg',
+          icon: '🐕',
+          meta: {},
+          cues: ['Start on hands and knees', 'Tuck toes', 'Lift hips up'],
           benefits: ['Strengthens arms and legs', 'Stretches hamstrings', 'Energizes the body'],
-          contraindications: ['Wrist injuries', 'High blood pressure'],
-          instructions: ['Start on hands and knees', 'Tuck toes and lift hips', 'Straighten legs as much as possible'],
-          image_url: '/images/poses/downward-dog.jpg',
-          video_url: null,
-          anatomy_focus: ['Arms', 'Legs', 'Back'],
-          energy_level: 'medium',
-          is_published: true,
-          created_by: null,
           created_at: new Date().toISOString(),
-          updated_at: new Date().toISOString()
+          hold_time: 60,
+          image_url: '/images/poses/downward-dog.jpg',
+          instructions: 'Start on hands and knees. Tuck toes and lift hips. Straighten legs as much as possible.',
+          modifications: 'Bend knees if hamstrings are tight',
+          contraindications: 'Wrist injuries, High blood pressure',
+          anatomical_focus: ['Arms', 'Legs', 'Back'],
+          other_side_slug: null,
+          intensity: 3,
+          sort_order: 2,
+          family: 'inversion',
+          sides: 'both',
+          aka: ['Down Dog'],
+          related_next_slugs: ['plank'],
+          counterpose_slugs: ['childs-pose'],
+          transitions_in: ['plank'],
+          transitions_out: ['plank', 'low-lunge']
         },
         {
           id: 'sample-3',
+          slug: 'childs-pose',
           name: 'Child\'s Pose',
-          sanskrit_name: 'Balasana',
+          sanskrit: 'Balasana',
           category: 'restorative',
-          difficulty: 'beginner',
-          description: 'A restful pose that calms the mind and gently stretches the back.',
+          level: 'beginner',
+          plane: 'sagittal',
+          thumbnail_url: '/images/poses/childs-pose.jpg',
+          icon: '🧘',
+          meta: {},
+          cues: ['Kneel on floor', 'Sit back on heels', 'Fold forward'],
           benefits: ['Calms the nervous system', 'Stretches back and hips', 'Relieves stress'],
-          contraindications: ['Knee injuries'],
-          instructions: ['Kneel on the floor', 'Sit back on heels', 'Fold forward with arms extended'],
-          image_url: '/images/poses/childs-pose.jpg',
-          video_url: null,
-          anatomy_focus: ['Back', 'Hips', 'Shoulders'],
-          energy_level: 'low',
-          is_published: true,
-          created_by: null,
           created_at: new Date().toISOString(),
-          updated_at: new Date().toISOString()
+          hold_time: 90,
+          image_url: '/images/poses/childs-pose.jpg',
+          instructions: 'Kneel on the floor. Sit back on heels. Fold forward with arms extended.',
+          modifications: 'Place pillow between calves and thighs if knees are tight',
+          contraindications: 'Knee injuries',
+          anatomical_focus: ['Back', 'Hips', 'Shoulders'],
+          other_side_slug: null,
+          intensity: 1,
+          sort_order: 3,
+          family: 'restorative',
+          sides: 'both',
+          aka: ['Balasana'],
+          related_next_slugs: ['table-top'],
+          counterpose_slugs: ['camel'],
+          transitions_in: ['downward-dog'],
+          transitions_out: ['table-top']
         }
       ];
       
@@ -115,10 +158,11 @@ export const getPosesFromDatabase = async (): Promise<DatabasePose[]> => {
       return samplePoses;
     }
     
+    // Query all poses from the table (no is_published filter since it's not in schema)
     const { data, error } = await supabase
       .from('poses')
       .select('*')
-      .eq('is_published', true)
+      .order('sort_order', { ascending: true, nullsFirst: false })
       .order('name');
     
     if (error) {
@@ -137,8 +181,8 @@ export const getPosesFromDatabase = async (): Promise<DatabasePose[]> => {
     } else {
       console.warn('No poses found in database. Check if:');
       console.warn('1. The poses table exists and has data');
-      console.warn('2. There are poses with is_published = true');
-      console.warn('3. The database connection is working properly');
+      console.warn('2. The database connection is working properly');
+      console.warn('3. The table schema matches expectations');
     }
     
     return data as DatabasePose[];
@@ -169,6 +213,7 @@ export const testSupabaseConnection = async (): Promise<boolean> => {
     console.log('Supabase URL:', supabaseUrl);
     console.log('Supabase Key (first 20 chars):', supabaseAnonKey.substring(0, 20) + '...');
     
+    // Test connection by getting count of poses
     const { data, error } = await supabase
       .from('poses')
       .select('count', { count: 'exact', head: true });
@@ -229,33 +274,38 @@ export const debugDatabaseConnection = async (): Promise<void> => {
     }
     
     if (!poses || poses.length === 0) {
-      console.log('⚠️ Poses table is empty or no published poses found');
+      console.log('⚠️ Poses table is empty');
       
-      // Check if table exists but no published poses
-      const { data: allPoses, error: allPosesError } = await supabase
+      // Check total count
+      const { count, error: countError } = await supabase
         .from('poses')
-        .select('count', { count: 'exact', head: true });
+        .select('*', { count: 'exact', head: true });
         
-      if (!allPosesError) {
-        console.log('Total poses in table (including unpublished):', allPoses);
+      if (!countError) {
+        console.log('Total poses in table:', count);
       }
     } else {
       console.log('✅ Poses table accessible');
       console.log('Sample pose structure:', Object.keys(poses[0]));
+      console.log('Sample pose data:', poses[0]);
     }
     
-    // Test published poses specifically
-    console.log('3. Testing published poses filter...');
-    const { data: publishedPoses, error: publishedError } = await supabase
+    // Test ordering
+    console.log('3. Testing ordering...');
+    const { data: orderedPoses, error: orderError } = await supabase
       .from('poses')
-      .select('*')
-      .eq('is_published', true)
-      .limit(1);
+      .select('id, name, sort_order')
+      .order('sort_order', { ascending: true, nullsFirst: false })
+      .order('name')
+      .limit(3);
       
-    if (publishedError) {
-      console.error('❌ Published poses query failed:', publishedError);
+    if (orderError) {
+      console.error('❌ Ordering query failed:', orderError);
     } else {
-      console.log(`✅ Found ${publishedPoses?.length || 0} published poses`);
+      console.log(`✅ Found ${orderedPoses?.length || 0} poses with ordering`);
+      if (orderedPoses && orderedPoses.length > 0) {
+        console.log('Sample ordered poses:', orderedPoses);
+      }
     }
     
   } catch (error) {

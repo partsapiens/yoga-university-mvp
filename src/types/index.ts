@@ -21,25 +21,37 @@ export interface User {
 }
 
 // 2. Pose and Flow Data Structures
-// Database pose type matching Supabase schema
+// Database pose type matching actual Supabase schema
 export interface DatabasePose {
   id: string;
+  slug: string;
   name: string;
-  sanskrit_name: string | null;
-  category: 'standing' | 'seated' | 'supine' | 'prone' | 'backbend' | 'forward_fold' | 'twist' | 'inversion' | 'arm_balance' | 'hip_opener' | 'core' | 'balance' | 'restorative' | 'meditation';
-  difficulty: 'beginner' | 'intermediate' | 'advanced';
-  description: string;
-  benefits: string[];
-  contraindications: string[];
-  instructions: string[];
+  sanskrit: string | null;
+  category: string | null;
+  level: string | null;
+  plane: string | null;
+  thumbnail_url: string | null;
+  icon: string | null;
+  meta: any; // jsonb
+  cues: string[] | null;
+  benefits: string[] | null;
+  created_at: string | null;
+  hold_time: number | null;
   image_url: string | null;
-  video_url: string | null;
-  anatomy_focus: string[];
-  energy_level: 'low' | 'medium' | 'high';
-  is_published: boolean;
-  created_by: string | null;
-  created_at: string;
-  updated_at: string;
+  instructions: string | null;
+  modifications: string | null;
+  contraindications: string | null;
+  anatomical_focus: string[] | null;
+  other_side_slug: string | null;
+  intensity: number | null;
+  sort_order: number | null;
+  family: string | null;
+  sides: string | null;
+  aka: string[] | null;
+  related_next_slugs: string[] | null;
+  counterpose_slugs: string[] | null;
+  transitions_in: string[] | null;
+  transitions_out: string[] | null;
 }
 
 // Legacy Pose interface for backward compatibility

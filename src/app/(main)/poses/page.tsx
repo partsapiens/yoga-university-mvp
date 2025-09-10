@@ -29,22 +29,27 @@ interface ExtendedPose {
 
 // Transform database poses to extended format
 const transformDatabasePose = (dbPose: DatabasePose): ExtendedPose => {
-  const intensityMap = { 'low': 2, 'medium': 3, 'high': 4 };
+  // Map intensity (1-5 scale to 1-10 scale)
+  const intensity = dbPose.intensity ? Math.min(Math.max(dbPose.intensity, 1), 5) : 3;
+  
+  // Map level to difficulty
+  const difficulty = dbPose.level === 'beginner' ? 'beginner' : 
+                    dbPose.level === 'advanced' ? 'advanced' : 'intermediate';
   
   return {
     id: dbPose.id,
-    slug: dbPose.name.toLowerCase().replace(/\s+/g, '-'),
+    slug: dbPose.slug || dbPose.name.toLowerCase().replace(/\s+/g, '-'),
     name_en: dbPose.name,
-    name_sanskrit: dbPose.sanskrit_name || '',
-    family_id: dbPose.category,
-    intensity: intensityMap[dbPose.energy_level] || 3,
-    thumbnail_url: dbPose.image_url || `/images/poses/default.jpg`,
-    icon_url: '🧘', // Default icon
-    benefits: dbPose.benefits,
-    bodyFocus: dbPose.anatomy_focus,
+    name_sanskrit: dbPose.sanskrit || '',
+    family_id: dbPose.category || dbPose.family || 'standing',
+    intensity: intensity,
+    thumbnail_url: dbPose.thumbnail_url || dbPose.image_url || `/images/poses/default.jpg`,
+    icon_url: dbPose.icon || '🧘', // Default icon
+    benefits: dbPose.benefits || [],
+    bodyFocus: dbPose.anatomical_focus || [],
     propsRequired: ['None'], // Default for now
-    difficulty: dbPose.difficulty,
-    planeOfMotion: ['Sagittal'] // Default for now
+    difficulty: difficulty,
+    planeOfMotion: dbPose.plane ? [dbPose.plane] : ['Sagittal'] // Default for now
   };
 };
 

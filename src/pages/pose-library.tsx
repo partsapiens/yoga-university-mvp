@@ -39,23 +39,23 @@ export default function PoseLibraryPage() {
     setLoading(true);
     console.log('Fetching poses with filters:', filters, 'search:', search, 'sort:', sort);
     
-    let query = supabase.from('poses').select('*').eq('is_published', true);
+    let query = supabase.from('poses').select('*');
 
-    // Apply filters (family -> category, intensity -> energy_level)
+    // Apply filters (family -> category, intensity -> level mapping)
     if (filters.family) query = query.eq('category', filters.family);
     if (filters.intensity) {
-      // Map intensity numbers to energy levels
-      const energyLevel = filters.intensity <= 2 ? 'low' : filters.intensity <= 4 ? 'medium' : 'high';
-      query = query.eq('energy_level', energyLevel);
+      // Map intensity numbers to level names
+      const level = filters.intensity <= 2 ? 'beginner' : filters.intensity <= 4 ? 'intermediate' : 'advanced';
+      query = query.eq('level', level);
     }
 
     // Search by name/Sanskrit using correct field names
     if (search)
-      query = query.or(`name.ilike.%${search}%,sanskrit_name.ilike.%${search}%,category.ilike.%${search}%`);
+      query = query.or(`name.ilike.%${search}%,sanskrit.ilike.%${search}%,category.ilike.%${search}%`);
 
     // Sorting using correct field names
     if (sort === 'alphabetical') query = query.order('name');
-    if (sort === 'intensity') query = query.order('energy_level');
+    if (sort === 'intensity') query = query.order('intensity');
     if (sort === 'recent') query = query.order('created_at', { ascending: false });
 
     // Pagination
