@@ -9,5 +9,5 @@ tags: []
 # Intention Series
 
 1:04
-- 1:05ExhaleStand at Attention
-- Samasthiti3B
+- 1:05 Exhale Stand at Attention
+- Samasthiti 3 B

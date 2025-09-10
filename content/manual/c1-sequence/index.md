@@ -9,7 +9,7 @@ summary: >-
   [ both sides ]Crescent Lun…
 tags: []
 ---
-# C1 Sequence
+# C 1 Sequence
 
 1:20
 - 1:231:04
@@ -17,7 +17,7 @@ tags: []
 - --
 
 #
-3. 3CRESCENT LUNGE SERIES [ both sides ]Crescent Lunge AnjaneyasanaRevolved Crescent Lunge Parivrtta AnjaneyasanaRunner’s LungeSide Plank VasisthasanaPrayer Twist Parivrtta UtkatasanaGorilla Pose PadahastasanaCrow Pose BakasanaBALANCING SERIES [ both sides ]Eagle Pose GarudasanaDancer’s Pose NatarajasanaTree Pose VrksasanaTRIANGLE SERIES [ both sides ] Warrior One Virabhadrasana I Warrior Two Virabhadrasana II Triangle Pose TrikonasanaWide Leg Forward Fold Prasarita PadottanasanaHIP SERIES [ both sides ]Half Pigeon Eka Pada RajakapotasanaSPINE SERIES Cobra Pose BhujangasanaBow Pose DhanurasanaCamel Pose UstrasanaBridge Pose Setu Bandha SarvangasanaReclined Bound Angle Pose Supta Baddha KonasanaSURRENDER SERIES Seated Forward Fold PaschimottanasanaHappy Baby Pose Ananda BalasanaSupine Twist Jathara ParivartanasanaCorpse Pose SavasanaEasy Pose Sukhasana1:23 - 1:33
+3. 3 CRESCENT LUNGE SERIES [ both sides ]Crescent Lunge Anjaneyasana Revolved Crescent Lunge Parivrtta Anjaneyasana Runner’s Lunge Side Plank Vasisthasana Prayer Twist Parivrtta Utkatasana Gorilla Pose Padahastasana Crow Pose Bakasana BALANCING SERIES [ both sides ]Eagle Pose Garudasana Dancer’s Pose Natarajasana Tree Pose Vrksasana TRIANGLE SERIES [ both sides ] Warrior One Virabhadrasana I Warrior Two Virabhadrasana II Triangle Pose Trikonasana Wide Leg Forward Fold Prasarita Padottanasana HIP SERIES [ both sides ]Half Pigeon Eka Pada Rajakapotasana SPINE SERIES Cobra Pose Bhujangasana Bow Pose Dhanurasana Camel Pose Ustrasana Bridge Pose Setu Bandha Sarvangasana Reclined Bound Angle Pose Supta Baddha Konasana SURRENDER SERIES Seated Forward Fold Paschimottanasana Happy Baby Pose Ananda Balasana Supine Twist Jathara Parivartanasana Corpse Pose Savasana Easy Pose Sukhasana 1:23 - 1:33
 
 1:53
 - 2:001:47

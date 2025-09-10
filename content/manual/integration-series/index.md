@@ -36,7 +36,7 @@ HIP SERIES[ both sides ]
 SURRENDER SERIES
 3. 7
 - --
-3. 8© Yoga Flow YOGA C1 Transition ChartINTEGRATION SERIES —Child’s Pose
-- Balasana2 minTransition“Inhale Table Top...”ExhaleDownward Facing Dog
-- Adho Mukha Svanasana1 minTransition“Inhale look forward, Exhale Ragdoll walk to the top of your mat...”ExhaleRagdoll
-- Uttanasana1 minTransition“Release your fingertips to the mat, Toe-heel your feet together, Inhale roll yourself up to standing...”
+3. 8© Yoga Flow YOGA C 1 Transition Chart INTEGRATION SERIES —Child’s Pose
+- Balasana 2 min Transition“Inhale Table Top...”Exhale Downward Facing Dog
+- Adho Mukha Svanasana 1 min Transition“Inhale look forward, Exhale Ragdoll walk to the top of your mat...”Exhale Ragdoll
+- Uttanasana 1 min Transition“Release your fingertips to the mat, Toe-heel your feet together, Inhale roll yourself up to standing...”
