@@ -126,7 +126,7 @@ export function PoseLibrarySidebar({ onAddPose, className = '' }: PoseLibrarySid
       energy_level: pose.intensity <= 2 ? 'low' as const : pose.intensity <= 4 ? 'medium' as const : 'high' as const,
       benefits: [],
       anatomy_focus: pose.groups || [],
-      description: pose.description || `Practice ${pose.name} with awareness.`
+      description: `Practice ${pose.name} with awareness.`
     }));
   };
 
