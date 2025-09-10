@@ -2,8 +2,8 @@ import type { NextApiRequest, NextApiResponse } from 'next';
 import { supabase } from '../../utils/supabaseClient';
 
 interface QueryFilters {
-  family?: string[];
-  intensity?: number[];
+  category?: string[];
+  energy_level?: string[];
   search?: string;
   favorites?: string[];
   page?: number;
@@ -14,8 +14,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   if (req.method === 'GET') {
     try {
       const {
-        family,
-        intensity,
+        category,
+        energy_level,
         search,
         favorites,
         page = 1,
@@ -25,23 +25,24 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       // Start building the query
       let query = supabase
         .from('poses')
-        .select('*', { count: 'exact' });
+        .select('*', { count: 'exact' })
+        .eq('is_published', true);
 
-      // Apply family filter
-      if (family) {
-        const familyArray = Array.isArray(family) ? family : [family];
-        query = query.in('family_id', familyArray);
+      // Apply category filter
+      if (category) {
+        const categoryArray = Array.isArray(category) ? category : [category];
+        query = query.in('category', categoryArray);
       }
 
-      // Apply intensity filter
-      if (intensity) {
-        const intensityArray = Array.isArray(intensity) ? intensity.map(Number) : [Number(intensity)];
-        query = query.in('intensity', intensityArray);
+      // Apply energy level filter
+      if (energy_level) {
+        const energyArray = Array.isArray(energy_level) ? energy_level : [energy_level];
+        query = query.in('energy_level', energyArray);
       }
 
       // Apply search filter
       if (search) {
-        query = query.or(`name_en.ilike.%${search}%,name_sanskrit.ilike.%${search}%,family_id.ilike.%${search}%`);
+        query = query.or(`name.ilike.%${search}%,sanskrit_name.ilike.%${search}%,category.ilike.%${search}%`);
       }
 
       // Apply favorites filter
@@ -56,7 +57,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       const from = (pageNum - 1) * limitNum;
       const to = from + limitNum - 1;
 
-      query = query.range(from, to).order('name_en');
+      query = query.range(from, to).order('name');
 
       const { data, error, count } = await query;
       
