@@ -37,19 +37,25 @@ export default function PoseLibraryPage() {
 
   async function fetchPoses(isInit = false) {
     setLoading(true);
-    let query = supabase.from('poses').select('*');
+    console.log('Fetching poses with filters:', filters, 'search:', search, 'sort:', sort);
+    
+    let query = supabase.from('poses').select('*').eq('is_published', true);
 
-    // Apply filters (family, intensity)
-    if (filters.family) query = query.eq('family_id', filters.family);
-    if (filters.intensity) query = query.eq('intensity', filters.intensity);
+    // Apply filters (family -> category, intensity -> energy_level)
+    if (filters.family) query = query.eq('category', filters.family);
+    if (filters.intensity) {
+      // Map intensity numbers to energy levels
+      const energyLevel = filters.intensity <= 2 ? 'low' : filters.intensity <= 4 ? 'medium' : 'high';
+      query = query.eq('energy_level', energyLevel);
+    }
 
-    // Search by name/Sanskrit
+    // Search by name/Sanskrit using correct field names
     if (search)
-      query = query.ilike('name_en', `%${search}%`).or(`name_sanskrit.ilike.%${search}%`);
+      query = query.or(`name.ilike.%${search}%,sanskrit_name.ilike.%${search}%,category.ilike.%${search}%`);
 
-    // Sorting
-    if (sort === 'alphabetical') query = query.order('name_en');
-    if (sort === 'intensity') query = query.order('intensity');
+    // Sorting using correct field names
+    if (sort === 'alphabetical') query = query.order('name');
+    if (sort === 'intensity') query = query.order('energy_level');
     if (sort === 'recent') query = query.order('created_at', { ascending: false });
 
     // Pagination
@@ -58,10 +64,12 @@ export default function PoseLibraryPage() {
     const { data, error } = await query;
 
     if (error) {
+      console.error('Error fetching poses:', error);
       setLoading(false);
       return;
     }
 
+    console.log(`Successfully fetched ${data?.length || 0} poses`);
     if (isInit) setPoses(data || []);
     else setPoses((prev) => [...prev, ...(data || [])]);
 

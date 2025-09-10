@@ -80,8 +80,20 @@ const PoseLibraryPage = () => {
       try {
         setLoading(true);
         console.log('Loading poses from database...');
+        
+        // Import debug function dynamically to avoid build issues
+        const { getPosesFromDatabase, debugDatabaseConnection } = await import('@/lib/database');
+        
+        // Run debug to help diagnose issues
+        await debugDatabaseConnection();
+        
         const dbPoses = await getPosesFromDatabase();
-        console.log('Database poses received:', dbPoses);
+        console.log('Database poses received:', dbPoses.length);
+        
+        if (dbPoses.length === 0) {
+          console.warn('No poses loaded from database - check console for debug information');
+        }
+        
         const transformedPoses = dbPoses.map(transformDatabasePose);
         setPoses(transformedPoses);
         setFilteredPoses(transformedPoses);
@@ -286,19 +298,40 @@ const PoseLibraryPage = () => {
 
             {filteredPoses.length === 0 && !loading && (
               <div className="text-center py-12">
-                <p className="text-gray-500 dark:text-gray-400 text-lg">
-                  No poses found matching your criteria
-                </p>
-                <button
-                  onClick={() => {
-                    setSearch('');
-                    setFilters({});
-                    setQuickFilters({});
-                  }}
-                  className="mt-4 px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700"
-                >
-                  Clear All Filters
-                </button>
+                {poses.length === 0 ? (
+                  <div>
+                    <p className="text-gray-500 dark:text-gray-400 text-lg mb-4">
+                      No poses found in database
+                    </p>
+                    <p className="text-gray-400 dark:text-gray-500 text-sm mb-4">
+                      This might be due to:
+                    </p>
+                    <ul className="text-gray-400 dark:text-gray-500 text-sm text-left max-w-md mx-auto space-y-1">
+                      <li>• Database connection issues</li>
+                      <li>• No published poses in the database</li>
+                      <li>• Configuration problems with Supabase</li>
+                    </ul>
+                    <p className="text-gray-400 dark:text-gray-500 text-xs mt-4">
+                      Check the browser console for detailed debug information
+                    </p>
+                  </div>
+                ) : (
+                  <div>
+                    <p className="text-gray-500 dark:text-gray-400 text-lg">
+                      No poses found matching your criteria
+                    </p>
+                    <button
+                      onClick={() => {
+                        setSearch('');
+                        setFilters({});
+                        setQuickFilters({});
+                      }}
+                      className="mt-4 px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700"
+                    >
+                      Clear All Filters
+                    </button>
+                  </div>
+                )}
               </div>
             )}
           </div>

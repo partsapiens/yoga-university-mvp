@@ -43,6 +43,14 @@ function transformDatabasePoseToLegacy(dbPose: DatabasePose): Pose {
 export const getPosesFromDatabase = async (): Promise<DatabasePose[]> => {
   try {
     console.log('Attempting to fetch poses from Supabase...');
+    
+    // Test connection first
+    const connectionTest = await testSupabaseConnection();
+    if (!connectionTest) {
+      console.error('Supabase connection test failed');
+      return [];
+    }
+    
     const { data, error } = await supabase
       .from('poses')
       .select('*')
@@ -50,11 +58,25 @@ export const getPosesFromDatabase = async (): Promise<DatabasePose[]> => {
       .order('name');
     
     if (error) {
-      console.error('Error fetching poses from Supabase:', error);
+      console.error('Error fetching poses from Supabase:', {
+        message: error.message,
+        details: error.details,
+        hint: error.hint,
+        code: error.code
+      });
       return [];
     }
     
     console.log(`Successfully fetched ${data?.length || 0} poses from Supabase`);
+    if (data && data.length > 0) {
+      console.log('Sample pose structure:', JSON.stringify(data[0], null, 2));
+    } else {
+      console.warn('No poses found in database. Check if:');
+      console.warn('1. The poses table exists and has data');
+      console.warn('2. There are poses with is_published = true');
+      console.warn('3. The database connection is working properly');
+    }
+    
     return data as DatabasePose[];
   } catch (error) {
     console.error('Error in getPosesFromDatabase:', error);
@@ -66,12 +88,34 @@ export const getPosesFromDatabase = async (): Promise<DatabasePose[]> => {
 export const testSupabaseConnection = async (): Promise<boolean> => {
   try {
     console.log('Testing Supabase connection...');
+    
+    // Check if environment variables are set
+    const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+    const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+    
+    if (!supabaseUrl || !supabaseAnonKey) {
+      console.error('Supabase environment variables not configured:', {
+        url: !!supabaseUrl,
+        key: !!supabaseAnonKey
+      });
+      return false;
+    }
+    
+    console.log('Environment variables check passed');
+    console.log('Supabase URL:', supabaseUrl);
+    console.log('Supabase Key (first 20 chars):', supabaseAnonKey.substring(0, 20) + '...');
+    
     const { data, error } = await supabase
       .from('poses')
       .select('count', { count: 'exact', head: true });
     
     if (error) {
-      console.error('Supabase connection test failed:', error);
+      console.error('Supabase connection test failed:', {
+        message: error.message,
+        details: error.details,
+        hint: error.hint,
+        code: error.code
+      });
       return false;
     }
     
@@ -91,4 +135,68 @@ export const getPoses = async (): Promise<Pose[]> => {
 export const getFlows = async () => {
   // TODO: Implement actual data fetching
   return [];
+};
+
+// Debug function to help diagnose database issues
+export const debugDatabaseConnection = async (): Promise<void> => {
+  console.log('=== Database Connection Debug ===');
+  
+  try {
+    // Test basic connection
+    console.log('1. Testing basic connection...');
+    const connectionWorking = await testSupabaseConnection();
+    console.log('Connection working:', connectionWorking);
+    
+    if (!connectionWorking) {
+      console.log('❌ Connection failed - check environment variables and network');
+      return;
+    }
+    
+    // Test poses table existence and structure
+    console.log('2. Testing poses table...');
+    const { data: poses, error: posesError } = await supabase
+      .from('poses')
+      .select('*')
+      .limit(1);
+      
+    if (posesError) {
+      console.error('❌ Poses table query failed:', posesError);
+      return;
+    }
+    
+    if (!poses || poses.length === 0) {
+      console.log('⚠️ Poses table is empty or no published poses found');
+      
+      // Check if table exists but no published poses
+      const { data: allPoses, error: allPosesError } = await supabase
+        .from('poses')
+        .select('count', { count: 'exact', head: true });
+        
+      if (!allPosesError) {
+        console.log('Total poses in table (including unpublished):', allPoses);
+      }
+    } else {
+      console.log('✅ Poses table accessible');
+      console.log('Sample pose structure:', Object.keys(poses[0]));
+    }
+    
+    // Test published poses specifically
+    console.log('3. Testing published poses filter...');
+    const { data: publishedPoses, error: publishedError } = await supabase
+      .from('poses')
+      .select('*')
+      .eq('is_published', true)
+      .limit(1);
+      
+    if (publishedError) {
+      console.error('❌ Published poses query failed:', publishedError);
+    } else {
+      console.log(`✅ Found ${publishedPoses?.length || 0} published poses`);
+    }
+    
+  } catch (error) {
+    console.error('❌ Debug function failed:', error);
+  }
+  
+  console.log('=== End Debug ===');
 };
