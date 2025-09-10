@@ -2,19 +2,13 @@
 title: Core Series
 slug: core-series
 group: Postures
-order: 4
+order: 18
 summary: >-
-  CORE SERIES CRESCENT LUNGE SERIESPART 1[ both sides ] CRESCENT LUNGE
-  SERIESPART 2 3. 5 --- [← Prev](/pages/page-055.md) &nbsp; [Top](/index.md)
-  &nbsp; [Next →](/pages/page-057.md)
+  1:20 - 1:23Transition“Inhale look forward, Exhale walk through to a seat and
+  lie on your back...”On ActionReclined Bound Angle Pose Sit Ups30 secsOn
+  ActionBicycle Sit Ups1 minTrans…
 tags: []
 ---
 # Core Series
 
-CORE SERIES
-CRESCENT LUNGE SERIESPART 1[ both sides ]
-CRESCENT LUNGE SERIESPART 2
-3. 5
-
----
-[← Prev](/pages/page-055.md) &nbsp; [Top](/index.md) &nbsp; [Next →](/pages/page-057.md)
+1:20 - 1:23Transition“Inhale look forward, Exhale walk through to a seat and lie on your back...”On ActionReclined Bound Angle Pose Sit Ups30 secsOn ActionBicycle Sit Ups1 minTransition“Draw your knees into your chest, Roll up to a seat...”On ActionBoat Pose - Navasana2-3 BTransition“Cross your ankles, Place your hands on the floor, Inhale step back to High Plank...”ExhaleHigh Plank to Low Plank - Chaturanga DandasanaInhaleUpward Facing Dog - Urdhva Mukha SvanasanaExhaleDownward Facing Dog - Adho Mukha Svanasana

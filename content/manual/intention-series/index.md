@@ -2,12 +2,10 @@
 title: Intention Series
 slug: intention-series
 group: Postures
-order: 2
-summary: INTENTION SERIES INTENTION SERIES
+order: 15
+summary: '1:04 - 1:05ExhaleStand at Attention - Samasthiti3B'
 tags: []
 ---
 # Intention Series
 
-# INTENTION SERIES
-
-INTENTION SERIES
+1:04 - 1:05ExhaleStand at Attention - Samasthiti3B

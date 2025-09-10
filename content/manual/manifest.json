@@ -7,42 +7,322 @@
       "title": "TT Intention",
       "group": "Training",
       "order": 1,
-      "summary": "Immerse in practice, philosophy, and teaching; deepen your practice and learn to guide others."
+      "summary": ""
     },
     {
-      "slug": "intention-series",
-      "title": "Intention Series",
-      "group": "Postures",
+      "slug": "setup-for-success",
+      "title": "Setup for Success",
+      "group": "Training",
       "order": 2,
-      "summary": "INTENTION SERIES INTENTION SERIES"
+      "summary": ""
+    },
+    {
+      "slug": "journaling",
+      "title": "Journaling",
+      "group": "Training",
+      "order": 3,
+      "summary": "and YFU Final Exam Guide Grad Reqsand Reading RecosBusiness of Yoga Yoga Alliance 3.23.153.233.273.41C1 SequenceIntegration Series Intention SeriesSun Salutation A Sun Salutation B…"
+    },
+    {
+      "slug": "yoga-class-essentials",
+      "title": "Yoga Class Essentials",
+      "group": "Teacher Toolkit",
+      "order": 4,
+      "summary": ", 8 Limbs of Yoga, 5 Yamas, 5 Niyamas and 7 Chakras.Familiarize yourself with the list of terms provided.Final Exam GuideAhimsaAparigraha AsanaAsteya BandhaBrahmacharya ChakraDhara…"
+    },
+    {
+      "slug": "environment-and-heat",
+      "title": "Environment and Heat",
+      "group": "Teacher Toolkit",
+      "order": 5,
+      "summary": "SET SEQUENCE The Power Vinyasa (C1) sequence is set to create consistency and opportunities to gauge your progress. Layers are a way to teach to all levels. A set sequence also tra…"
+    },
+    {
+      "slug": "blueprint-postures",
+      "title": "Blueprint Postures",
+      "group": "Teacher Toolkit",
+      "order": 6,
+      "summary": "MOUNTAIN POSE There are aspects of Mountain Pose in every yoga posture. This pose establishes neutral foreachindividual.Whatotherposturesfollowthis blueprint? WARRIOR ONE POSE Warr…"
+    },
+    {
+      "slug": "fundamental-formulas",
+      "title": "Fundamental Formulas",
+      "group": "Teacher Toolkit",
+      "order": 7,
+      "summary": "BPCCUE FORMULA Great teachers select the fewest, most powerful cues to set their student up for success in each pose. The Cue Formula gives you the tools to setup your students for…"
+    },
+    {
+      "slug": "cue-efficiency",
+      "title": "Cue Efficiency",
+      "group": "Teacher Toolkit",
+      "order": 8,
+      "summary": "Guide for cue approach and cueing in the momentTipExampleKnow what the pose looks likeWarrior II Know what pose you are coming from From Exhale Low LungeUse the Basic FormulaInhale…"
+    },
+    {
+      "slug": "theming",
+      "title": "Theming",
+      "group": "Teacher Toolkit",
+      "order": 9,
+      "summary": "WHERE TO START- Choose your favorite quote, line from a book, yoga sutra, yama/niyama, story, parable, etc- Be sure the quote or idea is accessible, universal and secular- Make sur…"
+    },
+    {
+      "slug": "keys-to-alignment",
+      "title": "Keys to Alignment",
+      "group": "Teacher Toolkit",
+      "order": 10,
+      "summary": "BUILDASTRONGFOUNDATION Alltheposturesstartfrom whatistouchingthe earth.ESTABLISHNEUTRALALIGNMENT Findwhatisneutral foryourbodytype andbone structure.STACKJOINTS ANDFORMRIGHTANGLES …"
+    },
+    {
+      "slug": "demos",
+      "title": "Demos",
+      "group": "Teacher Toolkit",
+      "order": 11,
+      "summary": "are required for Chaturanga, Boat Pose and Crow Pose.DEMO WHILE TEACHING Demo the pose while your students are alsoperforming the pose. Use general form cues toguide your students …"
+    },
+    {
+      "slug": "music-and-yoga",
+      "title": "Music and Yoga",
+      "group": "Teacher Toolkit",
+      "order": 12,
+      "summary": "Music is a form of yoga—Nada yoga, or the yoga of sound. Nada yoga is a way to approach music with reverence. Music in this context is more than justsomething you like or don’t lik…"
+    },
+    {
+      "slug": "c1-sequence",
+      "title": "C1 Sequence",
+      "group": "Postures",
+      "order": 13,
+      "summary": "1:00 - 1:04 1:20 - 1:231:04 - 1:05 --- [← Prev](/pages/page-052.md) &nbsp; [Top](/index.md) &nbsp; [Next →](/pages/page-054.md) 3. 3CRESCENT LUNGE SERIES [ both sides ]Crescent Lun…"
     },
     {
       "slug": "integration-series",
       "title": "Integration Series",
       "group": "Postures",
-      "order": 3,
-      "summary": "INTEGRATION SERIES SUNSALUTATION B[ both sides, 3 sets ] --- [\u2190 Prev](/pages/page-054.md) \u00a0 [Top](/index.md) \u00a0 [Next \u2192](/pages/page-056.md) 3. 5 3. 5 SUNSALUTATION A[ 3 s\u2026"
+      "order": 14,
+      "summary": "SUNSALUTATION B[ both sides, 3 sets ] --- [← Prev](/pages/page-054.md) &nbsp; [Top](/index.md) &nbsp; [Next →](/pages/page-056.md) 3. 5 3. 5 SUNSALUTATION A[ 3 sets ] CORE SERIES C…"
+    },
+    {
+      "slug": "intention-series",
+      "title": "Intention Series",
+      "group": "Postures",
+      "order": 15,
+      "summary": "1:04 - 1:05ExhaleStand at Attention - Samasthiti3B"
+    },
+    {
+      "slug": "sun-salutation-a",
+      "title": "Sun Salutation A",
+      "group": "Postures",
+      "order": 16,
+      "summary": "Surya Namaskar A [ 3 sets ]1:05 - 1:101st set - flow slow 2-3 breathsTransition“Open your eyes, Release your arms down...”InhaleMountain Pose - TadasanaExhaleStanding Forward Fold …"
+    },
+    {
+      "slug": "sun-salutation-b",
+      "title": "Sun Salutation B",
+      "group": "Postures",
+      "order": 17,
+      "summary": "Surya Namaskar B [ 3 sets ] 1:10 - 1:201st set - flow slow 2-3 breathsInhaleChairPose-Utkatasana --- [← Prev](/pages/page-058.md) &nbsp; [Top](/index.md) &nbsp; [Next →](/pages/pag…"
     },
     {
       "slug": "core-series",
       "title": "Core Series",
       "group": "Postures",
-      "order": 4,
-      "summary": "CORE SERIES CRESCENT LUNGE SERIESPART 1[ both sides ] CRESCENT LUNGE SERIESPART 2 3. 5 --- [\u2190 Prev](/pages/page-055.md) \u00a0 [Top](/index.md) \u00a0 [Next \u2192](/pages/page-057.md)"
+      "order": 18,
+      "summary": "1:20 - 1:23Transition“Inhale look forward, Exhale walk through to a seat and lie on your back...”On ActionReclined Bound Angle Pose Sit Ups30 secsOn ActionBicycle Sit Ups1 minTrans…"
+    },
+    {
+      "slug": "crescent-lunge-series",
+      "title": "Crescent Lunge Series",
+      "group": "Postures",
+      "order": 19,
+      "summary": "[ both sides] 1:23 - 1:33Transition“Inhale lift you right leg high, Exhale Low Lunge...”InhaleCrescent Lunge - Anjaneyasana2-3 BTransition“Inhale, Exhale bring your hands to heart …"
+    },
+    {
+      "slug": "balancing-series",
+      "title": "Balancing Series",
+      "group": "Postures",
+      "order": 20,
+      "summary": "[ both sides] 1:33 - 1:38InhaleChair Pose - UtkatasanaExhaleEagle Pose - Garudasana (right)2-3 BInhaleChair Pose - UtkatasanaExhaleEagle Pose - Garudasana (left)2-3 BInhaleMountain…"
+    },
+    {
+      "slug": "triangle-series",
+      "title": "Triangle Series",
+      "group": "Postures",
+      "order": 21,
+      "summary": "[ both sides] 1:38 - 1:47Transition“Inhale lift your right leg high, Exhale Low Lunge...”InhaleWarrior One - Virabhadrasana I2-3 BExhaleWarrior Two - Virabhadrasana II1 BTransition…"
+    },
+    {
+      "slug": "hip-series",
+      "title": "Hip Series",
+      "group": "Postures",
+      "order": 22,
+      "summary": "[ both sides] 1:47 - 1:49Transition“Inhale lift your right leg high...”ExhaleHalf Pigeon - Eka Pada Rajakapotasana2-3 BExhaleDownward Facing Dog - Adho Mukha SvanasanaTransition“In…"
     },
     {
       "slug": "spine-series",
       "title": "Spine Series",
       "group": "Postures",
-      "order": 5,
-      "summary": "SPINE SERIES BALANCING SERIES[ both sides ] SPINE SERIES --- [\u2190 Prev](/pages/page-056.md) \u00a0 [Top](/index.md) \u00a0 [Next \u2192](/pages/page-058.md) 3. 7 3. 7 TRIANGLE SERIES[ bot\u2026"
+      "order": 23,
+      "summary": "1:49 - 1:53InhaleCobra - Bhujangasana2-3 BTransition“Inhale, Exhale lower down, Bring your left ear to the mat...”—Rest, Look right3-5 BTransition“Bring your chin back to center, R…"
     },
     {
       "slug": "surrender-series",
       "title": "Surrender Series",
       "group": "Postures",
-      "order": 6,
-      "summary": "SURRENDER SERIES 3. 7 --- [\u2190 Prev](/pages/page-057.md) \u00a0 [Top](/index.md) \u00a0 [Next \u2192](/pages/page-059.md) Page 59 3. 8\u00a9 Yoga Flow YOGA C1 Transition ChartINTEGRATION SERIE\u2026"
+      "order": 24,
+      "summary": "1:53 - 2:00Transition“Draw your knees into your chest, Roll up to a seat, Extend your legs with a slight bend in your knees, Inhale...”ExhaleSeated Forward Fold - Paschimottanasana…"
+    },
+    {
+      "slug": "power-of-assists",
+      "title": "Power of Assists",
+      "group": "Assists and Options",
+      "order": 25,
+      "summary": "Harvard Med ical SchoolOn June 13, 2023, Harvard Medical School publisheda series of articles on the benefits of human touch.They found that Oxytocin can be released through touch,…"
+    },
+    {
+      "slug": "dapp-and-principles-of-assists",
+      "title": "DAPP and Principles of Assists",
+      "group": "Assists and Options",
+      "order": 26,
+      "summary": "IntentionThe intention of an adjustment is to set the student up for success. Adjust or “assist” thestudent to foster proper and healthy alignment. All your intentions are transfer…"
+    },
+    {
+      "slug": "props",
+      "title": "Props",
+      "group": "Assists and Options",
+      "order": 27,
+      "summary": "to support thefoundational form of a pose for a student?- Blocks, Straps, Roll ed Mats/ Towels Muscle Action- How would you use props to support the muscle action in a pose for a s…"
+    },
+    {
+      "slug": "common-physical-challenges",
+      "title": "Common Physical Challenges",
+      "group": "Assists and Options",
+      "order": 28,
+      "summary": "SHOULDERS The student can feel pain in the shoulders if thethoracic spine is rotated somewhere around T4 or T5. It is best to refer a student to a professional to have the spine an…"
+    },
+    {
+      "slug": "contraindications",
+      "title": "Contraindications",
+      "group": "Assists and Options",
+      "order": 29,
+      "summary": "forward fold. If the injury resides in the lumbar spine, limit backbends potentially only to Cobra or variations of Shalabasana. Fifty percent of Americans have lower back injuries…"
+    },
+    {
+      "slug": "anatomy-in-yoga",
+      "title": "Anatomy in Yoga",
+      "group": "Anatomy",
+      "order": 30,
+      "summary": "--- [← Prev](/pages/page-218.md) &nbsp; [Top](/index.md) &nbsp; [Next →](/pages/page-220.md) Page 220 5 .3 PLANES OF MOTION All basic movements of the body take place inthese three…"
+    },
+    {
+      "slug": "bones",
+      "title": "Bones",
+      "group": "Anatomy",
+      "order": 31,
+      "summary": "of the neck. As the head shifts forward, the neck extensor muscles must work harder to keep the head and visionupright. Over time, the increased chronic stress of those muscles can…"
+    },
+    {
+      "slug": "spine",
+      "title": "Spine",
+      "group": "Anatomy",
+      "order": 32,
+      "summary": "joint movement.EFFICIENCY OF MOVEMENT Efficiency of movement occurs when using theleast amount of physical, metabolic, and mental effort (energy) with each movement. Movements perf…"
+    },
+    {
+      "slug": "joints",
+      "title": "Joints",
+      "group": "Anatomy",
+      "order": 33,
+      "summary": "for Maximum Support- Track your knees in line with your big and middle toes- Watch for knocked knees or bow legged knees- Watch for Knees straight vs. lockedCreate Core Stability- …"
+    },
+    {
+      "slug": "fascia-ligaments-and-tendons",
+      "title": "Fascia, Ligaments and Tendons",
+      "group": "Anatomy",
+      "order": 34,
+      "summary": "FASCIA- Continuous sheet of fibrous tissue locatedbeneath the skin that connects everything inthe body. Everything from bone to muscle fibers to nerve is wrapped in fascia. It is t…"
+    },
+    {
+      "slug": "muscles",
+      "title": "Muscles",
+      "group": "Anatomy",
+      "order": 35,
+      "summary": "under the fascia in Yoga and create mobility.- If we allow any part of our bodies to remainimmobile, the fascia become less flexible and eventually restrict our movement. Posturali…"
+    },
+    {
+      "slug": "reading-different-bodies",
+      "title": "Reading Different Bodies",
+      "group": "Anatomy",
+      "order": 36,
+      "summary": "As human beings our bodies are similar in many ways. Similar bones, joints and soft tissuestructures carry us through the postures of life. There are also differences inherent in e…"
+    },
+    {
+      "slug": "nervous-system",
+      "title": "Nervous System",
+      "group": "Anatomy",
+      "order": 37,
+      "summary": "SENSORY DIVISION Sensory receptors are divided into three classes based either on their location in the body or the location of the stimuli to which they respond, exteroceptors, th…"
+    },
+    {
+      "slug": "breath",
+      "title": "Breath",
+      "group": "Anatomy",
+      "order": 38,
+      "summary": "ANATOMY OF BREATH Diaphragm ADome shaped muscle that divides ribs fromabdomen horizontally through the center of the body. The diaphragm pulls down to create more space in the lung…"
+    },
+    {
+      "slug": "sankalpa",
+      "title": "Sankalpa",
+      "group": "History and Philosophy",
+      "order": 39,
+      "summary": "WHY Having a sankalpagives you a clear reason to guide your efforts, actions and choices. With all the changes in the world, our families, our friends, our roles, our projects, a s…"
+    },
+    {
+      "slug": "yoga-sutras-of-patanjali",
+      "title": "Yoga Sutras of Patanjali",
+      "group": "History and Philosophy",
+      "order": 40,
+      "summary": "- Pranayama-transformation ofindividualenergy-physiologicalandpsychological-into cosmic energy- Pratyahara-displacementandsublimationof physicalandpsychicenergy- Dharana-fixationof…"
+    },
+    {
+      "slug": "yamas-and-niyamas",
+      "title": "Yamas and Niyamas",
+      "group": "History and Philosophy",
+      "order": 41,
+      "summary": "The yamas and niyamas are the first two limbs of the eight-limbed path. They are the most concrete places to start, as they relate directly to howyou behave outwardly in the world …"
+    },
+    {
+      "slug": "sanskrit",
+      "title": "Sanskrit",
+      "group": "History and Philosophy",
+      "order": 42,
+      "summary": "is the classical language of India. Itsmodern form is Hindi and is one of the 22 official languages of India. Sanskrit is one of the earliest members of the Indo-European language …"
+    },
+    {
+      "slug": "pranayama",
+      "title": "Pranayama",
+      "group": "History and Philosophy",
+      "order": 43,
+      "summary": "– rhythmic control of breathPida – pain, suffering, pressurePinda – fetus or embryoPrasarita – spread out, stretched outRaja – a king or rulerSalabha – a locustSalamba – with suppo…"
+    },
+    {
+      "slug": "bandhas",
+      "title": "Bandhas",
+      "group": "History and Philosophy",
+      "order": 44,
+      "summary": "Bandha translatestolockandreferstostopping theoutflowofenergyandreversingittodrawinward.AnotherwaytothinkofBandhaisasa valvethatturnstheflow ofenergybackintothebody.Theancientyogis…"
+    },
+    {
+      "slug": "chakras",
+      "title": "Chakras",
+      "group": "History and Philosophy",
+      "order": 45,
+      "summary": "canbeseenasadoorwaythroughwhichweperceiveourown reality.Thechakrasaresituatedalongthespinalcolumn, wherever thethreemajornadisorenergychannels intersect.Naditranslatesas“river”or“c…"
+    },
+    {
+      "slug": "om",
+      "title": "Om",
+      "group": "History and Philosophy",
+      "order": 46,
+      "summary": "thebaseofthe spineto thetopofthehead.IDANAD Ioriginatesatthelefttesticleorovary.Itcoilsaroundsushumnanadiinaserpentine-like fashion,culminating attheleftnostril.Idanadiisassociated…"
     }
   ]
 }

@@ -8,10 +8,10 @@ const OUT_DIR   = path.join(process.cwd(), "content/manual");
 const TOC_PATH  = path.join(process.cwd(), "content/manual/toc.json");
 
 const BRAND_REPLACEMENTS: Array<[RegExp, string]> = [
-  [/\bCorePower University\b/gi, "Yoga Flow University"],
-  [/\bCorePower\b/gi,            "Yoga Flow"],
-  [/\bCPYU\b/gi,                 "YFU"],
-  [/\bCPY\b/gi,                  "YF"],
+  [/CorePower University/gi, "Yoga Flow University"],
+  [/CorePower/gi,            "Yoga Flow"],
+  [/CPYU/gi,                 "YFU"],
+  [/CPY/gi,                  "YF"],
 ];
 
 function kebab(s:string){ return s.toLowerCase().replace(/[^\w\s-]/g,"").trim().replace(/\s+/g,"-"); }
@@ -38,19 +38,24 @@ function readAllPages(): string {
 }
 
 function splitByTOC(full:string, toc: Toc){
-  const text = "\n" + clean(full) + "\n";
+  const cleaned = clean(full);
+  const lower = cleaned.toLowerCase();
   const idxs: { title:string; start:number }[] = [];
+  let cursor = 0;
   for (const ch of toc.chapters) {
-    const title = ch.title.trim();
-    const re = new RegExp(`\\n(?:#{1,3}\\s+)?${title.replace(/[.*+?^${}()|[\\]\\\\]/g, "\\$&")}\\s*\\n`, "i");
-    const m = re.exec(text);
-    if (m) idxs.push({ title, start: m.index + 1 });
+    const titleLower = ch.title.toLowerCase();
+    const i = lower.indexOf(titleLower, cursor);
+    if (i !== -1) {
+      idxs.push({ title: ch.title, start: i });
+      cursor = i;
+    }
   }
-  idxs.sort((a,b)=> a.start - b.start);
   const chunks: { title:string; body:string }[] = [];
   for (let i=0;i<idxs.length;i++){
-    const cur = idxs[i], next = idxs[i+1];
-    const slice = text.slice(cur.start, next ? next.start : undefined).trim();
+    const cur = idxs[i];
+    const next = idxs[i+1];
+    const start = cur.start + cur.title.length;
+    const slice = cleaned.slice(start, next ? next.start : undefined).trim();
     chunks.push({ title: cur.title, body: slice });
   }
   return chunks;
