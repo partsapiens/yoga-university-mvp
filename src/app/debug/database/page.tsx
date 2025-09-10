@@ -90,7 +90,7 @@ const DatabaseTestPage = () => {
               <ul className="space-y-1">
                 {poses.slice(0, 5).map((pose, index) => (
                   <li key={index} className="text-sm text-gray-600 dark:text-gray-400">
-                    {pose.name} - {pose.category} - {pose.difficulty}
+                    {pose.name} ({pose.sanskrit || 'No Sanskrit'}) - {pose.category || 'No Category'} - {pose.level || 'No Level'}
                   </li>
                 ))}
               </ul>
@@ -122,8 +122,9 @@ const DatabaseTestPage = () => {
             <li>Check the browser console for detailed debug information</li>
             <li>Verify your .env.local file has the correct Supabase credentials</li>
             <li>Ensure the poses table exists in your Supabase database</li>
-            <li>Check that there are poses with is_published = true</li>
-            <li>Verify network connectivity to Supabase</li>
+            <li>Check that there are poses in the table (no is_published filter needed)</li>
+            <li>Verify network connectivity to Supabase (check for ad blockers)</li>
+            <li>Confirm the table schema matches: id, slug, name, sanskrit, category, level, etc.</li>
           </ol>
         </div>
       </div>

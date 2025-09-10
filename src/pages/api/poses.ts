@@ -3,7 +3,7 @@ import { supabase } from '../../utils/supabaseClient';
 
 interface QueryFilters {
   category?: string[];
-  energy_level?: string[];
+  level?: string[];
   search?: string;
   favorites?: string[];
   page?: number;
@@ -15,7 +15,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     try {
       const {
         category,
-        energy_level,
+        level,
         search,
         favorites,
         page = 1,
@@ -25,8 +25,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       // Start building the query
       let query = supabase
         .from('poses')
-        .select('*', { count: 'exact' })
-        .eq('is_published', true);
+        .select('*', { count: 'exact' });
 
       // Apply category filter
       if (category) {
@@ -34,15 +33,15 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         query = query.in('category', categoryArray);
       }
 
-      // Apply energy level filter
-      if (energy_level) {
-        const energyArray = Array.isArray(energy_level) ? energy_level : [energy_level];
-        query = query.in('energy_level', energyArray);
+      // Apply level filter (changed from energy_level to level)
+      if (level) {
+        const levelArray = Array.isArray(level) ? level : [level];
+        query = query.in('level', levelArray);
       }
 
-      // Apply search filter
+      // Apply search filter (using correct field names)
       if (search) {
-        query = query.or(`name.ilike.%${search}%,sanskrit_name.ilike.%${search}%,category.ilike.%${search}%`);
+        query = query.or(`name.ilike.%${search}%,sanskrit.ilike.%${search}%,category.ilike.%${search}%`);
       }
 
       // Apply favorites filter
@@ -57,7 +56,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       const from = (pageNum - 1) * limitNum;
       const to = from + limitNum - 1;
 
-      query = query.range(from, to).order('name');
+      query = query.range(from, to)
+        .order('sort_order', { ascending: true, nullsFirst: false })
+        .order('name');
 
       const { data, error, count } = await query;
       
