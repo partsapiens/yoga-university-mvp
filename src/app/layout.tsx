@@ -115,14 +115,19 @@ export default function RootLayout({
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         
-        {/* Privacy-friendly analytics placeholder */}
+        {/* Google Analytics */}
         {process.env.NODE_ENV === 'production' && (
           <>
-            {/* TODO: Add privacy-friendly analytics script */}
+            <script async src="https://www.googletagmanager.com/gtag/js?id=G-TJ9PF7HE8C" />
             <script
-              defer
-              data-domain="yogaflowuniversity.com"
-              src="/js/analytics.js"
+              dangerouslySetInnerHTML={{
+                __html: `
+                  window.dataLayer = window.dataLayer || [];
+                  function gtag(){dataLayer.push(arguments);}
+                  gtag('js', new Date());
+                  gtag('config', 'G-TJ9PF7HE8C');
+                `,
+              }}
             />
           </>
         )}
