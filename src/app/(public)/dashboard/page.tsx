@@ -25,39 +25,42 @@ const DashboardPage = async () => {
     <PageLayout title="Dashboard" description="Welcome to Yoga Flow University.">
       <HeaderBar unreadCount={unread} />
       <HeroQuickStart />
-      <section>
-        <SectionHeader title="Practice Snapshot" />
-        <div className="grid gap-4 lg:grid-cols-3">
-          <Suspense fallback={<StatsSkeleton />}>
-            {/* @ts-expect-error Async Server Component */}
-            <StatsCards />
-          </Suspense>
-          <CalendarStreak sessions={data.practiceSessions} />
-        </div>
-      </section>
-      <section className="mt-8">
-        <SectionHeader title="AI Zone" />
-        <div className="grid gap-4 lg:grid-cols-2">
-          <AIRecommendation />
-          <AIFormChecker />
-        </div>
-      </section>
-      <section className="mt-8">
-        <SectionHeader title="Recent Sessions" />
-        <div className="grid gap-4 lg:grid-cols-3">
-          <div className="lg:col-span-2">
+      <section className="grid gap-6 lg:grid-cols-12">
+        <div className="lg:col-span-8 space-y-8">
+          <div>
+            <SectionHeader title="AI Zone" />
+            <div className="grid gap-4 lg:grid-cols-2">
+              <AIRecommendation />
+              <AIFormChecker />
+            </div>
+          </div>
+          <div>
+            <SectionHeader title="Recent Sessions" />
             <RecentSessions sessions={data.recentSessions} />
           </div>
-          <div className="grid gap-4">
+        </div>
+        <div className="lg:col-span-4 space-y-8">
+          <div>
+            <SectionHeader title="Practice Snapshot" />
+            <div className="grid gap-4">
+              <Suspense fallback={<StatsSkeleton />}>
+                {/* @ts-expect-error Async Server Component */}
+                <StatsCards />
+              </Suspense>
+              <CalendarStreak sessions={data.practiceSessions} />
+            </div>
+          </div>
+          <div className="space-y-4">
             <GoalsCard goals={data.goals} />
             <RecommendationsCard items={data.recommendations} />
           </div>
         </div>
-      </section>
-      <section className="mt-8">
-        <SectionHeader title="Integrations & Notifications" />
-        <div className="grid gap-4 lg:grid-cols-2">
+        <div className="lg:col-span-6 space-y-4">
+          <SectionHeader title="Connected Apps" />
           <IntegrationsStatus integrations={data.integrations} />
+        </div>
+        <div className="lg:col-span-6 space-y-4">
+          <SectionHeader title="Notifications" />
           <NotificationsPanel notifications={data.notifications} />
         </div>
       </section>

@@ -1,11 +1,12 @@
 "use client";
 
 import { useState } from 'react';
-import { Button, Input, Badge } from '@/components/ui';
+import { Button, Input, Badge, Modal, ModalTrigger, ModalContent, ModalHeader, ModalTitle, ModalFooter, Select, SelectTrigger, SelectValue, SelectContent, SelectItem, Textarea } from '@/components/ui';
 import { useSavedFlows } from '@/hooks/useSavedFlows';
 import type { SavedFlow } from '@/types/yoga';
 import { track } from '@/lib/telemetry';
 import { slugify } from '@/lib/utils';
+import { autogenFlow } from '@/lib/api/ai';
 
 interface Preset {
   name: string;
@@ -26,6 +27,9 @@ export const HeroQuickStart = () => {
   const { saved, setSaved } = useSavedFlows(true);
   const [selectedPreset, setSelectedPreset] = useState<Preset | null>(null);
   const [flowName, setFlowName] = useState('');
+  const [open, setOpen] = useState(false);
+  const [generating, setGenerating] = useState(false);
+  const [aiForm, setAiForm] = useState({ duration: '', intensity: '1', focus: '', mood: '', injuries: '' });
 
   const isValidFlow = (f: SavedFlow) => f.name && Array.isArray(f.flow) && typeof f.overrides === 'object';
 
@@ -53,9 +57,22 @@ export const HeroQuickStart = () => {
     setFlowName('');
   };
 
-  const handleCreateWithAI = () => {
-    track('flow_autogen_requested', { preset: selectedPreset?.name, name: flowName });
-    console.log('Create with AI', { preset: selectedPreset?.name, name: flowName });
+  const handleCreateWithAI = async () => {
+    setGenerating(true);
+    track('flow_autogen_requested', { ...aiForm, name: flowName });
+    const flow = await autogenFlow({
+      name: flowName || 'AI Flow',
+      duration: Number(aiForm.duration),
+      intensity: Number(aiForm.intensity),
+      focus: aiForm.focus,
+      mood: aiForm.mood,
+      injuries: aiForm.injuries,
+    });
+    setGenerating(false);
+    setOpen(false);
+    if (isValidFlow(flow)) {
+      setSaved([...saved, flow]);
+    }
   };
 
   return (
@@ -76,6 +93,11 @@ export const HeroQuickStart = () => {
               <div className="flex items-center gap-1">
                 <span>{preset.name}</span>
                 <Badge variant="outline">{preset.duration}m</Badge>
+                {preset.focusTags.map((tag) => (
+                  <Badge key={tag} variant="secondary">
+                    {tag}
+                  </Badge>
+                ))}
               </div>
             </Button>
           ))}
@@ -89,9 +111,61 @@ export const HeroQuickStart = () => {
           onChange={(e) => setFlowName(e.target.value)}
           className="sm:flex-1"
         />
-        <Button variant="outline" className="w-full sm:w-auto" onClick={handleCreateWithAI}>
-          Create with AI
-        </Button>
+        <Modal open={open} onOpenChange={setOpen}>
+          <ModalTrigger asChild>
+            <Button variant="outline" className="w-full sm:w-auto">
+              Create with AI
+            </Button>
+          </ModalTrigger>
+          <ModalContent>
+            <ModalHeader>
+              <ModalTitle>Create with AI</ModalTitle>
+            </ModalHeader>
+            <div className="grid gap-2 py-4">
+              <Input
+                placeholder="Duration (min)"
+                aria-label="Duration"
+                value={aiForm.duration}
+                onChange={(e) => setAiForm({ ...aiForm, duration: e.target.value })}
+              />
+              <Select value={aiForm.intensity} onValueChange={(v) => setAiForm({ ...aiForm, intensity: v })}>
+                <SelectTrigger aria-label="Intensity">
+                  <SelectValue placeholder="Intensity" />
+                </SelectTrigger>
+                <SelectContent>
+                  {[1, 2, 3, 4, 5].map((n) => (
+                    <SelectItem key={n} value={String(n)}>
+                      {n}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+              <Input
+                placeholder="Focus"
+                aria-label="Focus"
+                value={aiForm.focus}
+                onChange={(e) => setAiForm({ ...aiForm, focus: e.target.value })}
+              />
+              <Input
+                placeholder="Mood"
+                aria-label="Mood"
+                value={aiForm.mood}
+                onChange={(e) => setAiForm({ ...aiForm, mood: e.target.value })}
+              />
+              <Textarea
+                placeholder="Injuries (optional)"
+                aria-label="Injuries"
+                value={aiForm.injuries}
+                onChange={(e) => setAiForm({ ...aiForm, injuries: e.target.value })}
+              />
+            </div>
+            <ModalFooter>
+              <Button onClick={handleCreateWithAI} disabled={generating}>
+                {generating ? 'Generating...' : 'Generate'}
+              </Button>
+            </ModalFooter>
+          </ModalContent>
+        </Modal>
         <Button className="w-full sm:w-auto" onClick={handleSave}>
           Save
         </Button>
