@@ -1,11 +1,15 @@
 import { useEffect, useState } from "react";
 
+const hasWindow = typeof window !== "undefined";
+
 export function useSpeechSynthesis() {
   const [voices, setVoices] = useState<SpeechSynthesisVoice[]>([]);
-  const [voiceName, setVoiceName] = useState<string>("");
+  const [voiceName, setVoiceName] = useState<string>(() =>
+    hasWindow ? localStorage.getItem("voiceName") || "" : ""
+  );
 
   useEffect(() => {
-    if (typeof window === "undefined" || !window.speechSynthesis) return;
+    if (!hasWindow || !window.speechSynthesis) return;
     const synth = window.speechSynthesis;
     const load = () => {
       const v = synth.getVoices();
@@ -24,15 +28,24 @@ export function useSpeechSynthesis() {
     };
   }, [voiceName]);
 
-  const speak = (text: string) => {
+  useEffect(() => {
+    if (hasWindow && voiceName) localStorage.setItem("voiceName", voiceName);
+  }, [voiceName]);
+
+  const speak = (
+    text: string,
+    opts: { volume?: number; rate?: number } = {}
+  ) => {
     try {
-      if (typeof window === "undefined" || !window.speechSynthesis) return;
+      if (!hasWindow || !window.speechSynthesis) return;
       const synth = window.speechSynthesis;
       const u = new SpeechSynthesisUtterance(text);
-      u.rate = 0.9;
+      u.rate = opts.rate ?? 1;
       u.pitch = 0.95;
-      u.volume = 0.95;
-      const v = voices.find((vv) => vv.name === voiceName) || voices.find((vv) => /en-/i.test(vv.lang));
+      u.volume = opts.volume ?? 1;
+      const v =
+        voices.find((vv) => vv.name === voiceName) ||
+        voices.find((vv) => /en-/i.test(vv.lang));
       if (v) u.voice = v;
       synth.cancel();
       synth.speak(u);

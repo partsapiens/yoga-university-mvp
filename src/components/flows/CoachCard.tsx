@@ -1,7 +1,8 @@
-import React, { useEffect, useMemo, useRef, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useCycler } from "@/hooks/useCycler";
+import { useSpeechSynthesis } from "@/hooks/useSpeechSynthesis";
+import { ProgressBar } from "@/components/ui/ProgressBar";
 import { toArray, stripHtml } from "@/lib/utils";
-import { cn } from "@/lib/utils";
 
 // --- Types ---
 export type Pose = {
@@ -30,10 +31,8 @@ export const demoFlow: Flow = {
 
 // --- Helpers & Guards ---
 const hasWindow = typeof window !== "undefined";
-const canSpeak = hasWindow && "speechSynthesis" in window;
 export function resolveFlow(flow?: Flow): Flow { if (!flow || !Array.isArray(flow.poses) || flow.poses.length === 0) return demoFlow; return flow; }
 export function getInitialSeconds(flow?: Flow) { const rf = resolveFlow(flow); return rf.poses[0]?.durationSec ?? 30; }
-export function speak(text: string) { if (!canSpeak) return; try { window.speechSynthesis.cancel(); const utter = new SpeechSynthesisUtterance(stripHtml(text)); const voices = window.speechSynthesis.getVoices?.() || []; const preferred = voices.find(v => /female|samantha|google uk english female|zira|jenny/i.test(v.name)); if (preferred) utter.voice = preferred; utter.rate = 1.0; utter.pitch = 1.02; window.speechSynthesis.speak(utter); } catch {} }
 function timeFmt(s: number) { const m = Math.floor(s / 60), ss = s % 60; return `${m}:${ss.toString().padStart(2, "0")}` }
 
 // --- Intent parsing (very lightweight) ---
@@ -48,53 +47,94 @@ export default function CoachCard({ flow }: { flow?: Flow }) {
   const [listening, setListening] = useState(false);
   const [asrError, setAsrError] = useState<string | null>(null);
   const [hypothesis, setHypothesis] = useState("");
-  const [rate, setRate] = useState(1);
+  const [rate, setRate] = useState(() => {
+    if (hasWindow) {
+      const stored = parseFloat(localStorage.getItem("coach-rate") || "");
+      if (!isNaN(stored)) return stored;
+    }
+    return 1;
+  });
   const [idx, setIdx] = useState(0);
   const [secondsLeft, setSecondsLeft] = useState<number>(getInitialSeconds(resolved));
   const [paused, setPaused] = useState(true);
+  const [volume, setVolume] = useState(() => {
+    if (hasWindow) {
+      const stored = parseFloat(localStorage.getItem("coach-volume") || "");
+      if (!isNaN(stored)) return stored;
+    }
+    return 1;
+  });
+
+  const { voices, voiceName, setVoiceName, speak } = useSpeechSynthesis();
 
   const recRef = useRef<any>(null);
   const tickRef = useRef<number | null>(null);
 
+  const say = useCallback((t: string) => speak(t, { volume, rate }), [speak, volume, rate]);
+
+  const nextPose = useCallback(() => {
+    setIdx(i => {
+      const next = Math.min(i + 1, poses.length - 1);
+      if (next !== i) say(stripHtml(poses[next].name));
+      return next;
+    });
+  }, [poses, say]);
+
+  const prevPose = useCallback(() => {
+    setIdx(i => {
+      const prev = Math.max(0, i - 1);
+      if (prev !== i) say(stripHtml(poses[prev].name));
+      return prev;
+    });
+  }, [poses, say]);
+
   useEffect(() => { setSupportedASR(hasWindow && ("webkitSpeechRecognition" in (window as any))) }, []);
   useEffect(() => { setSecondsLeft(poses[idx]?.durationSec ?? 30) }, [idx, poses]);
-  useEffect(() => { if (paused || !hasWindow) return; const step = () => { setSecondsLeft(s => { if (s <= 1) { nextPose(); return poses[Math.min(idx + 1, poses.length - 1)]?.durationSec ?? 0 } return s - 1 }); tickRef.current = window.setTimeout(step, Math.max(750, 1000 / rate)) }; tickRef.current = window.setTimeout(step, 1000); return () => { if (tickRef.current) window.clearTimeout(tickRef.current) } }, [paused, rate, idx, poses]);
+  useEffect(() => {
+    if (paused || !hasWindow) return;
+    const step = () => {
+      setSecondsLeft(s => {
+        if (s <= 1) {
+          const nextIdx = Math.min(idx + 1, poses.length - 1);
+          if (nextIdx !== idx) {
+            say(stripHtml(poses[nextIdx].name));
+            setIdx(nextIdx);
+          }
+          return poses[nextIdx]?.durationSec ?? 0;
+        }
+        return s - 1;
+      });
+      tickRef.current = window.setTimeout(step, Math.max(750, 1000 / rate));
+    };
+    tickRef.current = window.setTimeout(step, 1000);
+    return () => {
+      if (tickRef.current) window.clearTimeout(tickRef.current);
+    };
+  }, [paused, rate, idx, poses, say]);
 
   const pose = poses[idx] as Pose | undefined;
+  const next = poses[idx + 1] as Pose | undefined;
   const cuesList = toArray(pose?.cues).map(c => stripHtml(c));
   const [isHovered, setIsHovered] = useState(false);
   const cueText = useCycler(cuesList.length ? cuesList : [' '], 3500, !paused && !isHovered);
 
-  function nextPose() {
-    setIdx(i => {
-      const next = Math.min(i + 1, poses.length - 1);
-      if (next !== i) speak(poses[next].name);
-      return next;
-    });
-  }
-
-  function prevPose() {
-    setIdx(i => {
-      const prev = Math.max(0, i - 1);
-      if (prev !== i) speak(poses[prev].name);
-      return prev;
-    });
-  }
+  const poseProgress = pose ? (1 - secondsLeft / pose.durationSec) * 100 : 0;
+  const flowProgress = poses.length ? ((idx + poseProgress / 100) / poses.length) * 100 : 0;
 
   function handleIntent(raw: string) {
     const intent = parseIntent(raw);
     switch (intent.type) {
       case "NEXT": nextPose(); break;
       case "PREV": prevPose(); break;
-      case "PAUSE": setPaused(true); speak("Paused."); break;
-      case "RESUME": setPaused(false); speak("Resuming."); break;
-      case "REPEAT": setSecondsLeft(poses[idx]?.durationSec ?? 30); speak("Repeating from the beginning of this pose."); break;
-      case "SLOWER": setRate(r => Math.max(0.5, r - 0.15)); speak("Slowing down the pace."); break;
-      case "FASTER": setRate(r => Math.min(2, r + 0.15)); speak("Speeding up the pace."); break;
-      case "TIME": speak(`There are ${timeFmt(secondsLeft)} remaining.`); break;
+      case "PAUSE": setPaused(true); say("Paused."); break;
+      case "RESUME": setPaused(false); say("Resuming."); break;
+      case "REPEAT": setSecondsLeft(poses[idx]?.durationSec ?? 30); say("Repeating from the beginning of this pose."); break;
+      case "SLOWER": setRate(r => Math.max(0.5, r - 0.15)); say("Slowing down the pace."); break;
+      case "FASTER": setRate(r => Math.min(2, r + 0.15)); say("Speeding up the pace."); break;
+      case "TIME": say(`There are ${timeFmt(secondsLeft)} remaining.`); break;
       case "EXPLAIN":
       case "CHAT":
-        speak(stripHtml(pose?.description || "I can only respond to simple commands like next, previous, or pause."));
+        say(stripHtml(pose?.description || "I can only respond to simple commands like next, previous, or pause."));
         break;
     }
   }
@@ -120,6 +160,37 @@ export default function CoachCard({ flow }: { flow?: Flow }) {
     if (recRef.current) recRef.current.stop();
   }
 
+  useEffect(() => {
+    if (hasWindow) localStorage.setItem("coach-rate", rate.toString());
+  }, [rate]);
+
+  useEffect(() => {
+    if (hasWindow) localStorage.setItem("coach-volume", volume.toString());
+  }, [volume]);
+
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      const target = e.target as HTMLElement;
+      if (target.tagName === "INPUT" || target.tagName === "TEXTAREA" || target.isContentEditable) return;
+      if (e.key === " ") { e.preventDefault(); setPaused(p => !p); }
+      if (e.key === "ArrowLeft") { e.preventDefault(); prevPose(); }
+      if (e.key === "ArrowRight") { e.preventDefault(); nextPose(); }
+    };
+    if (hasWindow) {
+      window.addEventListener("keydown", onKey);
+      return () => window.removeEventListener("keydown", onKey);
+    }
+  }, [nextPose, prevPose]);
+
+  const lastVol = useRef(volume);
+  const toggleMute = () => {
+    setVolume(v => {
+      if (v === 0) return lastVol.current || 1;
+      lastVol.current = v;
+      return 0;
+    });
+  };
+
   return (
     <div className="p-4 rounded-2xl border bg-card">
       <header className="mb-3" title="Push and speak: “pause”, “next”, “repeat”, “slower”, “how long?”, or ask about alignment.">
@@ -132,6 +203,9 @@ export default function CoachCard({ flow }: { flow?: Flow }) {
             <div className="col-span-2">
               <div className="text-lg font-medium">{stripHtml(pose?.name)}</div>
               <div className="text-gray-600 text-sm line-clamp-1 min-h-[1.25rem]" onMouseEnter={() => setIsHovered(true)} onMouseLeave={() => setIsHovered(false)}>{cueText}</div>
+              {next && (
+                <div className="text-xs text-gray-500 mt-1">Next up: {stripHtml(next.name)}</div>
+              )}
             </div>
             <div className="text-right">
               <div className="font-mono tabular-nums text-2xl leading-none">{timeFmt(secondsLeft)}</div>
@@ -139,14 +213,36 @@ export default function CoachCard({ flow }: { flow?: Flow }) {
             </div>
           </div>
 
-          <div className="flex items-center gap-2 mb-3">
-            <div className="flex items-center gap-2 shrink-0">
-              <button onClick={() => setPaused(p => !p)} className="h-8 px-2.5 text-sm rounded-md border shadow-sm">{paused ? "▶️" : "⏸"}</button>
-              <button onClick={prevPose} className="h-8 px-2.5 text-sm rounded-md border shadow-sm">←</button>
-              <button onClick={nextPose} className="h-8 px-2.5 text-sm rounded-md border shadow-sm">→</button>
-            </div>
-            <div className="flex-1 min-w-[100px]"><input type="range" min={0.75} max={1.25} step={0.05} value={rate} onChange={e => setRate(parseFloat((e.target as HTMLInputElement).value))} className="w-full"/></div>
+          <div className="space-y-1 mb-4">
+            <ProgressBar value={poseProgress} />
+            <ProgressBar value={flowProgress} className="h-2" color="secondary" />
           </div>
+
+          <div className="flex items-center justify-end gap-2 mb-3">
+            <label htmlFor="voice-select" className="text-sm text-gray-500">Voice</label>
+            <select id="voice-select" aria-label="voice selection" value={voiceName} onChange={e => setVoiceName((e.target as HTMLSelectElement).value)} className="text-sm border rounded-md px-2 py-1">
+              {voices.length === 0 && <option value="">System default</option>}
+              {voices.map(v => (
+                <option key={v.name} value={v.name}>{v.name}</option>
+              ))}
+            </select>
+          </div>
+
+          <div className="flex items-center gap-2 mb-2">
+            <div className="flex items-center gap-2 shrink-0">
+              <button aria-label={paused ? "play" : "pause"} onClick={() => setPaused(p => !p)} className="h-8 px-2.5 text-sm rounded-md border shadow-sm">{paused ? "▶️" : "⏸"}</button>
+              <button aria-label="previous pose" onClick={prevPose} className="h-8 px-2.5 text-sm rounded-md border shadow-sm">←</button>
+              <button aria-label="next pose" onClick={nextPose} className="h-8 px-2.5 text-sm rounded-md border shadow-sm">→</button>
+            </div>
+            <div className="flex-1 min-w-[100px]"><input aria-label="playback speed" type="range" min={0.75} max={1.25} step={0.05} value={rate} onChange={e => setRate(parseFloat((e.target as HTMLInputElement).value))} className="w-full"/></div>
+          </div>
+
+          <div className="flex items-center gap-2 mb-3">
+            <button aria-label="mute" onClick={toggleMute} className="h-8 px-2.5 text-sm rounded-md border shadow-sm">{volume === 0 ? "🔇" : "🔊"}</button>
+            <div className="flex-1 min-w-[100px]"><input aria-label="volume" type="range" min={0} max={1} step={0.05} value={volume} onChange={e => setVolume(parseFloat((e.target as HTMLInputElement).value))} className="w-full"/></div>
+          </div>
+
+          <p className="text-xs text-gray-500 mb-3">Shortcuts: Space to play/pause, ←/→ to skip</p>
 
           <div className="flex items-center gap-2">
             {supportedASR ? (
@@ -164,5 +260,3 @@ export default function CoachCard({ flow }: { flow?: Flow }) {
   )
 }
 
-// --- Lightweight tests ---
-export function runVoiceCoachTests() { /* ... as before ... */ }
