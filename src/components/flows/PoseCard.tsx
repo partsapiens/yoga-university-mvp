@@ -82,7 +82,9 @@ export function PoseCard({
         <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-muted text-lg">{pose.icon || "🧘"}</div>
         <div>
           <div className="font-medium leading-tight">{pose.name}</div>
-          <div className="text-xs text-muted-foreground">{pose.sanskrit}</div>
+          {pose.sanskrit && (
+            <div className="text-xs text-muted-foreground">{pose.sanskrit}</div>
+          )}
         </div>
       </div>
 
