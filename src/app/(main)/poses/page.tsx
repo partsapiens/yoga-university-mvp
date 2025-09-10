@@ -9,7 +9,7 @@ const PoseCard = ({ pose }: { pose: Pose }) => (
     <div className="bg-card text-card-foreground rounded-2xl border shadow-sm p-4 flex flex-col items-center justify-center text-center">
         <div className="text-5xl mb-2">{pose.icon}</div>
         <h3 className="text-lg font-bold">{pose.name}</h3>
-        <p className="text-sm text-muted-foreground">{pose.sanskrit}</p>
+        <p className="text-sm text-muted-foreground">{pose.sanskritName}</p>
     </div>
 );
 

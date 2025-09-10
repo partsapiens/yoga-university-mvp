@@ -83,35 +83,21 @@ CREATE TABLE sessions (
 
 -- Poses table
 CREATE TABLE poses (
-    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    id TEXT PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
-    sanskrit_name VARCHAR(255),
-    category pose_category NOT NULL,
-    difficulty difficulty_level NOT NULL,
-    description TEXT NOT NULL,
+    sanskrit VARCHAR(255),
+    "defaultSeconds" INTEGER DEFAULT 30,
+    icon TEXT,
+    intensity INTEGER,
+    groups TEXT[] DEFAULT '{}',
+    family TEXT,
+    description TEXT,
     benefits TEXT[] DEFAULT '{}',
-    contraindications TEXT[] DEFAULT '{}',
-    instructions TEXT[] DEFAULT '{}',
-    image_url TEXT,
-    video_url TEXT,
-    anatomy_focus TEXT[] DEFAULT '{}',
-    energy_level energy_level DEFAULT 'medium',
+    cues TEXT[] DEFAULT '{}',
+    plane TEXT,
     is_published BOOLEAN DEFAULT TRUE,
-    created_by UUID REFERENCES users(id),
     created_at TIMESTAMP DEFAULT NOW(),
     updated_at TIMESTAMP DEFAULT NOW()
-);
-
--- Pose variations
-CREATE TABLE pose_variations (
-    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
-    pose_id UUID NOT NULL REFERENCES poses(id) ON DELETE CASCADE,
-    name VARCHAR(255) NOT NULL,
-    description TEXT,
-    difficulty difficulty_level NOT NULL,
-    image_url TEXT,
-    instructions TEXT[] DEFAULT '{}',
-    created_at TIMESTAMP DEFAULT NOW()
 );
 
 -- Flows table
@@ -326,8 +312,6 @@ CREATE INDEX idx_users_role ON users(role);
 CREATE INDEX idx_users_active ON users(is_active);
 
 -- Pose indexes
-CREATE INDEX idx_poses_category ON poses(category);
-CREATE INDEX idx_poses_difficulty ON poses(difficulty);
 CREATE INDEX idx_poses_published ON poses(is_published);
 
 -- Flow indexes
@@ -423,6 +407,22 @@ LEFT JOIN flow_sequences fs ON p.id = fs.pose_id
 LEFT JOIN user_favorites uf ON p.id = uf.favoritable_id AND uf.favoritable_type = 'pose'
 WHERE p.is_published = true
 GROUP BY p.id;
+
+-- ========================================
+-- SEED DATA
+-- ========================================
+
+INSERT INTO poses (id, name, sanskrit, "defaultSeconds", icon, intensity, groups, family, description, benefits, cues, plane) VALUES
+('child', 'Child''s Pose', 'Balasana', 60, '🧘', 1, '{"Full-Body", "Restorative"}', 'Rest', 'A resting pose that can be taken at any time.', '{"Stretches the hips, thighs, and ankles", "Relieves back and neck pain"}', '{"Knees together or wide apart", "Fold forward, resting your forehead on the mat"}', 'sagittal'),
+('down_dog', 'Downward-Facing Dog', 'Adho Mukha Svanasana', 30, '🤸', 2, '{"Full-Body", "Hamstrings", "Shoulders"}', 'Inversion', 'An inversion that stretches the entire body.', '{"Strengthens the arms and legs", "Stretches the shoulders, hamstrings, calves, arches, and hands"}', '{"Press firmly through your palms", "Lift your hips up and back"}', 'sagittal'),
+('warrior1_r', 'Warrior 1 (Right)', 'Virabhadrasana I', 30, '🚶', 3, '{"Full-Body", "Hips", "Shoulders"}', 'Standing', 'A powerful standing pose that builds strength and confidence.', '{"Stretches the chest, lungs, shoulders, neck, belly, and groin", "Strengthens the shoulders, arms, and back muscles"}', '{"Front knee bent to 90 degrees", "Back foot flat on the floor at a 45-degree angle", "Arms extended overhead"}', 'sagittal'),
+('butterfly', 'Butterfly Pose', 'Baddha Konasana', 45, '🦋', 1, '{"Hips", "Restorative"}', 'Hip Opener', 'A gentle hip opener.', '{"Stretches the inner thighs, groins, and knees", "Soothes menstrual discomfort and sciatica"}', '{"Sit with your soles of the feet together", "Hold onto your feet or ankles", "Gently press your knees down"}', 'frontal'),
+('forward_fold', 'Forward Fold', 'Uttanasana', 45, '🙇', 2, '{"Hamstrings", "Spine"}', 'Forward Fold', 'A standing forward bend that calms the brain and helps relieve stress.', '{"Stretches the hamstrings, calves, and hips", "Strengthens the thighs and knees"}', '{"Hinge at your hips", "Keep your spine long", "Let your head hang heavy"}', 'sagittal'),
+('high_lunge_r', 'High Lunge (Right)', 'Ashta Chandrasana', 30, '🏃', 3, '{"Full-Body", "Balance"}', 'Standing', 'A balancing pose that strengthens the legs and opens the hips.', '{"Stretches the groin", "Strengthens the legs and arms"}', '{"Step your left foot back into a lunge", "Keep your right knee over your ankle", "Lift your arms overhead"}', 'sagittal'),
+('bridge', 'Bridge Pose', 'Setu Bandhasana', 30, '🌉', 2, '{"Spine", "Full-Body"}', 'Backbend', 'A gentle backbend that opens the chest.', '{"Stretches the chest, neck, and spine", "Calms the brain and helps alleviate stress and mild depression"}', '{"Lie on your back with your knees bent", "Lift your hips off the floor", "Clasp your hands underneath your back"}', 'sagittal'),
+('pigeon', 'Pigeon Pose (Right)', 'Eka Pada Rajakapotasana', 60, '🐦', 4, '{"Hips"}', 'Hip Opener', 'An intense hip opener.', '{"Stretches the thigh, groin, psoas, abdomen, chest, shoulder, and neck", "Stimulates the abdominal organs"}', '{"Bring your right knee to your right wrist", "Extend your left leg back", "Keep your hips square"}', 'sagittal'),
+('boat', 'Boat Pose', 'Navasana', 30, '⛵', 4, '{"Core"}', 'Core', 'A core-strengthening pose.', '{"Strengthens the abdomen, hip flexors, and spine", "Stimulates the kidneys, thyroid and prostate glands, and intestines"}', '{"Balance on your sit bones", "Lift your feet off the floor", "Keep your spine straight"}', 'sagittal');
+
 
 -- ========================================
 -- COMPLETION MESSAGE

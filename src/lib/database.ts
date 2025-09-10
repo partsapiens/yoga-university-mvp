@@ -24,12 +24,13 @@ export const getPoses = async ({ page = 0, searchQuery = '' }: { page?: number, 
   const from = page * POSES_PER_PAGE;
   const to = from + POSES_PER_PAGE - 1;
 
-  // Select only the columns required by the Pose type, aliasing snake_case to camelCase
+  // Select only the columns required by the Pose type.
+  // The database schema is assumed to match the camelCase fields of the Pose type.
   const selectColumns = `
     id,
     name,
-    sanskrit:sanskrit_name,
-    defaultSeconds:default_seconds,
+    sanskrit,
+    defaultSeconds,
     icon,
     intensity,
     groups,
