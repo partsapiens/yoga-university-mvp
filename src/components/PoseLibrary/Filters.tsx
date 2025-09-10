@@ -1,4 +1,9 @@
-export default function Filters({ filters, setFilters }) {
+interface FiltersProps {
+  filters: { family?: string; intensity?: number };
+  setFilters: (updater: (prev: { family?: string; intensity?: number }) => { family?: string; intensity?: number }) => void;
+}
+
+export default function Filters({ filters, setFilters }: FiltersProps) {
   // Implement dropdowns/checkboxes for family, intensity, etc.
   return (
     <div className="flex space-x-2 mb-2">
@@ -9,7 +14,7 @@ export default function Filters({ filters, setFilters }) {
         <option value="Twist">Twist</option>
         {/* etc. */}
       </select>
-      <select value={filters.intensity || ''} onChange={e => setFilters(f => ({ ...f, intensity: e.target.value }))}>
+      <select value={filters.intensity || ''} onChange={e => setFilters(f => ({ ...f, intensity: e.target.value ? Number(e.target.value) : undefined }))}>
         <option value="">All Intensities</option>
         {[1,2,3,4,5].map(v => <option value={v} key={v}>{v}</option>)}
       </select>
