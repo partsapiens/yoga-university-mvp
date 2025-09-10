@@ -1,7 +1,5 @@
 import React from 'react';
 import { PageLayout } from '@/components/layout/PageLayout';
-import { HeaderBar } from '@/components/dashboard/HeaderBar';
-import HeroQuickStart from '@/components/dashboard/HeroQuickStart';
 import { AIRecommendation } from '@/components/dashboard/AIZone/AIRecommendation';
 import { AIFormChecker } from '@/components/dashboard/AIZone/AIFormChecker';
 import { CalendarStreak } from '@/components/dashboard/PracticeSnapshot/CalendarStreak';
@@ -17,12 +15,8 @@ import { StatsCards } from '@/components/dashboard/PracticeSnapshot/StatsCards';
 
 const DashboardPage = async () => {
   const data = await fetchDashboardData();
-  const unread = data.notifications.filter((n) => !n.read).length;
-
   return (
     <PageLayout title="Dashboard" description="Welcome to Yoga Flow University.">
-      <HeaderBar unreadCount={unread} />
-      <HeroQuickStart />
       <section className="grid gap-6 lg:grid-cols-12">
         <div className="lg:col-span-8 space-y-8">
           <div>
