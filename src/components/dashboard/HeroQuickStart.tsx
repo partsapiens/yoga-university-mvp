@@ -27,6 +27,8 @@ export const HeroQuickStart = () => {
   const [selectedPreset, setSelectedPreset] = useState<Preset | null>(null);
   const [flowName, setFlowName] = useState('');
 
+  const isValidFlow = (f: SavedFlow) => f.name && Array.isArray(f.flow) && typeof f.overrides === 'object';
+
   const handleSave = () => {
     if (!flowName.trim()) return;
     const flow: SavedFlow = {
@@ -35,9 +37,11 @@ export const HeroQuickStart = () => {
       flow: [],
       overrides: {},
     };
+    if (!isValidFlow(flow)) return;
     setSaved([...saved, flow]);
     const slug = slugify(flow.name);
-    const timestamp = new Date().toISOString().replace(/[-:]/g, '').slice(0, 13).replace('T', '_');
+    const now = new Date();
+    const timestamp = `${now.getFullYear()}${String(now.getMonth() + 1).padStart(2, '0')}${String(now.getDate()).padStart(2, '0')}_${String(now.getHours()).padStart(2, '0')}${String(now.getMinutes()).padStart(2, '0')}`;
     const filename = `flow_${slug}_${timestamp}.json`;
     const blob = new Blob([JSON.stringify(flow, null, 2)], { type: 'application/json' });
     const url = URL.createObjectURL(blob);

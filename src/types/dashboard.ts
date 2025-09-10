@@ -42,7 +42,6 @@ export interface NotificationItem {
 }
 
 export interface DashboardData {
-  stats: DashboardStats;
   practiceSessions: PracticeSession[];
   recentSessions: PracticeSession[];
   goals: UserGoal[];

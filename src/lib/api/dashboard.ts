@@ -8,7 +8,7 @@ import {
   NotificationItem,
 } from '@/types/dashboard';
 
-async function fetchStats(): Promise<DashboardStats> {
+export async function fetchStats(): Promise<DashboardStats> {
   try {
     const res = await fetch('/api/dashboard/stats', { next: { revalidate: 0 } });
     if (!res.ok) throw new Error('Failed to fetch stats');
@@ -59,7 +59,7 @@ async function fetchIntegrations(): Promise<IntegrationStatus[]> {
     { id: 'google-drive', name: 'Google Drive', connected: false },
     { id: 'google-calendar', name: 'Google Calendar', connected: false },
     { id: 'apple-health', name: 'Apple Health', connected: false },
-    { id: 'strava', name: 'Strava', connected: true, lastSyncedAt: new Date().toISOString() },
+    { id: 'strava', name: 'Strava', connected: false },
     { id: 'notion', name: 'Notion', connected: false },
     { id: 'instagram', name: 'Instagram', connected: false },
     { id: 'twitter', name: 'Twitter', connected: false },
@@ -74,8 +74,7 @@ async function fetchNotifications(): Promise<NotificationItem[]> {
 }
 
 export async function fetchDashboardData(): Promise<DashboardData> {
-  const [stats, practiceSessions, goals, recommendations, integrations, notifications] = await Promise.all([
-    fetchStats(),
+  const [practiceSessions, goals, recommendations, integrations, notifications] = await Promise.all([
     fetchPracticeSessions(),
     fetchGoals(),
     fetchRecommendations(),
@@ -83,5 +82,5 @@ export async function fetchDashboardData(): Promise<DashboardData> {
     fetchNotifications(),
   ]);
   const recentSessions = practiceSessions.slice(0, 5);
-  return { stats, practiceSessions, recentSessions, goals, recommendations, integrations, notifications };
+  return { practiceSessions, recentSessions, goals, recommendations, integrations, notifications };
 }

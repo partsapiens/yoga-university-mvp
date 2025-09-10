@@ -64,11 +64,9 @@ export const HeaderBar: React.FC<HeaderBarProps> = ({ unreadCount }) => {
           <div className="relative">
             <Button variant="ghost" size="icon" aria-label="Notifications">
               <Bell className="h-4 w-4" />
-              {unreadCount > 0 && (
-                <span className="absolute -top-1 -right-1 rounded-full bg-red-500 px-1 text-[10px] text-white">
-                  {unreadCount}
-                </span>
-              )}
+              <span className="absolute -top-1 -right-1 rounded-full bg-red-500 px-1 text-[10px] text-white">
+                {unreadCount}
+              </span>
             </Button>
           </div>
           <div className="relative">

@@ -13,3 +13,4 @@ export * from './SectionHeader';
 export * from './ThemeToggle';
 export * from './Input';
 export * from './Textarea';
+export * from './Skeleton';
