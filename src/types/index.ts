@@ -21,6 +21,28 @@ export interface User {
 }
 
 // 2. Pose and Flow Data Structures
+// Database pose type matching Supabase schema
+export interface DatabasePose {
+  id: string;
+  name: string;
+  sanskrit_name: string | null;
+  category: 'standing' | 'seated' | 'supine' | 'prone' | 'backbend' | 'forward_fold' | 'twist' | 'inversion' | 'arm_balance' | 'hip_opener' | 'core' | 'balance' | 'restorative' | 'meditation';
+  difficulty: 'beginner' | 'intermediate' | 'advanced';
+  description: string;
+  benefits: string[];
+  contraindications: string[];
+  instructions: string[];
+  image_url: string | null;
+  video_url: string | null;
+  anatomy_focus: string[];
+  energy_level: 'low' | 'medium' | 'high';
+  is_published: boolean;
+  created_by: string | null;
+  created_at: string;
+  updated_at: string;
+}
+
+// Legacy Pose interface for backward compatibility
 export interface Pose {
   id: string;
   name:string;

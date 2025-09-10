@@ -1,8 +1,8 @@
 "use client";
 
 import React, { useState, useEffect, useRef } from 'react';
-import { POSES } from '@/lib/yoga-data';
-import { PoseId } from '@/types/yoga';
+import { getPosesFromDatabase } from '@/lib/database';
+import { DatabasePose } from '@/types';
 import SearchBar from '@/components/PoseLibrary/SearchBar';
 import Filters from '@/components/PoseLibrary/Filters';
 import AdvancedFilters from '@/components/PoseLibrary/AdvancedFilters';
@@ -27,27 +27,29 @@ interface ExtendedPose {
   planeOfMotion?: string[];
 }
 
-// Transform yoga-data poses to extended format
-const transformPoses = (): ExtendedPose[] => {
-  return POSES.map(pose => ({
-    id: pose.id,
-    slug: pose.id.replace(/_/g, '-'),
-    name_en: pose.name,
-    name_sanskrit: pose.sanskrit,
-    family_id: pose.family,
-    intensity: pose.intensity,
-    thumbnail_url: `/images/poses/${pose.id}.jpg`,
-    icon_url: pose.icon,
-    benefits: pose.groups,
-    bodyFocus: pose.groups,
-    propsRequired: pose.intensity > 3 ? ['Block', 'Strap'] : ['None'],
-    difficulty: pose.intensity <= 2 ? 'beginner' : pose.intensity <= 3 ? 'intermediate' : 'advanced',
-    planeOfMotion: ['Sagittal']
-  }));
+// Transform database poses to extended format
+const transformDatabasePose = (dbPose: DatabasePose): ExtendedPose => {
+  const intensityMap = { 'low': 2, 'medium': 3, 'high': 4 };
+  
+  return {
+    id: dbPose.id,
+    slug: dbPose.name.toLowerCase().replace(/\s+/g, '-'),
+    name_en: dbPose.name,
+    name_sanskrit: dbPose.sanskrit_name || '',
+    family_id: dbPose.category,
+    intensity: intensityMap[dbPose.energy_level] || 3,
+    thumbnail_url: dbPose.image_url || `/images/poses/default.jpg`,
+    icon_url: '🧘', // Default icon
+    benefits: dbPose.benefits,
+    bodyFocus: dbPose.anatomy_focus,
+    propsRequired: ['None'], // Default for now
+    difficulty: dbPose.difficulty,
+    planeOfMotion: ['Sagittal'] // Default for now
+  };
 };
 
 const PoseLibraryPage = () => {
-  const [poses] = useState<ExtendedPose[]>(transformPoses());
+  const [poses, setPoses] = useState<ExtendedPose[]>([]);
   const [filteredPoses, setFilteredPoses] = useState<ExtendedPose[]>([]);
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState('');
@@ -72,18 +74,34 @@ const PoseLibraryPage = () => {
     { key: 'core-strength', label: 'Core Strength', filter: (p: ExtendedPose) => p.bodyFocus?.includes('Core') || false }
   ];
 
-  // Load user preferences
+  // Load poses from database and user preferences
   useEffect(() => {
-    if (typeof window !== 'undefined') {
-      const recent = JSON.parse(localStorage.getItem('recentPoses') || '[]');
-      const favs = JSON.parse(localStorage.getItem('yogaFavorites') || '[]');
-      setRecentPoses(recent.slice(0, 5));
-      setFavorites(favs);
-    }
-    // Initialize filtered poses and set loading to false
-    setFilteredPoses(poses);
-    setLoading(false);
-  }, [poses]);
+    const loadPoses = async () => {
+      try {
+        setLoading(true);
+        console.log('Loading poses from database...');
+        const dbPoses = await getPosesFromDatabase();
+        console.log('Database poses received:', dbPoses);
+        const transformedPoses = dbPoses.map(transformDatabasePose);
+        setPoses(transformedPoses);
+        setFilteredPoses(transformedPoses);
+        
+        // Load user preferences
+        if (typeof window !== 'undefined') {
+          const recent = JSON.parse(localStorage.getItem('recentPoses') || '[]');
+          const favs = JSON.parse(localStorage.getItem('yogaFavorites') || '[]');
+          setRecentPoses(recent.slice(0, 5));
+          setFavorites(favs);
+        }
+      } catch (error) {
+        console.error('Error loading poses:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadPoses();
+  }, []);
 
   // Filter and search logic
   useEffect(() => {
