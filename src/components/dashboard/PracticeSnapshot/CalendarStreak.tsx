@@ -42,6 +42,16 @@ export const CalendarStreak: React.FC<CalendarStreakProps> = ({ sessions }) => {
             />
           ))}
         </div>
+        <div className="mt-2 flex items-center gap-4 text-xs text-muted-foreground">
+          <div className="flex items-center gap-1">
+            <span className="h-3 w-3 rounded-sm bg-primary" />
+            <span>Practice</span>
+          </div>
+          <div className="flex items-center gap-1">
+            <span className="h-3 w-3 rounded-sm bg-muted" />
+            <span>Rest</span>
+          </div>
+        </div>
       </CardContent>
     </Card>
   );

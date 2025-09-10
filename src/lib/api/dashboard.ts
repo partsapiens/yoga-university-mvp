@@ -15,10 +15,10 @@ export async function fetchStats(): Promise<DashboardStats> {
     return await res.json();
   } catch {
     return {
-      total_sessions: 0,
-      total_practice_time: 0,
-      sessions_this_week: 0,
-      current_streak: 0,
+      total_sessions: 42,
+      total_practice_time: 1234,
+      sessions_this_week: 3,
+      current_streak: 7,
     };
   }
 }
