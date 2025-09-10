@@ -20,10 +20,13 @@ import { StatsSkeleton } from '@/components/dashboard/StatsSkeleton';
 const DashboardPage = async () => {
   const data = await fetchDashboardData();
   const unread = data.notifications.filter((n) => !n.read).length;
+  
+  // In a real app, this would come from user session/auth
+  const userName = "Yogi"; // Could be fetched from auth context
 
   return (
     <PageLayout title="Dashboard" description="Welcome to Yoga Flow University.">
-      <HeaderBar unreadCount={unread} />
+      <HeaderBar unreadCount={unread} userName={userName} />
       <HeroQuickStart />
       <section className="grid gap-6 lg:grid-cols-12">
         <div className="lg:col-span-8 space-y-8">

@@ -60,17 +60,34 @@ export const AIFormChecker = () => {
           value={notes}
           onChange={(e) => setNotes(e.target.value)}
         />
-        <Button onClick={handleCheck}>Check</Button>
+        <Button onClick={handleCheck} disabled={!pose}>
+          Check Form
+        </Button>
         {feedback.length > 0 && (
-          <div>
-            <ul className="mb-2 list-disc pl-4">
-              {feedback.map((f, idx) => (
-                <li key={idx}>{f.message}</li>
-              ))}
-            </ul>
-            <Button variant="outline" size="sm" onClick={handleCopy}>
-              Copy to Clipboard
-            </Button>
+          <div className="space-y-3">
+            <div className="rounded-lg bg-blue-50 p-4 border border-blue-200">
+              <h4 className="font-medium text-blue-900 mb-2">AI Form Analysis</h4>
+              <ul className="space-y-2">
+                {feedback.map((f, idx) => (
+                  <li key={idx} className="flex items-start gap-2 text-sm text-blue-800">
+                    <span className="text-blue-500 mt-0.5">•</span>
+                    <span>{f.message}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <div className="flex gap-2">
+              <Button variant="outline" size="sm" onClick={handleCopy}>
+                Copy Feedback
+              </Button>
+              <Button 
+                variant="outline" 
+                size="sm" 
+                onClick={() => setFeedback([])}
+              >
+                Clear
+              </Button>
+            </div>
           </div>
         )}
       </CardContent>

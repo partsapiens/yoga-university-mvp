@@ -10,6 +10,9 @@ export interface PracticeSession {
   completedAt: string; // ISO date string
   duration: number; // minutes
   flowName: string;
+  type?: string; // e.g., 'vinyasa', 'hatha', 'restorative'
+  difficulty?: 'beginner' | 'intermediate' | 'advanced';
+  completed?: boolean; // completion status
 }
 
 export interface UserGoal {
