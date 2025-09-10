@@ -8,7 +8,9 @@
     "start": "next start",
     "lint": "next lint",
     "test": "vitest run",
-    "build:manual": "tsx scripts/prepare-manual-from-pages.ts && tsx scripts/build-manual-index.ts"
+    "build:manual": "tsx scripts/prepare-manual-from-pages.ts && tsx scripts/build-manual-index.ts",
+    "process:pages": "tsx scripts/process-chapters-to-pages.ts",
+    "build:manual:full": "npm run build:manual && npm run process:pages"
   },
   "dependencies": {
     "@radix-ui/react-dialog": "^1.0.5",

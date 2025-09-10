@@ -12,8 +12,9 @@ tags: []
 # Spine Series
 
 1:49 - 1:53InhaleCobra - Bhujangasana2-3 BTransition“Inhale, Exhale lower down, Bring your left ear to the mat...”—Rest, Look right3-5 BTransition“Bring your chin back to center, Reach back and capture the outside edges of your feet...”InhaleFloor Bow - Dhanurasana2-3 B
-- --
-[← Prev](/pages/page-062. md) &nbsp; [Top](/index. md) &nbsp; [Next →](/pages/page-064. md)
+
+---
+[← Prev](/pages/page-062.md) &nbsp; [Top](/index.md) &nbsp; [Next →](/pages/page-064.md)
 
 # Page 64
 

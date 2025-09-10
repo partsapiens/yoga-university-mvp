@@ -11,23 +11,4 @@ tags: []
 ---
 # Sun Salutation A
 
-Surya Namaskar A [ 3 sets ]1:05
-- 1:101st set
-- flow slow 2-3 breathsTransition“Open your eyes, Release your arms down...”InhaleMountain Pose
-- TadasanaExhaleStanding Forward Fold
-- UttanasanaInhaleHalfway Lift
-- Ardha UttanasanaExhaleHigh Plank to Low Plank
-- Chaturanga DandasanaInhaleUpward Facing Dog
-- Urdhva Mukha SvanasanaExhaleDownward Facing Dog
-- Adho Mukha Svanasana2-3 BTransition“Inhale look forward, Exhale walk to the top of your mat...”InhaleHalfway Lift
-- Ardha UttanasanaExhaleStanding Forward Fold
-- Uttanasana2nd and 3rd set
-- vinyasa, flow 1 breath to 1 movementInhaleMountain Pose
-- TadasanaExhaleStanding Forward Fold
-- UttanasanaInhaleHalfway Lift
-- Ardha UttanasanaExhaleHigh Plank to Low Plank
-- Chaturanga DandasanaInhaleUpward Facing Dog
-- Urdhva Mukha SvanasanaExhaleDownward Facing Dog
-- Adho Mukha Svanasana2-3 BTransition“Inhale look forward, Exhale walk to the top of your mat...”InhaleHalfway Lift
-- Ardha UttanasanaExhaleStanding Forward Fold
-- Uttanasana
+Surya Namaskar A [ 3 sets ]1:05 - 1:101st set - flow slow 2-3 breathsTransition“Open your eyes, Release your arms down...”InhaleMountain Pose - TadasanaExhaleStanding Forward Fold - UttanasanaInhaleHalfway Lift - Ardha UttanasanaExhaleHigh Plank to Low Plank - Chaturanga DandasanaInhaleUpward Facing Dog - Urdhva Mukha SvanasanaExhaleDownward Facing Dog - Adho Mukha Svanasana2-3 BTransition“Inhale look forward, Exhale walk to the top of your mat...”InhaleHalfway Lift - Ardha UttanasanaExhaleStanding Forward Fold - Uttanasana2nd and 3rd set - vinyasa, flow 1 breath to 1 movementInhaleMountain Pose - TadasanaExhaleStanding Forward Fold - UttanasanaInhaleHalfway Lift - Ardha UttanasanaExhaleHigh Plank to Low Plank - Chaturanga DandasanaInhaleUpward Facing Dog - Urdhva Mukha SvanasanaExhaleDownward Facing Dog - Adho Mukha Svanasana2-3 BTransition“Inhale look forward, Exhale walk to the top of your mat...”InhaleHalfway Lift - Ardha UttanasanaExhaleStanding Forward Fold - Uttanasana
