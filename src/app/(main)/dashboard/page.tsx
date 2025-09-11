@@ -1,6 +1,5 @@
 import React from 'react';
 import { Suspense } from 'react';
-import { HeroQuickStart } from '@/components/dashboard/HeroQuickStart';
 import { AIRecommendation } from '@/components/dashboard/AIRecommendation';
 import { AIFormChecker } from '@/components/dashboard/AIFormChecker';
 import { CalendarStreak } from '@/components/dashboard/CalendarStreak';
@@ -24,7 +23,6 @@ const DashboardPage = async () => {
         <h1 className="text-4xl font-bold">Dashboard</h1>
         <p className="text-lg text-muted-foreground mt-2">Welcome to Yoga Flow University.</p>
       </div>
-      <HeroQuickStart />
       <section className="grid gap-6 lg:grid-cols-12">
         <div className="lg:col-span-8 space-y-8">
           <div>
