@@ -21,3 +21,6 @@
 
 # typescript build artifacts
 tsconfig.tsbuildinfo
+
+# test files
+test-ai-apis.js
