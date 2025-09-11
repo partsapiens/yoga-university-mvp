@@ -27,7 +27,7 @@ export default function GlobalError({
               </h2>
               <p className="text-gray-600 mb-8">
                 Our server encountered an unexpected condition. Take a deep breath - 
-                we're working to restore balance.
+                we&apos;re working to restore balance.
               </p>
             </div>
             

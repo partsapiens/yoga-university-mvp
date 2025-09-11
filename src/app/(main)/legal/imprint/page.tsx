@@ -51,7 +51,7 @@ export default function ImprintPage() {
             <div className="mb-6 text-sm text-gray-600">
               <p className="mb-4">
                 The contents of our pages have been created with the utmost care. However, we cannot guarantee 
-                the contents' accuracy, completeness, or topicality. According to statutory provisions, we are 
+                the contents&apos; accuracy, completeness, or topicality. According to statutory provisions, we are 
                 furthermore responsible for our own content on these web pages.
               </p>
               <p className="mb-4">

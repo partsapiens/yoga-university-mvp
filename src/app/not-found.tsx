@@ -17,7 +17,7 @@ export default function NotFound() {
           </h2>
           <p className="text-gray-600 mb-8">
             This page seems to have wandered off into deep meditation. 
-            Let's guide you back to your practice.
+            Let&apos;s guide you back to your practice.
           </p>
         </div>
         
@@ -56,7 +56,7 @@ export default function NotFound() {
         {/* Mindful quote */}
         <div className="mt-12 p-4 bg-white/50 rounded-lg border border-gray-200">
           <p className="text-sm text-gray-600 italic">
-            "The present moment is the only moment available to us, and it is the door to all moments."
+            &quot;The present moment is the only moment available to us, and it is the door to all moments.&quot;
           </p>
           <p className="text-xs text-gray-500 mt-2">— Thich Nhat Hanh</p>
         </div>
