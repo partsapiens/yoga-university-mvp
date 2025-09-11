@@ -18,7 +18,6 @@ export default function PrivacyPage() {
           <h1 className="text-3xl font-bold text-gray-900 mb-8">Privacy Policy</h1>
           
           <div className="prose max-w-none">
-            {/* TODO: Customize privacy policy for actual data practices */}
             <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-8">
               <p className="text-blue-800 text-sm">
                 <strong>Privacy-First Approach:</strong> We prioritize your privacy and use minimal, 

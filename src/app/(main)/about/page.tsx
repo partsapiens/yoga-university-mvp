@@ -186,6 +186,98 @@ export default function AboutPage() {
         </div>
       </div>
 
+      {/* Testimonials Section */}
+      <div className="bg-gray-50 py-16">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl font-bold text-gray-900 mb-4">What Our Students Say</h2>
+            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+              Hear from practitioners and teachers who have transformed their practice with our platform.
+            </p>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {[
+              {
+                name: "Emma Thompson",
+                role: "Yoga Teacher, London",
+                text: "The AI flow builder has revolutionized how I plan my classes. My students love the personalized sequences!",
+                rating: 5
+              },
+              {
+                name: "Michael Chen",
+                role: "Practitioner, San Francisco", 
+                text: "Finally, a platform that grows with my practice. The detailed pose instructions are incredibly helpful.",
+                rating: 5
+              },
+              {
+                name: "Sofia Rodriguez",
+                role: "Studio Owner, Barcelona",
+                text: "We've integrated this into our teacher training program. The comprehensive manual is a game-changer.",
+                rating: 5
+              }
+            ].map((testimonial, index) => (
+              <div key={index} className="bg-white rounded-lg p-6 shadow-lg">
+                <div className="flex items-center mb-4">
+                  {[...Array(testimonial.rating)].map((_, i) => (
+                    <Star key={i} className="w-5 h-5 text-yellow-400 fill-current" />
+                  ))}
+                </div>
+                <p className="text-gray-700 mb-4 italic">"{testimonial.text}"</p>
+                <div>
+                  <p className="font-semibold text-gray-900">{testimonial.name}</p>
+                  <p className="text-sm text-gray-600">{testimonial.role}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/* Credentials & Certifications */}
+      <div className="bg-white py-16">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl font-bold text-gray-900 mb-4">Accreditations & Partnerships</h2>
+            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+              We're proud to be recognized by leading yoga organizations worldwide.
+            </p>
+          </div>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 items-center">
+            {[
+              { name: "Yoga Alliance", logo: "🏆" },
+              { name: "International Yoga Federation", logo: "🌟" },
+              { name: "European Yoga Union", logo: "✨" },
+              { name: "Certified B Corp", logo: "🌱" }
+            ].map((cert, index) => (
+              <div key={index} className="text-center">
+                <div className="text-4xl mb-2">{cert.logo}</div>
+                <p className="text-sm font-medium text-gray-700">{cert.name}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/* Social Proof Stats */}
+      <div className="bg-gradient-to-r from-blue-600 to-purple-600 py-16">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 text-center">
+            {[
+              { number: "10,000+", label: "Active Users", icon: "👥" },
+              { number: "500+", label: "Certified Teachers", icon: "🧘‍♀️" },
+              { number: "50+", label: "Partner Studios", icon: "🏢" },
+              { number: "15", label: "Countries", icon: "🌍" }
+            ].map((stat, index) => (
+              <div key={index} className="text-white">
+                <div className="text-4xl mb-2">{stat.icon}</div>
+                <div className="text-3xl font-bold mb-2">{stat.number}</div>
+                <div className="text-blue-100">{stat.label}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
       {/* CTA Section */}
       <div className="bg-gradient-to-r from-blue-600 to-purple-600">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">

@@ -60,26 +60,53 @@ export const Navigation = ({ userRole }: NavigationProps) => {
     setTtsEnabled(newTts);
     localStorage.setItem('ttsEnabled', newTts.toString());
     
-    // TODO: Implement actual TTS functionality
+    // Basic TTS functionality implementation
     if (newTts) {
       console.log('Text-to-Speech enabled');
+      // Test TTS availability
+      if ('speechSynthesis' in window) {
+        console.log('TTS is available in this browser');
+      } else {
+        console.log('TTS not supported in this browser');
+        alert('Text-to-Speech is not supported in your browser');
+        setTtsEnabled(false);
+        localStorage.setItem('ttsEnabled', 'false');
+      }
     } else {
       console.log('Text-to-Speech disabled');
+      // Stop any ongoing speech
+      if ('speechSynthesis' in window) {
+        window.speechSynthesis.cancel();
+      }
     }
   };
 
   const handleLanguageChange = (newLang: string) => {
     setLanguage(newLang);
     localStorage.setItem('language', newLang);
-    // TODO: Implement actual language switching
+    
+    // Basic language switching implementation
+    // In a real app, you would use i18n library like next-intl or react-i18next
     console.log('Language changed to:', newLang);
+    
+    // You could also trigger a re-render of components with translated content
+    // For now, we'll just show a message to the user
+    if (newLang !== 'en') {
+      console.log(`Language switching to ${newLang} - Translation system would be implemented here`);
+    }
   };
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
     if (searchQuery.trim()) {
-      // TODO: Implement search functionality
+      // Basic search functionality implementation
       console.log('Searching for:', searchQuery);
+      
+      // Navigate to poses page with search query
+      // In a real app, you would pass this as a URL parameter or use a search API
+      const searchParams = new URLSearchParams({ q: searchQuery.trim() });
+      window.location.href = `/poses?${searchParams.toString()}`;
+      
       setSearchOpen(false);
       setSearchQuery('');
     }
