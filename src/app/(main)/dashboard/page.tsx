@@ -10,7 +10,6 @@ import { IntegrationsStatus } from '@/components/dashboard/IntegrationsStatus';
 import { NotificationsPanel } from '@/components/dashboard/NotificationsPanel';
 import { StatsCards } from '@/components/dashboard/StatsCards';
 import { StatsSkeleton } from '@/components/dashboard/StatsSkeleton';
-import { QuickActions } from '@/components/dashboard/QuickActions';
 import { RecentAchievements } from '@/components/dashboard/RecentAchievements';
 
 const DashboardPage = async () => {
@@ -21,11 +20,6 @@ const DashboardPage = async () => {
       <div className="mb-8">
         <h1 className="text-4xl font-bold">Dashboard</h1>
         <p className="text-lg text-muted-foreground mt-2">Welcome to Yoga Flow University.</p>
-      </div>
-      
-      {/* Quick Actions - Top Row */}
-      <div className="mb-8">
-        <QuickActions />
       </div>
       
       <section className="grid gap-6 lg:grid-cols-12">

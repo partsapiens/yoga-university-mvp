@@ -16,6 +16,7 @@ import { AutoSave } from "@/components/flows/AutoSave";
 import { KeyboardShortcuts, useKeyboardShortcuts } from "@/components/flows/KeyboardShortcuts";
 import { FlowNameInput } from "@/components/flows/FlowNameInput";
 import { FlowTemplates } from "@/components/flows/FlowTemplates";
+import { QuickActions } from "@/components/dashboard/QuickActions";
 import { Focus, TimingMode, PoseId, SavedFlow, Pose } from "@/types/yoga";
 import { POSES } from "@/lib/yoga-data";
 import {
@@ -55,6 +56,7 @@ export default function CreateFlowPage() {
   const [cooldownMin, setCooldownMin] = useState<number>(2);
   const [preview, setPreview] = useState<PoseId[] | null>(null);
   const [flowName, setFlowName] = useState('');
+  const [showCustomSettings, setShowCustomSettings] = useState<boolean>(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userId, setUserId] = useState<string | null>(null);
   const [saveToDatabase, setSaveToDatabase] = useState(false);
@@ -352,6 +354,16 @@ export default function CreateFlowPage() {
     if (validFoci.includes(template.focus)) {
       setFocus(template.focus as Focus);
     }
+    // Hide custom settings when selecting a template
+    setShowCustomSettings(false);
+  };
+
+  const handleCreateOwn = () => {
+    setShowCustomSettings(true);
+    // Reset to default state for custom creation
+    setFlow([]);
+    setOverrides({});
+    setFlowName('');
   };
 
   // --- Player Handlers ---
@@ -437,18 +449,23 @@ export default function CreateFlowPage() {
           </div>
           <KeyboardShortcuts />
         </div>
-        {/* Settings and Flow Templates - Side by Side */}
-        <div className="mt-6 grid grid-cols-1 lg:grid-cols-2 gap-6">
-          {/* Settings Container */}
-          <div>
+        
+        {/* Quick Start Section */}
+        <div className="mt-6">
+          <QuickActions />
+        </div>
+
+        {/* Flow Templates Section */}
+        <div className="mt-6">
+          <FlowTemplates onSelectTemplate={handleSelectTemplate} onCreateOwn={handleCreateOwn} />
+        </div>
+
+        {/* Conditional Settings Section - only shown when creating own template */}
+        {showCustomSettings && (
+          <div className="mt-6">
             <ControlPanel {...{ minutes, setMinutes, intensity, setIntensity, focus, setFocus, breathingCues, setBreathingCues, saferSequencing, setSaferSequencing, saveToDevice, setSaveToDevice, timingMode, setTimingMode, secPerBreath, setSecPerBreath, transitionSec, setTransitionSec, cooldownMin, setCooldownMin, onAutoGenerate: handleGenerate, flowName, setFlowName, onSaveFlow: handleSaveFlow }} />
           </div>
-          
-          {/* Flow Templates Container */}
-          <div>
-            <FlowTemplates onSelectTemplate={handleSelectTemplate} />
-          </div>
-        </div>
+        )}
         
         {/* Auto-save and Flow Name Section */}
         <div className="mt-4 space-y-4">
