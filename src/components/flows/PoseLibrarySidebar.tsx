@@ -60,7 +60,7 @@ export function PoseLibrarySidebar({ onAddPose, className = '' }: PoseLibrarySid
   const [favorites, setFavorites] = useState<string[]>([]);
   
   const observerRef = useRef<IntersectionObserver>();
-  const lastPoseElementRef = useCallback((node: HTMLDivElement | null) => {
+  const lastPoseElementRef = useCallback((node: HTMLButtonElement | null) => {
     if (loading) return;
     if (observerRef.current) observerRef.current.disconnect();
     observerRef.current = new IntersectionObserver(entries => {
@@ -337,231 +337,210 @@ export function PoseLibrarySidebar({ onAddPose, className = '' }: PoseLibrarySid
   };
 
   return (
-    <div className={`flex flex-col h-full bg-card border-l border-border ${className}`}>
-      {/* Header */}
-      <div className="p-4 border-b border-border">
+    <section className="p-4">
+      {/* Header with controls */}
+      <div className="mb-4">
         <div className="flex items-center justify-between mb-3">
-          <h2 className="text-lg font-semibold">Pose Library</h2>
-          <button
-            onClick={() => setShowFilters(!showFilters)}
-            className="flex items-center gap-1 px-2 py-1 text-sm bg-muted rounded-md hover:bg-muted/80 transition-colors"
-          >
-            <Filter size={14} />
-            {getActiveFilterCount() > 0 && (
-              <span className="bg-primary text-primary-foreground text-xs px-1.5 py-0.5 rounded-full">
-                {getActiveFilterCount()}
-              </span>
-            )}
-          </button>
+          <h2 className="text-lg font-medium">Pose Library</h2>
+          <div className="flex items-center gap-2">
+            <button
+              onClick={() => setShowFilters(!showFilters)}
+              className="flex items-center gap-1 px-2 py-1 text-sm bg-muted rounded-md hover:bg-muted/80 transition-colors"
+            >
+              <Filter size={14} />
+              {getActiveFilterCount() > 0 && (
+                <span className="bg-primary text-primary-foreground text-xs px-1.5 py-0.5 rounded-full">
+                  {getActiveFilterCount()}
+                </span>
+              )}
+            </button>
+            <div className="text-xs text-muted-foreground">Click to add</div>
+          </div>
         </div>
 
-        {/* Search */}
-        <div className="relative">
-          <Search size={16} className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground" />
-          <input
-            type="text"
-            placeholder="Search poses..."
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-full pl-9 pr-3 py-2 border border-border rounded-md bg-background text-sm focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary"
-          />
-        </div>
-
-        {/* Sort */}
-        <div className="mt-2">
+        {/* Search and Sort Row */}
+        <div className="flex gap-2 mb-3">
+          <div className="relative flex-1">
+            <Search size={16} className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground" />
+            <input
+              type="text"
+              placeholder="Search poses..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              className="w-full pl-9 pr-3 py-2 border border-border rounded-md bg-background text-sm focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary"
+            />
+          </div>
           <select
             value={sortBy}
             onChange={(e) => setSortBy(e.target.value as any)}
-            className="w-full px-3 py-1.5 text-sm border border-border rounded-md bg-background focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary"
+            className="px-3 py-2 text-sm border border-border rounded-md bg-background focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary"
           >
-            <option value="alphabetical">Alphabetical</option>
-            <option value="difficulty">By Difficulty</option>
-            <option value="energy">By Energy Level</option>
+            <option value="alphabetical">A-Z</option>
+            <option value="difficulty">Difficulty</option>
+            <option value="energy">Energy</option>
           </select>
         </div>
+
+        {/* Filters Panel */}
+        {showFilters && (
+          <div className="p-3 border border-border bg-muted/20 rounded-lg mb-3">
+            <div className="flex items-center justify-between mb-2">
+              <h3 className="font-medium text-sm">Filters</h3>
+              {getActiveFilterCount() > 0 && (
+                <button
+                  onClick={clearAllFilters}
+                  className="text-xs text-primary hover:underline"
+                >
+                  Clear all
+                </button>
+              )}
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-3 text-xs">
+              {/* Category Filter */}
+              <div>
+                <h4 className="font-medium mb-1 text-muted-foreground">Category</h4>
+                <div className="flex flex-wrap gap-1">
+                  {CATEGORIES.slice(0, 4).map(category => (
+                    <button
+                      key={category}
+                      onClick={() => handleFilterChange('category', category)}
+                      className={`px-2 py-1 rounded border transition-colors ${
+                        filters.category.includes(category)
+                          ? 'bg-primary text-primary-foreground border-primary'
+                          : 'bg-background border-border hover:bg-muted'
+                      }`}
+                    >
+                      {category.replace('_', ' ')}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              {/* Difficulty Filter */}
+              <div>
+                <h4 className="font-medium mb-1 text-muted-foreground">Difficulty</h4>
+                <div className="flex gap-1">
+                  {DIFFICULTIES.map(difficulty => (
+                    <button
+                      key={difficulty}
+                      onClick={() => handleFilterChange('difficulty', difficulty)}
+                      className={`px-2 py-1 rounded border transition-colors ${
+                        filters.difficulty.includes(difficulty)
+                          ? 'bg-primary text-primary-foreground border-primary'
+                          : 'bg-background border-border hover:bg-muted'
+                      }`}
+                    >
+                      {difficulty}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              {/* Energy Level Filter */}
+              <div>
+                <h4 className="font-medium mb-1 text-muted-foreground">Energy</h4>
+                <div className="flex gap-1">
+                  {ENERGY_LEVELS.map(energy => (
+                    <button
+                      key={energy}
+                      onClick={() => handleFilterChange('energy_level', energy)}
+                      className={`px-2 py-1 rounded border transition-colors ${
+                        filters.energy_level.includes(energy)
+                          ? 'bg-primary text-primary-foreground border-primary'
+                          : 'bg-background border-border hover:bg-muted'
+                      }`}
+                    >
+                      {energy}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
 
-      {/* Filters Panel */}
-      {showFilters && (
-        <div className="p-4 border-b border-border bg-muted/20 max-h-48 overflow-y-auto">
-          <div className="flex items-center justify-between mb-3">
-            <h3 className="font-medium text-sm">Filters</h3>
-            {getActiveFilterCount() > 0 && (
-              <button
-                onClick={clearAllFilters}
-                className="text-xs text-primary hover:underline"
-              >
-                Clear all
-              </button>
-            )}
-          </div>
+      {/* Card Grid */}
+      <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
+        {poses.map((pose, index) => (
+          <button
+            key={pose.id}
+            ref={index === poses.length - 1 ? lastPoseElementRef : null}
+            onClick={() => handleAddPose(pose)}
+            className="group rounded-2xl border border-border bg-card p-3 text-left shadow-sm transition hover:shadow-md relative"
+          >
+            {/* Favorite Button */}
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                toggleFavorite(pose.id);
+              }}
+              className="absolute top-2 right-2 p-1 hover:bg-muted rounded-md transition-colors z-10"
+            >
+              <Heart
+                size={12}
+                className={favorites.includes(pose.id) ? 'fill-red-500 text-red-500' : 'text-muted-foreground'}
+              />
+            </button>
 
-          <div className="space-y-3">
-            {/* Category Filter */}
-            <div>
-              <h4 className="text-xs font-medium mb-1 text-muted-foreground">Category</h4>
-              <div className="flex flex-wrap gap-1">
-                {CATEGORIES.slice(0, 6).map(category => (
-                  <button
-                    key={category}
-                    onClick={() => handleFilterChange('category', category)}
-                    className={`px-2 py-1 text-xs rounded-md border transition-colors ${
-                      filters.category.includes(category)
-                        ? 'bg-primary text-primary-foreground border-primary'
-                        : 'bg-background border-border hover:bg-muted'
-                    }`}
-                  >
-                    {category.replace('_', ' ')}
-                  </button>
-                ))}
-              </div>
+            {/* Icon */}
+            <div className="mb-2 flex h-20 w-full items-center justify-center rounded-xl bg-muted text-3xl">
+              {pose.image_url ? (
+                <img
+                  src={pose.image_url}
+                  alt={pose.name}
+                  className="w-full h-full object-cover rounded-xl"
+                  loading="lazy"
+                />
+              ) : (
+                <span>🧘</span>
+              )}
             </div>
 
-            {/* Difficulty Filter */}
-            <div>
-              <h4 className="text-xs font-medium mb-1 text-muted-foreground">Difficulty</h4>
-              <div className="flex gap-1">
-                {DIFFICULTIES.map(difficulty => (
-                  <button
-                    key={difficulty}
-                    onClick={() => handleFilterChange('difficulty', difficulty)}
-                    className={`px-2 py-1 text-xs rounded-md border transition-colors ${
-                      filters.difficulty.includes(difficulty)
-                        ? 'bg-primary text-primary-foreground border-primary'
-                        : 'bg-background border-border hover:bg-muted'
-                    }`}
-                  >
-                    {difficulty}
-                  </button>
-                ))}
-              </div>
+            {/* Content */}
+            <div className="font-medium group-hover:underline text-sm leading-tight mb-1">{pose.name}</div>
+            <div className="text-xs text-muted-foreground truncate mb-2">{pose.sanskrit_name}</div>
+            
+            {/* Tags */}
+            <div className="flex flex-wrap gap-1">
+              <span className={`px-1 py-0.5 text-xs rounded ${getDifficultyColor(pose.difficulty)}`}>
+                {pose.difficulty[0].toUpperCase()}
+              </span>
+              <span className={`px-1 py-0.5 text-xs rounded ${getEnergyColor(pose.energy_level)}`}>
+                {pose.energy_level[0].toUpperCase()}
+              </span>
             </div>
+          </button>
+        ))}
+      </div>
 
-            {/* Energy Level Filter */}
-            <div>
-              <h4 className="text-xs font-medium mb-1 text-muted-foreground">Energy Level</h4>
-              <div className="flex gap-1">
-                {ENERGY_LEVELS.map(energy => (
-                  <button
-                    key={energy}
-                    onClick={() => handleFilterChange('energy_level', energy)}
-                    className={`px-2 py-1 text-xs rounded-md border transition-colors ${
-                      filters.energy_level.includes(energy)
-                        ? 'bg-primary text-primary-foreground border-primary'
-                        : 'bg-background border-border hover:bg-muted'
-                    }`}
-                  >
-                    {energy}
-                  </button>
-                ))}
-              </div>
-            </div>
-          </div>
+      {/* Loading indicator */}
+      {loading && (
+        <div className="flex justify-center py-6">
+          <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-primary"></div>
         </div>
       )}
 
-      {/* Pose List */}
-      <div className="flex-1 overflow-y-auto p-4">
-        <div className="space-y-3">
-          {poses.map((pose, index) => (
-            <div
-              key={pose.id}
-              ref={index === poses.length - 1 ? lastPoseElementRef : null}
-              className="bg-background border border-border rounded-lg p-3 hover:shadow-md transition-shadow group"
-            >
-              <div className="flex items-start gap-3">
-                {/* Pose Image/Icon */}
-                <div className="w-12 h-12 bg-muted rounded-lg flex items-center justify-center flex-shrink-0">
-                  {pose.image_url ? (
-                    <img
-                      src={pose.image_url}
-                      alt={pose.name}
-                      className="w-full h-full object-cover rounded-lg"
-                      loading="lazy"
-                    />
-                  ) : (
-                    <span className="text-lg">🧘</span>
-                  )}
-                </div>
-
-                {/* Pose Info */}
-                <div className="flex-1 min-w-0">
-                  <div className="flex items-start justify-between">
-                    <div className="min-w-0">
-                      <h3 className="font-medium text-sm leading-tight truncate">{pose.name}</h3>
-                      <p className="text-xs text-muted-foreground truncate">{pose.sanskrit_name}</p>
-                    </div>
-                    <div className="flex items-center gap-1 ml-2">
-                      <button
-                        onClick={() => toggleFavorite(pose.id)}
-                        className="p-1 hover:bg-muted rounded-md transition-colors"
-                      >
-                        <Heart
-                          size={14}
-                          className={favorites.includes(pose.id) ? 'fill-red-500 text-red-500' : 'text-muted-foreground'}
-                        />
-                      </button>
-                      <button
-                        onClick={() => handleAddPose(pose)}
-                        className="p-1 hover:bg-primary/10 hover:text-primary rounded-md transition-colors opacity-0 group-hover:opacity-100"
-                      >
-                        <Plus size={14} />
-                      </button>
-                    </div>
-                  </div>
-
-                  {/* Tags */}
-                  <div className="flex items-center gap-1 mt-2">
-                    <span className={`px-1.5 py-0.5 text-xs rounded-md ${getDifficultyColor(pose.difficulty)}`}>
-                      {pose.difficulty}
-                    </span>
-                    <span className={`px-1.5 py-0.5 text-xs rounded-md ${getEnergyColor(pose.energy_level)}`}>
-                      {pose.energy_level}
-                    </span>
-                    <span className="px-1.5 py-0.5 text-xs rounded-md bg-gray-100 text-gray-800 dark:bg-gray-800 dark:text-gray-200">
-                      {pose.category.replace('_', ' ')}
-                    </span>
-                  </div>
-
-                  {/* Benefits (if available) */}
-                  {pose.benefits && pose.benefits.length > 0 && (
-                    <p className="text-xs text-muted-foreground mt-1 line-clamp-2">
-                      {pose.benefits.slice(0, 2).join(', ')}
-                    </p>
-                  )}
-                </div>
-              </div>
-            </div>
-          ))}
+      {/* No results */}
+      {!loading && poses.length === 0 && (searchTerm || getActiveFilterCount() > 0) && (
+        <div className="text-center py-8 text-muted-foreground">
+          <p className="text-sm">No poses found</p>
+          <button
+            onClick={clearAllFilters}
+            className="text-xs text-primary hover:underline mt-1"
+          >
+            Clear filters
+          </button>
         </div>
+      )}
 
-        {/* Loading indicator */}
-        {loading && (
-          <div className="flex justify-center py-4">
-            <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-primary"></div>
-          </div>
-        )}
-
-        {/* No results */}
-        {!loading && poses.length === 0 && (searchTerm || getActiveFilterCount() > 0) && (
-          <div className="text-center py-8 text-muted-foreground">
-            <p className="text-sm">No poses found</p>
-            <button
-              onClick={clearAllFilters}
-              className="text-xs text-primary hover:underline mt-1"
-            >
-              Clear filters
-            </button>
-          </div>
-        )}
-
-        {/* End of results */}
-        {!loading && !hasMore && poses.length > 0 && (
-          <div className="text-center py-4 text-xs text-muted-foreground">
-            End of results
-          </div>
-        )}
-      </div>
-    </div>
+      {/* End of results */}
+      {!loading && !hasMore && poses.length > 0 && (
+        <div className="text-center py-4 text-xs text-muted-foreground">
+          End of results ({poses.length} poses)
+        </div>
+      )}
+    </section>
   );
 }
