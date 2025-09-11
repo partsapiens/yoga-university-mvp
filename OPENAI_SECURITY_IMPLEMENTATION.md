@@ -82,7 +82,7 @@ USE_MOCK=false
 ### 1. Netlify Environment Variables
 Set these in your Netlify dashboard:
 ```
-OPENAI_API_KEY=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
+OPENAI_API_KEY=sk-proj-xxxxxxxxxxxx-your-actual-openai-api-key-here-xxxxxxxxxxxx
 USE_MOCK=false
 ```
 
