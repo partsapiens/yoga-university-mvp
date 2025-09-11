@@ -81,7 +81,21 @@ export function CombinedPoseLibrary({ onAddPose, className = '' }: CombinedPoseL
                 {pose.icon}
               </div>
               <div className="font-medium group-hover:underline text-sm leading-tight">{pose.name}</div>
-              <div className="text-xs text-muted-foreground truncate">{pose.sanskrit}</div>
+              <div className="text-xs text-muted-foreground truncate mb-1">{pose.sanskrit}</div>
+              <div className="space-y-1">
+                <div className="text-xs text-muted-foreground">
+                  <span className="font-medium">Intensity:</span> {'●'.repeat(pose.intensity)}{'○'.repeat(5-pose.intensity)}
+                </div>
+                <div className="text-xs text-muted-foreground">
+                  <span className="font-medium">Groups:</span> {pose.groups.join(', ')}
+                </div>
+                <div className="text-xs text-muted-foreground">
+                  <span className="font-medium">Plane:</span> {pose.plane}
+                </div>
+                <div className="text-xs text-muted-foreground">
+                  <span className="font-medium">Chakra:</span> {pose.chakra}
+                </div>
+              </div>
             </button>
           ))
         ) : (
@@ -96,7 +110,21 @@ export function CombinedPoseLibrary({ onAddPose, className = '' }: CombinedPoseL
                 {pose.icon}
               </div>
               <div className="font-medium group-hover:underline text-sm leading-tight">{pose.name}</div>
-              <div className="text-xs text-muted-foreground truncate">{pose.sanskrit}</div>
+              <div className="text-xs text-muted-foreground truncate mb-1">{pose.sanskrit}</div>
+              <div className="space-y-1">
+                <div className="text-xs text-muted-foreground">
+                  <span className="font-medium">Intensity:</span> {'●'.repeat(pose.intensity)}{'○'.repeat(5-pose.intensity)}
+                </div>
+                <div className="text-xs text-muted-foreground">
+                  <span className="font-medium">Groups:</span> {pose.groups.join(', ')}
+                </div>
+                <div className="text-xs text-muted-foreground">
+                  <span className="font-medium">Plane:</span> {pose.plane}
+                </div>
+                <div className="text-xs text-muted-foreground">
+                  <span className="font-medium">Chakra:</span> {pose.chakra}
+                </div>
+              </div>
             </button>
           ))
         )}
