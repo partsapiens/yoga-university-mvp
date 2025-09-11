@@ -27,6 +27,16 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         .from('poses')
         .select('*', { count: 'exact' });
 
+      // Exclude variations from main library unless searching
+      // Variations are typically poses with (Right), (Left), or similar directional indicators
+      if (!search) {
+        // Filter out poses that appear to be variations (contain directional indicators)
+        query = query.not('name', 'ilike', '%\\(Right\\)%')
+                     .not('name', 'ilike', '%\\(Left\\)%')
+                     .not('name', 'ilike', '%Right%')
+                     .not('name', 'ilike', '%Left%');
+      }
+
       // Apply category filter
       if (category) {
         const categoryArray = Array.isArray(category) ? category : [category];
