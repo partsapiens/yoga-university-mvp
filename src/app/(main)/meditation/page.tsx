@@ -2,13 +2,18 @@
 
 import React, { useState, useEffect } from 'react';
 import { useLocalStorage } from '@/hooks/useLocalStorage';
+import { generateMeditationScript } from '@/lib/api/ai';
+import { MeditationInput, MeditationScript } from '@/types/ai';
+import { MoodInput } from '@/components/meditation/MoodInput';
+import { GuidedMeditationPlayer } from '@/components/meditation/GuidedMeditationPlayer';
+import { BreathingOrb } from '@/components/meditation/BreathingOrb';
 
 // Types for meditation features
 interface MeditationSession {
   id: string;
   name: string;
   duration: number; // in minutes
-  type: 'guided' | 'timer' | 'breathing';
+  type: 'guided' | 'timer' | 'breathing' | 'ai-guided';
   description: string;
 }
 
@@ -16,10 +21,20 @@ interface SessionStats {
   streak: number;
   lastSession: string | null;
   totalSessions: number;
+  totalMinutes: number;
+  favoriteStyle?: string;
+  averageRating?: number;
 }
 
 // Sample meditation techniques
 const MEDITATION_TECHNIQUES: MeditationSession[] = [
+  {
+    id: 'ai-guided',
+    name: '✨ AI-Guided Meditation',
+    duration: 0, // Variable duration
+    type: 'ai-guided',
+    description: 'Personalized meditation created just for you based on your current mood and needs.'
+  },
   {
     id: 'mindfulness-5',
     name: 'Mindfulness Meditation',
@@ -56,11 +71,20 @@ export default function MeditationPage() {
   const [timeRemaining, setTimeRemaining] = useState(0);
   const [customDuration, setCustomDuration] = useState(10);
   
+  // AI-guided meditation state
+  const [showMoodInput, setShowMoodInput] = useState(false);
+  const [isGenerating, setIsGenerating] = useState(false);
+  const [generatedScript, setGeneratedScript] = useState<MeditationScript | null>(null);
+  const [showPlayer, setShowPlayer] = useState(false);
+  
   // Local storage for session tracking
   const [sessionStats, setSessionStats] = useLocalStorage<SessionStats>('meditation_stats', {
     streak: 0,
     lastSession: null,
-    totalSessions: 0
+    totalSessions: 0,
+    totalMinutes: 0,
+    favoriteStyle: undefined,
+    averageRating: undefined
   });
 
   // Timer logic
@@ -106,17 +130,54 @@ export default function MeditationPage() {
       newStreak = 1; // First session
     }
     
+    const sessionDuration = selectedSession?.duration || Math.floor((generatedScript?.totalDuration || 0) / 60);
+    
     setSessionStats({
       streak: newStreak,
       lastSession: today,
-      totalSessions: sessionStats.totalSessions + 1
+      totalSessions: sessionStats.totalSessions + 1,
+      totalMinutes: sessionStats.totalMinutes + sessionDuration,
+      favoriteStyle: sessionStats.favoriteStyle,
+      averageRating: sessionStats.averageRating
     });
   };
 
   const startSession = (session: MeditationSession) => {
+    if (session.type === 'ai-guided') {
+      setShowMoodInput(true);
+      return;
+    }
+    
     setSelectedSession(session);
     setTimeRemaining(session.duration * 60);
     setIsPlaying(true);
+  };
+
+  const handleAIGenerate = async (input: MeditationInput) => {
+    setIsGenerating(true);
+    try {
+      const script = await generateMeditationScript(input);
+      setGeneratedScript(script);
+      setShowMoodInput(false);
+      setShowPlayer(true);
+    } catch (error) {
+      console.error('Failed to generate meditation script:', error);
+      // TODO: Show error message to user
+    } finally {
+      setIsGenerating(false);
+    }
+  };
+
+  const handlePlayerComplete = () => {
+    setShowPlayer(false);
+    setGeneratedScript(null);
+    handleSessionComplete();
+  };
+
+  const handlePlayerExit = () => {
+    setShowPlayer(false);
+    setGeneratedScript(null);
+    setSelectedSession(null);
   };
 
   const startCustomTimer = () => {
@@ -145,6 +206,41 @@ export default function MeditationPage() {
     return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
   };
 
+  // Show AI meditation player if generated
+  if (showPlayer && generatedScript) {
+    return (
+      <GuidedMeditationPlayer
+        script={generatedScript}
+        onComplete={handlePlayerComplete}
+        onExit={handlePlayerExit}
+      />
+    );
+  }
+
+  // Show mood input for AI-guided meditation
+  if (showMoodInput) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-purple-50 via-blue-50 to-indigo-50 py-8">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-8">
+            <button
+              onClick={() => setShowMoodInput(false)}
+              className="text-gray-600 hover:text-gray-800 mb-4"
+            >
+              ← Back to Meditation Center
+            </button>
+            <h1 className="text-4xl font-bold text-gray-900 mb-4">AI-Guided Meditation</h1>
+            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+              Tell me how you're feeling, and I'll create a personalized meditation just for you.
+            </p>
+          </div>
+          
+          <MoodInput onGenerate={handleAIGenerate} isGenerating={isGenerating} />
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-purple-50 via-blue-50 to-indigo-50 py-8">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -169,9 +265,13 @@ export default function MeditationPage() {
               <div className="text-sm text-gray-600">Total Sessions</div>
             </div>
             <div className="text-center">
-              <div className="text-sm font-medium text-gray-800">
-                {sessionStats.lastSession ? `Last: ${sessionStats.lastSession}` : 'No sessions yet'}
-              </div>
+              <div className="text-2xl font-bold text-green-600">{sessionStats.totalMinutes}</div>
+              <div className="text-sm text-gray-600">Minutes Practiced</div>
+            </div>
+          </div>
+          <div className="mt-4 text-center">
+            <div className="text-sm font-medium text-gray-800">
+              {sessionStats.lastSession ? `Last session: ${sessionStats.lastSession}` : 'Ready for your first session!'}
             </div>
           </div>
         </div>
@@ -189,9 +289,16 @@ export default function MeditationPage() {
                 >
                   <div className="flex justify-between items-start mb-2">
                     <h3 className="font-semibold text-lg">{session.name}</h3>
-                    <span className="bg-purple-100 text-purple-800 text-sm px-2 py-1 rounded">
-                      {session.duration} min
-                    </span>
+                    {session.type !== 'ai-guided' && (
+                      <span className="bg-purple-100 text-purple-800 text-sm px-2 py-1 rounded">
+                        {session.duration} min
+                      </span>
+                    )}
+                    {session.type === 'ai-guided' && (
+                      <span className="bg-gradient-to-r from-blue-100 to-purple-100 text-purple-800 text-sm px-2 py-1 rounded">
+                        Personalized
+                      </span>
+                    )}
                   </div>
                   <p className="text-gray-600 text-sm mb-3">{session.description}</p>
                   <div className="flex justify-between items-center">
@@ -248,19 +355,17 @@ export default function MeditationPage() {
                 {/* Breathing Visualizer for breathing exercises */}
                 {selectedSession.type === 'breathing' && (
                   <div className="mb-8">
-                    <div className="relative mx-auto w-32 h-32">
-                      <div className={`absolute inset-0 rounded-full border-4 border-blue-300 ${
-                        isPlaying ? 'animate-pulse' : ''
-                      }`}></div>
-                      <div className="absolute inset-4 rounded-full bg-blue-200 flex items-center justify-center">
-                        <span className="text-sm font-medium text-blue-800">
-                          {isPlaying ? 'Breathe' : 'Paused'}
-                        </span>
-                      </div>
-                    </div>
-                    <p className="mt-4 text-sm text-gray-600">
-                      Inhale for 4 • Hold for 4 • Exhale for 4 • Hold for 4
-                    </p>
+                    <BreathingOrb
+                      isActive={isPlaying}
+                      pattern={{
+                        name: 'Box Breathing',
+                        inhale: 4,
+                        hold1: 4,
+                        exhale: 4,
+                        hold2: 4,
+                        description: '4-4-4-4 pattern for stress relief and focus'
+                      }}
+                    />
                   </div>
                 )}
 
