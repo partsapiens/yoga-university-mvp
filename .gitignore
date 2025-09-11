@@ -6,6 +6,7 @@
 # build output
 /.next/
 /out/
+/dist/
 
 # local env files
 .env.local
