@@ -1,9 +1,11 @@
 "use client";
 
 import React, { useState, useEffect, useRef } from 'react';
+import { Search, Sparkles } from 'lucide-react';
 import { getPosesFromDatabase } from '@/lib/database';
 import { DatabasePose } from '@/types';
 import SearchBar from '@/components/PoseLibrary/SearchBar';
+import SemanticSearch from '@/components/SemanticSearch';
 import Filters from '@/components/PoseLibrary/Filters';
 import AdvancedFilters from '@/components/PoseLibrary/AdvancedFilters';
 import PoseCard from '@/components/PoseLibrary/PoseCard';
@@ -58,6 +60,8 @@ const PoseLibraryPage = () => {
   const [filteredPoses, setFilteredPoses] = useState<ExtendedPose[]>([]);
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState('');
+  const [useSemanticSearch, setUseSemanticSearch] = useState(false);
+  const [semanticResults, setSemanticResults] = useState<ExtendedPose[]>([]);
   const [filters, setFilters] = useState<{
     family?: string[];
     intensity?: string[];
@@ -126,8 +130,11 @@ const PoseLibraryPage = () => {
     
     let filtered = [...poses];
 
-    // Apply search
-    if (search) {
+    // Use semantic search results if available and enabled
+    if (useSemanticSearch && semanticResults.length > 0) {
+      filtered = semanticResults;
+    } else if (search) {
+      // Apply traditional search
       filtered = filtered.filter(pose =>
         pose.name_en.toLowerCase().includes(search.toLowerCase()) ||
         pose.name_sanskrit.toLowerCase().includes(search.toLowerCase()) ||
@@ -175,13 +182,43 @@ const PoseLibraryPage = () => {
     }
 
     setFilteredPoses(filtered);
-  }, [poses, search, filters, quickFilters, sort]);
+  }, [poses, search, filters, quickFilters, sort, useSemanticSearch, semanticResults]);
+
+  const handleSemanticResults = (results: any[]) => {
+    const transformedResults = results.map(result => ({
+      id: result.id,
+      slug: result.slug || result.name.toLowerCase().replace(/\s+/g, '-'),
+      name_en: result.displayName || result.name,
+      name_sanskrit: result.displaySanskrit || result.sanskrit || '',
+      family_id: result.displayCategory || result.family || result.category || 'standing',
+      intensity: result.intensity || 3,
+      thumbnail_url: result.displayImage || result.thumbnail_url || result.image_url || '/images/poses/default.jpg',
+      icon_url: result.icon || '🧘',
+      benefits: result.displayBenefits || result.benefits || [],
+      bodyFocus: result.anatomical_focus || [],
+      propsRequired: ['None'],
+      difficulty: result.displayDifficulty || result.level || 'beginner',
+      planeOfMotion: result.plane ? [result.plane] : ['Sagittal']
+    }));
+    setSemanticResults(transformedResults);
+    setUseSemanticSearch(true);
+  };
+
+  const handleSearchModeChange = (semantic: boolean) => {
+    setUseSemanticSearch(semantic);
+    if (!semantic) {
+      setSemanticResults([]);
+    }
+  };
 
   const handleQuickFilter = (key: string) => {
     setQuickFilters(prev => ({
       ...prev,
       [key]: !prev[key]
     }));
+    // Disable semantic search when using quick filters
+    setUseSemanticSearch(false);
+    setSemanticResults([]);
   };
 
   const filterOptions = {
@@ -221,13 +258,55 @@ const PoseLibraryPage = () => {
             Master {totalPoses}+ yoga poses with AI-guided instructions
           </p>
 
-          {/* Search Bar */}
+          {/* Search Section */}
           <div className="mb-6">
-            <SearchBar
-              value={search}
-              onChange={setSearch}
-              suggestions={poses.map(p => p.name_en)}
-            />
+            {/* Search Mode Toggle */}
+            <div className="flex items-center gap-4 mb-4">
+              <button
+                onClick={() => handleSearchModeChange(false)}
+                className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
+                  !useSemanticSearch
+                    ? 'bg-blue-500 text-white'
+                    : 'bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700'
+                }`}
+              >
+                <Search className="w-4 h-4" />
+                Traditional Search
+              </button>
+              <button
+                onClick={() => handleSearchModeChange(true)}
+                className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
+                  useSemanticSearch
+                    ? 'bg-purple-500 text-white'
+                    : 'bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700'
+                }`}
+              >
+                <Sparkles className="w-4 h-4" />
+                AI Search
+              </button>
+            </div>
+
+            {/* Search Input */}
+            {useSemanticSearch ? (
+              <SemanticSearch
+                endpoint="/api/search/poses"
+                placeholder="Ask for poses by benefit, body focus, or feeling... (e.g., 'poses for tight hips and stress relief')"
+                onResults={handleSemanticResults}
+                filters={filters}
+                className="w-full"
+                showTypeIndicator={true}
+              />
+            ) : (
+              <SearchBar
+                value={search}
+                onChange={(value) => {
+                  setSearch(value);
+                  setUseSemanticSearch(false);
+                  setSemanticResults([]);
+                }}
+                suggestions={poses.map(p => p.name_en)}
+              />
+            )}
           </div>
 
           {/* Quick Filters */}
