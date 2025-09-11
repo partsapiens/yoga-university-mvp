@@ -1,6 +1,9 @@
-import OpenAI from 'openai';
+import OpenAI from "openai";
 
-// Initialize OpenAI client with graceful handling of missing API key
+// Export 'oa' as specified in the problem statement
+export const oa = new OpenAI({ apiKey: process.env.OPENAI_API_KEY! });
+
+// Keep backward compatibility with existing code
 export const openai = process.env.OPENAI_API_KEY 
   ? new OpenAI({
       apiKey: process.env.OPENAI_API_KEY,
