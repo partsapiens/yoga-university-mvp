@@ -182,14 +182,38 @@ export default function AIGuidePage() {
 
   return (
     <div className="max-w-6xl mx-auto p-6 space-y-6">
-      {/* Header */}
+      {/* Header with Navigation */}
       <div className="text-center">
         <h1 className="text-4xl font-bold text-gray-900 dark:text-white mb-4">
           🤖 AI Yoga Guide
         </h1>
-        <p className="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
+        <p className="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto mb-4">
           Your personal AI-powered yoga instructor. Get real-time pose feedback through your camera and voice commands.
         </p>
+        
+        {/* Integration Navigation */}
+        <div className="flex justify-center gap-4 mb-6">
+          <a 
+            href="/flows/create"
+            className="inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+          >
+            🧘‍♀️ Create Custom Flow
+          </a>
+          <button
+            onClick={() => {
+              // Store current AI Guide state and navigate to Create Flow with AI guidance enabled
+              const searchParams = new URLSearchParams();
+              searchParams.set('aiGuideMode', 'true');
+              if (selectedPose) {
+                searchParams.set('startPose', selectedPose);
+              }
+              window.location.href = `/flows/create?${searchParams.toString()}`;
+            }}
+            className="inline-flex items-center px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors"
+          >
+            ✨ Create Flow with AI Guidance
+          </button>
+        </div>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
