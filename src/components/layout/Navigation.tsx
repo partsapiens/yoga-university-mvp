@@ -32,12 +32,12 @@ export const Navigation = ({ userRole }: NavigationProps) => {
   }, []);
 
   const navItems = [
-    { href: '/dashboard', label: 'Dashboard', icon: '📊' },
-    { href: '/poses', label: 'Pose Library', icon: '🧘' },
-    { href: '/flows/create', label: 'Create Flow', icon: '✨' },
-    { href: '/ai-guide', label: 'AI Guide', icon: '🤖' },
-    { href: '/manual', label: 'Manual', icon: '📚' },
-    { href: '/meditation', label: 'Meditation', icon: '🧠' },
+    { href: '/dashboard', label: 'Dashboard' },
+    { href: '/poses', label: 'Pose Library' },
+    { href: '/flows/create', label: 'Create Flow' },
+    { href: '/ai-guide', label: 'AI Guide' },
+    { href: '/manual', label: 'Manual' },
+    { href: '/meditation', label: 'Meditation' },
   ];
 
   const toggleDarkMode = () => {
@@ -100,10 +100,9 @@ export const Navigation = ({ userRole }: NavigationProps) => {
               <Link
                 key={item.href}
                 href={item.href}
-                className="flex items-center space-x-1 text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
+                className="text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors font-medium"
               >
-                <span className="text-sm">{item.icon}</span>
-                <span className="font-medium">{item.label}</span>
+                {item.label}
               </Link>
             ))}
           </div>
@@ -245,11 +244,10 @@ export const Navigation = ({ userRole }: NavigationProps) => {
                 <Link
                   key={item.href}
                   href={item.href}
-                  className="flex items-center space-x-3 px-3 py-2 rounded-lg text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+                  className="block px-3 py-2 rounded-lg text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors font-medium"
                   onClick={() => setMobileOpen(false)}
                 >
-                  <span>{item.icon}</span>
-                  <span className="font-medium">{item.label}</span>
+                  {item.label}
                 </Link>
               ))}
             </div>

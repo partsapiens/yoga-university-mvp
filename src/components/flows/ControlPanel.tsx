@@ -45,20 +45,19 @@ export function ControlPanel({
   flowName, setFlowName, onSaveFlow
 }: ControlPanelProps) {
   return (
-    <div className="mx-auto mt-4 rounded-lg border border-border bg-card/90 p-3 shadow-sm">
-      <div className="flex flex-col gap-2">
+    <div className="rounded-lg border border-border bg-card/90 p-4 shadow-sm">
+      <div className="flex flex-col gap-4">
         {/* Settings Header */}
-        <h2 className="text-md font-semibold text-foreground mb-1">Settings</h2>
+        <h2 className="text-lg font-semibold text-foreground">Settings</h2>
         
-        {/* Compact Grid Layout */}
-        <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-3 text-sm">
-          {/* Basic Settings */}
-          <div className="space-y-1">
-            <label className="flex items-center gap-1 text-xs">
-              <span className="w-8 text-muted-foreground">Time</span>
+        {/* First Line: Time and Intensity */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="space-y-2">
+            <label className="flex items-center gap-2 text-sm font-medium">
+              <span>Time</span>
               <HelpIcon text="Target length of the practice in minutes." />
             </label>
-            <div className="flex items-center gap-1">
+            <div className="flex items-center gap-2">
               <input 
                 type="range" 
                 min={10} 
@@ -66,18 +65,18 @@ export function ControlPanel({
                 step={5} 
                 value={minutes} 
                 onChange={(e) => setMinutes(Number(e.target.value))} 
-                className="flex-1 h-1"
+                className="flex-1 h-2"
               />
-              <span className="w-8 text-right text-xs font-medium tabular-nums">{minutes}m</span>
+              <span className="w-12 text-right text-sm font-medium tabular-nums">{minutes}m</span>
             </div>
           </div>
 
-          <div className="space-y-1">
-            <label className="flex items-center gap-1 text-xs">
-              <span className="w-12 text-muted-foreground">Intensity</span>
+          <div className="space-y-2">
+            <label className="flex items-center gap-2 text-sm font-medium">
+              <span>Intensity</span>
               <HelpIcon text="How physically demanding the flow will be (1-5)." />
             </label>
-            <div className="flex items-center gap-1">
+            <div className="flex items-center gap-2">
               <input 
                 type="range" 
                 min={1} 
@@ -85,15 +84,18 @@ export function ControlPanel({
                 value={intensity} 
                 step={1} 
                 onChange={(e) => setIntensity(Number(e.target.value))} 
-                className="flex-1 h-1"
+                className="flex-1 h-2"
               />
-              <span className="w-8 text-right text-xs font-medium tabular-nums">{dotBar(intensity)}</span>
+              <span className="w-12 text-right text-sm font-medium tabular-nums">{dotBar(intensity)}</span>
             </div>
           </div>
+        </div>
 
-          <div className="space-y-1">
-            <label className="flex items-center gap-1 text-xs">
-              <span className="w-8 text-muted-foreground">Focus</span>
+        {/* Second Line: Muscle Focus and Intention (breathing cues as intention) */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="space-y-2">
+            <label className="flex items-center gap-2 text-sm font-medium">
+              <span>Muscle Focus</span>
               <HelpIcon text="The primary body area to target." />
             </label>
             <UiSelect value={focus} onValueChange={(v: Focus) => setFocus(v)}>
@@ -101,9 +103,34 @@ export function ControlPanel({
             </UiSelect>
           </div>
 
-          <div className="space-y-1">
-            <label className="flex items-center gap-1 text-xs">
-              <span className="w-12 text-muted-foreground">Timing</span>
+          <div className="space-y-2">
+            <label className="flex items-center gap-2 text-sm font-medium">
+              <span>Intention</span>
+              <HelpIcon text="Practice options and sequencing preferences." />
+            </label>
+            <div className="grid grid-cols-2 gap-2">
+              <label className="flex items-center justify-between p-2 border border-border rounded-md hover:bg-muted/50 transition-colors">
+                <span className="text-xs">Breathing Cues</span>
+                <Switch.Root checked={breathingCues} onCheckedChange={setBreathingCues} className="w-[32px] h-[18px] bg-muted rounded-full relative data-[state=checked]:bg-primary outline-none cursor-default">
+                  <Switch.Thumb className="block w-[14px] h-[14px] bg-white rounded-full shadow-lg transition-transform duration-100 translate-x-0.5 will-change-transform data-[state=checked]:translate-x-[16px]" />
+                </Switch.Root>
+              </label>
+              
+              <label className="flex items-center justify-between p-2 border border-border rounded-md hover:bg-muted/50 transition-colors">
+                <span className="text-xs">Safer Sequencing</span>
+                <Switch.Root checked={saferSequencing} onCheckedChange={setSaferSequencing} className="w-[32px] h-[18px] bg-muted rounded-full relative data-[state=checked]:bg-primary outline-none cursor-default">
+                  <Switch.Thumb className="block w-[14px] h-[14px] bg-white rounded-full shadow-lg transition-transform duration-100 translate-x-0.5 will-change-transform data-[state=checked]:translate-x-[16px]" />
+                </Switch.Root>
+              </label>
+            </div>
+          </div>
+        </div>
+
+        {/* Third Line: Timing Settings */}
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+          <div className="space-y-2">
+            <label className="flex items-center gap-2 text-sm font-medium">
+              <span>Timing Mode</span>
               <HelpIcon text="Hold poses for a number of seconds or a number of breaths." />
             </label>
             <UiSelect value={timingMode} onValueChange={(v: TimingMode) => setTimingMode(v)}>
@@ -112,11 +139,10 @@ export function ControlPanel({
             </UiSelect>
           </div>
 
-          {/* Conditional Timing Setting */}
           {timingMode === TimingMode.Breaths && (
-            <div className="space-y-1">
-              <label className="flex items-center gap-1 text-xs">
-                <span className="w-16 text-muted-foreground">Secs/Breath</span>
+            <div className="space-y-2">
+              <label className="flex items-center gap-2 text-sm font-medium">
+                <span>Secs/Breath</span>
                 <HelpIcon text="The average number of seconds per full breath cycle (in and out)." />
               </label>
               <input 
@@ -125,100 +151,68 @@ export function ControlPanel({
                 max={10} 
                 value={secPerBreath} 
                 onChange={e => setSecPerBreath(clamp(Number(e.target.value), 3, 10))} 
-                className="h-6 w-full rounded-md border border-input px-1 py-0.5 text-xs" 
+                className="w-full px-3 py-2 rounded-md border border-input text-sm" 
               />
             </div>
           )}
 
-          <div className="space-y-1">
-            <label className="flex items-center gap-1 text-xs">
-              <span className="w-12 text-muted-foreground">Transition</span>
+          <div className="space-y-2">
+            <label className="flex items-center gap-2 text-sm font-medium">
+              <span>Transition</span>
               <HelpIcon text="Seconds to pause between poses." />
             </label>
-            <div className="flex items-center gap-1">
+            <div className="flex items-center gap-2">
               <input 
                 type="number" 
                 min={0} 
                 max={20} 
                 value={transitionSec} 
                 onChange={e => setTransitionSec(clamp(Number(e.target.value), 0, 20))} 
-                className="h-6 w-full rounded-md border border-input px-1 py-0.5 text-xs" 
+                className="w-full px-3 py-2 rounded-md border border-input text-sm" 
               />
-              <span className="text-xs text-muted-foreground">s</span>
+              <span className="text-sm text-muted-foreground">s</span>
             </div>
           </div>
 
-          <div className="space-y-1">
-            <label className="flex items-center gap-1 text-xs">
-              <span className="w-12 text-muted-foreground">Cooldown</span>
+          <div className="space-y-2">
+            <label className="flex items-center gap-2 text-sm font-medium">
+              <span>Cooldown</span>
               <HelpIcon text="Minutes of Savasana (Corpse Pose) to add at the end." />
             </label>
-            <div className="flex items-center gap-1">
+            <div className="flex items-center gap-2">
               <input 
                 type="number" 
                 min={0} 
                 max={10} 
                 value={cooldownMin} 
                 onChange={e => setCooldownMin(clamp(Number(e.target.value), 0, 10))} 
-                className="h-6 w-full rounded-md border border-input px-1 py-0.5 text-xs" 
+                className="w-full px-3 py-2 rounded-md border border-input text-sm" 
               />
-              <span className="text-xs text-muted-foreground">min</span>
+              <span className="text-sm text-muted-foreground">min</span>
             </div>
           </div>
-        </div>
-
-        {/* Toggle Settings Row - More Compact */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-2 mt-1">
-          <label className="flex items-center justify-between">
-            <span className="text-xs text-muted-foreground">Breathing Cues</span>
-            <Switch.Root checked={breathingCues} onCheckedChange={setBreathingCues} className="w-[36px] h-[20px] bg-muted rounded-full relative data-[state=checked]:bg-primary outline-none cursor-default">
-              <Switch.Thumb className="block w-[16px] h-[16px] bg-white rounded-full shadow-lg transition-transform duration-100 translate-x-0.5 will-change-transform data-[state=checked]:translate-x-[18px]" />
-            </Switch.Root>
-          </label>
-          
-          <label className="flex items-center justify-between">
-            <div className="flex items-center gap-1">
-              <span className="text-xs text-muted-foreground">Safer Sequencing</span>
-              <HelpIcon text="Avoids sharp transitions (e.g., twist to backbend) by inserting neutral poses." />
-            </div>
-            <Switch.Root checked={saferSequencing} onCheckedChange={setSaferSequencing} className="w-[36px] h-[20px] bg-muted rounded-full relative data-[state=checked]:bg-primary outline-none cursor-default">
-              <Switch.Thumb className="block w-[16px] h-[16px] bg-white rounded-full shadow-lg transition-transform duration-100 translate-x-0.5 will-change-transform data-[state=checked]:translate-x-[18px]" />
-            </Switch.Root>
-          </label>
-          
-          <label className="flex items-center justify-between">
-            <div className="flex items-center gap-1">
-              <span className="text-xs text-muted-foreground">Save to Device</span>
-              <HelpIcon text="If on, saved flows will persist after you close the browser." />
-            </div>
-            <Switch.Root checked={saveToDevice} onCheckedChange={setSaveToDevice} className="w-[36px] h-[20px] bg-muted rounded-full relative data-[state=checked]:bg-primary outline-none cursor-default">
-              <Switch.Thumb className="block w-[16px] h-[16px] bg-white rounded-full shadow-lg transition-transform duration-100 translate-x-0.5 will-change-transform data-[state=checked]:translate-x-[18px]" />
-            </Switch.Root>
-          </label>
         </div>
         
-        {/* Actions Section */}
-        <div className="border-t border-border pt-2 mt-2">
-          <div className="flex items-center justify-center gap-2">
-              <input 
-                value={flowName} 
-                onChange={e => setFlowName(e.target.value)} 
-                className="h-6 w-24 rounded-md border border-input px-2 py-1 text-xs" 
-                placeholder="Flow name" 
-              />
-              <button 
-                onClick={onSaveFlow} 
-                className="h-6 rounded-md border px-2 py-1 text-xs hover:bg-accent"
-              >
-                Save
-              </button>
-              <button 
-                onClick={onAutoGenerate} 
-                className="h-6 rounded-md px-2 py-1 text-xs text-primary-foreground bg-primary hover:bg-primary/90"
-              >
-                Generate
-              </button>
-          </div>
+        {/* Fourth Line: Generate button */}
+        <div className="flex items-center justify-center gap-4 pt-2 border-t border-border">
+          <input 
+            value={flowName} 
+            onChange={e => setFlowName(e.target.value)} 
+            className="px-3 py-2 rounded-md border border-input text-sm flex-1 max-w-xs" 
+            placeholder="Flow name" 
+          />
+          <button 
+            onClick={onSaveFlow} 
+            className="px-4 py-2 rounded-md border border-border text-sm hover:bg-accent transition-colors"
+          >
+            Save
+          </button>
+          <button 
+            onClick={onAutoGenerate} 
+            className="px-6 py-2 rounded-md text-sm text-primary-foreground bg-primary hover:bg-primary/90 transition-colors font-medium"
+          >
+            Generate Flow
+          </button>
         </div>
       </div>
     </div>
