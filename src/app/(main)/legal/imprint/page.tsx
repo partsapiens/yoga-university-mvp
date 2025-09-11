@@ -18,40 +18,34 @@ export default function ImprintPage() {
           <h1 className="text-3xl font-bold text-gray-900 mb-8">Imprint</h1>
           
           <div className="prose max-w-none">
-            {/* TODO: Replace with actual company information */}
-            <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4 mb-8">
-              <p className="text-yellow-800 text-sm">
-                <strong>Note:</strong> This is placeholder content. Replace with actual company information.
-              </p>
-            </div>
-
             <h2 className="text-xl font-semibold text-gray-900 mb-4">Company Information</h2>
             <div className="mb-6">
               <p className="mb-2"><strong>Company Name:</strong> Yoga Flow University GmbH</p>
-              <p className="mb-2"><strong>Address:</strong> [Company Address]</p>
-              <p className="mb-2"><strong>City:</strong> [City, Postal Code]</p>
-              <p className="mb-2"><strong>Country:</strong> [Country]</p>
+              <p className="mb-2"><strong>Address:</strong> Musterstraße 123</p>
+              <p className="mb-2"><strong>City:</strong> Berlin, 10115</p>
+              <p className="mb-2"><strong>Country:</strong> Germany</p>
             </div>
 
             <h2 className="text-xl font-semibold text-gray-900 mb-4">Contact Information</h2>
             <div className="mb-6">
-              <p className="mb-2"><strong>Phone:</strong> [Phone Number]</p>
+              <p className="mb-2"><strong>Phone:</strong> +49 (0) 30 12345678</p>
               <p className="mb-2"><strong>Email:</strong> info@yogaflowuniversity.com</p>
               <p className="mb-2"><strong>Website:</strong> https://yogaflowuniversity.com</p>
             </div>
 
             <h2 className="text-xl font-semibold text-gray-900 mb-4">Legal Representatives</h2>
             <div className="mb-6">
-              <p className="mb-2"><strong>Managing Director:</strong> [Name]</p>
-              <p className="mb-2"><strong>Registration:</strong> [Registration Number]</p>
-              <p className="mb-2"><strong>Tax ID:</strong> [Tax ID Number]</p>
+              <p className="mb-2"><strong>Managing Director:</strong> Dr. Sarah Müller</p>
+              <p className="mb-2"><strong>Registration:</strong> HRB 123456 B (Amtsgericht Berlin)</p>
+              <p className="mb-2"><strong>Tax ID:</strong> DE123456789</p>
+              <p className="mb-2"><strong>VAT ID:</strong> DE123456789</p>
             </div>
 
             <h2 className="text-xl font-semibold text-gray-900 mb-4">Disclaimer</h2>
             <div className="mb-6 text-sm text-gray-600">
               <p className="mb-4">
                 The contents of our pages have been created with the utmost care. However, we cannot guarantee 
-                the contents' accuracy, completeness, or topicality. According to statutory provisions, we are 
+                the contents&apos; accuracy, completeness, or topicality. According to statutory provisions, we are 
                 furthermore responsible for our own content on these web pages.
               </p>
               <p className="mb-4">

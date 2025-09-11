@@ -17,7 +17,7 @@ export default function OfflinePage() {
             Practice Offline
           </h1>
           <p className="text-gray-600 mb-8">
-            You're currently offline, but your mindfulness practice doesn't have to stop. 
+            You&apos;re currently offline, but your mindfulness practice doesn&apos;t have to stop. 
             Try these offline techniques while we reconnect.
           </p>
         </div>
@@ -48,7 +48,7 @@ export default function OfflinePage() {
               <span className="text-green-600 mt-1">🙏</span>
               <div>
                 <h3 className="font-medium text-gray-900">Gratitude Practice</h3>
-                <p className="text-sm text-gray-600">Think of three things you're grateful for right now.</p>
+                <p className="text-sm text-gray-600">Think of three things you&apos;re grateful for right now.</p>
               </div>
             </div>
             

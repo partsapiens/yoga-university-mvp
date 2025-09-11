@@ -71,7 +71,7 @@ export default function PrivacyPage() {
                 explicitly choose to sync it with our servers.
               </p>
               <p className="mb-4">
-                For analytics, we use privacy-focused tools that don't track individual users 
+                For analytics, we use privacy-focused tools that don&apos;t track individual users 
                 and comply with GDPR requirements. No personal identifiers are stored in our 
                 analytics systems.
               </p>
@@ -116,7 +116,7 @@ export default function PrivacyPage() {
               </ul>
             </div>
 
-            <h2 className="text-xl font-semibold text-gray-900 mb-4">Children's Privacy</h2>
+            <h2 className="text-xl font-semibold text-gray-900 mb-4">Children&apos;s Privacy</h2>
             <div className="mb-6 text-gray-600">
               <p>
                 Our service is not directed to children under 13. We do not knowingly collect 

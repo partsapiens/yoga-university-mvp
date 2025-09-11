@@ -95,8 +95,12 @@ export default function AIGuidePage() {
     
     setGuideState('active');
     const poseInstructions = getPoseInstructions(selectedPose);
-    speak(`Let's begin with ${selectedPose.replace('_', ' ')}. ${poseInstructions}`);
-  }, [selectedPose, speak]);
+    if (cameraEnabled) {
+      speak(`Let's begin with ${selectedPose.replace('_', ' ')}. ${poseInstructions} I'll help you with real-time feedback.`);
+    } else {
+      speak(`Let's begin with ${selectedPose.replace('_', ' ')}. ${poseInstructions} Follow along with the audio guidance.`);
+    }
+  }, [selectedPose, speak, cameraEnabled]);
 
   // Analyze current pose
   const analyzePose = useCallback(async () => {
@@ -188,8 +192,13 @@ export default function AIGuidePage() {
           🤖 AI Yoga Guide
         </h1>
         <p className="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto mb-4">
-          Your personal AI-powered yoga instructor. Get real-time pose feedback through your camera and voice commands.
+          Your personal AI-powered yoga instructor. Use voice guidance for practice, and optionally enable your camera for real-time pose feedback.
         </p>
+        <div className="bg-blue-50 dark:bg-blue-900/30 border border-blue-200 dark:border-blue-800 rounded-lg p-4 max-w-2xl mx-auto">
+          <p className="text-blue-800 dark:text-blue-200 text-sm">
+            ✨ <strong>Camera is optional!</strong> You can practice with voice guidance only, or enable your camera for pose analysis and feedback.
+          </p>
+        </div>
         
         {/* Integration Navigation */}
         <div className="flex justify-center gap-4 mb-6">
@@ -235,7 +244,10 @@ export default function AIGuidePage() {
                 <div className="flex items-center justify-center h-full">
                   <div className="text-center">
                     <div className="text-6xl mb-4">📹</div>
-                    <p className="text-gray-500 dark:text-gray-400">Camera not enabled</p>
+                    <p className="text-gray-500 dark:text-gray-400 mb-2">Camera not enabled</p>
+                    <p className="text-sm text-gray-400 dark:text-gray-500">
+                      Enable camera for pose analysis, or practice with voice guidance only
+                    </p>
                   </div>
                 </div>
               )}
@@ -296,7 +308,7 @@ export default function AIGuidePage() {
             <div className="space-y-3">
               <Button 
                 onClick={startGuidedSession}
-                disabled={!selectedPose || !cameraEnabled}
+                disabled={!selectedPose}
                 className="w-full"
               >
                 🚀 Start Guided Session
@@ -308,7 +320,7 @@ export default function AIGuidePage() {
                 variant="secondary"
                 className="w-full"
               >
-                {isAnalyzing ? "Analyzing..." : "🔍 Analyze Pose"}
+                {isAnalyzing ? "Analyzing..." : "🔍 Analyze Pose (Camera Required)"}
               </Button>
               
               <Button 

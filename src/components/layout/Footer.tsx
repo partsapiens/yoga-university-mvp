@@ -74,7 +74,10 @@ export const Footer = () => {
     { name: 'Pose Library', href: '/poses' },
     { name: 'Create Flow', href: '/flows/create' },
     { name: 'Meditation', href: '/meditation' },
-    { name: 'Manual', href: '/manual' }
+    { name: 'Manual', href: '/manual' },
+    { name: 'About', href: '/about' },
+    { name: 'Pricing', href: '/pricing' },
+    { name: 'Contact', href: '/contact' }
   ];
 
   return (
@@ -191,15 +194,7 @@ export const Footer = () => {
         </div>
       </div>
 
-      {/* Development TODO Notes */}
-      <div className="bg-yellow-900/20 border-t border-yellow-800">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3">
-          <div className="text-yellow-200 text-xs">
-            <strong>TODO:</strong> Implement newsletter signup, language switching for footer content, 
-            analytics integration for social link tracking, and accessibility improvements
-          </div>
-        </div>
-      </div>
+
     </footer>
   );
 };

@@ -157,7 +157,7 @@ export default function ManualSearch() {
         <div className="absolute top-full left-0 right-0 mt-2 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg shadow-lg z-50">
           <div className="p-4 text-center text-gray-500 dark:text-gray-400">
             <Search className="w-8 h-8 mx-auto mb-2 opacity-50" />
-            <p>No results found for "{query}"</p>
+            <p>No results found for &quot;{query}&quot;</p>
             <p className="text-sm mt-1">Try different keywords or browse by chapter</p>
           </div>
         </div>
