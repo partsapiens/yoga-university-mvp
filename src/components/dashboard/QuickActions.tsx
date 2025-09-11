@@ -120,20 +120,7 @@ export const QuickActions: React.FC = () => {
           })}
         </div>
         
-        {/* Today's Recommendation */}
-        <div className="mt-4 p-3 rounded-lg bg-gradient-to-r from-primary/10 to-primary/5 border border-primary/20">
-          <div className="flex items-center gap-2 mb-1">
-            <Target className="h-4 w-4 text-primary" />
-            <span className="text-sm font-medium">Today&apos;s AI Recommendation</span>
-          </div>
-          <div className="text-xs text-muted-foreground mb-2">
-            Based on your recent activity and the time of day
-          </div>
-          <Button size="sm" className="w-full">
-            <Play className="h-3 w-3 mr-2" />
-            Start Gentle Morning Flow (20 min)
-          </Button>
-        </div>
+
       </CardContent>
     </Card>
   );
