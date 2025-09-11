@@ -159,7 +159,7 @@ export const RecentAchievements: React.FC = () => {
             <span className="text-xs text-muted-foreground">80% complete</span>
           </div>
           <div className="text-xs text-muted-foreground mb-2">
-            Practice for 3 more days to unlock "10-Day Streak"
+            Practice for 3 more days to unlock &quot;10-Day Streak&quot;
           </div>
           <div className="w-full bg-muted rounded-full h-2">
             <div className="bg-primary h-2 rounded-full transition-all duration-300" style={{ width: '80%' }} />
