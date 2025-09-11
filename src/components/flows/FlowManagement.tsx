@@ -1,7 +1,6 @@
 import React from 'react';
 import { QuickActions } from './QuickActions';
 import { FlowValidation } from './FlowValidation';
-import { PoseCard } from './PoseCard';
 import { PoseId, TimingMode } from '@/types/yoga';
 
 interface FlowManagementProps {
@@ -109,30 +108,13 @@ export function FlowManagement({
         <FlowValidation flow={flow} totalSeconds={totalSeconds} />
       </div>
 
-      {/* Your Flow Grid */}
+      {/* Your Flow Grid - Only show when no flow exists or show minimal info */}
       <div>
         {flow.length > 0 ? (
-          <div className="grid grid-cols-1 gap-3 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
-            {flow.map((id, i) => (
-              <PoseCard
-                key={`${id}-${i}`}
-                poseId={id}
-                index={i}
-                duration={secondsPerPose[i] || 0}
-                onRemove={onRemovePose}
-                onUpdateDuration={onUpdatePoseDuration}
-                timingMode={timingMode}
-                secPerBreath={secPerBreath}
-                onMove={onMovePose}
-                dragIndexRef={dragIndexRef}
-                isFirst={i === 0}
-                isLast={i === flow.length - 1}
-                isActive={i === activePoseIndex}
-                timeInPose={i === activePoseIndex ? timeInPose : 0}
-                prevPoseId={flow[i-1]}
-                nextPoseId={flow[i+1]}
-              />
-            ))}
+          <div className="text-center py-8 text-muted-foreground">
+            <div className="text-4xl mb-2">🧘‍♀️</div>
+            <h3 className="text-lg font-semibold mb-2">Flow Active</h3>
+            <p className="text-sm">Your flow sequence is now displayed in the player below for easy access during practice</p>
           </div>
         ) : (
           <div className="text-center py-12 text-muted-foreground">

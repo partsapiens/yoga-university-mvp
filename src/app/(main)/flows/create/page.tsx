@@ -15,6 +15,7 @@ import { FlowManagement } from "@/components/flows/FlowManagement";
 import { AutoSave } from "@/components/flows/AutoSave";
 import { KeyboardShortcuts, useKeyboardShortcuts } from "@/components/flows/KeyboardShortcuts";
 import { FlowNameInput } from "@/components/flows/FlowNameInput";
+import YogaAIDemo from "@/components/flows/YogaAIDemo";
 import { FlowTemplates } from "@/components/flows/FlowTemplates";
 import { QuickActions } from "@/components/dashboard/QuickActions";
 import { Focus, TimingMode, PoseId, SavedFlow, Pose } from "@/types/yoga";
@@ -418,36 +419,14 @@ export default function CreateFlowPage() {
         <div className="flex items-center justify-between mb-4">
           <div>
             <h1 className="text-3xl font-semibold tracking-tight">Create your sequence</h1>
-            {/* AI Guide Integration */}
-            <div className="flex items-center gap-3 mt-2">
-              <a 
-                href="/ai-guide"
-                className="inline-flex items-center px-3 py-1.5 bg-purple-600 text-white text-sm rounded-lg hover:bg-purple-700 transition-colors"
-              >
-                🧘‍♀️ Your Yoga Teacher
-              </a>
-              {flow.length > 0 && (
-                <button
-                  onClick={() => {
-                    // Save current flow and navigate to AI Guide with the flow
-                    const searchParams = new URLSearchParams();
-                    searchParams.set('fromCreateFlow', 'true');
-                    searchParams.set('flowData', JSON.stringify({
-                      flow: flow,
-                      name: flowName || 'My Flow',
-                      totalSeconds: totalSeconds
-                    }));
-                    window.location.href = `/ai-guide?${searchParams.toString()}`;
-                  }}
-                  className="inline-flex items-center px-3 py-1.5 bg-green-600 text-white text-sm rounded-lg hover:bg-green-700 transition-colors"
-                >
-                  ✨ Practice with Yoga Teacher
-                </button>
-              )}
-              <span className="text-xs text-muted-foreground">Create flows here, then use your AI Yoga Teacher for real-time feedback and guidance</span>
-            </div>
+
           </div>
           <KeyboardShortcuts />
+        </div>
+        
+        {/* AI Yoga Flow Generator */}
+        <div className="mt-6">
+          <YogaAIDemo />
         </div>
         
         {/* Quick Start Section */}
@@ -532,7 +511,33 @@ export default function CreateFlowPage() {
         </div>
       </div>
       
-      {flow.length > 0 && <Player {...{ isPlaying: playbackState === 'playing', isPaused: playbackState === 'paused', currentPoseId: flow[currentPoseIndex], nextPoseId: flow[currentPoseIndex + 1], timeInPose, currentPoseDuration: tempoAdjust(secondsPerPose[currentPoseIndex] ?? 0, playbackRate), sessionTotalSeconds: totalSeconds, sessionTimeRemaining, onPlay: handlePlay, onPause: handlePause, onResume: handleResume, onStop: handleStop, onNext: handleNext, onPrev: handlePrev, playbackRate, adjustRate }} />}
+      {flow.length > 0 && <Player {...{ 
+        isPlaying: playbackState === 'playing', 
+        isPaused: playbackState === 'paused', 
+        currentPoseId: flow[currentPoseIndex], 
+        nextPoseId: flow[currentPoseIndex + 1], 
+        timeInPose, 
+        currentPoseDuration: tempoAdjust(secondsPerPose[currentPoseIndex] ?? 0, playbackRate), 
+        sessionTotalSeconds: totalSeconds, 
+        sessionTimeRemaining, 
+        onPlay: handlePlay, 
+        onPause: handlePause, 
+        onResume: handleResume, 
+        onStop: handleStop, 
+        onNext: handleNext, 
+        onPrev: handlePrev, 
+        playbackRate, 
+        adjustRate,
+        flow,
+        secondsPerPose,
+        onRemovePose: removePose,
+        onUpdatePoseDuration: updatePoseDuration,
+        timingMode,
+        secPerBreath,
+        onMovePose: movePose,
+        dragIndexRef: dragIndex,
+        activePoseIndex: playbackState !== 'idle' ? currentPoseIndex : -1
+      }} />}
       <GeneratePreviewModal isOpen={!!preview} onClose={() => setPreview(null)} preview={preview} onShuffle={handleGenerate} onAccept={acceptPreview} />
     </div>
   );

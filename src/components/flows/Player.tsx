@@ -3,6 +3,7 @@ import { POSES } from '@/lib/yoga-data';
 import { PoseId } from '@/types/yoga';
 import { Avatar } from '@/components/Avatar';
 import { useYogaVoiceGuide } from '@/hooks/useYogaVoiceGuide';
+import { PoseCard } from './PoseCard';
 
 interface PlayerProps {
   isPlaying: boolean;
@@ -21,12 +22,24 @@ interface PlayerProps {
   onNext?: () => void;
   onPrev?: () => void;
   adjustRate: (amount: number) => void;
+  // New props for flow display
+  flow: PoseId[];
+  secondsPerPose: number[];
+  onRemovePose: (index: number) => void;
+  onUpdatePoseDuration: (index: number, duration: number) => void;
+  timingMode: any;
+  secPerBreath: number;
+  onMovePose: (dragIndex: number, hoverIndex: number) => void;
+  dragIndexRef: React.MutableRefObject<number | null>;
+  activePoseIndex: number;
 }
 
 export function Player({
   isPlaying, isPaused, currentPoseId, nextPoseId, timeInPose, currentPoseDuration,
   sessionTotalSeconds, sessionTimeRemaining, playbackRate,
   onPlay, onPause, onResume, onStop, onNext, onPrev, adjustRate,
+  flow, secondsPerPose, onRemovePose, onUpdatePoseDuration, timingMode, secPerBreath,
+  onMovePose, dragIndexRef, activePoseIndex,
 }: PlayerProps) {
   const currentPose = currentPoseId ? POSES.find(p => p.id === currentPoseId) : null;
   const nextPose = nextPoseId ? POSES.find(p => p.id === nextPoseId) : null;
@@ -108,6 +121,41 @@ export function Player({
 
   return (
     <div className="fixed bottom-0 left-0 right-0 bg-card/95 border-t border-border shadow-lg backdrop-blur-sm">
+      {/* Flow Sequence Display - Only show when flow exists */}
+      {flow.length > 0 && (
+        <div className="border-b border-border p-4 max-h-48 overflow-y-auto">
+          <div className="mb-2">
+            <h3 className="text-sm font-semibold text-foreground">Active Flow Sequence</h3>
+            <p className="text-xs text-muted-foreground">
+              {flow.length} poses • {Math.round(sessionTotalSeconds / 60)} minutes total
+            </p>
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2">
+            {flow.map((id, i) => (
+              <div key={`${id}-${i}`} className="scale-75 origin-top-left">
+                <PoseCard
+                  poseId={id}
+                  index={i}
+                  duration={secondsPerPose[i] || 0}
+                  onRemove={onRemovePose}
+                  onUpdateDuration={onUpdatePoseDuration}
+                  timingMode={timingMode}
+                  secPerBreath={secPerBreath}
+                  onMove={onMovePose}
+                  dragIndexRef={dragIndexRef}
+                  isFirst={i === 0}
+                  isLast={i === flow.length - 1}
+                  isActive={i === activePoseIndex}
+                  timeInPose={i === activePoseIndex ? timeInPose : 0}
+                  prevPoseId={flow[i-1]}
+                  nextPoseId={flow[i+1]}
+                />
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+      
       {/* Session Progress Bar */}
       <div title={`Session progress: ${Math.round(sessionProgress)}%`} className="h-0.5 w-full bg-muted overflow-hidden">
         <div className="h-full bg-primary transition-all duration-500" style={{ width: `${sessionProgress}%` }} role="progressbar" aria-valuenow={sessionProgress} aria-valuemin={0} aria-valuemax={100} />
