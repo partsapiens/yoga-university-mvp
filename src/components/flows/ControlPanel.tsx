@@ -86,13 +86,13 @@ export function ControlPanel({
                 onChange={(e) => setIntensity(Number(e.target.value))} 
                 className="flex-1 h-2"
               />
-              <span className="w-12 text-right text-sm font-medium tabular-nums">{dotBar(intensity)}</span>
+              <span className="w-12 text-right text-sm font-medium tabular-nums">{intensity}</span>
             </div>
           </div>
         </div>
 
-        {/* Second Line: Muscle Focus and Intention (breathing cues as intention) */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        {/* Second Line: Muscle Focus only */}
+        <div className="grid grid-cols-1 md:grid-cols-1 gap-4">
           <div className="space-y-2">
             <label className="flex items-center gap-2 text-sm font-medium">
               <span>Muscle Focus</span>
@@ -101,28 +101,6 @@ export function ControlPanel({
             <UiSelect value={focus} onValueChange={(v: Focus) => setFocus(v)}>
               {FOCI.map(f => <UiSelectItem key={f} value={f}>{f}</UiSelectItem>)}
             </UiSelect>
-          </div>
-
-          <div className="space-y-2">
-            <label className="flex items-center gap-2 text-sm font-medium">
-              <span>Intention</span>
-              <HelpIcon text="Practice options and sequencing preferences." />
-            </label>
-            <div className="grid grid-cols-2 gap-2">
-              <label className="flex items-center justify-between p-2 border border-border rounded-md hover:bg-muted/50 transition-colors">
-                <span className="text-xs">Breathing Cues</span>
-                <Switch.Root checked={breathingCues} onCheckedChange={setBreathingCues} className="w-[32px] h-[18px] bg-muted rounded-full relative data-[state=checked]:bg-primary outline-none cursor-default">
-                  <Switch.Thumb className="block w-[14px] h-[14px] bg-white rounded-full shadow-lg transition-transform duration-100 translate-x-0.5 will-change-transform data-[state=checked]:translate-x-[16px]" />
-                </Switch.Root>
-              </label>
-              
-              <label className="flex items-center justify-between p-2 border border-border rounded-md hover:bg-muted/50 transition-colors">
-                <span className="text-xs">Safer Sequencing</span>
-                <Switch.Root checked={saferSequencing} onCheckedChange={setSaferSequencing} className="w-[32px] h-[18px] bg-muted rounded-full relative data-[state=checked]:bg-primary outline-none cursor-default">
-                  <Switch.Thumb className="block w-[14px] h-[14px] bg-white rounded-full shadow-lg transition-transform duration-100 translate-x-0.5 will-change-transform data-[state=checked]:translate-x-[16px]" />
-                </Switch.Root>
-              </label>
-            </div>
           </div>
         </div>
 
