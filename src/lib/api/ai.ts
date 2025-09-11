@@ -1,4 +1,4 @@
-import type { RecommendationInput, Recommendation, FormCheckInput, FormFeedback } from '@/types/ai';
+import type { RecommendationInput, Recommendation, FormCheckInput, FormFeedback, MeditationInput, MeditationScript, MeditationPhase, BreathingPattern } from '@/types/ai';
 import type { SavedFlow } from '@/types/yoga';
 import { PoseId } from '@/types/yoga';
 
@@ -170,4 +170,193 @@ export async function autogenFlow(_input: {
     flow: [],
     overrides: {},
   };
+}
+
+// Meditation-specific AI functions
+export async function generateMeditationScript(input: MeditationInput): Promise<MeditationScript> {
+  // Define breathing patterns
+  const breathingPatterns: Record<string, BreathingPattern> = {
+    box: { name: 'Box Breathing', inhale: 4, hold1: 4, exhale: 4, hold2: 4, description: '4-4-4-4 pattern for stress relief' },
+    triangle: { name: '4-7-8 Breathing', inhale: 4, hold1: 7, exhale: 8, description: 'Calming pattern for sleep and anxiety' },
+    resonance: { name: 'Resonance Breathing', inhale: 5.5, exhale: 5.5, description: 'Balanced 5.5 BPM for optimal coherence' },
+    natural: { name: 'Natural Breathing', inhale: 0, exhale: 0, description: 'Follow your natural breath rhythm' }
+  };
+
+  // Select breathing pattern based on style and goal
+  let breathingPattern = breathingPatterns.natural;
+  if (input.style === 'breathing') {
+    if (input.goal.toLowerCase().includes('sleep') || input.goal.toLowerCase().includes('anxiety')) {
+      breathingPattern = breathingPatterns.triangle;
+    } else if (input.goal.toLowerCase().includes('stress') || input.goal.toLowerCase().includes('focus')) {
+      breathingPattern = breathingPatterns.box;
+    } else {
+      breathingPattern = breathingPatterns.resonance;
+    }
+  }
+
+  // Generate personalized script content
+  const context = {
+    mood: input.mood,
+    goal: input.goal,
+    timeOfDay: input.timeOfDay,
+    experience: input.experience,
+    duration: input.duration
+  };
+
+  const phases: MeditationPhase[] = [];
+  const totalDuration = input.duration * 60; // Convert to seconds
+  
+  // Intro phase (10-15% of total time)
+  const introTime = Math.max(30, Math.floor(totalDuration * 0.12));
+  phases.push({
+    id: 'intro',
+    name: 'intro',
+    duration: introTime,
+    script: generateIntroScript(context),
+    voiceSettings: { pace: 'slow', tone: 'gentle' }
+  });
+
+  // Settle phase (15-20% of total time)
+  const settleTime = Math.max(45, Math.floor(totalDuration * 0.18));
+  phases.push({
+    id: 'settle',
+    name: 'settle',
+    duration: settleTime,
+    script: generateSettleScript(context),
+    breathingCue: 'natural',
+    voiceSettings: { pace: 'slow', tone: 'gentle' }
+  });
+
+  // Main practice phase (50-60% of total time)
+  const mainTime = totalDuration - introTime - settleTime - 60; // Leave 60s for closing
+  if (mainTime > 0) {
+    phases.push({
+      id: 'main',
+      name: input.style === 'breathing' ? 'breathwork' : 'main',
+      duration: mainTime,
+      script: generateMainScript(context, input.style),
+      breathingCue: input.style === 'breathing' ? breathingPattern.name : 'natural',
+      voiceSettings: { pace: 'normal', tone: 'neutral' }
+    });
+  }
+
+  // Closing phase (10-15% of total time, minimum 60s)
+  const closeTime = Math.max(60, Math.floor(totalDuration * 0.12));
+  phases.push({
+    id: 'close',
+    name: 'close',
+    duration: closeTime,
+    script: generateCloseScript(context),
+    voiceSettings: { pace: 'slow', tone: 'gentle' }
+  });
+
+  return {
+    id: `meditation_${Date.now()}`,
+    title: generateTitle(input),
+    phases,
+    totalDuration,
+    breathingPattern: input.style === 'breathing' ? breathingPattern : undefined
+  };
+}
+
+function generateIntroScript(context: any): string {
+  const greetings = {
+    morning: "Good morning. Welcome to your morning meditation practice.",
+    afternoon: "Hello, and welcome to this moment of peace in your day.",
+    evening: "Good evening. It's time to unwind and center yourself.",
+    night: "Welcome to this calming practice as you prepare for rest."
+  };
+
+  const moodResponses: Record<string, string> = {
+    stressed: "I sense you might be feeling some tension today. This practice will help you find calm.",
+    anxious: "It's natural to feel unsettled sometimes. Let's create some space for peace.",
+    tired: "When we're tired, meditation can be deeply restorative. Allow yourself to be supported.",
+    energetic: "Your energy is wonderful. Let's channel it mindfully and find centered focus.",
+    sad: "Difficult emotions are part of being human. This practice offers gentle compassion.",
+    happy: "Your positive energy is beautiful. Let's enhance this sense of wellbeing.",
+    overwhelmed: "When life feels too much, meditation offers a refuge of simplicity.",
+    default: "Whatever brought you here today, this time is yours for finding peace."
+  };
+
+  const greeting = greetings[context.timeOfDay as keyof typeof greetings] || greetings.afternoon;
+  const moodResponse = moodResponses[context.mood] || moodResponses.default;
+
+  return `${greeting} ${moodResponse} Find a comfortable position, whether sitting or lying down. Close your eyes gently, or soften your gaze downward. Take a moment to arrive fully in this space.`;
+}
+
+function generateSettleScript(context: any): string {
+  const experienceAdjustments: Record<string, string> = {
+    beginner: "If you're new to meditation, simply focus on your breath. There's no wrong way to do this.",
+    intermediate: "Bring your attention to your natural breathing pattern, noticing each inhale and exhale.",
+    advanced: "Settle into your established practice, allowing your breath to guide you into deeper awareness."
+  };
+
+  const goalOrientedText: Record<string, string> = {
+    sleep: "Allow your body to release the day's tensions with each exhale.",
+    focus: "Notice how your mind naturally settles when you give it this focused task.",
+    stress: "With each breath, imagine releasing what no longer serves you.",
+    default: "Simply be present with what is, without trying to change anything."
+  };
+
+  const experienceText = experienceAdjustments[context.experience as string] || experienceAdjustments.intermediate;
+  const goalKey = Object.keys(goalOrientedText).find(key => 
+    context.goal.toLowerCase().includes(key)
+  );
+  const goalText = goalKey ? goalOrientedText[goalKey] : goalOrientedText.default;
+
+  return `${experienceText} ${goalText} Allow your breathing to find its natural rhythm. Notice the gentle rise and fall of your chest, the subtle pause between breaths.`;
+}
+
+function generateMainScript(context: any, style: string): string {
+  const styleScripts: Record<string, string> = {
+    mindfulness: `Now, rest your attention on your breath. When your mind wanders - and it will - simply notice where it went with kindness, and gently return to your breath. This is the practice: noticing, and returning. Each time you return is a moment of awakening.`,
+    
+    breathing: `We'll now work with a specific breathing pattern. Follow the rhythm naturally, without forcing. If the pattern feels too challenging, return to your natural breath at any time. Let the breathing become a gentle anchor for your attention.`,
+    
+    'body-scan': `Beginning at the top of your head, slowly scan downward through your body. Notice any sensations, tension, or areas of ease. Don't try to change anything - simply observe with curiosity and kindness. Move slowly from your head to your neck, shoulders, arms...`,
+    
+    'loving-kindness': `Bring someone you love easily to mind. Silently offer them these wishes: May you be happy. May you be peaceful. May you be free from suffering. Now extend these same wishes to yourself: May I be happy. May I be peaceful. May I be free from suffering.`,
+    
+    sleep: `With each exhale, feel yourself sinking deeper into relaxation. Notice how your body naturally wants to rest. Allow your thoughts to become like clouds drifting peacefully across an evening sky. There's nowhere to go, nothing to do except rest.`,
+    
+    focus: `Choose a single point of focus - perhaps the sensation of breath at your nostrils, or a word like 'peace' or 'calm'. When your mind moves away from this focus, gently guide it back. This training of attention strengthens your capacity for concentration.`
+  };
+
+  return styleScripts[style] || styleScripts.mindfulness;
+}
+
+function generateCloseScript(context: any): string {
+  const timeBasedClosing: Record<string, string> = {
+    morning: "As you complete this practice, carry this sense of calm awareness into your day ahead.",
+    afternoon: "Take this peace with you as you continue through your day, knowing you can return to this calm whenever needed.",
+    evening: "Let this peaceful state prepare you for a restful evening, releasing the day with gratitude.",
+    night: "Allow this tranquility to stay with you as you rest, supporting peaceful sleep."
+  };
+
+  const closing = timeBasedClosing[context.timeOfDay as string] || timeBasedClosing.afternoon;
+
+  return `Begin to deepen your breath slightly. Wiggle your fingers and toes gently. When you're ready, slowly open your eyes. ${closing} Take a moment to appreciate this time you've given yourself for inner peace.`;
+}
+
+function generateTitle(input: MeditationInput): string {
+  const timeAdjective: Record<string, string> = {
+    morning: "Morning",
+    afternoon: "Midday",
+    evening: "Evening", 
+    night: "Nighttime"
+  };
+
+  const styleNoun: Record<string, string> = {
+    mindfulness: "Mindfulness",
+    breathing: "Breathing",
+    'body-scan': "Body Scan",
+    'loving-kindness': "Loving-Kindness",
+    sleep: "Sleep",
+    focus: "Focus"
+  };
+
+  const timePrefix = timeAdjective[input.timeOfDay] || "";
+  const styleWord = styleNoun[input.style] || "Meditation";
+  
+  return `${timePrefix} ${styleWord} (${input.duration} min)`.trim();
 }
