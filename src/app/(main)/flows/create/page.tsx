@@ -11,6 +11,12 @@ import { Player } from "@/components/flows/Player";
 import { SavedFlows } from "@/components/flows/SavedFlows";
 import { PoseLibrarySidebar } from "@/components/flows/PoseLibrarySidebar";
 import { ExportFlow } from "@/components/flows/ExportFlow";
+import { FlowValidation } from "@/components/flows/FlowValidation";
+import { QuickActions } from "@/components/flows/QuickActions";
+import { AutoSave } from "@/components/flows/AutoSave";
+import { KeyboardShortcuts, useKeyboardShortcuts } from "@/components/flows/KeyboardShortcuts";
+import { FlowNameInput } from "@/components/flows/FlowNameInput";
+import { FlowTemplates } from "@/components/flows/FlowTemplates";
 import { Focus, TimingMode, PoseId, SavedFlow, Pose } from "@/types/yoga";
 import { POSES } from "@/lib/yoga-data";
 import {
@@ -279,6 +285,77 @@ export default function CreateFlowPage() {
   const handleLoadFlow = (id: string) => { const f = savedFlows.find(x => x.id === id); if (f) { setFlow(f.flow); setOverrides(f.overrides); setFlowName(f.name); } };
   const handleDeleteFlow = (id: string) => setSavedFlows(savedFlows.filter(f => f.id !== id));
 
+  // --- New Enhanced Handlers ---
+  const handleDuplicateFlow = () => {
+    const duplicatedFlow = [...flow, ...flow];
+    const duplicatedOverrides: Record<number, number> = {};
+    Object.entries(overrides).forEach(([key, value]) => {
+      const index = parseInt(key);
+      duplicatedOverrides[index] = value;
+      duplicatedOverrides[index + flow.length] = value;
+    });
+    setFlow(duplicatedFlow);
+    setOverrides(duplicatedOverrides);
+  };
+
+  const handleReverseFlow = () => {
+    const reversedFlow = [...flow].reverse();
+    const reversedOverrides: Record<number, number> = {};
+    Object.entries(overrides).forEach(([key, value]) => {
+      const oldIndex = parseInt(key);
+      const newIndex = flow.length - 1 - oldIndex;
+      reversedOverrides[newIndex] = value;
+    });
+    setFlow(reversedFlow);
+    setOverrides(reversedOverrides);
+  };
+
+  const handleShuffleFlow = () => {
+    const shuffledIndices = Array.from({ length: flow.length }, (_, i) => i)
+      .sort(() => Math.random() - 0.5);
+    
+    const shuffledFlow = shuffledIndices.map(i => flow[i]);
+    const shuffledOverrides: Record<number, number> = {};
+    
+    shuffledIndices.forEach((oldIndex, newIndex) => {
+      if (overrides[oldIndex]) {
+        shuffledOverrides[newIndex] = overrides[oldIndex];
+      }
+    });
+    
+    setFlow(shuffledFlow);
+    setOverrides(shuffledOverrides);
+  };
+
+  const handleClearFlow = () => {
+    if (confirm('Are you sure you want to clear all poses?')) {
+      setFlow([]);
+      setOverrides({});
+    }
+  };
+
+  const handleRestoreFlow = (restoredFlow: PoseId[], restoredOverrides: Record<number, number>, name: string) => {
+    setFlow(restoredFlow);
+    setOverrides(restoredOverrides);
+    setFlowName(name);
+  };
+
+  const handleSelectTemplate = (template: any) => {
+    setFlow(template.poses);
+    setOverrides({});
+    setFlowName(template.name);
+    // Update control panel settings based on template
+    setMinutes(template.duration);
+    if (template.difficulty === 'Beginner') setIntensity(2);
+    else if (template.difficulty === 'Intermediate') setIntensity(3);
+    else setIntensity(4);
+    // Set focus if it matches available options
+    const validFoci = ["Full-Body", "Hips", "Hamstrings", "Shoulders", "Core", "Spine", "Balance"];
+    if (validFoci.includes(template.focus)) {
+      setFocus(template.focus as Focus);
+    }
+  };
+
   // --- Player Handlers ---
   const handlePlay = useCallback(() => { if (flow.length === 0) return; setCurrentPoseIndex(0); setTimeInPose(0); setPlaybackState('playing'); }, [flow.length]);
   const handlePause = useCallback(() => setPlaybackState('paused'), []);
@@ -319,11 +396,43 @@ export default function CreateFlowPage() {
     return computeTotalRemaining(currentPoseIndex, currentDuration - timeInPose, secondsPerPose.map(s => tempoAdjust(s, playbackRate)), transitionSec, flow.length, cooldownMin * 60, false);
   }, [playbackState, currentPoseIndex, timeInPose, secondsPerPose, flow.length, transitionSec, cooldownMin, playbackRate]);
 
+  // --- Keyboard Shortcuts ---
+  useKeyboardShortcuts({
+    onSave: () => { if (flowName.trim()) handleSaveFlow(); },
+    onDuplicate: handleDuplicateFlow,
+  });
+
   return (
     <div className="min-h-screen bg-background text-foreground pb-40">
       <header className="mx-auto max-w-7xl px-4 py-6">
-        <h1 className="text-3xl font-semibold text-center tracking-tight">Create your sequence</h1>
+        <div className="flex items-center justify-between mb-4">
+          <h1 className="text-3xl font-semibold tracking-tight">Create your sequence</h1>
+          <KeyboardShortcuts />
+        </div>
+        
         <ControlPanel {...{ minutes, setMinutes, intensity, setIntensity, focus, setFocus, breathingCues, setBreathingCues, saferSequencing, setSaferSequencing, saveToDevice, setSaveToDevice, timingMode, setTimingMode, secPerBreath, setSecPerBreath, transitionSec, setTransitionSec, cooldownMin, setCooldownMin, onAutoGenerate: handleGenerate, flowName, setFlowName, onSaveFlow: handleSaveFlow, onLoadPreset: handleLoadPreset }} />
+        
+        {/* Auto-save and Flow Name Section */}
+        <div className="mt-4 space-y-4">
+          <AutoSave 
+            flow={flow}
+            overrides={overrides}
+            flowName={flowName}
+            onRestoreFlow={handleRestoreFlow}
+          />
+          
+          <div>
+            <label className="block text-sm font-medium mb-2">Flow Name</label>
+            <FlowNameInput
+              value={flowName}
+              onChange={setFlowName}
+              onSave={handleSaveFlow}
+              focus={focus}
+              intensity={intensity}
+              duration={minutes}
+            />
+          </div>
+        </div>
         
         {/* Authentication notice for saving */}
         {!isLoggedIn && (
@@ -341,6 +450,22 @@ export default function CreateFlowPage() {
       {/* Main content area with sidebar */}
       <div className="mx-auto max-w-7xl px-4 pb-16">
         <SavedFlows flows={savedFlows} onLoad={handleLoadFlow} onDelete={handleDeleteFlow} />
+        
+        {/* Flow Templates */}
+        <FlowTemplates onSelectTemplate={handleSelectTemplate} className="mt-6" />
+        
+        {/* Flow Validation */}
+        <FlowValidation flow={flow} totalSeconds={totalSeconds} className="mt-6" />
+        
+        {/* Quick Actions */}
+        <QuickActions
+          flow={flow}
+          onDuplicateFlow={handleDuplicateFlow}
+          onReverseFlow={handleReverseFlow}
+          onClearFlow={handleClearFlow}
+          onShuffleFlow={handleShuffleFlow}
+          className="mt-6"
+        />
         
         <div className="space-y-6 mt-6">
           {/* Main Flow Canvas */}
