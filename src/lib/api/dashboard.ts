@@ -31,24 +31,8 @@ async function fetchPracticeSessions(): Promise<PracticeSession[]> {
     if (!res.ok) throw new Error('Failed to fetch sessions');
     return await res.json();
   } catch {
-    const today = new Date();
-    const flowTypes = ['vinyasa', 'hatha', 'restorative', 'power', 'yin'];
-    const difficulties: ('beginner' | 'intermediate' | 'advanced')[] = ['beginner', 'intermediate', 'advanced'];
-    const flowNames = [
-      'Morning Energizer', 'Evening Wind Down', 'Core Strength', 
-      'Hip Opener', 'Heart Opener', 'Stress Relief', 
-      'Power Flow', 'Gentle Stretch', 'Flow 9', 'Flow 10'
-    ];
-    
-    return Array.from({ length: 10 }, (_, i) => ({
-      id: `${i}`,
-      flowName: flowNames[i] || `Flow ${i + 1}`,
-      duration: 20 + Math.floor(Math.random() * 40), // 20-60 minutes
-      completedAt: new Date(today.getFullYear(), today.getMonth(), today.getDate() - i).toISOString(),
-      type: flowTypes[i % flowTypes.length],
-      difficulty: difficulties[i % difficulties.length],
-      completed: Math.random() > 0.1, // 90% completion rate
-    }));
+    // Return empty array for new users instead of demo data
+    return [];
   }
 }
 

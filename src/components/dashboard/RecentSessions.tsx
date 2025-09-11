@@ -112,10 +112,29 @@ export const RecentSessions: React.FC<RecentSessionsProps> = ({ sessions }) => {
       </CardHeader>
       <CardContent>
         {sortedSessions.length === 0 ? (
-          <EmptyState 
-            title="No sessions found" 
-            description="Try adjusting your filters or start a new practice session." 
-          />
+          sessions.length === 0 ? (
+            <EmptyState 
+              icon="🧘‍♀️"
+              title="Start Your Yoga Journey" 
+              description="You haven't practiced any flows yet. Ready to begin your yoga adventure?" 
+              action={
+                <div className="flex flex-col sm:flex-row gap-2">
+                  <Button onClick={() => window.location.href = '/poses'}>
+                    Explore Poses
+                  </Button>
+                  <Button variant="outline" onClick={() => window.location.href = '/flows/create'}>
+                    Create Flow
+                  </Button>
+                </div>
+              }
+            />
+          ) : (
+            <EmptyState 
+              icon="🔍"
+              title="No sessions found" 
+              description="Try adjusting your filters or start a new practice session." 
+            />
+          )
         ) : (
           <ul className="space-y-3 text-sm" aria-label="Recent sessions">
             {sortedSessions.map((s) => (
