@@ -424,7 +424,7 @@ export default function CreateFlowPage() {
                 href="/ai-guide"
                 className="inline-flex items-center px-3 py-1.5 bg-purple-600 text-white text-sm rounded-lg hover:bg-purple-700 transition-colors"
               >
-                🤖 AI Guide
+                🧘‍♀️ Your Yoga Teacher
               </a>
               {flow.length > 0 && (
                 <button
@@ -441,10 +441,10 @@ export default function CreateFlowPage() {
                   }}
                   className="inline-flex items-center px-3 py-1.5 bg-green-600 text-white text-sm rounded-lg hover:bg-green-700 transition-colors"
                 >
-                  ✨ Get AI Guidance for This Flow
+                  ✨ Practice with Yoga Teacher
                 </button>
               )}
-              <span className="text-xs text-muted-foreground">Create flows here, then use AI Guide to practice with real-time feedback</span>
+              <span className="text-xs text-muted-foreground">Create flows here, then use your AI Yoga Teacher for real-time feedback and guidance</span>
             </div>
           </div>
           <KeyboardShortcuts />

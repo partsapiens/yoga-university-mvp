@@ -217,10 +217,10 @@ export default function AIGuidePage() {
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        {/* Camera Feed */}
+        {/* Yoga Teacher */}
         <div className="space-y-4">
           <div className="bg-white dark:bg-gray-800 rounded-lg p-6 shadow-lg">
-            <h2 className="text-2xl font-semibold mb-4 dark:text-white">Camera Feed</h2>
+            <h2 className="text-2xl font-semibold mb-4 dark:text-white">Yoga Teacher</h2>
             
             <div className="relative aspect-video bg-gray-100 dark:bg-gray-700 rounded-lg overflow-hidden">
               {cameraEnabled ? (
