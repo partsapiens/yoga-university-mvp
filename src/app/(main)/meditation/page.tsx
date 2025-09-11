@@ -295,16 +295,63 @@ export default function MeditationPage() {
           </div>
         </div>
 
-        {/* TODO: Add more features */}
-        <div className="mt-8 bg-yellow-50 border border-yellow-200 rounded-lg p-4">
-          <h3 className="font-semibold text-yellow-800 mb-2">Coming Soon</h3>
-          <ul className="text-sm text-yellow-700 space-y-1">
-            <li>• Audio-guided meditation tracks</li>
-            <li>• Progress visualization and insights</li>
-            <li>• Meditation challenges and programs</li>
-            <li>• Community meditation sessions</li>
-            <li>• Integration with practice journal</li>
-          </ul>
+        {/* Additional Features */}
+        <div className="mt-8 grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="bg-white/70 backdrop-blur-sm rounded-lg p-6 shadow-lg">
+            <h3 className="text-xl font-semibold mb-4">Coming Soon</h3>
+            <ul className="space-y-3 text-gray-700">
+              <li className="flex items-center">
+                <span className="text-green-500 mr-2">✓</span>
+                Audio-guided meditation tracks
+              </li>
+              <li className="flex items-center">
+                <span className="text-green-500 mr-2">✓</span>
+                Progress visualization and insights
+              </li>
+              <li className="flex items-center">
+                <span className="text-blue-500 mr-2">○</span>
+                Meditation challenges and programs
+              </li>
+              <li className="flex items-center">
+                <span className="text-blue-500 mr-2">○</span>
+                Community meditation sessions
+              </li>
+              <li className="flex items-center">
+                <span className="text-blue-500 mr-2">○</span>
+                Integration with practice journal
+              </li>
+            </ul>
+          </div>
+          
+          <div className="bg-white/70 backdrop-blur-sm rounded-lg p-6 shadow-lg">
+            <h3 className="text-xl font-semibold mb-4">Meditation Benefits</h3>
+            <ul className="space-y-3 text-gray-700">
+              <li className="flex items-start">
+                <span className="text-purple-500 mr-2">🧠</span>
+                <div>
+                  <strong>Mental Clarity:</strong> Improve focus and decision-making
+                </div>
+              </li>
+              <li className="flex items-start">
+                <span className="text-purple-500 mr-2">❤️</span>
+                <div>
+                  <strong>Stress Relief:</strong> Reduce anxiety and promote relaxation
+                </div>
+              </li>
+              <li className="flex items-start">
+                <span className="text-purple-500 mr-2">😴</span>
+                <div>
+                  <strong>Better Sleep:</strong> Improve sleep quality and rest
+                </div>
+              </li>
+              <li className="flex items-start">
+                <span className="text-purple-500 mr-2">⚡</span>
+                <div>
+                  <strong>Emotional Balance:</strong> Develop resilience and calm
+                </div>
+              </li>
+            </ul>
+          </div>
         </div>
       </div>
     </div>
