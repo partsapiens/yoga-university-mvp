@@ -36,6 +36,83 @@ export interface MeditationInput {
   currentStreak?: number;
 }
 
+// Enhanced AI Selector Input
+export interface AISelectInput {
+  userText: string;
+  timeOfDay: string;
+  preferredDuration?: number;
+  recentSessions?: Array<{style: string, completed: boolean, rating?: number}>;
+  userMood?: 'stressed' | 'tired' | 'anxious' | 'energetic' | 'neutral';
+}
+
+// Enhanced AI Selector Output
+export interface AISelectOutput {
+  style: string;
+  duration: number;
+  breathingPattern: {inhale: number, hold: number, exhale: number};
+  rationale: string;
+  visualTheme: 'calm-blue' | 'energizing-gold' | 'grounding-green';
+  confidence: number;
+}
+
+// Enhanced Script Generation Input
+export interface AIScriptInput {
+  style: string;
+  duration: number;
+  userPreferences: {
+    voiceTone: 'gentle' | 'confident' | 'warm';
+    guidanceLevel: 'minimal' | 'moderate' | 'detailed';
+    personalTouchpoints: string[];
+  };
+  sessionHistory: Array<{scriptId: string, rating?: number, completed: boolean}>;
+  userContext?: string;
+}
+
+// Enhanced Script Generation Output
+export interface AIScriptOutput {
+  scriptId: string;
+  intro: string;
+  breathingCues: Array<{phase: string, text: string, duration: number}>;
+  transitions: string[];
+  outro: string;
+  backgroundMusicSuggestion: string;
+  estimatedWords: number;
+}
+
+// Session Insights Input
+export interface AIInsightsInput {
+  sessionData: {
+    style: string;
+    duration: number;
+    completed: boolean;
+    userFeedback?: string;
+    completionTime: number;
+    userRating?: number;
+  };
+  userJourney: {
+    totalSessions: number;
+    weeklyAverage: number;
+    preferredStyles: string[];
+    progressMetrics: object;
+  };
+}
+
+// Session Insights Output
+export interface AIInsightsOutput {
+  immediateRecap: string;
+  insights: string[];
+  nextRecommendation: {
+    suggestion: string;
+    reasoning: string;
+    recommendedTime: string;
+  };
+  journeyProgress: {
+    milestone?: string;
+    encouragement: string;
+    skillsDeveloped: string[];
+  };
+}
+
 export interface MeditationScript {
   id: string;
   title: string;
