@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from 'react';
-import { Mail, Phone, MapPin, Clock, MessageCircle, Users, BookOpen, CreditCard, Send } from 'lucide-react';
+import { Mail, MapPin, Clock, MessageCircle, Users, BookOpen, CreditCard, Send } from 'lucide-react';
 
 export default function ContactPage() {
   const [formData, setFormData] = useState({
@@ -62,13 +62,6 @@ export default function ContactPage() {
       responseTime: "Within 24 hours"
     },
     {
-      icon: <Phone className="w-6 h-6" />,
-      title: "Phone Support",
-      description: "Speak directly with our support team",
-      contact: "+49 (0) 30 12345678",
-      responseTime: "Mon-Fri, 9AM-6PM CET"
-    },
-    {
       icon: <MessageCircle className="w-6 h-6" />,
       title: "Live Chat",
       description: "Quick answers to your questions",
@@ -126,19 +119,19 @@ export default function ContactPage() {
   ];
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
       {/* Hero Section */}
       <div className="bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
           <div className="text-center">
-            <h1 className="text-4xl sm:text-5xl font-bold text-gray-900 mb-6">
+            <h1 className="text-4xl sm:text-5xl font-bold text-gray-900 dark:text-white mb-6">
               We&apos;re Here to Help
             </h1>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto mb-8">
+            <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto mb-8">
               Have a question about your practice, our platform, or need technical support? 
               Our team is ready to assist you on your yoga journey.
             </p>
-            <div className="flex items-center justify-center space-x-6 text-sm text-gray-500">
+            <div className="flex items-center justify-center space-x-6 text-sm text-gray-500 dark:text-gray-400">
               <div className="flex items-center">
                 <Clock className="w-4 h-4 mr-2" />
                 24-hour response time
@@ -155,26 +148,26 @@ export default function ContactPage() {
       {/* Contact Methods */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
         <div className="text-center mb-12">
-          <h2 className="text-3xl font-bold text-gray-900 mb-4">Get in Touch</h2>
-          <p className="text-lg text-gray-600">Choose the method that works best for you</p>
+          <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-4">Get in Touch</h2>
+          <p className="text-lg text-gray-600 dark:text-gray-300">Choose the method that works best for you</p>
         </div>
         
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
           {contactMethods.map((method, index) => (
-            <div key={index} className="bg-white rounded-lg shadow-lg p-6 text-center">
+            <div key={index} className="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 text-center">
               <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4 text-blue-600">
                 {method.icon}
               </div>
-              <h3 className="text-xl font-semibold text-gray-900 mb-2">
+              <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">
                 {method.title}
               </h3>
-              <p className="text-gray-600 mb-4">
+              <p className="text-gray-600 dark:text-gray-300 mb-4">
                 {method.description}
               </p>
               <div className="text-blue-600 font-medium mb-2">
                 {method.contact}
               </div>
-              <div className="text-sm text-gray-500">
+              <div className="text-sm text-gray-500 dark:text-gray-400">
                 {method.responseTime}
               </div>
             </div>
@@ -184,12 +177,12 @@ export default function ContactPage() {
         {/* Contact Form and Info */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
           {/* Contact Form */}
-          <div className="bg-white rounded-lg shadow-lg p-8">
-            <h2 className="text-2xl font-bold text-gray-900 mb-6">Send us a Message</h2>
+          <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-8">
+            <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">Send us a Message</h2>
             <form onSubmit={handleSubmit} className="space-y-6">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                  <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
+                  <label htmlFor="name" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                     Full Name *
                   </label>
                   <input
