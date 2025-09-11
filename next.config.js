@@ -1,6 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  output: 'export',
+  // Temporarily disable static export for API routes development
+  // output: 'export',
   eslint: {
     // Warning: This allows production builds to successfully complete even if
     // your project has ESLint errors.
