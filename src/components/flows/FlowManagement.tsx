@@ -104,9 +104,8 @@ export function FlowManagement({
         </div>
       </div>
 
-      {/* AI Flow Review (Flow Validation) */}
+      {/* Flow Validation */}
       <div>
-        <h3 className="text-lg font-semibold mb-2">AI Flow Review</h3>
         <FlowValidation flow={flow} totalSeconds={totalSeconds} />
       </div>
 

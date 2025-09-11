@@ -16,6 +16,7 @@ interface FlowTemplate {
 
 interface FlowTemplatesProps {
   onSelectTemplate: (template: FlowTemplate) => void;
+  onCreateOwn?: () => void;
   className?: string;
 }
 
@@ -94,7 +95,7 @@ const DIFFICULTY_COLORS = {
   Advanced: 'bg-red-100 text-red-800 dark:bg-red-900/20 dark:text-red-400'
 };
 
-export function FlowTemplates({ onSelectTemplate, className = '' }: FlowTemplatesProps) {
+export function FlowTemplates({ onSelectTemplate, onCreateOwn, className = '' }: FlowTemplatesProps) {
   return (
     <div className={`bg-card border border-border rounded-lg p-4 ${className}`}>
       <div className="flex items-center gap-2 mb-4">
@@ -160,6 +161,32 @@ export function FlowTemplates({ onSelectTemplate, className = '' }: FlowTemplate
             </div>
           </button>
         ))}
+
+        {/* Create your Own Template Button */}
+        {onCreateOwn && (
+          <button
+            onClick={onCreateOwn}
+            className="group p-4 border-2 border-dashed border-border rounded-lg hover:bg-muted/50 hover:border-primary/50 transition-colors text-left"
+          >
+            <div className="flex items-start gap-3 mb-3">
+              <div className="text-2xl">➕</div>
+              <div className="flex-1 min-w-0">
+                <h4 className="font-medium text-sm group-hover:text-primary transition-colors">
+                  Create your Own
+                </h4>
+                <p className="text-xs text-muted-foreground mt-1">
+                  Customize intensity, duration, focus, and intention
+                </p>
+              </div>
+            </div>
+
+            <div className="flex items-center justify-center py-4">
+              <span className="text-xs text-muted-foreground">
+                Click to customize your flow settings
+              </span>
+            </div>
+          </button>
+        )}
       </div>
 
       {/* Quick Stats */}
