@@ -467,26 +467,14 @@ export default function CreateFlowPage() {
           </div>
         )}
         
-        {/* Auto-save and Flow Name Section */}
-        <div className="mt-4 space-y-4">
+        {/* Auto-save Section */}
+        <div className="mt-4">
           <AutoSave 
             flow={flow}
             overrides={overrides}
             flowName={flowName}
             onRestoreFlow={handleRestoreFlow}
           />
-          
-          <div>
-            <label className="block text-sm font-medium mb-2">Flow Name</label>
-            <FlowNameInput
-              value={flowName}
-              onChange={setFlowName}
-              onSave={handleSaveFlow}
-              focus={focus}
-              intensity={intensity}
-              duration={minutes}
-            />
-          </div>
         </div>
         
         {/* Authentication notice for saving */}

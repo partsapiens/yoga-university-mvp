@@ -43,7 +43,7 @@ export function FlowManagement({
       {/* Header with Your Flow title and Quick Actions */}
       <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
         <div>
-          <h2 className="text-xl font-semibold mb-2">Custom Flow</h2>
+          <h2 className="text-xl font-semibold mb-2">Yoga Flow Sequence</h2>
           <div className="flex flex-wrap gap-2 text-sm text-muted-foreground">
             <span className="rounded-full border border-border px-2 py-0.5">
               Total: <strong className="font-semibold text-foreground tabular-nums">{Math.round(totalSeconds / 60)}m</strong>
