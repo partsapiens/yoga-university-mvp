@@ -2,7 +2,6 @@
 
 import React, { useState } from 'react'
 import { Modal, ModalContent, Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui'
-import { PageLayout } from '@/components/layout/PageLayout'
 import { User } from '@/types'
 import { OverviewSection } from '@/components/admin/OverviewSection'
 import { UsersSection } from '@/components/admin/UsersSection'
@@ -73,10 +72,11 @@ export default function AdminDashboard() {
   ]
 
   return (
-    <PageLayout
-      title="Admin Dashboard 🔧"
-      description="Platform management and analytics"
-    >
+    <div className="container mx-auto p-4 md:p-8">
+      <div className="mb-8">
+        <h1 className="text-4xl font-bold">Admin Dashboard 🔧</h1>
+        <p className="text-lg text-muted-foreground mt-2">Platform management and analytics</p>
+      </div>
       <div className="space-y-6">
         <Tabs defaultValue="overview" className="w-full">
           <TabsList>
@@ -98,6 +98,6 @@ export default function AdminDashboard() {
           </ModalContent>
         </Modal>
       </div>
-    </PageLayout>
+    </div>
   )
 }
