@@ -313,10 +313,10 @@ export default function AIGuidePage() {
                 Voice Commands
               </h3>
               <ul className="text-sm text-blue-800 dark:text-blue-200 space-y-1">
-                <li>"Start session" - Begin guided practice</li>
-                <li>"Analyze pose" - Get pose feedback</li>
-                <li>"Repeat instructions" - Hear pose cues again</li>
-                <li>"Stop session" - End current session</li>
+                <li>&quot;Start session&quot; - Begin guided practice</li>
+                <li>&quot;Analyze pose&quot; - Get pose feedback</li>
+                <li>&quot;Repeat instructions&quot; - Hear pose cues again</li>
+                <li>&quot;Stop session&quot; - End current session</li>
               </ul>
             </div>
           )}
