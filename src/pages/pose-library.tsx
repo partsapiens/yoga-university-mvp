@@ -1,4 +1,5 @@
 import { useEffect, useState, useRef } from 'react';
+import { Toaster } from 'react-hot-toast';
 import { supabase } from '../utils/supabaseClient';
 import PoseCard from '../components/PoseLibrary/PoseCard';
 import Filters from '../components/PoseLibrary/Filters';
@@ -18,6 +19,7 @@ export default function PoseLibraryPage() {
   const [sort, setSort] = useState('alphabetical');
   const [recentPoses, setRecentPoses] = useState<any[]>([]);
   const [searchSuggestions, setSearchSuggestions] = useState<string[]>([]);
+  const [currentFlowCount, setCurrentFlowCount] = useState(0);
   const page = useRef(0);
 
   useEffect(() => {
@@ -25,6 +27,10 @@ export default function PoseLibraryPage() {
     if (typeof window !== 'undefined') {
       const recent = JSON.parse(localStorage.getItem('recentPoses') || '[]');
       setRecentPoses(recent);
+      
+      // Load current flow count
+      const currentFlow = JSON.parse(localStorage.getItem('currentFlow') || '[]');
+      setCurrentFlowCount(currentFlow.length);
     }
     
     // Generate search suggestions from pose names
@@ -33,6 +39,15 @@ export default function PoseLibraryPage() {
       'Mountain Pose', 'Forward Fold', 'Triangle', 'Plank', 'Bridge'
     ];
     setSearchSuggestions(suggestions);
+
+    // Listen for storage changes to update flow count
+    const handleStorageChange = () => {
+      const currentFlow = JSON.parse(localStorage.getItem('currentFlow') || '[]');
+      setCurrentFlowCount(currentFlow.length);
+    };
+
+    window.addEventListener('storage', handleStorageChange);
+    return () => window.removeEventListener('storage', handleStorageChange);
   }, []);
 
   async function fetchPoses(isInit = false) {
@@ -47,6 +62,15 @@ export default function PoseLibraryPage() {
       // Map intensity numbers to level names
       const level = filters.intensity <= 2 ? 'beginner' : filters.intensity <= 4 ? 'intermediate' : 'advanced';
       query = query.eq('level', level);
+    }
+
+    // Exclude variations from main library unless searching
+    // Variations are typically poses with (Right), (Left), or similar directional indicators
+    if (!search) {
+      query = query.not('name', 'ilike', '%\\(Right\\)%')
+                   .not('name', 'ilike', '%\\(Left\\)%')
+                   .not('name', 'ilike', '%Right%')
+                   .not('name', 'ilike', '%Left%');
     }
 
     // Search by name/Sanskrit using correct field names
@@ -85,11 +109,16 @@ export default function PoseLibraryPage() {
   useEffect(() => {
     function handleScroll() {
       if (loading || !hasMore) return;
-      if (window.innerHeight + document.documentElement.scrollTop + 100 >= document.documentElement.offsetHeight) {
+      
+      const scrollPosition = window.innerHeight + document.documentElement.scrollTop;
+      const threshold = document.documentElement.offsetHeight - 1000; // Load more when 1000px from bottom
+      
+      if (scrollPosition >= threshold) {
         page.current += 1;
         fetchPoses();
       }
     }
+    
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, [loading, hasMore]);
@@ -100,16 +129,48 @@ export default function PoseLibraryPage() {
 
   return (
     <div className="container mx-auto p-4 dark:bg-gray-900 min-h-screen">
+      <Toaster 
+        position="top-right"
+        toastOptions={{
+          duration: 4000,
+          style: {
+            background: 'var(--toast-bg)',
+            color: 'var(--toast-color)',
+          },
+        }}
+      />
       <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
         {/* Main Content */}
         <div className="lg:col-span-3">
-          <h1 className="text-2xl font-bold mb-4 dark:text-white">Pose Library</h1>
+          <div className="flex justify-between items-center mb-4">
+            <h1 className="text-2xl font-bold dark:text-white">Pose Library</h1>
+            <button
+              onClick={() => window.location.href = '/flows/create'}
+              className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition-colors text-sm"
+            >
+              View Current Flow
+              {currentFlowCount > 0 && (
+                <span className="bg-blue-800 text-xs px-2 py-1 rounded-full">
+                  {currentFlowCount}
+                </span>
+              )}
+            </button>
+          </div>
           
           <SearchBar 
             value={search} 
             onChange={setSearch} 
             suggestions={searchSuggestions}
           />
+
+          {!search && (
+            <div className="mt-2 mb-4">
+              <div className="flex items-center gap-2 text-sm text-blue-600 dark:text-blue-400">
+                <span>ℹ️</span>
+                <span>Showing main poses only. Search to include variations.</span>
+              </div>
+            </div>
+          )}
           
           <div className="my-4">
             <Filters filters={filters} setFilters={setFilters} />
@@ -135,12 +196,43 @@ export default function PoseLibraryPage() {
             {poses.map((pose) => (
               <PoseCard key={pose.id} pose={pose} />
             ))}
-            {loading && <SkeletonLoader count={4} />}
           </div>
+
+          {loading && page.current === 0 && <SkeletonLoader count={PAGE_SIZE} />}
+          
+          {loading && page.current > 0 && (
+            <div className="flex justify-center items-center py-8">
+              <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500"></div>
+              <span className="ml-2 text-gray-500 dark:text-gray-400">Loading more poses...</span>
+            </div>
+          )}
+
+          {!loading && !hasMore && poses.length > 0 && (
+            <div className="text-center py-8 text-gray-500 dark:text-gray-400">
+              <p>You&apos;ve reached the end of the pose library!</p>
+              <p className="text-sm mt-1">Found {poses.length} poses</p>
+            </div>
+          )}
+
+          {!loading && poses.length === 0 && !search && (
+            <div className="text-center py-12 text-gray-500 dark:text-gray-400">
+              <div className="text-6xl mb-4">🧘‍♀️</div>
+              <h3 className="text-lg font-medium mb-2">No poses found</h3>
+              <p>Try adjusting your filters or check back later.</p>
+            </div>
+          )}
 
           {!loading && poses.length === 0 && search && (
             <div className="text-center py-8 text-gray-500 dark:text-gray-400">
-              No poses found for "{search}". Try a different search term.
+              <div className="text-4xl mb-4">🔍</div>
+              <p>No poses found for &ldquo;{search}&rdquo;</p>
+              <p className="text-sm mt-1">Try a different search term or browse all poses.</p>
+              <button 
+                onClick={() => setSearch('')}
+                className="mt-3 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition-colors"
+              >
+                Clear Search
+              </button>
             </div>
           )}
         </div>
