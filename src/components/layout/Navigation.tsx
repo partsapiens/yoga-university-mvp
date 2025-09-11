@@ -38,6 +38,9 @@ export const Navigation = ({ userRole }: NavigationProps) => {
     { href: '/ai-guide', label: 'AI Guide' },
     { href: '/manual', label: 'Manual' },
     { href: '/meditation', label: 'Meditation' },
+    { href: '/about', label: 'About' },
+    { href: '/pricing', label: 'Pricing' },
+    { href: '/contact', label: 'Contact' },
   ];
 
   const toggleDarkMode = () => {
