@@ -4,15 +4,13 @@ import React, { useMemo, useState, useRef, useEffect, useCallback } from "react"
 import { useLocalStorage } from "@/hooks/useLocalStorage";
 import { useTimer } from "@/hooks/useTimer";
 import { ControlPanel } from "@/components/flows/ControlPanel";
-import { PoseGrid } from "@/components/flows/PoseGrid";
 import { SuggestionsGrid } from "@/components/flows/SuggestionsGrid";
 import { GeneratePreviewModal } from "@/components/flows/GeneratePreviewModal";
 import { Player } from "@/components/flows/Player";
 import { SavedFlows } from "@/components/flows/SavedFlows";
 import { PoseLibrarySidebar } from "@/components/flows/PoseLibrarySidebar";
 import { ExportFlow } from "@/components/flows/ExportFlow";
-import { FlowValidation } from "@/components/flows/FlowValidation";
-import { QuickActions } from "@/components/flows/QuickActions";
+import { FlowManagement } from "@/components/flows/FlowManagement";
 import { AutoSave } from "@/components/flows/AutoSave";
 import { KeyboardShortcuts, useKeyboardShortcuts } from "@/components/flows/KeyboardShortcuts";
 import { FlowNameInput } from "@/components/flows/FlowNameInput";
@@ -201,7 +199,6 @@ export default function CreateFlowPage() {
   const addPose = (id: PoseId) => setFlow([...flow, id]);
   const updatePoseDuration = (index: number, duration: number) => setOverrides({ ...overrides, [index]: duration });
   const movePose = (from: number, to: number) => { setFlow(f => { const a = [...f]; const [i] = a.splice(from, 1); a.splice(to, 0, i); return a; }); setOverrides(moveOverrides(overrides, from, to)); };
-  const handleLoadPreset = (presetFlow: PoseId[]) => { setFlow(presetFlow); setOverrides({}); };
 
   // Check authentication status
   useEffect(() => {
@@ -406,11 +403,41 @@ export default function CreateFlowPage() {
     <div className="min-h-screen bg-background text-foreground pb-40">
       <header className="mx-auto max-w-7xl px-4 py-6">
         <div className="flex items-center justify-between mb-4">
-          <h1 className="text-3xl font-semibold tracking-tight">Create your sequence</h1>
+          <div>
+            <h1 className="text-3xl font-semibold tracking-tight">Create your sequence</h1>
+            {/* AI Guide Integration */}
+            <div className="flex items-center gap-3 mt-2">
+              <a 
+                href="/ai-guide"
+                className="inline-flex items-center px-3 py-1.5 bg-purple-600 text-white text-sm rounded-lg hover:bg-purple-700 transition-colors"
+              >
+                🤖 AI Guide
+              </a>
+              {flow.length > 0 && (
+                <button
+                  onClick={() => {
+                    // Save current flow and navigate to AI Guide with the flow
+                    const searchParams = new URLSearchParams();
+                    searchParams.set('fromCreateFlow', 'true');
+                    searchParams.set('flowData', JSON.stringify({
+                      flow: flow,
+                      name: flowName || 'My Flow',
+                      totalSeconds: totalSeconds
+                    }));
+                    window.location.href = `/ai-guide?${searchParams.toString()}`;
+                  }}
+                  className="inline-flex items-center px-3 py-1.5 bg-green-600 text-white text-sm rounded-lg hover:bg-green-700 transition-colors"
+                >
+                  ✨ Get AI Guidance for This Flow
+                </button>
+              )}
+              <span className="text-xs text-muted-foreground">Create flows here, then use AI Guide to practice with real-time feedback</span>
+            </div>
+          </div>
           <KeyboardShortcuts />
         </div>
         
-        <ControlPanel {...{ minutes, setMinutes, intensity, setIntensity, focus, setFocus, breathingCues, setBreathingCues, saferSequencing, setSaferSequencing, saveToDevice, setSaveToDevice, timingMode, setTimingMode, secPerBreath, setSecPerBreath, transitionSec, setTransitionSec, cooldownMin, setCooldownMin, onAutoGenerate: handleGenerate, flowName, setFlowName, onSaveFlow: handleSaveFlow, onLoadPreset: handleLoadPreset }} />
+        <ControlPanel {...{ minutes, setMinutes, intensity, setIntensity, focus, setFocus, breathingCues, setBreathingCues, saferSequencing, setSaferSequencing, saveToDevice, setSaveToDevice, timingMode, setTimingMode, secPerBreath, setSecPerBreath, transitionSec, setTransitionSec, cooldownMin, setCooldownMin, onAutoGenerate: handleGenerate, flowName, setFlowName, onSaveFlow: handleSaveFlow }} />
         
         {/* Auto-save and Flow Name Section */}
         <div className="mt-4 space-y-4">
@@ -454,12 +481,19 @@ export default function CreateFlowPage() {
         {/* Flow Templates */}
         <FlowTemplates onSelectTemplate={handleSelectTemplate} className="mt-6" />
         
-        {/* Flow Validation */}
-        <FlowValidation flow={flow} totalSeconds={totalSeconds} className="mt-6" />
-        
-        {/* Quick Actions */}
-        <QuickActions
+        {/* Combined Flow Management: Your Flow + Quick Actions + AI Flow Review */}
+        <FlowManagement
           flow={flow}
+          secondsPerPose={secondsPerPose}
+          totalSeconds={totalSeconds}
+          onRemovePose={removePose}
+          onUpdatePoseDuration={updatePoseDuration}
+          timingMode={timingMode}
+          secPerBreath={secPerBreath}
+          onMovePose={movePose}
+          dragIndexRef={dragIndex}
+          activePoseIndex={playbackState !== 'idle' ? currentPoseIndex : -1}
+          timeInPose={timeInPose}
           onDuplicateFlow={handleDuplicateFlow}
           onReverseFlow={handleReverseFlow}
           onClearFlow={handleClearFlow}
@@ -468,11 +502,6 @@ export default function CreateFlowPage() {
         />
         
         <div className="space-y-6 mt-6">
-          {/* Main Flow Canvas */}
-          <div>
-            <PoseGrid {...{ flow, secondsPerPose, totalSeconds, onRemovePose: removePose, onUpdatePoseDuration: updatePoseDuration, timingMode, secPerBreath, onMovePose: movePose, dragIndexRef: dragIndex, activePoseIndex: playbackState !== 'idle' ? currentPoseIndex : -1, timeInPose }} />
-          </div>
-          
           {/* Suggestions moved above Pose Library */}
           <div>
             <SuggestionsGrid onAddPose={addPose} />
