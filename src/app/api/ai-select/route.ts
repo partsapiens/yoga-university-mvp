@@ -6,15 +6,11 @@ export const dynamic = 'force-dynamic';
 export async function POST(req: Request) {
   const { userText, preferredDuration } = await req.json();
   
-  console.log('USE_MOCK environment variable:', process.env.USE_MOCK);
-  
   try {
     if (process.env.USE_MOCK === "true") {
-      console.log('Using mock mode');
       return NextResponse.json({ style: "Box Breathing", duration: 10, rationale: "Mock" });
     }
 
-    console.log('Attempting OpenAI call');
     const prompt = `
 User request: "${userText}"
 Pick one style from: Mindfulness, Box Breathing, Body Scan, Loving Kindness.
