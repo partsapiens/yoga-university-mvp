@@ -1,7 +1,5 @@
 import React from 'react';
-import { PageLayout } from '@/components/layout/PageLayout';
 import { Suspense } from 'react';
-import { HeaderBar } from '@/components/dashboard/HeaderBar';
 import { HeroQuickStart } from '@/components/dashboard/HeroQuickStart';
 import { AIRecommendation } from '@/components/dashboard/AIRecommendation';
 import { AIFormChecker } from '@/components/dashboard/AIFormChecker';
@@ -19,14 +17,13 @@ import { StatsSkeleton } from '@/components/dashboard/StatsSkeleton';
 
 const DashboardPage = async () => {
   const data = await fetchDashboardData();
-  const unread = data.notifications.filter((n) => !n.read).length;
   
-  // In a real app, this would come from user session/auth
-  const userName = "Yogi"; // Could be fetched from auth context
-
   return (
-    <PageLayout title="Dashboard" description="Welcome to Yoga Flow University.">
-      <HeaderBar unreadCount={unread} userName={userName} />
+    <div className="container mx-auto p-4 md:p-8">
+      <div className="mb-8">
+        <h1 className="text-4xl font-bold">Dashboard</h1>
+        <p className="text-lg text-muted-foreground mt-2">Welcome to Yoga Flow University.</p>
+      </div>
       <HeroQuickStart />
       <section className="grid gap-6 lg:grid-cols-12">
         <div className="lg:col-span-8 space-y-8">
@@ -67,7 +64,7 @@ const DashboardPage = async () => {
         </div>
       </section>
       <FooterStats />
-    </PageLayout>
+    </div>
   );
 };
 
