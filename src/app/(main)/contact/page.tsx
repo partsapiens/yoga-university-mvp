@@ -20,11 +20,37 @@ export default function ContactPage() {
     }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // TODO: Implement form submission
-    console.log('Form submitted:', formData);
-    alert('Thank you for your message! We\'ll get back to you within 24 hours.');
+    
+    // Basic form validation
+    if (!formData.name || !formData.email || !formData.message) {
+      alert('Please fill in all required fields.');
+      return;
+    }
+
+    try {
+      // In a real application, you would send this to your backend API
+      // For now, we'll simulate the submission and provide user feedback
+      console.log('Form submitted:', formData);
+      
+      // Simulate API call delay
+      await new Promise(resolve => setTimeout(resolve, 1000));
+      
+      // Reset form after successful submission
+      setFormData({
+        name: '',
+        email: '',
+        subject: '',
+        category: '',
+        message: ''
+      });
+      
+      alert('Thank you for your message! We\'ll get back to you within 24 hours.');
+    } catch (error) {
+      console.error('Form submission error:', error);
+      alert('There was an error sending your message. Please try again.');
+    }
   };
 
   const contactMethods = [

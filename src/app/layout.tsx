@@ -1,3 +1,4 @@
+import Script from 'next/script';
 import './globals.css'
 import { AuthProvider } from '@/components/auth/AuthProvider'
 import { QueryProvider } from '@/components/providers/QueryProvider'
@@ -118,17 +119,18 @@ export default function RootLayout({
         {/* Google Analytics */}
         {process.env.NODE_ENV === 'production' && (
           <>
-            <script async src="https://www.googletagmanager.com/gtag/js?id=G-TJ9PF7HE8C" />
-            <script
-              dangerouslySetInnerHTML={{
-                __html: `
-                  window.dataLayer = window.dataLayer || [];
-                  function gtag(){dataLayer.push(arguments);}
-                  gtag('js', new Date());
-                  gtag('config', 'G-TJ9PF7HE8C');
-                `,
-              }}
+            <Script
+              src="https://www.googletagmanager.com/gtag/js?id=G-TJ9PF7HE8C"
+              strategy="afterInteractive"
             />
+            <Script id="google-analytics" strategy="afterInteractive">
+              {`
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){dataLayer.push(arguments);}
+                gtag('js', new Date());
+                gtag('config', 'G-TJ9PF7HE8C');
+              `}
+            </Script>
           </>
         )}
         

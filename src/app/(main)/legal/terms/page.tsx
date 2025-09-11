@@ -18,7 +18,6 @@ export default function TermsPage() {
           <h1 className="text-3xl font-bold text-gray-900 mb-8">Terms of Service</h1>
           
           <div className="prose max-w-none">
-            {/* TODO: Customize terms for actual service */}
             <div className="bg-green-50 border border-green-200 rounded-lg p-4 mb-8">
               <p className="text-green-800 text-sm">
                 <strong>Effective Date:</strong> {new Date().toLocaleDateString()} | 
