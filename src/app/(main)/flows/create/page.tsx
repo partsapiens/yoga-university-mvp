@@ -323,7 +323,12 @@ export default function CreateFlowPage() {
     <div className="min-h-screen bg-background text-foreground pb-40">
       <header className="mx-auto max-w-7xl px-4 py-6">
         <h1 className="text-3xl font-semibold text-center tracking-tight">Create your sequence</h1>
-        <ControlPanel {...{ minutes, setMinutes, intensity, setIntensity, focus, setFocus, breathingCues, setBreathingCues, saferSequencing, setSaferSequencing, saveToDevice, setSaveToDevice, timingMode, setTimingMode, secPerBreath, setSecPerBreath, transitionSec, setTransitionSec, cooldownMin, setCooldownMin, onAutoGenerate: handleGenerate, flowName, setFlowName, onSaveFlow: handleSaveFlow, onLoadPreset: handleLoadPreset }} />
+        
+        {/* Settings Section */}
+        <div className="mt-6">
+          <h2 className="text-xl font-medium mb-4">Settings</h2>
+          <ControlPanel {...{ minutes, setMinutes, intensity, setIntensity, focus, setFocus, breathingCues, setBreathingCues, saferSequencing, setSaferSequencing, saveToDevice, setSaveToDevice, timingMode, setTimingMode, secPerBreath, setSecPerBreath, transitionSec, setTransitionSec, cooldownMin, setCooldownMin, onAutoGenerate: handleGenerate, flowName, setFlowName, onSaveFlow: handleSaveFlow, onLoadPreset: handleLoadPreset }} />
+        </div>
         
         {/* Authentication notice for saving */}
         {!isLoggedIn && (
@@ -348,16 +353,16 @@ export default function CreateFlowPage() {
             <PoseGrid {...{ flow, secondsPerPose, totalSeconds, onRemovePose: removePose, onUpdatePoseDuration: updatePoseDuration, timingMode, secPerBreath, onMovePose: movePose, dragIndexRef: dragIndex, activePoseIndex: playbackState !== 'idle' ? currentPoseIndex : -1, timeInPose }} />
           </div>
           
-          {/* Pose Library Section */}
+          {/* Suggestions Section - Now on top */}
+          <div>
+            <SuggestionsGrid onAddPose={addPose} />
+          </div>
+
+          {/* Pose Library Section - Reformatted as cards */}
           <div className="bg-card border border-border rounded-lg">
             <div className="h-96">
               <PoseLibrarySidebar onAddPose={addPose} />
             </div>
-          </div>
-          
-          {/* Keep suggestions as additional fallback */}
-          <div>
-            <SuggestionsGrid onAddPose={addPose} />
           </div>
 
           {/* Export Flow Section */}
