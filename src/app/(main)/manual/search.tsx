@@ -3,7 +3,8 @@
 import { useEffect, useState } from 'react';
 import Fuse from 'fuse.js';
 import Link from 'next/link';
-import { Search, BookOpen, Clock, Tag, X } from 'lucide-react';
+import { Search, BookOpen, Clock, Tag, X, Sparkles, Brain } from 'lucide-react';
+import SemanticSearch from '@/components/SemanticSearch';
 
 interface Item {
   slug: string;
@@ -19,6 +20,8 @@ export default function ManualSearch() {
   const [results, setResults] = useState<Item[]>([]);
   const [isOpen, setIsOpen] = useState(false);
   const [selectedGroup, setSelectedGroup] = useState<string>('all');
+  const [useSemanticSearch, setUseSemanticSearch] = useState(false);
+  const [semanticResults, setSemanticResults] = useState<Item[]>([]);
 
   useEffect(() => {
     fetch('/manual/search-index.json')
@@ -33,6 +36,21 @@ export default function ManualSearch() {
       return;
     }
     
+    // If using semantic search and we have results, use those
+    if (useSemanticSearch && semanticResults.length > 0) {
+      let filtered = semanticResults;
+      
+      // Filter by group if selected
+      if (selectedGroup !== 'all') {
+        filtered = filtered.filter(item => item.group === selectedGroup);
+      }
+      
+      setResults(filtered.slice(0, 8));
+      setIsOpen(true);
+      return;
+    }
+    
+    // Traditional fuzzy search
     const fuse = new Fuse(data, { 
       keys: ['title', 'content', 'summary'],
       threshold: 0.3,
@@ -49,7 +67,28 @@ export default function ManualSearch() {
     
     setResults(searchResults.slice(0, 8));
     setIsOpen(true);
-  }, [query, data, selectedGroup]);
+  }, [query, data, selectedGroup, useSemanticSearch, semanticResults]);
+
+  // Handle semantic search results
+  const handleSemanticResults = (results: any[]) => {
+    const transformedResults = results.map((result: any) => ({
+      slug: result.slug,
+      title: result.title,
+      summary: result.summary || '',
+      content: result.content || '',
+      group: result.group || 'General'
+    }));
+    setSemanticResults(transformedResults);
+    setUseSemanticSearch(true);
+  };
+
+  // Handle search mode change
+  const handleSearchModeChange = (semantic: boolean) => {
+    setUseSemanticSearch(semantic);
+    if (!semantic) {
+      setSemanticResults([]);
+    }
+  };
 
   // Get unique groups for filter
   const groups = ['all', ...Array.from(new Set(data.map(item => item.group)))];
@@ -64,31 +103,74 @@ export default function ManualSearch() {
     setQuery('');
     setResults([]);
     setIsOpen(false);
+    setUseSemanticSearch(false);
+    setSemanticResults([]);
   };
 
   return (
     <div className="relative mb-8">
-      {/* Search Input */}
-      <div className="relative">
-        <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-          <Search className="h-5 w-5 text-gray-400" />
-        </div>
-        <input
-          className="w-full pl-10 pr-10 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white dark:bg-gray-800 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400"
-          type="search"
-          placeholder="Search manual content, chapters, or concepts..."
-          value={query}
-          onChange={(e) => setQuery(e.target.value)}
-        />
-        {query && (
-          <button
-            onClick={clearSearch}
-            className="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-gray-600 dark:hover:text-gray-300"
-          >
-            <X className="h-5 w-5" />
-          </button>
-        )}
+      {/* Search Mode Toggle */}
+      <div className="flex items-center gap-4 mb-4">
+        <button
+          onClick={() => handleSearchModeChange(false)}
+          className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
+            !useSemanticSearch
+              ? 'bg-blue-500 text-white'
+              : 'bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700'
+          }`}
+        >
+          <Search className="w-4 h-4" />
+          Traditional Search
+        </button>
+        <button
+          onClick={() => handleSearchModeChange(true)}
+          className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
+            useSemanticSearch
+              ? 'bg-purple-500 text-white'
+              : 'bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700'
+          }`}
+        >
+          <Brain className="w-4 h-4" />
+          AI Search
+        </button>
       </div>
+
+      {/* Search Input */}
+      {useSemanticSearch ? (
+        <SemanticSearch
+          endpoint="/api/search/manual"
+          placeholder="Ask about yoga concepts, techniques, or topics... (e.g., 'how to improve my breathing during practice')"
+          onResults={handleSemanticResults}
+          filters={{ groups: selectedGroup !== 'all' ? [selectedGroup] : [] }}
+          className="w-full"
+          showTypeIndicator={true}
+        />
+      ) : (
+        <div className="relative">
+          <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+            <Search className="h-5 w-5 text-gray-400" />
+          </div>
+          <input
+            className="w-full pl-10 pr-10 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white dark:bg-gray-800 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400"
+            type="search"
+            placeholder="Search manual content, chapters, or concepts..."
+            value={query}
+            onChange={(e) => {
+              setQuery(e.target.value);
+              setUseSemanticSearch(false);
+              setSemanticResults([]);
+            }}
+          />
+          {query && (
+            <button
+              onClick={clearSearch}
+              className="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-gray-600 dark:hover:text-gray-300"
+            >
+              <X className="h-5 w-5" />
+            </button>
+          )}
+        </div>
+      )}
 
       {/* Group Filter */}
       {query && (
