@@ -76,7 +76,7 @@ export async function POST(request: NextRequest) {
   }
 }
 
-// Flow generation algorithm
+// Flow generation algorithm with AI transition detection
 function generateFlowSequence(poses: any[], options: {
   duration: number;
   difficulty: string;
@@ -99,12 +99,13 @@ function generateFlowSequence(poses: any[], options: {
   const forwardFoldPoses = poses.filter(p => p.category === 'forward_fold');
   const restorativePoses = poses.filter(p => ['restorative', 'supine'].includes(p.category));
 
-  // Build flow structure based on mood and focus areas
+  // Build flow structure with transition-aware sequencing
   let flow: any[] = [];
   
-  // Warm-up (20% of flow)
+  // Warm-up (20% of flow) - start with neutral poses
   const warmupCount = Math.max(2, Math.floor(targetPoseCount * 0.2));
-  flow.push(...selectRandomPoses(warmupPoses, warmupCount));
+  const warmupSequence = selectTransitionAwarePoses(null, warmupPoses, warmupCount, poses);
+  flow.push(...warmupSequence);
   
   // Active sequence (50% of flow) - adapted based on focus areas
   const activeCount = Math.floor(targetPoseCount * 0.5);
@@ -123,28 +124,51 @@ function generateFlowSequence(poses: any[], options: {
     activePosePool = activePosePool.filter(p => p.category === 'backbend');
   }
   
-  flow.push(...selectRandomPoses(activePosePool, activeCount));
+  const activeSequence = selectTransitionAwarePoses(
+    flow[flow.length - 1] || null, 
+    activePosePool, 
+    activeCount, 
+    poses
+  );
+  flow.push(...activeSequence);
   
   // Balancing/twists (20% of flow)
   const balanceCount = Math.floor(targetPoseCount * 0.2);
   const balanceTwistPoses = [...balancePoses, ...twistPoses];
-  flow.push(...selectRandomPoses(balanceTwistPoses, balanceCount));
+  const balanceSequence = selectTransitionAwarePoses(
+    flow[flow.length - 1] || null,
+    balanceTwistPoses,
+    balanceCount,
+    poses
+  );
+  flow.push(...balanceSequence);
   
   // Cool-down (10% of flow)
   const cooldownCount = Math.max(1, Math.floor(targetPoseCount * 0.1));
   const cooldownPoses = [...forwardFoldPoses, ...restorativePoses];
-  flow.push(...selectRandomPoses(cooldownPoses, cooldownCount));
+  const cooldownSequence = selectTransitionAwarePoses(
+    flow[flow.length - 1] || null,
+    cooldownPoses,
+    cooldownCount,
+    poses
+  );
+  flow.push(...cooldownSequence);
   
-  // Adjust for mood
+  // Adjust for mood with transition awareness
   if (mood === 'energizing') {
-    // Add more active poses, reduce restorative
-    const extraActivePoses = selectRandomPoses(activePoses, 2);
+    // Add more active poses, but consider transitions
+    const lastPose = flow[flow.length - 2] || null;
+    const extraActivePoses = selectTransitionAwarePoses(lastPose, activePoses, 2, poses);
     flow.splice(-2, 0, ...extraActivePoses);
   } else if (mood === 'calming') {
-    // Add more restorative poses
-    const extraRestorativePoses = selectRandomPoses(restorativePoses, 2);
+    // Add more restorative poses with smooth transitions
+    const lastPose = flow[flow.length - 1] || null;
+    const extraRestorativePoses = selectTransitionAwarePoses(lastPose, restorativePoses, 2, poses);
     flow.push(...extraRestorativePoses);
   }
+  
+  // Apply final transition optimization
+  flow = optimizeFlowTransitions(flow, poses);
   
   // Ensure flow doesn't exceed target pose count
   if (flow.length > targetPoseCount) {
@@ -156,6 +180,7 @@ function generateFlowSequence(poses: any[], options: {
     pose_id: pose.id,
     order_index: index,
     duration: calculatePoseDuration(pose, duration, flow.length),
+    transition_score: index > 0 ? calculateTransitionScore(flow[index - 1], pose) : null,
     pose: {
       id: pose.id,
       name: pose.name,
@@ -166,6 +191,187 @@ function generateFlowSequence(poses: any[], options: {
       description: pose.description
     }
   }));
+}
+
+// Helper function to select poses with transition awareness
+function selectTransitionAwarePoses(previousPose: any, candidatePoses: any[], count: number, allPoses: any[]): any[] {
+  if (!candidatePoses || candidatePoses.length === 0) return [];
+  if (count <= 0) return [];
+  
+  const selected: any[] = [];
+  let currentPose = previousPose;
+  
+  for (let i = 0; i < count; i++) {
+    if (candidatePoses.length === 0) break;
+    
+    // Use transition-aware selection
+    const nextPoses = selectBestTransitionPoses(currentPose, candidatePoses, 1);
+    if (nextPoses.length === 0) break;
+    
+    const nextPose = nextPoses[0];
+    selected.push(nextPose);
+    currentPose = nextPose;
+    
+    // Remove selected pose from candidates
+    const index = candidatePoses.findIndex(p => p.id === nextPose.id);
+    if (index !== -1) {
+      candidatePoses.splice(index, 1);
+    }
+  }
+  
+  return selected;
+}
+
+// Optimize flow transitions by inserting bridging poses when needed
+function optimizeFlowTransitions(flow: any[], allPoses: any[]): any[] {
+  const optimizedFlow: any[] = [];
+  
+  for (let i = 0; i < flow.length; i++) {
+    const currentPose = flow[i];
+    const nextPose = flow[i + 1];
+    
+    optimizedFlow.push(currentPose);
+    
+    // Check if we need a transition pose
+    if (nextPose) {
+      const transitionScore = calculateTransitionScore(currentPose, nextPose);
+      
+      if (transitionScore < 3) { // Poor transition
+        const bridgePose = suggestTransitionPose(currentPose, nextPose, allPoses);
+        if (bridgePose && !optimizedFlow.some(p => p.id === bridgePose.id)) {
+          optimizedFlow.push(bridgePose);
+        }
+      }
+    }
+  }
+  
+  return optimizedFlow;
+}
+
+// Import transition helper functions (these would be from yoga-helpers.ts)
+function calculateTransitionScore(fromPose: any, toPose: any): number {
+  if (!fromPose || !toPose) return 0;
+
+  let score = 0;
+
+  // Check if poses have direct transition relationship
+  if (fromPose.transitions_out?.includes(toPose.slug) || fromPose.transitions_out?.includes(toPose.id)) {
+    score += 10; // Strong direct transition
+  }
+  
+  if (toPose.transitions_in?.includes(fromPose.slug) || toPose.transitions_in?.includes(fromPose.id)) {
+    score += 10; // Strong incoming transition
+  }
+
+  // Check related next poses
+  if (fromPose.related_next_slugs?.includes(toPose.slug) || fromPose.related_next_slugs?.includes(toPose.id)) {
+    score += 5; // Good sequence relationship
+  }
+
+  // Same category bonus (easier transitions within same pose family)
+  if (fromPose.category === toPose.category) {
+    score += 3;
+  }
+
+  // Same plane of movement bonus
+  if (fromPose.plane === toPose.plane) {
+    score += 2;
+  }
+
+  // Similar intensity levels (avoid big jumps in difficulty)
+  const intensityDiff = Math.abs((fromPose.intensity || 3) - (toPose.intensity || 3));
+  if (intensityDiff <= 1) {
+    score += 2;
+  } else if (intensityDiff >= 3) {
+    score -= 2; // Penalize big intensity jumps
+  }
+
+  // Check if transition requires safety intervention
+  if (isTransitionUnsafe(fromPose, toPose)) {
+    score -= 5; // Penalize unsafe transitions
+  }
+
+  return Math.max(0, score); // Ensure non-negative score
+}
+
+function isTransitionUnsafe(fromPose: any, toPose: any): boolean {
+  if (!fromPose || !toPose) return false;
+
+  const fromFamily = (fromPose.family || fromPose.category || '').toLowerCase();
+  const toFamily = (toPose.family || toPose.category || '').toLowerCase();
+
+  // Unsafe patterns: twist to backbend or backbend to twist
+  return (/twist/i.test(fromFamily) && /backbend/i.test(toFamily)) || 
+         (/backbend/i.test(fromFamily) && /twist/i.test(toFamily));
+}
+
+function selectBestTransitionPoses(currentPose: any, candidatePoses: any[], count: number): any[] {
+  if (!candidatePoses || candidatePoses.length === 0) return [];
+  if (!currentPose) return selectRandomPoses(candidatePoses, count);
+
+  // Score each candidate pose
+  const scoredPoses = candidatePoses.map(pose => ({
+    pose,
+    score: calculateTransitionScore(currentPose, pose)
+  }));
+
+  // Sort by score (descending) and add some randomness for variety
+  scoredPoses.sort((a, b) => {
+    const scoreDiff = b.score - a.score;
+    if (scoreDiff === 0) {
+      return Math.random() - 0.5; // Random for equal scores
+    }
+    return scoreDiff;
+  });
+
+  // Select top candidates but introduce some randomness to avoid predictability
+  const topCandidates = Math.min(count * 2, scoredPoses.length);
+  const selected: any[] = [];
+  
+  for (let i = 0; i < count && i < candidatePoses.length; i++) {
+    // Bias toward higher scored poses but allow some variety
+    const maxIndex = Math.min(topCandidates, scoredPoses.length);
+    const weightedIndex = Math.floor(Math.random() * Math.random() * maxIndex);
+    
+    if (scoredPoses[weightedIndex] && !selected.includes(scoredPoses[weightedIndex].pose)) {
+      selected.push(scoredPoses[weightedIndex].pose);
+      scoredPoses.splice(weightedIndex, 1); // Remove to avoid duplicates
+    }
+  }
+
+  // Fill remaining slots with random selection if needed
+  while (selected.length < count && scoredPoses.length > 0) {
+    const randomIndex = Math.floor(Math.random() * scoredPoses.length);
+    selected.push(scoredPoses[randomIndex].pose);
+    scoredPoses.splice(randomIndex, 1);
+  }
+
+  return selected;
+}
+
+function suggestTransitionPose(fromPose: any, toPose: any, availablePoses: any[]): any | null {
+  if (!fromPose || !toPose || calculateTransitionScore(fromPose, toPose) >= 5) {
+    return null; // No transition needed for good transitions
+  }
+
+  // Look for poses that can bridge the gap
+  const bridgePoses = availablePoses.filter(pose => {
+    const fromBridge = calculateTransitionScore(fromPose, pose);
+    const bridgeTo = calculateTransitionScore(pose, toPose);
+    return fromBridge >= 3 && bridgeTo >= 3;
+  });
+
+  if (bridgePoses.length === 0) {
+    // Fallback to neutral poses
+    const neutralPoses = availablePoses.filter(pose => 
+      ['restorative', 'neutral', 'standing'].includes(pose.category) ||
+      pose.slug === 'childs-pose' || pose.slug === 'mountain-pose'
+    );
+    return neutralPoses.length > 0 ? neutralPoses[0] : null;
+  }
+
+  // Return the best bridging pose
+  return selectBestTransitionPoses(fromPose, bridgePoses, 1)[0] || null;
 }
 
 // Helper function to select random poses from a pool

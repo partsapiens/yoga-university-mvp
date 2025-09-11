@@ -84,6 +84,154 @@ export function applySafetyAdjustments(seq: PoseId[]): PoseId[] {
   return out;
 }
 
+/**
+ * Helper function to select random poses from a pool (fallback for transition selection)
+ */
+function selectRandomPoses(poses: any[], count: number): any[] {
+  if (!poses || poses.length === 0) return [];
+  
+  const shuffled = [...poses].sort(() => 0.5 - Math.random());
+  return shuffled.slice(0, Math.min(count, poses.length));
+}
+
+/**
+ * Calculate transition compatibility score between two poses
+ * Higher score means better/easier transition
+ */
+export function calculateTransitionScore(fromPose: any, toPose: any): number {
+  if (!fromPose || !toPose) return 0;
+
+  let score = 0;
+
+  // Check if poses have direct transition relationship
+  if (fromPose.transitions_out?.includes(toPose.slug) || fromPose.transitions_out?.includes(toPose.id)) {
+    score += 10; // Strong direct transition
+  }
+  
+  if (toPose.transitions_in?.includes(fromPose.slug) || toPose.transitions_in?.includes(fromPose.id)) {
+    score += 10; // Strong incoming transition
+  }
+
+  // Check related next poses
+  if (fromPose.related_next_slugs?.includes(toPose.slug) || fromPose.related_next_slugs?.includes(toPose.id)) {
+    score += 5; // Good sequence relationship
+  }
+
+  // Same category bonus (easier transitions within same pose family)
+  if (fromPose.category === toPose.category) {
+    score += 3;
+  }
+
+  // Same plane of movement bonus
+  if (fromPose.plane === toPose.plane) {
+    score += 2;
+  }
+
+  // Similar intensity levels (avoid big jumps in difficulty)
+  const intensityDiff = Math.abs((fromPose.intensity || 3) - (toPose.intensity || 3));
+  if (intensityDiff <= 1) {
+    score += 2;
+  } else if (intensityDiff >= 3) {
+    score -= 2; // Penalize big intensity jumps
+  }
+
+  // Check if transition requires safety intervention
+  if (isTransitionUnsafe(fromPose, toPose)) {
+    score -= 5; // Penalize unsafe transitions
+  }
+
+  return Math.max(0, score); // Ensure non-negative score
+}
+
+/**
+ * Check if a transition between poses is unsafe and requires intervention
+ */
+function isTransitionUnsafe(fromPose: any, toPose: any): boolean {
+  if (!fromPose || !toPose) return false;
+
+  const fromFamily = (fromPose.family || fromPose.category || '').toLowerCase();
+  const toFamily = (toPose.family || toPose.category || '').toLowerCase();
+
+  // Existing unsafe patterns from applySafetyAdjustments logic
+  return (/twist/i.test(fromFamily) && /backbend/i.test(toFamily)) || 
+         (/backbend/i.test(fromFamily) && /twist/i.test(toFamily));
+}
+
+/**
+ * Find the best next poses from a pool based on transition compatibility
+ */
+export function selectBestTransitionPoses(currentPose: any, candidatePoses: any[], count: number): any[] {
+  if (!candidatePoses || candidatePoses.length === 0) return [];
+  if (!currentPose) return selectRandomPoses(candidatePoses, count);
+
+  // Score each candidate pose
+  const scoredPoses = candidatePoses.map(pose => ({
+    pose,
+    score: calculateTransitionScore(currentPose, pose)
+  }));
+
+  // Sort by score (descending) and add some randomness for variety
+  scoredPoses.sort((a, b) => {
+    const scoreDiff = b.score - a.score;
+    if (scoreDiff === 0) {
+      return Math.random() - 0.5; // Random for equal scores
+    }
+    return scoreDiff;
+  });
+
+  // Select top candidates but introduce some randomness to avoid predictability
+  const topCandidates = Math.min(count * 2, scoredPoses.length);
+  const selected: any[] = [];
+  
+  for (let i = 0; i < count && i < candidatePoses.length; i++) {
+    // Bias toward higher scored poses but allow some variety
+    const maxIndex = Math.min(topCandidates, scoredPoses.length);
+    const weightedIndex = Math.floor(Math.random() * Math.random() * maxIndex);
+    
+    if (scoredPoses[weightedIndex] && !selected.includes(scoredPoses[weightedIndex].pose)) {
+      selected.push(scoredPoses[weightedIndex].pose);
+      scoredPoses.splice(weightedIndex, 1); // Remove to avoid duplicates
+    }
+  }
+
+  // Fill remaining slots with random selection if needed
+  while (selected.length < count && scoredPoses.length > 0) {
+    const randomIndex = Math.floor(Math.random() * scoredPoses.length);
+    selected.push(scoredPoses[randomIndex].pose);
+    scoredPoses.splice(randomIndex, 1);
+  }
+
+  return selected;
+}
+
+/**
+ * Suggest transition poses when direct transition is difficult
+ */
+export function suggestTransitionPose(fromPose: any, toPose: any, availablePoses: any[]): any | null {
+  if (!fromPose || !toPose || calculateTransitionScore(fromPose, toPose) >= 5) {
+    return null; // No transition needed for good transitions
+  }
+
+  // Look for poses that can bridge the gap
+  const bridgePoses = availablePoses.filter(pose => {
+    const fromBridge = calculateTransitionScore(fromPose, pose);
+    const bridgeTo = calculateTransitionScore(pose, toPose);
+    return fromBridge >= 3 && bridgeTo >= 3;
+  });
+
+  if (bridgePoses.length === 0) {
+    // Fallback to neutral poses
+    const neutralPoses = availablePoses.filter(pose => 
+      ['restorative', 'neutral', 'standing'].includes(pose.category) ||
+      pose.slug === 'childs-pose' || pose.slug === 'mountain-pose'
+    );
+    return neutralPoses.length > 0 ? neutralPoses[0] : null;
+  }
+
+  // Return the best bridging pose
+  return selectBestTransitionPoses(fromPose, bridgePoses, 1)[0] || null;
+}
+
 export function smartGenerate(totalMinutes: number, intensity: number, focus: Focus): PoseId[] {
   let seq = templateSunA();
   const bodyPool: PoseId[] = [PoseId.Warrior1Right, PoseId.HighLungeRight, PoseId.TwistLow, PoseId.Boat, PoseId.Bridge, PoseId.Pigeon, PoseId.DownDog, PoseId.ForwardFold];
