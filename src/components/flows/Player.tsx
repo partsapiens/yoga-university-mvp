@@ -1,6 +1,8 @@
-import React from 'react';
+import React, { useEffect, useCallback } from 'react';
 import { POSES } from '@/lib/yoga-data';
 import { PoseId } from '@/types/yoga';
+import { Avatar } from '@/components/Avatar';
+import { useYogaVoiceGuide } from '@/hooks/useYogaVoiceGuide';
 
 interface PlayerProps {
   isPlaying: boolean;
@@ -16,16 +18,64 @@ interface PlayerProps {
   onPause: () => void;
   onResume: () => void;
   onStop: () => void;
+  onNext?: () => void;
+  onPrev?: () => void;
   adjustRate: (amount: number) => void;
 }
 
 export function Player({
   isPlaying, isPaused, currentPoseId, nextPoseId, timeInPose, currentPoseDuration,
   sessionTotalSeconds, sessionTimeRemaining, playbackRate,
-  onPlay, onPause, onResume, onStop, adjustRate,
+  onPlay, onPause, onResume, onStop, onNext, onPrev, adjustRate,
 }: PlayerProps) {
   const currentPose = currentPoseId ? POSES.find(p => p.id === currentPoseId) : null;
   const nextPose = nextPoseId ? POSES.find(p => p.id === nextPoseId) : null;
+
+  // Voice guide integration
+  const voiceGuide = useYogaVoiceGuide({
+    onNext,
+    onPrev,
+    onPause,
+    onResume,
+    onRepeatInstructions: () => {
+      if (currentPoseId && currentPoseDuration) {
+        voiceGuide.guideThroughPose(currentPoseId, currentPoseDuration);
+      }
+    }
+  });
+
+  // Guide through pose when starting a new pose
+  useEffect(() => {
+    if (isPlaying && currentPoseId && timeInPose === 0 && voiceGuide.isVoiceEnabled) {
+      voiceGuide.guideThroughPose(currentPoseId, currentPoseDuration);
+    }
+  }, [isPlaying, currentPoseId, timeInPose, currentPoseDuration, voiceGuide]);
+
+  // Provide encouragement during longer holds
+  useEffect(() => {
+    if (isPlaying && voiceGuide.isVoiceEnabled && currentPoseDuration > 30) {
+      const encouragementInterval = setInterval(() => {
+        if (timeInPose > 0 && timeInPose % 20 === 0) { // Every 20 seconds
+          voiceGuide.provideEncouragement();
+        }
+      }, 1000);
+
+      return () => clearInterval(encouragementInterval);
+    }
+  }, [isPlaying, timeInPose, currentPoseDuration, voiceGuide]);
+
+  // Offer conversation periodically when voice is enabled
+  useEffect(() => {
+    if (isPlaying && voiceGuide.isVoiceEnabled) {
+      const conversationInterval = setInterval(() => {
+        if (Math.random() < 0.1) { // 10% chance every check
+          voiceGuide.offerConversation();
+        }
+      }, 30000); // Check every 30 seconds
+
+      return () => clearInterval(conversationInterval);
+    }
+  }, [isPlaying, voiceGuide]);
 
   const formatTime = (seconds: number) => {
     const mins = Math.floor(seconds / 60);
@@ -41,6 +91,36 @@ export function Player({
         <div className="h-full bg-primary transition-all duration-500" style={{ width: `${sessionProgress}%` }} role="progressbar" aria-valuenow={sessionProgress} aria-valuemin={0} aria-valuemax={100} />
       </div>
       <div className="flex items-center gap-4">
+        {/* Avatar Section */}
+        <div className="flex items-center gap-3">
+          <Avatar 
+            state={voiceGuide.state} 
+            size="md"
+            className="flex-shrink-0"
+          />
+          <div className="flex flex-col gap-2">
+            <button
+              onClick={voiceGuide.toggleVoiceGuide}
+              className={`px-3 py-1 text-xs rounded-lg font-medium transition-colors ${
+                voiceGuide.isVoiceEnabled 
+                  ? 'bg-green-500 text-white hover:bg-green-600' 
+                  : 'bg-gray-500 text-white hover:bg-gray-600'
+              }`}
+            >
+              {voiceGuide.isVoiceEnabled ? '🎙️ Voice On' : '🔇 Voice Off'}
+            </button>
+            {voiceGuide.isVoiceEnabled && (
+              <button
+                onClick={voiceGuide.startListening}
+                disabled={voiceGuide.isListening}
+                className="px-3 py-1 text-xs rounded-lg font-medium bg-blue-500 text-white hover:bg-blue-600 disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                {voiceGuide.isListening ? '👂 Listening...' : '💬 Talk'}
+              </button>
+            )}
+          </div>
+        </div>
+
         <div className="flex-1 flex items-center gap-3 min-w-0">
           {currentPose && isPlaying ? (
             <>
