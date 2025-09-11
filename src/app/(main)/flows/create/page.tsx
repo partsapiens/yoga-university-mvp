@@ -16,6 +16,7 @@ import { QuickActions } from "@/components/flows/QuickActions";
 import { AutoSave } from "@/components/flows/AutoSave";
 import { KeyboardShortcuts, useKeyboardShortcuts } from "@/components/flows/KeyboardShortcuts";
 import { FlowNameInput } from "@/components/flows/FlowNameInput";
+import { FlowTemplates } from "@/components/flows/FlowTemplates";
 import { Focus, TimingMode, PoseId, SavedFlow, Pose } from "@/types/yoga";
 import { POSES } from "@/lib/yoga-data";
 import {
@@ -339,6 +340,22 @@ export default function CreateFlowPage() {
     setFlowName(name);
   };
 
+  const handleSelectTemplate = (template: any) => {
+    setFlow(template.poses);
+    setOverrides({});
+    setFlowName(template.name);
+    // Update control panel settings based on template
+    setMinutes(template.duration);
+    if (template.difficulty === 'Beginner') setIntensity(2);
+    else if (template.difficulty === 'Intermediate') setIntensity(3);
+    else setIntensity(4);
+    // Set focus if it matches available options
+    const validFoci = ["Full-Body", "Hips", "Hamstrings", "Shoulders", "Core", "Spine", "Balance"];
+    if (validFoci.includes(template.focus)) {
+      setFocus(template.focus as Focus);
+    }
+  };
+
   // --- Player Handlers ---
   const handlePlay = useCallback(() => { if (flow.length === 0) return; setCurrentPoseIndex(0); setTimeInPose(0); setPlaybackState('playing'); }, [flow.length]);
   const handlePause = useCallback(() => setPlaybackState('paused'), []);
@@ -433,6 +450,9 @@ export default function CreateFlowPage() {
       {/* Main content area with sidebar */}
       <div className="mx-auto max-w-7xl px-4 pb-16">
         <SavedFlows flows={savedFlows} onLoad={handleLoadFlow} onDelete={handleDeleteFlow} />
+        
+        {/* Flow Templates */}
+        <FlowTemplates onSelectTemplate={handleSelectTemplate} className="mt-6" />
         
         {/* Flow Validation */}
         <FlowValidation flow={flow} totalSeconds={totalSeconds} className="mt-6" />
