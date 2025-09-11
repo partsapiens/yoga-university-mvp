@@ -473,16 +473,14 @@ export default function CreateFlowPage() {
             <PoseGrid {...{ flow, secondsPerPose, totalSeconds, onRemovePose: removePose, onUpdatePoseDuration: updatePoseDuration, timingMode, secPerBreath, onMovePose: movePose, dragIndexRef: dragIndex, activePoseIndex: playbackState !== 'idle' ? currentPoseIndex : -1, timeInPose }} />
           </div>
           
-          {/* Pose Library Section */}
-          <div className="bg-card border border-border rounded-lg">
-            <div className="h-96">
-              <PoseLibrarySidebar onAddPose={addPose} />
-            </div>
-          </div>
-          
-          {/* Keep suggestions as additional fallback */}
+          {/* Suggestions moved above Pose Library */}
           <div>
             <SuggestionsGrid onAddPose={addPose} />
+          </div>
+
+          {/* Pose Library Section */}
+          <div className="bg-card border border-border rounded-lg">
+            <PoseLibrarySidebar onAddPose={addPose} />
           </div>
 
           {/* Export Flow Section */}
