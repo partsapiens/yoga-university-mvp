@@ -27,7 +27,7 @@ export function PoseGrid({
         <span className="rounded-full border border-border px-2 py-0.5">Total: <strong className="font-semibold text-foreground tabular-nums">{Math.round(totalSeconds / 60)}m</strong></span>
         <span className="rounded-full border border-border px-2 py-0.5">Poses: <strong className="font-semibold text-foreground tabular-nums">{flow.length}</strong></span>
       </div>
-      <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
+      <div className="grid grid-cols-1 gap-3 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
         {flow.map((id, i) => (
           <PoseCard
             key={`${id}-${i}`}
