@@ -1,14 +1,24 @@
 import OpenAI from "openai";
 
-// Export 'oa' as specified in the problem statement
-export const oa = new OpenAI({ apiKey: process.env.OPENAI_API_KEY! });
+// Validate environment variables
+if (!process.env.OPENAI_API_KEY && process.env.USE_MOCK !== "true") {
+  console.warn("OPENAI_API_KEY missing - API calls will use fallback responses");
+}
 
-// Keep backward compatibility with existing code
+// Main OpenAI client - only created when API key is available
 export const openai = process.env.OPENAI_API_KEY 
   ? new OpenAI({
       apiKey: process.env.OPENAI_API_KEY,
     })
   : null;
+
+// Keep backward compatibility for existing imports
+export const oa = openai;
+
+// Check if OpenAI is available
+export const isOpenAIAvailable = (): boolean => {
+  return !!openai && process.env.USE_MOCK !== "true";
+};
 
 // Rate limiting configuration
 export const rateLimits = {
@@ -43,14 +53,14 @@ export async function generateCompletion(
 ): Promise<string> {
   try {
     // Check if OpenAI is available
-    if (!openai) {
-      console.warn('OpenAI API key not configured, using fallback content');
+    if (!isOpenAIAvailable()) {
+      console.warn('OpenAI not available, using fallback content');
       return getFallbackContent(complexity);
     }
     
     const model = selectModel(complexity);
     
-    const completion = await openai.chat.completions.create({
+    const completion = await openai!.chat.completions.create({
       model,
       messages: [
         {
@@ -66,7 +76,8 @@ export async function generateCompletion(
       max_tokens: 1000,
     });
 
-    return completion.choices[0]?.message?.content || '';
+    const content = completion.choices[0]?.message?.content || '';
+    return filterContent(content);
   } catch (error) {
     console.error('OpenAI API error:', error);
     
@@ -95,4 +106,20 @@ export function filterContent(content: string): string {
   filtered = filtered.replace(/\b(prescription|medicine|drug)\b/gi, '');
   
   return filtered.trim();
+}
+
+// Health check for OpenAI API (without exposing secrets)
+export async function checkOpenAIHealth(): Promise<{ ok: boolean; error?: string }> {
+  try {
+    if (!isOpenAIAvailable()) {
+      return { ok: false, error: "API key not configured" };
+    }
+    
+    // Simple test call to verify API is working
+    await openai!.models.list();
+    return { ok: true };
+  } catch (error) {
+    console.error('OpenAI health check failed:', error);
+    return { ok: false, error: "API connection failed" };
+  }
 }
