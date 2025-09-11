@@ -5,6 +5,7 @@ import { useLocalStorage } from "@/hooks/useLocalStorage";
 import { useTimer } from "@/hooks/useTimer";
 import { ControlPanel } from "@/components/flows/ControlPanel";
 import { SuggestionsGrid } from "@/components/flows/SuggestionsGrid";
+import { CombinedPoseLibrary } from "@/components/flows/CombinedPoseLibrary";
 import { GeneratePreviewModal } from "@/components/flows/GeneratePreviewModal";
 import { Player } from "@/components/flows/Player";
 import { SavedFlows } from "@/components/flows/SavedFlows";
@@ -436,8 +437,18 @@ export default function CreateFlowPage() {
           </div>
           <KeyboardShortcuts />
         </div>
-        
-        <ControlPanel {...{ minutes, setMinutes, intensity, setIntensity, focus, setFocus, breathingCues, setBreathingCues, saferSequencing, setSaferSequencing, saveToDevice, setSaveToDevice, timingMode, setTimingMode, secPerBreath, setSecPerBreath, transitionSec, setTransitionSec, cooldownMin, setCooldownMin, onAutoGenerate: handleGenerate, flowName, setFlowName, onSaveFlow: handleSaveFlow }} />
+        {/* Settings and Flow Templates - Side by Side */}
+        <div className="mt-6 grid grid-cols-1 lg:grid-cols-2 gap-6">
+          {/* Settings Container */}
+          <div>
+            <ControlPanel {...{ minutes, setMinutes, intensity, setIntensity, focus, setFocus, breathingCues, setBreathingCues, saferSequencing, setSaferSequencing, saveToDevice, setSaveToDevice, timingMode, setTimingMode, secPerBreath, setSecPerBreath, transitionSec, setTransitionSec, cooldownMin, setCooldownMin, onAutoGenerate: handleGenerate, flowName, setFlowName, onSaveFlow: handleSaveFlow }} />
+          </div>
+          
+          {/* Flow Templates Container */}
+          <div>
+            <FlowTemplates onSelectTemplate={handleSelectTemplate} />
+          </div>
+        </div>
         
         {/* Auto-save and Flow Name Section */}
         <div className="mt-4 space-y-4">
@@ -478,9 +489,6 @@ export default function CreateFlowPage() {
       <div className="mx-auto max-w-7xl px-4 pb-16">
         <SavedFlows flows={savedFlows} onLoad={handleLoadFlow} onDelete={handleDeleteFlow} />
         
-        {/* Flow Templates */}
-        <FlowTemplates onSelectTemplate={handleSelectTemplate} className="mt-6" />
-        
         {/* Combined Flow Management: Your Flow + Quick Actions + AI Flow Review */}
         <FlowManagement
           flow={flow}
@@ -502,15 +510,8 @@ export default function CreateFlowPage() {
         />
         
         <div className="space-y-6 mt-6">
-          {/* Suggestions moved above Pose Library */}
-          <div>
-            <SuggestionsGrid onAddPose={addPose} />
-          </div>
-
-          {/* Pose Library Section */}
-          <div className="bg-card border border-border rounded-lg">
-            <PoseLibrarySidebar onAddPose={addPose} />
-          </div>
+          {/* Combined AI Suggestions and Search Library */}
+          <CombinedPoseLibrary onAddPose={addPose} />
 
           {/* Export Flow Section */}
           {flow.length > 0 && isLoggedIn && (
