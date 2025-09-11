@@ -40,7 +40,7 @@ describe('AIGuidePage', () => {
     render(<AIGuidePage />);
     
     expect(screen.getByText('🤖 AI Yoga Guide')).toBeInTheDocument();
-    expect(screen.getByText('Camera Feed')).toBeInTheDocument();
+    expect(screen.getByText('Yoga Teacher')).toBeInTheDocument();
     expect(screen.getByText('Select Pose')).toBeInTheDocument();
     expect(screen.getByText('Session Control')).toBeInTheDocument();
     expect(screen.getByText('Voice Commands')).toBeInTheDocument();
