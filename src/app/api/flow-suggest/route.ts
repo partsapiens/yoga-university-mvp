@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { oa } from "@/lib/openai";
+import { oa, isOpenAIAvailable } from "@/lib/openai";
 import { supabase } from "@/utils/supabaseClient";
 
 export const dynamic = 'force-dynamic';
@@ -8,7 +8,7 @@ export async function POST(req: Request) {
   try {
     const { goal, time, difficulty, equipment } = await req.json();
 
-    if (process.env.USE_MOCK === "true") {
+    if (!isOpenAIAvailable()) {
       return NextResponse.json({
         sequence: [1, 2, 3],
         cuesByPose: {
@@ -50,7 +50,7 @@ Return JSON: {"sequence": [id1, id2, ...], "cuesByPose": {"id1": "cue text", ...
 Keep cues encouraging and anatomically safe.
 `;
 
-    const r = await oa.chat.completions.create({
+    const r = await oa!.chat.completions.create({
       model: "gpt-4o-mini",
       messages: [
         { role: "system", content: "Experienced yoga instructor. Focus on safe transitions and encouraging cues." },

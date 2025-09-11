@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { oa } from "@/lib/openai";
+import { oa, isOpenAIAvailable } from "@/lib/openai";
 
 export const dynamic = 'force-dynamic';
 
@@ -7,11 +7,11 @@ export async function POST(req: Request) {
   const { style, duration, feelingNote } = await req.json();
 
   try {
-    if (process.env.USE_MOCK === "true") {
+    if (!isOpenAIAvailable()) {
       return NextResponse.json({ recap: "You practiced calmly.", suggestion: "Try 10 min tomorrow." });
     }
 
-    const r = await oa.chat.completions.create({
+    const r = await oa!.chat.completions.create({
       model: "gpt-4o-mini",
       messages: [{
         role: "user",

@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { oa } from "@/lib/openai";
+import { oa, isOpenAIAvailable } from "@/lib/openai";
 
 export const dynamic = 'force-dynamic';
 
@@ -7,7 +7,7 @@ export async function POST(req: Request) {
   const { userText, preferredDuration } = await req.json();
   
   try {
-    if (process.env.USE_MOCK === "true") {
+    if (!isOpenAIAvailable()) {
       return NextResponse.json({ style: "Box Breathing", duration: 10, rationale: "Mock" });
     }
 
@@ -18,7 +18,7 @@ Pick duration from: 5, 10, 15 (fallback to ${preferredDuration ?? 10} if unclear
 Return STRICT JSON: {"style":"...","duration":number,"rationale":"..."}
 `;
 
-    const r = await oa.chat.completions.create({
+    const r = await oa!.chat.completions.create({
       model: "gpt-4o-mini",
       messages: [{ role: "system", content: "You are a concise meditation coach." },
                  { role: "user", content: prompt }],
