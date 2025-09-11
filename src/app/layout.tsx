@@ -153,7 +153,7 @@ export default function RootLayout({
           }}
         />
       </head>
-      <body className="h-full bg-gray-50 antialiased font-sans">
+      <body className="h-full bg-gray-50 dark:bg-gray-900 antialiased font-sans">
         <QueryProvider>
           <AuthProvider>
             <div className="min-h-full">
