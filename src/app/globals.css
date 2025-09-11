@@ -210,4 +210,501 @@
       @apply p-3 text-sm;
     }
   }
+
+  /* Mountain Meditation Landing Page Styles */
+  .hero-container {
+    width: 100vw;
+    height: 100vh;
+    position: relative;
+    background: linear-gradient(180deg, 
+        #fef9e7 0%, 
+        #fdf2e9 15%,
+        #eaf2f8 35%, 
+        #e8f4f8 55%,
+        #f0f8ff 75%, 
+        #f8f0ff 100%);
+    overflow: hidden;
+  }
+
+  /* Mountain silhouettes */
+  .mountains {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 40%;
+    z-index: 1;
+  }
+
+  .mountain-layer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  .mountain-back {
+    background: linear-gradient(to bottom, 
+        rgba(147, 112, 219, 0.1) 0%,
+        rgba(135, 206, 235, 0.15) 100%);
+    clip-path: polygon(0% 100%, 0% 60%, 20% 45%, 35% 65%, 50% 40%, 65% 55%, 80% 35%, 100% 50%, 100% 100%);
+    animation: mountainFloat1 15s ease-in-out infinite;
+  }
+
+  .mountain-mid {
+    background: linear-gradient(to bottom, 
+        rgba(135, 206, 235, 0.2) 0%,
+        rgba(176, 196, 222, 0.25) 100%);
+    clip-path: polygon(0% 100%, 0% 80%, 25% 50%, 40% 70%, 60% 45%, 75% 60%, 100% 40%, 100% 100%);
+    animation: mountainFloat2 12s ease-in-out infinite reverse;
+  }
+
+  .mountain-front {
+    background: linear-gradient(to bottom, 
+        rgba(176, 196, 222, 0.3) 0%,
+        rgba(70, 130, 180, 0.2) 100%);
+    clip-path: polygon(0% 100%, 0% 90%, 30% 65%, 45% 80%, 70% 60%, 85% 75%, 100% 70%, 100% 100%);
+    animation: mountainFloat3 18s ease-in-out infinite;
+  }
+
+  /* Clouds */
+  .clouds-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 2;
+  }
+
+  .cloud {
+    position: absolute;
+    background: rgba(255, 255, 255, 0.4);
+    border-radius: 100px;
+    opacity: 0.6;
+    animation: cloudDrift 25s linear infinite;
+  }
+
+  .cloud::before,
+  .cloud::after {
+    content: '';
+    position: absolute;
+    background: rgba(255, 255, 255, 0.4);
+    border-radius: 100px;
+  }
+
+  .cloud1 {
+    width: 120px;
+    height: 40px;
+    top: 20%;
+    left: -150px;
+    animation-duration: 30s;
+  }
+
+  .cloud1::before {
+    width: 50px;
+    height: 50px;
+    top: -25px;
+    left: 10px;
+  }
+
+  .cloud1::after {
+    width: 60px;
+    height: 40px;
+    top: -15px;
+    right: 10px;
+  }
+
+  .cloud2 {
+    width: 80px;
+    height: 30px;
+    top: 35%;
+    left: -100px;
+    animation-duration: 40s;
+    animation-delay: -10s;
+  }
+
+  .cloud2::before {
+    width: 40px;
+    height: 40px;
+    top: -20px;
+    left: 15px;
+  }
+
+  .cloud2::after {
+    width: 50px;
+    height: 30px;
+    top: -10px;
+    right: 15px;
+  }
+
+  /* Meditation figure - more detailed */
+  .person-container {
+    position: absolute;
+    bottom: 25%;
+    left: 15%;
+    z-index: 10;
+  }
+
+  .person {
+    width: 180px;
+    height: 220px;
+    position: relative;
+    animation: gentleBreathing 5s ease-in-out infinite;
+  }
+
+  .person-body {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 80px;
+    background: linear-gradient(145deg, 
+        rgba(70, 130, 180, 0.2) 0%, 
+        rgba(135, 206, 235, 0.15) 50%, 
+        rgba(176, 196, 222, 0.1) 100%);
+    border-radius: 30px 30px 15px 15px;
+    box-shadow: 0 10px 30px rgba(70, 130, 180, 0.1);
+  }
+
+  .person-head {
+    position: absolute;
+    bottom: 70px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 40px;
+    height: 40px;
+    background: linear-gradient(145deg, 
+        rgba(70, 130, 180, 0.18) 0%, 
+        rgba(135, 206, 235, 0.12) 100%);
+    border-radius: 50%;
+    box-shadow: 0 5px 20px rgba(70, 130, 180, 0.08);
+  }
+
+  .person-arms {
+    position: absolute;
+    bottom: 45px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100px;
+    height: 35px;
+    background: linear-gradient(90deg, 
+        rgba(70, 130, 180, 0.15) 0%, 
+        rgba(135, 206, 235, 0.1) 50%, 
+        rgba(70, 130, 180, 0.15) 100%);
+    border-radius: 20px;
+    box-shadow: 0 5px 15px rgba(70, 130, 180, 0.08);
+  }
+
+  .person-legs {
+    position: absolute;
+    bottom: 5px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 90px;
+    height: 25px;
+    background: linear-gradient(90deg, 
+        rgba(70, 130, 180, 0.12) 0%, 
+        rgba(135, 206, 235, 0.08) 50%, 
+        rgba(70, 130, 180, 0.12) 100%);
+    border-radius: 15px;
+    box-shadow: 0 3px 10px rgba(70, 130, 180, 0.06);
+  }
+
+  /* Enhanced breathing sphere */
+  .breathing-sphere {
+    position: absolute;
+    top: 40%;
+    right: 20%;
+    transform: translateY(-50%);
+    width: 350px;
+    height: 350px;
+    z-index: 5;
+  }
+
+  .sphere-outer-glow {
+    position: absolute;
+    width: 120%;
+    height: 120%;
+    top: -10%;
+    left: -10%;
+    border-radius: 50%;
+    background: radial-gradient(circle, 
+        rgba(135, 206, 235, 0.1) 0%,
+        rgba(255, 182, 193, 0.08) 40%,
+        transparent 70%);
+    animation: pulseGlow 6s ease-in-out infinite;
+  }
+
+  .sphere-core {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background: radial-gradient(circle at 25% 25%, 
+        rgba(255, 255, 255, 0.4) 0%,
+        rgba(135, 206, 235, 0.25) 20%,
+        rgba(255, 182, 193, 0.2) 50%,
+        rgba(147, 112, 219, 0.15) 80%,
+        rgba(70, 130, 180, 0.1) 100%);
+    position: relative;
+    animation: breathingPulse 4s ease-in-out infinite;
+    backdrop-filter: blur(3px);
+    box-shadow: 
+        0 0 80px rgba(135, 206, 235, 0.2),
+        inset 0 0 40px rgba(255, 255, 255, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+  }
+
+  /* AI neural network pattern inside sphere */
+  .neural-pattern {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 60%;
+    height: 60%;
+    opacity: 0.3;
+  }
+
+  .neural-node {
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    background: rgba(70, 130, 180, 0.6);
+    border-radius: 50%;
+    animation: neuralPulse 3s ease-in-out infinite;
+  }
+
+  .neural-node:nth-child(1) { top: 20%; left: 30%; animation-delay: 0s; }
+  .neural-node:nth-child(2) { top: 40%; left: 60%; animation-delay: 0.5s; }
+  .neural-node:nth-child(3) { top: 70%; left: 40%; animation-delay: 1s; }
+  .neural-node:nth-child(4) { top: 50%; left: 20%; animation-delay: 1.5s; }
+  .neural-node:nth-child(5) { top: 30%; left: 70%; animation-delay: 2s; }
+
+  .sphere-ring {
+    position: absolute;
+    border: 1px solid rgba(135, 206, 235, 0.25);
+    border-radius: 50%;
+    animation: rotateRing 20s linear infinite;
+  }
+
+  .ring-1 {
+    width: 110%;
+    height: 110%;
+    top: -5%;
+    left: -5%;
+    animation-duration: 25s;
+    border-color: rgba(255, 182, 193, 0.2);
+  }
+
+  .ring-2 {
+    width: 130%;
+    height: 130%;
+    top: -15%;
+    left: -15%;
+    border-color: rgba(147, 112, 219, 0.15);
+    animation-duration: 35s;
+    animation-direction: reverse;
+  }
+
+  /* Enhanced particles */
+  .floating-particles {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 3;
+  }
+
+  .particle {
+    position: absolute;
+    border-radius: 50%;
+    animation: floatUp 12s ease-in-out infinite;
+  }
+
+  .particle-small {
+    width: 2px;
+    height: 2px;
+    background: rgba(135, 206, 235, 0.5);
+  }
+
+  .particle-medium {
+    width: 3px;
+    height: 3px;
+    background: rgba(255, 182, 193, 0.4);
+  }
+
+  .particle-large {
+    width: 4px;
+    height: 4px;
+    background: rgba(147, 112, 219, 0.4);
+  }
+
+  .particle:nth-child(1) { left: 10%; animation-delay: 0s; }
+  .particle:nth-child(2) { left: 25%; animation-delay: 2s; }
+  .particle:nth-child(3) { left: 40%; animation-delay: 4s; }
+  .particle:nth-child(4) { left: 55%; animation-delay: 1s; }
+  .particle:nth-child(5) { left: 70%; animation-delay: 3s; }
+  .particle:nth-child(6) { left: 85%; animation-delay: 5s; }
+
+  /* Light rays */
+  .light-rays {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    opacity: 0.1;
+  }
+
+  .ray {
+    position: absolute;
+    background: linear-gradient(to bottom, 
+        rgba(255, 255, 255, 0.3) 0%,
+        transparent 100%);
+    transform-origin: top center;
+    animation: rayShimmer 8s ease-in-out infinite;
+  }
+
+  .ray1 {
+    top: -10%;
+    left: 20%;
+    width: 2px;
+    height: 50%;
+    animation-delay: 0s;
+  }
+
+  .ray2 {
+    top: -10%;
+    left: 45%;
+    width: 1px;
+    height: 40%;
+    animation-delay: 2s;
+  }
+
+  .ray3 {
+    top: -10%;
+    left: 70%;
+    width: 3px;
+    height: 60%;
+    animation-delay: 4s;
+  }
+
+  /* Animations */
+  @keyframes breathingPulse {
+    0%, 100% { 
+        transform: scale(1); 
+        opacity: 0.7;
+        filter: hue-rotate(0deg);
+    }
+    50% { 
+        transform: scale(1.08); 
+        opacity: 0.9;
+        filter: hue-rotate(15deg);
+    }
+  }
+
+  @keyframes pulseGlow {
+    0%, 100% { 
+        transform: scale(1);
+        opacity: 0.3;
+    }
+    50% { 
+        transform: scale(1.1);
+        opacity: 0.6;
+    }
+  }
+
+  @keyframes gentleBreathing {
+    0%, 100% { 
+        transform: translateY(0px) scale(1); 
+    }
+    50% { 
+        transform: translateY(-5px) scale(1.02); 
+    }
+  }
+
+  @keyframes mountainFloat1 {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-8px); }
+  }
+
+  @keyframes mountainFloat2 {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-12px); }
+  }
+
+  @keyframes mountainFloat3 {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-6px); }
+  }
+
+  @keyframes cloudDrift {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(calc(100vw + 200px)); }
+  }
+
+  @keyframes rotateRing {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+
+  @keyframes neuralPulse {
+    0%, 100% { 
+        opacity: 0.3;
+        transform: scale(1);
+    }
+    50% { 
+        opacity: 0.8;
+        transform: scale(1.5);
+    }
+  }
+
+  @keyframes floatUp {
+    0% {
+        bottom: -10px;
+        opacity: 0;
+        transform: translateX(0px) scale(0.5);
+    }
+    25% {
+        opacity: 0.8;
+        transform: translateX(15px) scale(1);
+    }
+    75% {
+        opacity: 0.4;
+        transform: translateX(-10px) scale(0.8);
+    }
+    100% {
+        bottom: 110%;
+        opacity: 0;
+        transform: translateX(5px) scale(0.3);
+    }
+  }
+
+  @keyframes rayShimmer {
+    0%, 100% { opacity: 0.05; }
+    50% { opacity: 0.2; }
+  }
+
+  /* Responsive Design for Mountain Meditation */
+  @media (max-width: 1200px) {
+    .breathing-sphere { width: 280px; height: 280px; }
+    .person { width: 150px; height: 180px; }
+  }
+
+  @media (max-width: 768px) {
+    .breathing-sphere {
+        width: 220px;
+        height: 220px;
+        right: 10%;
+        top: 35%;
+    }
+    .person-container {
+        bottom: 30%;
+        left: 10%;
+    }
+    .person { width: 120px; height: 150px; }
+  }
 }
