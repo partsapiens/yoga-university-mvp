@@ -49,60 +49,137 @@ function transformDatabasePoseToLegacy(dbPose: DatabasePose): Pose {
 
 export const getPosesFromDatabase = async (): Promise<DatabasePose[]> => {
   try {
-    console.log('Using fallback pose data for development...');
+    console.log('Using static fallback pose data for development...');
     
-    // Import the existing POSES data and convert it to DatabasePose format
-    const { POSES, EXTENDED_POSES } = await import('./yoga-data');
+    // Static sample data to avoid import issues
+    const samplePoses: DatabasePose[] = [
+      {
+        id: 'butterfly-pose',
+        slug: 'butterfly-pose',
+        name: 'Butterfly Pose',
+        sanskrit: 'Baddha Konasana',
+        category: 'seated',
+        level: 'beginner',
+        plane: 'sagittal',
+        thumbnail_url: '/images/poses/butterfly-pose.jpg',
+        icon: '🦋',
+        meta: {},
+        cues: ['Hold for 60 seconds', 'Focus on breathing', 'Maintain alignment'],
+        benefits: ['Targets Hips, Groin', '2/5 intensity level', 'Sacral chakra activation'],
+        created_at: new Date().toISOString(),
+        hold_time: 60,
+        image_url: '/images/poses/butterfly-pose.jpg',
+        instructions: 'Practice Butterfly Pose (Baddha Konasana) focusing on Hips, Groin.',
+        modifications: 'Can be held longer for deeper stretch',
+        contraindications: 'Generally safe for most practitioners',
+        anatomical_focus: ['Hips', 'Groin'],
+        other_side_slug: null,
+        intensity: 2,
+        sort_order: 1,
+        family: 'seated',
+        sides: 'both',
+        aka: ['Baddha Konasana'],
+        related_next_slugs: [],
+        counterpose_slugs: [],
+        transitions_in: [],
+        transitions_out: []
+      },
+      {
+        id: 'standing-forward-fold',
+        slug: 'standing-forward-fold',
+        name: 'Standing Forward Fold',
+        sanskrit: 'Uttanāsana',
+        category: 'standing',
+        level: 'beginner',
+        plane: 'sagittal',
+        thumbnail_url: '/images/poses/standing-forward-fold.jpg',
+        icon: '🧎',
+        meta: {},
+        cues: ['Hold for 60 seconds', 'Focus on breathing', 'Maintain alignment'],
+        benefits: ['Targets Hamstrings, Spine', '2/5 intensity level', 'Root chakra activation'],
+        created_at: new Date().toISOString(),
+        hold_time: 60,
+        image_url: '/images/poses/standing-forward-fold.jpg',
+        instructions: 'Practice Standing Forward Fold (Uttanāsana) focusing on Hamstrings, Spine.',
+        modifications: 'Can be held longer for deeper stretch',
+        contraindications: 'Generally safe for most practitioners',
+        anatomical_focus: ['Hamstrings', 'Spine'],
+        other_side_slug: null,
+        intensity: 2,
+        sort_order: 2,
+        family: 'standing',
+        sides: 'both',
+        aka: ['Uttanāsana'],
+        related_next_slugs: [],
+        counterpose_slugs: [],
+        transitions_in: [],
+        transitions_out: []
+      },
+      {
+        id: 'downward-facing-dog',
+        slug: 'downward-facing-dog',
+        name: 'Downward Facing Dog',
+        sanskrit: 'Adho Mukha Svanasana',
+        category: 'inversion',
+        level: 'intermediate',
+        plane: 'sagittal',
+        thumbnail_url: '/images/poses/downward-facing-dog.jpg',
+        icon: '🐶',
+        meta: {},
+        cues: ['Hold for 45 seconds', 'Focus on breathing', 'Maintain alignment'],
+        benefits: ['Targets Shoulders, Hamstrings, Spine', '3/5 intensity level', 'Heart chakra activation'],
+        created_at: new Date().toISOString(),
+        hold_time: 45,
+        image_url: '/images/poses/downward-facing-dog.jpg',
+        instructions: 'Practice Downward Facing Dog (Adho Mukha Svanasana) focusing on Shoulders, Hamstrings, Spine.',
+        modifications: 'Use props for support if needed',
+        contraindications: 'Generally safe for most practitioners',
+        anatomical_focus: ['Shoulders', 'Hamstrings', 'Spine'],
+        other_side_slug: null,
+        intensity: 3,
+        sort_order: 3,
+        family: 'inversion',
+        sides: 'both',
+        aka: ['Adho Mukha Svanasana'],
+        related_next_slugs: [],
+        counterpose_slugs: [],
+        transitions_in: [],
+        transitions_out: []
+      },
+      {
+        id: 'warrior-1-right',
+        slug: 'warrior-1-right',
+        name: 'Warrior I (Right)',
+        sanskrit: 'Virabhadrāsana I',
+        category: 'standing',
+        level: 'intermediate',
+        plane: 'sagittal',
+        thumbnail_url: '/images/poses/warrior-1-right.jpg',
+        icon: '🛡️',
+        meta: {},
+        cues: ['Hold for 45 seconds', 'Focus on breathing', 'Maintain alignment'],
+        benefits: ['Targets Hips, Quads, Core', '3/5 intensity level', 'Solar Plexus chakra activation'],
+        created_at: new Date().toISOString(),
+        hold_time: 45,
+        image_url: '/images/poses/warrior-1-right.jpg',
+        instructions: 'Practice Warrior I (Right) (Virabhadrāsana I) focusing on Hips, Quads, Core.',
+        modifications: 'Use props for support if needed',
+        contraindications: 'Generally safe for most practitioners',
+        anatomical_focus: ['Hips', 'Quads', 'Core'],
+        other_side_slug: null,
+        intensity: 3,
+        sort_order: 4,
+        family: 'standing',
+        sides: 'both',
+        aka: ['Virabhadrāsana I'],
+        related_next_slugs: [],
+        counterpose_slugs: [],
+        transitions_in: [],
+        transitions_out: []
+      }
+    ];
     
-    // Convert POSES to DatabasePose format (with id field)
-    const posesWithIds = POSES.map((pose, index) => ({
-      ...pose,
-      id: pose.id || `pose-original-${index + 1}` // Use existing id or generate one
-    }));
-    
-    // Convert EXTENDED_POSES to match POSES format (add id field)
-    const extendedPosesWithIds = EXTENDED_POSES.map((pose, index) => ({
-      ...pose,
-      id: `pose-extended-${index + 1}` // Generate unique id for extended poses
-    }));
-    
-    // Combine both pose collections
-    const allPoses = [...posesWithIds, ...extendedPosesWithIds];
-    
-    // Convert to DatabasePose format 
-    const samplePoses: DatabasePose[] = allPoses.map((pose, index) => ({
-      id: pose.id || `pose-${index + 1}`,
-      slug: pose.name.toLowerCase().replace(/[^a-z0-9]+/g, '-'),
-      name: pose.name,
-      sanskrit: pose.sanskrit,
-      category: pose.family.toLowerCase(),
-      level: pose.intensity <= 2 ? 'beginner' : pose.intensity >= 4 ? 'advanced' : 'intermediate',
-      plane: pose.plane.toLowerCase(),
-      thumbnail_url: `/images/poses/${pose.name.toLowerCase().replace(/[^a-z0-9]+/g, '-')}.jpg`,
-      icon: pose.icon,
-      meta: {},
-      cues: [`Hold for ${pose.defaultSeconds} seconds`, 'Focus on breathing', 'Maintain alignment'],
-      benefits: [`Targets ${pose.groups.join(', ')}`, `${pose.intensity}/5 intensity level`, `${pose.chakra} chakra activation`],
-      created_at: new Date().toISOString(),
-      hold_time: pose.defaultSeconds,
-      image_url: `/images/poses/${pose.name.toLowerCase().replace(/[^a-z0-9]+/g, '-')}.jpg`,
-      instructions: `Practice ${pose.name} (${pose.sanskrit}) focusing on ${pose.groups.join(', ')}.`,
-      modifications: pose.intensity >= 3 ? 'Use props for support if needed' : 'Can be held longer for deeper stretch',
-      contraindications: pose.intensity >= 4 ? 'Avoid if you have injuries in target areas' : 'Generally safe for most practitioners',
-      anatomical_focus: pose.groups,
-      other_side_slug: null,
-      intensity: pose.intensity,
-      sort_order: index + 1,
-      family: pose.family.toLowerCase(),
-      sides: 'both',
-      aka: [pose.sanskrit],
-      related_next_slugs: [],
-      counterpose_slugs: [],
-      transitions_in: [],
-      transitions_out: []
-    }));
-    
-    console.log(`Returning ${samplePoses.length} poses converted from yoga-data.ts (${POSES.length} original + ${EXTENDED_POSES.length} extended)`);
+    console.log(`Returning ${samplePoses.length} static sample poses`);
     return samplePoses;
   } catch (error) {
     console.error('Error in getPosesFromDatabase:', error);
