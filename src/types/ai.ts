@@ -141,3 +141,50 @@ export interface BreathingPattern {
   hold2?: number;
   description: string;
 }
+
+// Enhanced recommendation types
+export interface MeditationRecommendation {
+  id: string;
+  title: string;
+  description: string;
+  duration: number;
+  style: string;
+  confidence: number;
+  reasoning: string;
+  tags: string[];
+  timeOfDay?: 'morning' | 'afternoon' | 'evening' | 'night';
+  breathingPattern?: BreathingPattern;
+  personalizedFor?: {
+    mood?: string;
+    energyLevel?: 'low' | 'medium' | 'high';
+    stressLevel?: 'low' | 'medium' | 'high';
+    experience?: 'beginner' | 'intermediate' | 'advanced';
+  };
+}
+
+export interface UserMeditationProfile {
+  preferredDurations: number[];
+  favoriteStyles: string[];
+  typicalMeditationTimes: string[];
+  completionRate: number;
+  averageRating: number;
+  recentMoods: string[];
+  meditationGoals: string[];
+  lastRecommendationDate?: string;
+}
+
+export interface RecommendationContext {
+  timeOfDay: string;
+  dayOfWeek: string;
+  userProfile: UserMeditationProfile;
+  recentSessions: Array<{
+    style: string;
+    duration: number;
+    completed: boolean;
+    rating?: number;
+    timestamp: string;
+    mood?: string;
+  }>;
+  currentMood?: string;
+  availableTime?: number;
+}
