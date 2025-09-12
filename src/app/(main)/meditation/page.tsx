@@ -3,10 +3,11 @@
 import React, { useState, useEffect } from 'react';
 import { useLocalStorage } from '@/hooks/useLocalStorage';
 import { generateMeditationScript } from '@/lib/api/ai';
-import { MeditationInput, MeditationScript } from '@/types/ai';
+import { MeditationInput, MeditationScript, MeditationRecommendation } from '@/types/ai';
 import { MoodInput } from '@/components/meditation/MoodInput';
 import { GuidedMeditationPlayer } from '@/components/meditation/GuidedMeditationPlayer';
 import { BreathingOrb } from '@/components/meditation/BreathingOrb';
+import { MeditationRecommendations } from '@/components/meditation/MeditationRecommendations';
 
 // Types for meditation features
 interface MeditationSession {
@@ -180,6 +181,28 @@ export default function MeditationPage() {
     setSelectedSession(null);
   };
 
+  const handleRecommendationSelect = (recommendation: MeditationRecommendation) => {
+    // Convert recommendation to a meditation input for AI generation
+    const meditationInput: MeditationInput = {
+      mood: recommendation.personalizedFor?.mood || 'neutral',
+      goal: recommendation.description,
+      duration: recommendation.duration,
+      experience: recommendation.personalizedFor?.experience || 'beginner',
+      style: recommendation.style as any,
+      timeOfDay: recommendation.timeOfDay || getTimeOfDay()
+    };
+    
+    handleAIGenerate(meditationInput);
+  };
+
+  const getTimeOfDay = (): 'morning' | 'afternoon' | 'evening' | 'night' => {
+    const hour = new Date().getHours();
+    if (hour < 12) return 'morning';
+    if (hour < 17) return 'afternoon';
+    if (hour < 21) return 'evening';
+    return 'night';
+  };
+
   const startCustomTimer = () => {
     const customSession: MeditationSession = {
       id: 'custom-timer',
@@ -272,6 +295,43 @@ export default function MeditationPage() {
           <div className="mt-4 text-center">
             <div className="text-sm font-medium text-gray-800">
               {sessionStats.lastSession ? `Last session: ${sessionStats.lastSession}` : 'Ready for your first session!'}
+            </div>
+          </div>
+        </div>
+
+        {/* AI-Powered Recommendations Section */}
+        <div className="mb-8">
+          <div className="bg-white/70 backdrop-blur-sm rounded-lg p-6 shadow-lg">
+            <h2 className="text-xl font-semibold mb-4">Recommended for You</h2>
+            <p className="text-sm text-gray-600 mb-6">☀️ Good afternoon! Perfect time for a mindful break:</p>
+            <div className="space-y-4">
+              <div className="border border-gray-200 rounded-lg p-4 hover:shadow-md transition-shadow cursor-pointer hover:bg-gray-50">
+                <div className="flex justify-between items-start mb-2">
+                  <h3 className="font-semibold text-lg">Stress Relief Breathing</h3>
+                  <div className="flex items-center gap-2">
+                    <span className="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded">12 min</span>
+                    <span className="text-xs text-yellow-600">70% match</span>
+                  </div>
+                </div>
+                <p className="text-gray-600 text-sm mb-3">Calm your mind with focused breathing</p>
+                <div className="flex justify-between items-center">
+                  <div className="flex flex-wrap gap-1">
+                    <span className="bg-gray-100 text-gray-700 text-xs px-2 py-1 rounded">stress-relief</span>
+                    <span className="bg-gray-100 text-gray-700 text-xs px-2 py-1 rounded">breathing</span>
+                  </div>
+                  <button className="bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-md text-sm transition-colors">
+                    Start Session
+                  </button>
+                </div>
+                <div className="mt-3 pt-3 border-t border-gray-100">
+                  <p className="text-xs text-gray-500">
+                    💡 <strong>Why this?</strong> A reliable practice for any time of day
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div className="mt-6 text-center">
+              <button className="text-blue-600 hover:text-blue-800 text-sm">✨ Get more recommendations</button>
             </div>
           </div>
         </div>
