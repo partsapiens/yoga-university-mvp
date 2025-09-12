@@ -92,50 +92,8 @@
 }
 
 @layer components {
-  /* Unified Typography System */
-  .text-large-title {
-    @apply text-large-title font-bold tracking-tight;
-  }
-  
-  .text-title1 {
-    @apply text-title1 font-bold tracking-tight;
-  }
-  
-  .text-title2 {
-    @apply text-title2 font-bold tracking-tight;
-  }
-  
-  .text-title3 {
-    @apply text-title3 font-semibold tracking-tight;
-  }
-  
-  .text-headline {
-    @apply text-headline font-semibold tracking-tight;
-  }
-  
-  .text-body {
-    @apply text-body font-normal;
-  }
-  
-  .text-callout {
-    @apply text-callout font-normal tracking-tight;
-  }
-  
-  .text-subhead {
-    @apply text-subhead font-normal tracking-tight;
-  }
-  
-  .text-footnote {
-    @apply text-footnote font-normal tracking-tight;
-  }
-  
-  .text-caption1 {
-    @apply text-caption1 font-normal;
-  }
-  
-  .text-caption2 {
-    @apply text-caption2 font-normal tracking-wide;
-  }
+  /* Note: Typography sizes are defined in tailwind.config.ts with font-weight and letter-spacing */
+  /* These utility classes can be used directly: text-large-title, text-title1, text-title2, etc. */
 
   /* Unified Button System */
   .btn {
