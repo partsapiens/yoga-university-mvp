@@ -370,19 +370,6 @@ export default function MeditationPage() {
               {sessionStats.lastSession ? `Last session: ${sessionStats.lastSession}` : 'Ready for your first session!'}
             </div>
           </div>
-          
-          {/* Test Progress Button - for testing purposes */}
-          <div className="mt-4 text-center">
-            <button
-              onClick={() => {
-                console.log('Testing meditation progress tracking');
-                handleSessionComplete();
-              }}
-              className="px-4 py-2 bg-gray-600 text-white rounded-md hover:bg-gray-700 text-sm"
-            >
-              🧪 Test Progress (Debug)
-            </button>
-          </div>
         </div>
 
         {/* ✨-Powered Recommendations Section */}
