@@ -1,9 +1,0 @@
-# FEET + LEGSPELVIS + SPINEARMS + HEADMUSCLESJOINTACTIONS
-
-Cobra PoseBhujangasana[ buhooj-jung-GA-suh-nuh ]INHALE
-// TRANSITION“Inhale High Plank, Exhale slowly lower down tothe mat,Place yourhands lightly under yourshoulders...”To exit pose,“Inhale, Exhale lower down,Bring yourleft ear to the mat...”BPCWhat setup cues will mov e your students into the pose? In what order? What deepening cues will help their pose? Where do you feel this pose? How does it benefit you?
-FEET + LEGSPELVIS + SPINEARMS + HEADMUSCLESJOINTACTIONS
-
-
----
-[← Prev](/pages/page-146.md) &nbsp; [Top](/index.md) &nbsp; [Next →](/pages/page-148.md)

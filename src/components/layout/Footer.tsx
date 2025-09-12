@@ -75,7 +75,6 @@ export const Footer = () => {
     { name: 'Pose Library', href: '/poses' },
     { name: 'Create Flow', href: '/flows/create' },
     { name: 'Meditation', href: '/meditation' },
-    { name: 'Manual', href: '/manual' },
     { name: 'About', href: '/about' },
     { name: 'Pricing', href: '/pricing' },
     { name: 'Contact', href: '/contact' }

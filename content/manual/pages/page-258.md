@@ -1,9 +1,0 @@
-# Asana
-
-6 .12 The cultivation of a single point of focus requires patience, persistence and compassion towardoneself.DHYANAOnce the body and mind have been prepared, weenter the seventh limb, dhyana, or meditation. In a true meditative state, the meditator is not aware of the actual act of meditating. They are onlyaware of the meditation object itself (examples:sound, mantra, image, intention, open awareness).In concentration practice, the practitioner isaware of the choice to focus, again and again, on the object. The ability to meditate first requiresthat one is able to concentrate. Meditation isusually described as a graceful practice, whereas concentration is described as an effortful practice. You can’t sit down and force yourself to meditate, but you can sit down and practice concentration, which will lead to longer and longer moments ofmeditation.SAMADHISamadhi is the experience of enlightenment and non-duality; the experience of yoga. The wordsamadhi is made up of two Sanskrit words:“sama” which means “even” or “same” and “dhi” which means intellect. Samadhi refers to astate of complete evenness or equilibrium of the mind. It is what Patanjali describes in the Yoga Sutra as the cessation of the fluctuations ofthe mind. In samadhi, you no longer experience yourself as separate from everything else. There is no separation between the individual and the universal, oneness is realized.DharanaDhyana
-Asana
-YamasNiyamasPranayamaPratyaharaSamadhiWHAT IS YOGA?Yoga comes from the root ‘yuj’ meaning yoke, to join or union. Yoga is skill in action. Yoga is the realization ofoneness of being; the experience that we are all one. Yoga is the experience of lacking nothing.“Yoga is the cessation of the fluctuations of the mind.”- Patanjali’s Yoga Sutra“Yoga is clear, discerning, dynamic participation in one’s life.” - Bhagavad Gita
-
-
----
-[← Prev](/pages/page-257.md) &nbsp; [Top](/index.md) &nbsp; [Next →](/pages/page-259.md)

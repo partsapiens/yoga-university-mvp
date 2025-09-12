@@ -93,7 +93,7 @@ const generateSampleData = () => {
 
     // Page views
     if (Math.random() < 0.4) {
-      const pages = ['/meditation', '/poses', '/flows/create', '/manual', '/'];
+      const pages = ['/meditation', '/poses', '/flows/create', '/'];
       const page = pages[Math.floor(Math.random() * pages.length)];
       analyticsStore.push({
         action: 'page_view',

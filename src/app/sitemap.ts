@@ -9,7 +9,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     '/dashboard',
     '/poses',
     '/flows/create',
-    '/manual',
     '/meditation',
     '/legal',
     '/legal/imprint',
@@ -18,7 +17,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
   ];
 
   // TODO: Add dynamic pages from database
-  // - Manual pages from /manual/[slug]
   // - User generated content (if public)
   
   const sitemap: MetadataRoute.Sitemap = staticPages.map((path) => ({

@@ -1,7 +1,0 @@
-# Page 30
-
-2 .9 © COREPOWER YOGA Cue EfficiencyGuide for cue approach and cueing in the momentTipExampleKnow what the pose looks likeWarrior II Know what pose you are coming from From Exhale Low LungeUse the Basic FormulaInhale Warrior IISetup the pose from the ground-upPlace your back heel downLift your torso up and face the side of the roomBreathe here (Disengage the breath when landing on an Inhale)Reach our arms out to the front and backLook at your students and offer deepening cues, support alignment or ways to personalize Pivot your back foot inwardsTrack your front knee to align with your front toesMuscle Action Cue Shorten your stance to support your balanceTheme Action CueKindly soften your shoulders away from your earsHow can you practice kindness in your poses today? Kindness àYama of Ahimsa (non-harming)Re-engage BreathInhale, Exhale Extended Side Angle
-
-
----
-[← Prev](/pages/page-029.md) &nbsp; [Top](/index.md) &nbsp; [Next →](/pages/page-031.md)

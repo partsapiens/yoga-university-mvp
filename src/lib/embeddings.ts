@@ -141,9 +141,9 @@ export function createPoseSearchText(pose: any): string {
 }
 
 /**
- * Create searchable text content from manual data  
+ * Create searchable text content from content data  
  */
-export function createManualSearchText(item: any): string {
+export function createContentSearchText(item: any): string {
   const parts = [
     item.title || '',
     item.summary || '',

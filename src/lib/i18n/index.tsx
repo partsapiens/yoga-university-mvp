@@ -36,7 +36,6 @@ const translations: Record<SupportedLanguage, Translations> = {
       dashboard: 'Dashboard',
       poses: 'Pose Library',
       create: 'Create Flow',
-      manual: 'Manual',
       meditation: 'Meditation',
     },
     common: {
@@ -61,7 +60,6 @@ const translations: Record<SupportedLanguage, Translations> = {
       dashboard: 'Dashboard',
       poses: 'Posen-Bibliothek',
       create: 'Flow Erstellen',
-      manual: 'Handbuch',
       meditation: 'Meditation',
     },
     common: {
@@ -86,7 +84,6 @@ const translations: Record<SupportedLanguage, Translations> = {
       dashboard: 'Tablou de Bord',
       poses: 'Biblioteca de Pozitii',
       create: 'Creaza Flow',
-      manual: 'Manual',
       meditation: 'Meditatie',
     },
     common: {
@@ -111,7 +108,6 @@ const translations: Record<SupportedLanguage, Translations> = {
       dashboard: 'Панель',
       poses: 'Библиотека Поз',
       create: 'Создать Поток',
-      manual: 'Руководство',
       meditation: 'Медитация',
     },
     common: {

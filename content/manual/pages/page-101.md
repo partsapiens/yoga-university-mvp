@@ -1,8 +1,0 @@
-# Page 101
-
-3. 5 0© COREPOWER YOGA Rest your arms and legs, belly upActivate your core to prepare for deep twists and balancing Prepare for all inversionsConnect with your students face to face
-THE COREThe 360-Core refers to the front, back, sides and deep layers of the torso. Some of the muscles included are the three layers of the abdominal muscles: the rectus abs, the obliques, the transverse abs, and the “good postures” muscles in the back: the erector spinae.This series is a reminder that the core gives great stability to the spine in daily life and in yoga postures.
-
-
----
-[← Prev](/pages/page-100.md) &nbsp; [Top](/index.md) &nbsp; [Next →](/pages/page-102.md)
