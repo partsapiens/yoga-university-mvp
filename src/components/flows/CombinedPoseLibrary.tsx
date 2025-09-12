@@ -133,7 +133,7 @@ export function CombinedPoseLibrary({ onAddPose, className = '' }: CombinedPoseL
             }`}
           >
             <Sparkles size={16} />
-            AI Suggestions
+            ✨ Suggestions
           </button>
           <button
             onClick={() => setActiveTab('search')}
@@ -284,7 +284,7 @@ export function CombinedPoseLibrary({ onAddPose, className = '' }: CombinedPoseL
       {/* Content Area */}
       <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
         {activeTab === 'suggestions' ? (
-          // AI Suggestions - Show all poses for now (in a real app, this would be AI-generated)
+          // ✨ Suggestions - Show all poses for now (in a real app, this would be ✨-generated)
           POSES.slice(0, 10).map((pose) => (
             <button
               key={pose.id}
@@ -362,7 +362,7 @@ export function CombinedPoseLibrary({ onAddPose, className = '' }: CombinedPoseL
         <div className="flex items-center justify-between text-xs text-muted-foreground">
           <div>
             {activeTab === 'suggestions' 
-              ? 'AI-curated poses based on your settings' 
+              ? '✨-curated poses based on your settings' 
               : `${filteredAndSortedPoses.length} poses available`
             }
           </div>

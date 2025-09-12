@@ -2,7 +2,7 @@ import { MetadataRoute } from 'next';
 
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: 'Yoga Flow University - AI-Powered Yoga Platform',
+    name: 'Yoga Flow University - ✨-Powered Yoga Platform',
     short_name: 'Yoga Flow',
     description: 'Create personalized yoga flows with AI assistance, track your practice, and grow your teaching skills.',
     start_url: '/',

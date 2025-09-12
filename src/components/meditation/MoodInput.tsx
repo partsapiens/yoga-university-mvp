@@ -125,7 +125,7 @@ export const MoodInput: React.FC<MoodInputProps> = ({ onGenerate, isGenerating =
     }
   };
 
-  // Enhanced AI-powered submission with sentiment analysis
+  // Enhanced ✨-powered submission with sentiment analysis
   const handleEnhancedSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     

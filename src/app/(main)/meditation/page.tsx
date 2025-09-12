@@ -67,7 +67,17 @@ export default function MeditationPage() {
   const [timeRemaining, setTimeRemaining] = useState(0);
   const [customDuration, setCustomDuration] = useState(10);
   
-  // AI-guided meditation state
+  // Wearables integration state
+  const [connectedWearable, setConnectedWearable] = useState<'apple' | 'android' | 'other' | null>(null);
+  const [bioFeedback, setBioFeedback] = useState({
+    bpm: 72,
+    hrv: 35,
+    breaths: 12,
+    stress: 25
+  });
+  const [showWearableOptions, setShowWearableOptions] = useState(false);
+  
+  // ✨-guided meditation state
   const [showMoodInput, setShowMoodInput] = useState(false);
   const [isGenerating, setIsGenerating] = useState(false);
   const [generatedScript, setGeneratedScript] = useState<MeditationScript | null>(null);
@@ -240,6 +250,43 @@ export default function MeditationPage() {
     }
   };
 
+  // Wearables functions
+  const connectWearable = (type: 'apple' | 'android' | 'other') => {
+    setConnectedWearable(type);
+    setShowWearableOptions(false);
+    
+    // Simulate connection success
+    console.log(`Connected to ${type} wearable`);
+    
+    // Start simulated biofeedback
+    startBioFeedbackSimulation();
+  };
+
+  const disconnectWearable = () => {
+    setConnectedWearable(null);
+    setBioFeedback({ bpm: 72, hrv: 35, breaths: 12, stress: 25 });
+  };
+
+  const startBioFeedbackSimulation = () => {
+    // Simulate real-time biofeedback data updates
+    const interval = setInterval(() => {
+      if (!connectedWearable) {
+        clearInterval(interval);
+        return;
+      }
+      
+      setBioFeedback(prev => ({
+        bpm: Math.max(60, Math.min(100, prev.bpm + (Math.random() - 0.5) * 4)),
+        hrv: Math.max(20, Math.min(60, prev.hrv + (Math.random() - 0.5) * 6)),
+        breaths: Math.max(8, Math.min(20, prev.breaths + (Math.random() - 0.5) * 2)),
+        stress: Math.max(0, Math.min(100, prev.stress + (Math.random() - 0.5) * 8))
+      }));
+    }, 2000);
+
+    // Clean up interval after 5 minutes or when component unmounts
+    setTimeout(() => clearInterval(interval), 300000);
+  };
+
   // Show AI meditation player if generated
   if (showPlayer && generatedScript) {
     return (
@@ -251,7 +298,7 @@ export default function MeditationPage() {
     );
   }
 
-  // Show mood input for AI-guided meditation
+  // Show mood input for ✨-guided meditation
   if (showMoodInput) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-purple-50 via-blue-50 to-indigo-50 py-8">
@@ -263,7 +310,7 @@ export default function MeditationPage() {
             >
               ← Back to Meditation Center
             </button>
-            <h1 className="text-4xl font-bold text-gray-900 mb-4">AI-Guided Meditation</h1>
+            <h1 className="text-4xl font-bold text-gray-900 mb-4">✨-Guided Meditation</h1>
             <p className="text-lg text-gray-600 max-w-2xl mx-auto">
               Tell me how you're feeling, and I'll create a personalized meditation just for you.
             </p>
@@ -310,7 +357,7 @@ export default function MeditationPage() {
           </div>
         </div>
 
-        {/* AI-Powered Recommendations Section */}
+        {/* ✨-Powered Recommendations Section */}
         <div className="mb-8">
           <div className="bg-white/70 backdrop-blur-sm rounded-lg p-6 shadow-lg">
             <h2 className="text-xl font-semibold mb-4">Recommended for You</h2>
@@ -479,6 +526,92 @@ export default function MeditationPage() {
                     ⏹ Reset
                   </button>
                 </div>
+
+                {/* Wearables Bio Feedback Section */}
+                <div className="mt-8 border-t pt-6">
+                  <h3 className="text-lg font-semibold mb-4 text-center">Bio Feedback</h3>
+                  
+                  {!connectedWearable ? (
+                    <div className="text-center">
+                      <p className="text-gray-600 mb-4 text-sm">
+                        Connect your wearable device to track your biometric data during meditation
+                      </p>
+                      <button
+                        onClick={() => setShowWearableOptions(!showWearableOptions)}
+                        className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm transition-colors"
+                      >
+                        Connect Wearable Device
+                      </button>
+                      
+                      {showWearableOptions && (
+                        <div className="mt-4 space-y-2">
+                          <div className="flex justify-center gap-3">
+                            <button
+                              onClick={() => connectWearable('apple')}
+                              className="flex items-center gap-2 bg-white border border-gray-300 hover:bg-gray-50 px-4 py-2 rounded-lg text-sm transition-colors"
+                            >
+                              🍎 Apple Watch
+                            </button>
+                            <button
+                              onClick={() => connectWearable('android')}
+                              className="flex items-center gap-2 bg-white border border-gray-300 hover:bg-gray-50 px-4 py-2 rounded-lg text-sm transition-colors"
+                            >
+                              🤖 Android Wear
+                            </button>
+                            <button
+                              onClick={() => connectWearable('other')}
+                              className="flex items-center gap-2 bg-white border border-gray-300 hover:bg-gray-50 px-4 py-2 rounded-lg text-sm transition-colors"
+                            >
+                              📱 Other Device
+                            </button>
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                  ) : (
+                    <div>
+                      <div className="flex items-center justify-between mb-4">
+                        <div className="flex items-center gap-2 text-sm text-green-600">
+                          <span className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
+                          Connected to {connectedWearable === 'apple' ? 'Apple Watch' : 
+                                       connectedWearable === 'android' ? 'Android Wear' : 'Other Device'}
+                        </div>
+                        <button
+                          onClick={disconnectWearable}
+                          className="text-gray-500 hover:text-gray-700 text-sm"
+                        >
+                          Disconnect
+                        </button>
+                      </div>
+                      
+                      {/* Bio Feedback Display */}
+                      <div className="grid grid-cols-2 gap-4">
+                        <div className="bg-red-50 p-3 rounded-lg text-center">
+                          <div className="text-2xl font-bold text-red-600">{Math.round(bioFeedback.bpm)}</div>
+                          <div className="text-xs text-gray-600">BPM</div>
+                        </div>
+                        <div className="bg-blue-50 p-3 rounded-lg text-center">
+                          <div className="text-2xl font-bold text-blue-600">{Math.round(bioFeedback.hrv)}</div>
+                          <div className="text-xs text-gray-600">HRV</div>
+                        </div>
+                        <div className="bg-green-50 p-3 rounded-lg text-center">
+                          <div className="text-2xl font-bold text-green-600">{Math.round(bioFeedback.breaths)}</div>
+                          <div className="text-xs text-gray-600">Breaths/min</div>
+                        </div>
+                        <div className="bg-orange-50 p-3 rounded-lg text-center">
+                          <div className="text-2xl font-bold text-orange-600">{Math.round(bioFeedback.stress)}%</div>
+                          <div className="text-xs text-gray-600">Stress</div>
+                        </div>
+                      </div>
+                      
+                      <div className="mt-3 text-center">
+                        <div className="text-xs text-gray-500">
+                          Real-time biometric feedback during your meditation practice
+                        </div>
+                      </div>
+                    </div>
+                  )}
+                </div>
               </div>
             ) : (
               <div className="text-center">
@@ -494,6 +627,85 @@ export default function MeditationPage() {
                       description: 'Start with natural breathing rhythm'
                     }}
                   />
+                </div>
+                
+                {/* Wearables Section for default state */}
+                <div className="mb-6 border-t pt-6">
+                  <h3 className="text-lg font-semibold mb-4 text-center">Bio Feedback</h3>
+                  
+                  {!connectedWearable ? (
+                    <div className="text-center">
+                      <p className="text-gray-500 mb-4 text-sm">
+                        Connect your wearable to track biometric data
+                      </p>
+                      <button
+                        onClick={() => setShowWearableOptions(!showWearableOptions)}
+                        className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm transition-colors"
+                      >
+                        Connect Wearable Device
+                      </button>
+                      
+                      {showWearableOptions && (
+                        <div className="mt-4 space-y-2">
+                          <div className="flex justify-center gap-3">
+                            <button
+                              onClick={() => connectWearable('apple')}
+                              className="flex items-center gap-2 bg-white border border-gray-300 hover:bg-gray-50 px-4 py-2 rounded-lg text-sm transition-colors"
+                            >
+                              🍎 Apple Watch
+                            </button>
+                            <button
+                              onClick={() => connectWearable('android')}
+                              className="flex items-center gap-2 bg-white border border-gray-300 hover:bg-gray-50 px-4 py-2 rounded-lg text-sm transition-colors"
+                            >
+                              🤖 Android Wear
+                            </button>
+                            <button
+                              onClick={() => connectWearable('other')}
+                              className="flex items-center gap-2 bg-white border border-gray-300 hover:bg-gray-50 px-4 py-2 rounded-lg text-sm transition-colors"
+                            >
+                              📱 Other Device
+                            </button>
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                  ) : (
+                    <div>
+                      <div className="flex items-center justify-between mb-4">
+                        <div className="flex items-center gap-2 text-sm text-green-600">
+                          <span className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
+                          Connected to {connectedWearable === 'apple' ? 'Apple Watch' : 
+                                       connectedWearable === 'android' ? 'Android Wear' : 'Other Device'}
+                        </div>
+                        <button
+                          onClick={disconnectWearable}
+                          className="text-gray-500 hover:text-gray-700 text-sm"
+                        >
+                          Disconnect
+                        </button>
+                      </div>
+                      
+                      <div className="grid grid-cols-2 gap-3">
+                        <div className="bg-red-50 p-3 rounded-lg text-center">
+                          <div className="text-xl font-bold text-red-600">{Math.round(bioFeedback.bpm)}</div>
+                          <div className="text-xs text-gray-600">BPM</div>
+                        </div>
+                        <div className="bg-blue-50 p-3 rounded-lg text-center">
+                          <div className="text-xl font-bold text-blue-600">{Math.round(bioFeedback.hrv)}</div>
+                          <div className="text-xs text-gray-600">HRV</div>
+                        </div>
+                        <div className="bg-green-50 p-3 rounded-lg text-center">
+                          <div className="text-xl font-bold text-green-600">{Math.round(bioFeedback.breaths)}</div>
+                          <div className="text-xs text-gray-600">Breaths/min</div>
+                        </div>
+                        <div className="bg-orange-50 p-3 rounded-lg text-center">
+                          <div className="text-xl font-bold text-orange-600">{Math.round(bioFeedback.stress)}%</div>
+                          <div className="text-xs text-gray-600">Stress</div>
+                        </div>
+                      </div>
+                    </div>
+                  )}
                 </div>
                 <div className="text-gray-500 space-y-2">
                   <p className="text-lg font-medium">Ready to Begin Your Journey</p>
