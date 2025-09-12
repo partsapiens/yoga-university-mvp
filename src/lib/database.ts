@@ -49,97 +49,61 @@ function transformDatabasePoseToLegacy(dbPose: DatabasePose): Pose {
 
 export const getPosesFromDatabase = async (): Promise<DatabasePose[]> => {
   try {
-    console.log('Attempting to fetch poses from Supabase...');
+    console.log('Using fallback pose data for development...');
     
-    // Test connection first
-    const connectionTest = await testSupabaseConnection();
+    // Import the existing POSES data and convert it to DatabasePose format
+    const { POSES, EXTENDED_POSES } = await import('./yoga-data');
     
-    if (!connectionTest) {
-      console.log('Supabase connection test failed, falling back to comprehensive sample data');
-      
-      // Import the existing POSES data and convert it to DatabasePose format
-      const { POSES, EXTENDED_POSES } = await import('./yoga-data');
-      
-      // Convert POSES to DatabasePose format (with id field)
-      const posesWithIds = POSES.map((pose, index) => ({
-        ...pose,
-        id: pose.id || `pose-original-${index + 1}` // Use existing id or generate one
-      }));
-      
-      // Convert EXTENDED_POSES to match POSES format (add id field)
-      const extendedPosesWithIds = EXTENDED_POSES.map((pose, index) => ({
-        ...pose,
-        id: `pose-extended-${index + 1}` // Generate unique id for extended poses
-      }));
-      
-      // Combine both pose collections
-      const allPoses = [...posesWithIds, ...extendedPosesWithIds];
-      
-      // Convert to DatabasePose format 
-      const samplePoses: DatabasePose[] = allPoses.map((pose, index) => ({
-        id: pose.id || `pose-${index + 1}`,
-        slug: pose.name.toLowerCase().replace(/[^a-z0-9]+/g, '-'),
-        name: pose.name,
-        sanskrit: pose.sanskrit,
-        category: pose.family.toLowerCase(),
-        level: pose.intensity <= 2 ? 'beginner' : pose.intensity >= 4 ? 'advanced' : 'intermediate',
-        plane: pose.plane.toLowerCase(),
-        thumbnail_url: `/images/poses/${pose.name.toLowerCase().replace(/[^a-z0-9]+/g, '-')}.jpg`,
-        icon: pose.icon,
-        meta: {},
-        cues: [`Hold for ${pose.defaultSeconds} seconds`, 'Focus on breathing', 'Maintain alignment'],
-        benefits: [`Targets ${pose.groups.join(', ')}`, `${pose.intensity}/5 intensity level`, `${pose.chakra} chakra activation`],
-        created_at: new Date().toISOString(),
-        hold_time: pose.defaultSeconds,
-        image_url: `/images/poses/${pose.name.toLowerCase().replace(/[^a-z0-9]+/g, '-')}.jpg`,
-        instructions: `Practice ${pose.name} (${pose.sanskrit}) focusing on ${pose.groups.join(', ')}.`,
-        modifications: pose.intensity >= 3 ? 'Use props for support if needed' : 'Can be held longer for deeper stretch',
-        contraindications: pose.intensity >= 4 ? 'Avoid if you have injuries in target areas' : 'Generally safe for most practitioners',
-        anatomical_focus: pose.groups,
-        other_side_slug: null,
-        intensity: pose.intensity,
-        sort_order: index + 1,
-        family: pose.family.toLowerCase(),
-        sides: 'both',
-        aka: [pose.sanskrit],
-        related_next_slugs: [],
-        counterpose_slugs: [],
-        transitions_in: [],
-        transitions_out: []
-      }));
-      
-      console.log(`Returning ${samplePoses.length} poses converted from yoga-data.ts (${POSES.length} original + ${EXTENDED_POSES.length} extended)`);
-      return samplePoses;
-    }
+    // Convert POSES to DatabasePose format (with id field)
+    const posesWithIds = POSES.map((pose, index) => ({
+      ...pose,
+      id: pose.id || `pose-original-${index + 1}` // Use existing id or generate one
+    }));
     
-    // Query all poses from the table (no is_published filter since it's not in schema)
-    const { data, error } = await supabase
-      .from('poses')
-      .select('*')
-      .order('sort_order', { ascending: true, nullsFirst: false })
-      .order('name');
+    // Convert EXTENDED_POSES to match POSES format (add id field)
+    const extendedPosesWithIds = EXTENDED_POSES.map((pose, index) => ({
+      ...pose,
+      id: `pose-extended-${index + 1}` // Generate unique id for extended poses
+    }));
     
-    if (error) {
-      console.error('Error fetching poses from Supabase:', {
-        message: error.message,
-        details: error.details,
-        hint: error.hint,
-        code: error.code
-      });
-      return [];
-    }
+    // Combine both pose collections
+    const allPoses = [...posesWithIds, ...extendedPosesWithIds];
     
-    console.log(`Successfully fetched ${data?.length || 0} poses from Supabase`);
-    if (data && data.length > 0) {
-      console.log('Sample pose structure:', JSON.stringify(data[0], null, 2));
-    } else {
-      console.warn('No poses found in database. Check if:');
-      console.warn('1. The poses table exists and has data');
-      console.warn('2. The database connection is working properly');
-      console.warn('3. The table schema matches expectations');
-    }
+    // Convert to DatabasePose format 
+    const samplePoses: DatabasePose[] = allPoses.map((pose, index) => ({
+      id: pose.id || `pose-${index + 1}`,
+      slug: pose.name.toLowerCase().replace(/[^a-z0-9]+/g, '-'),
+      name: pose.name,
+      sanskrit: pose.sanskrit,
+      category: pose.family.toLowerCase(),
+      level: pose.intensity <= 2 ? 'beginner' : pose.intensity >= 4 ? 'advanced' : 'intermediate',
+      plane: pose.plane.toLowerCase(),
+      thumbnail_url: `/images/poses/${pose.name.toLowerCase().replace(/[^a-z0-9]+/g, '-')}.jpg`,
+      icon: pose.icon,
+      meta: {},
+      cues: [`Hold for ${pose.defaultSeconds} seconds`, 'Focus on breathing', 'Maintain alignment'],
+      benefits: [`Targets ${pose.groups.join(', ')}`, `${pose.intensity}/5 intensity level`, `${pose.chakra} chakra activation`],
+      created_at: new Date().toISOString(),
+      hold_time: pose.defaultSeconds,
+      image_url: `/images/poses/${pose.name.toLowerCase().replace(/[^a-z0-9]+/g, '-')}.jpg`,
+      instructions: `Practice ${pose.name} (${pose.sanskrit}) focusing on ${pose.groups.join(', ')}.`,
+      modifications: pose.intensity >= 3 ? 'Use props for support if needed' : 'Can be held longer for deeper stretch',
+      contraindications: pose.intensity >= 4 ? 'Avoid if you have injuries in target areas' : 'Generally safe for most practitioners',
+      anatomical_focus: pose.groups,
+      other_side_slug: null,
+      intensity: pose.intensity,
+      sort_order: index + 1,
+      family: pose.family.toLowerCase(),
+      sides: 'both',
+      aka: [pose.sanskrit],
+      related_next_slugs: [],
+      counterpose_slugs: [],
+      transitions_in: [],
+      transitions_out: []
+    }));
     
-    return data as DatabasePose[];
+    console.log(`Returning ${samplePoses.length} poses converted from yoga-data.ts (${POSES.length} original + ${EXTENDED_POSES.length} extended)`);
+    return samplePoses;
   } catch (error) {
     console.error('Error in getPosesFromDatabase:', error);
     return [];
