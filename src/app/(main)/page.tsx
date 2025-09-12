@@ -1,8 +1,12 @@
+'use client'
+
 import React from 'react'
 import Link from 'next/link'
 import { MountainMeditationHero } from '@/components/home/MountainMeditationHero'
+import { useLanguage } from '@/contexts/LanguageContext'
 
 const HomePage = () => {
+  const { t } = useLanguage();
   return (
     <div>
       {/* Mountain Meditation Hero Section */}
@@ -13,15 +17,11 @@ const HomePage = () => {
         <div className="absolute inset-0 flex items-center justify-center z-20">
           <div className="text-center px-responsive">
             <h1 className="heading-responsive-1 text-white mb-6 drop-shadow-lg">
-              Welcome to{' '}
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-200 to-purple-200">
-                Yoga Flow University
-              </span>
+              {t('hero.title')}
             </h1>
             
             <p className="text-responsive-lg text-white/90 mb-8 max-w-3xl mx-auto drop-shadow-md leading-relaxed">
-              Create personalized yoga flows with intelligent assistance, track your practice, 
-              and grow your teaching skills in our comprehensive platform.
+              {t('hero.subtitle')}
             </p>
             
             <div className="flex-responsive justify-center max-w-md mx-auto">
@@ -29,13 +29,13 @@ const HomePage = () => {
                 href="/flows/create"
                 className="btn btn-primary touch-target-large bg-white/90 backdrop-blur-sm hover:bg-white text-gray-900 border-2 border-white px-6 py-3 rounded-lg font-semibold transition-all duration-300 hover:scale-105 shadow-lg w-full sm:w-auto"
               >
-                Start Creating Flows
+                {t('cta.start-creating')}
               </Link>
               <Link
                 href="/poses"
                 className="btn btn-primary touch-target-large bg-blue-600 backdrop-blur-sm hover:bg-blue-700 text-white border-2 border-blue-500 px-6 py-3 rounded-lg font-semibold transition-all duration-300 hover:scale-105 shadow-lg w-full sm:w-auto"
               >
-                Explore Pose Library
+                {t('cta.explore-poses')}
               </Link>
             </div>
           </div>
