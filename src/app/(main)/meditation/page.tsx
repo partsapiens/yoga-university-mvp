@@ -10,6 +10,7 @@ import { GuidedMeditationPlayer } from '@/components/meditation/GuidedMeditation
 import { BreathingOrb } from '@/components/meditation/BreathingOrb';
 import { MeditationRecommendations } from '@/components/meditation/MeditationRecommendations';
 import { Avatar } from '@/components/Avatar';
+import { PersonalizedAffirmations } from '@/components/ai/PersonalizedAffirmations';
 
 // Types for meditation features
 interface MeditationSession {
@@ -80,6 +81,15 @@ export default function MeditationPage() {
   const [generatedScript, setGeneratedScript] = useState<MeditationScript | null>(null);
   const [showPlayer, setShowPlayer] = useState(false);
   
+  // State for affirmations
+  const [selectedAffirmation, setSelectedAffirmation] = useState<any>(null);
+  const [userProfile, setUserProfile] = useState({
+    experience: 'beginner' as 'beginner' | 'intermediate' | 'advanced',
+    preferredTone: 'gentle' as 'gentle' | 'empowering' | 'calming' | 'energizing',
+    goals: ['stress relief', 'better sleep'],
+    challenges: []
+  });
+
   // Local storage for session tracking
   const [sessionStats, setSessionStats] = useLocalStorage<SessionStats>('meditation_stats', {
     streak: 0,
@@ -402,6 +412,20 @@ export default function MeditationPage() {
             </div>
           </div>
         </div>
+
+        {/* Personalized Affirmations Section */}
+        <PersonalizedAffirmations
+          context="meditation"
+          userProfile={userProfile}
+          sessionData={{
+            mood: 'calm',
+            timeOfDay: getTimeOfDay(),
+            focusArea: 'mindfulness',
+            duration: customDuration
+          }}
+          onAffirmationSelect={setSelectedAffirmation}
+          className="mb-8"
+        />
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           {/* Meditation Techniques List */}

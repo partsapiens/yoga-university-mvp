@@ -194,13 +194,36 @@ export async function generateMeditationScript(input: MeditationInput): Promise<
     }
   }
 
+  // Generate personalized affirmations for the meditation
+  const userProfile = {
+    experience: input.experience,
+    preferredTone: 'gentle' as const,
+    goals: [input.goal],
+    challenges: []
+  };
+
+  const sessionData = {
+    mood: input.mood,
+    timeOfDay: input.timeOfDay,
+    focusArea: input.style,
+    duration: input.duration
+  };
+
+  const affirmations = await generatePersonalizedAffirmations({
+    context: 'meditation',
+    userProfile,
+    sessionData,
+    count: 3
+  });
+
   // Generate personalized script content
   const context = {
     mood: input.mood,
     goal: input.goal,
     timeOfDay: input.timeOfDay,
     experience: input.experience,
-    duration: input.duration
+    duration: input.duration,
+    affirmations
   };
 
   const phases: MeditationPhase[] = [];
@@ -281,7 +304,12 @@ function generateIntroScript(context: any): string {
   const greeting = greetings[context.timeOfDay as keyof typeof greetings] || greetings.afternoon;
   const moodResponse = moodResponses[context.mood] || moodResponses.default;
 
-  return `${greeting} ${moodResponse} Find a comfortable position, whether sitting or lying down. Close your eyes gently, or soften your gaze downward. Take a moment to arrive fully in this space.`;
+  // Add personalized affirmation if available
+  const beginningAffirmation = context.affirmations?.find((aff: any) => aff.timing === 'beginning');
+  const affirmationText = beginningAffirmation ? 
+    ` Take a moment to connect with this truth: ${beginningAffirmation.text}.` : '';
+
+  return `${greeting} ${moodResponse} Find a comfortable position, whether sitting or lying down. Close your eyes gently, or soften your gaze downward. Take a moment to arrive fully in this space.${affirmationText}`;
 }
 
 function generateSettleScript(context: any): string {
@@ -322,7 +350,15 @@ function generateMainScript(context: any, style: string): string {
     focus: `Choose a single point of focus - perhaps the sensation of breath at your nostrils, or a word like 'peace' or 'calm'. When your mind moves away from this focus, gently guide it back. This training of attention strengthens your capacity for concentration.`
   };
 
-  return styleScripts[style] || styleScripts.mindfulness;
+  let mainScript = styleScripts[style] || styleScripts.mindfulness;
+
+  // Add personalized affirmation for middle section if available
+  const middleAffirmation = context.affirmations?.find((aff: any) => aff.timing === 'middle');
+  if (middleAffirmation) {
+    mainScript += ` As you continue, remember: ${middleAffirmation.text}. Let this truth support you in your practice.`;
+  }
+
+  return mainScript;
 }
 
 function generateCloseScript(context: any): string {
@@ -335,7 +371,12 @@ function generateCloseScript(context: any): string {
 
   const closing = timeBasedClosing[context.timeOfDay as string] || timeBasedClosing.afternoon;
 
-  return `Begin to deepen your breath slightly. Wiggle your fingers and toes gently. When you're ready, slowly open your eyes. ${closing} Take a moment to appreciate this time you've given yourself for inner peace.`;
+  // Add personalized affirmation for ending if available
+  const endingAffirmation = context.affirmations?.find((aff: any) => aff.timing === 'end');
+  const affirmationText = endingAffirmation ? 
+    ` Before you return to your day, hold this intention: ${endingAffirmation.text}.` : '';
+
+  return `Begin to deepen your breath slightly. Wiggle your fingers and toes gently. When you're ready, slowly open your eyes. ${closing}${affirmationText} Take a moment to appreciate this time you've given yourself for inner peace.`;
 }
 
 function generateTitle(input: MeditationInput): string {
@@ -359,4 +400,93 @@ function generateTitle(input: MeditationInput): string {
   const styleWord = styleNoun[input.style] || "Meditation";
   
   return `${timePrefix} ${styleWord} (${input.duration} min)`.trim();
+}
+
+// New AI functions for personalized content
+
+export async function generatePersonalizedAffirmations(params: {
+  context: 'meditation' | 'flow' | 'general';
+  userProfile?: {
+    goals?: string[];
+    challenges?: string[];
+    experience?: 'beginner' | 'intermediate' | 'advanced';
+    preferredTone?: 'gentle' | 'empowering' | 'calming' | 'energizing';
+  };
+  sessionData?: {
+    mood?: string;
+    timeOfDay?: string;
+    focusArea?: string;
+    duration?: number;
+  };
+  count?: number;
+}): Promise<{
+  id: string;
+  text: string;
+  category: string;
+  timing: string;
+  personalizedFor: string;
+}[]> {
+  try {
+    const response = await fetch('/api/ai/affirmations', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(params)
+    });
+    
+    if (!response.ok) {
+      throw new Error('Failed to generate affirmations');
+    }
+    
+    const data = await response.json();
+    return data.affirmations || [];
+  } catch (error) {
+    console.error('Error generating affirmations:', error);
+    return [];
+  }
+}
+
+export async function adaptFlow(params: {
+  currentFlow: {
+    poses: any[];
+    durations: number[];
+    totalDuration: number;
+  };
+  userProfile: {
+    experience: 'beginner' | 'intermediate' | 'advanced';
+    physicalLimitations?: string[];
+    preferences?: string[];
+    pastPerformance?: any;
+  };
+  sessionFeedback?: {
+    difficulty?: string;
+    energy?: string;
+    timeConstraint?: number;
+    specificRequest?: string;
+  };
+  adaptationType?: string;
+}) {
+  try {
+    const response = await fetch('/api/ai/adapt-flow', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(params)
+    });
+    
+    if (!response.ok) {
+      throw new Error('Failed to adapt flow');
+    }
+    
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error('Error adapting flow:', error);
+    return {
+      adaptedFlow: params.currentFlow,
+      personalizationInsights: {
+        adaptationSummary: 'Using original flow',
+        whyThisWorks: 'Flow maintained as requested',
+        progressNotes: 'Continue with mindful practice'
+      }
+    };
+  }
 }
