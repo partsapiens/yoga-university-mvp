@@ -3,7 +3,9 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { MeditationScript, MeditationPhase } from '@/types/ai';
 import { useSpeechSynthesis } from '@/hooks/useSpeechSynthesis';
+import { useMeditationVoiceGuide } from '@/hooks/useMeditationVoiceGuide';
 import { BreathingOrb } from './BreathingOrb';
+import { Avatar } from '@/components/Avatar';
 
 interface GuidedMeditationPlayerProps {
   script: MeditationScript;
@@ -120,6 +122,48 @@ export const GuidedMeditationPlayer: React.FC<GuidedMeditationPlayerProps> = ({
     return names[phase.name] || phase.name;
   };
 
+  const formatTimeForSpeech = (seconds: number) => {
+    const mins = Math.floor(seconds / 60);
+    const secs = Math.floor(seconds % 60);
+    if (mins === 0) {
+      return `${secs} seconds`;
+    } else if (secs === 0) {
+      return `${mins} ${mins === 1 ? 'minute' : 'minutes'}`;
+    } else {
+      return `${mins} ${mins === 1 ? 'minute' : 'minutes'} and ${secs} seconds`;
+    }
+  };
+
+  const goToNextPhase = () => {
+    if (currentPhaseIndex < script.phases.length - 1) {
+      setCurrentPhaseIndex(prev => prev + 1);
+      setPhaseProgress(0);
+    }
+  };
+
+  // Voice guide integration for guided meditation
+  const meditationVoiceGuide = useMeditationVoiceGuide({
+    onStartMeditation: () => {
+      if (!hasStarted) {
+        handleStart();
+      } else if (!isPlaying) {
+        handleResume();
+      }
+    },
+    onPauseMeditation: handlePause,
+    onResumeMeditation: handleResume,
+    onStopMeditation: onExit,
+    onGetTimeRemaining: () => formatTimeForSpeech(timeRemaining),
+    onRepeatInstruction: () => {
+      if (currentPhase) {
+        speak(currentPhase.script);
+      }
+    },
+    onNextSection: goToNextPhase,
+    isPlaying: isPlaying && hasStarted,
+    timeRemaining
+  });
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-indigo-900 via-purple-900 to-pink-900 flex items-center justify-center p-4">
       <div className="max-w-4xl w-full">
@@ -176,7 +220,7 @@ export const GuidedMeditationPlayer: React.FC<GuidedMeditationPlayerProps> = ({
                 <h3 className="text-white font-semibold mb-3">Before we begin:</h3>
                 <ul className="text-white/80 space-y-2 text-left">
                   <li>• Find a comfortable seated or lying position</li>
-                  <li>• Ensure you won't be disturbed for the next {Math.ceil(script.totalDuration / 60)} minutes</li>
+                  <li>• Ensure you won&rsquo;t be disturbed for the next {Math.ceil(script.totalDuration / 60)} minutes</li>
                   <li>• Close your eyes or soften your gaze downward</li>
                   <li>• Allow your breathing to find its natural rhythm</li>
                 </ul>
@@ -213,6 +257,44 @@ export const GuidedMeditationPlayer: React.FC<GuidedMeditationPlayerProps> = ({
           >
             Exit
           </button>
+        </div>
+
+        {/* Voice Control */}
+        <div className="mt-6 bg-white/10 backdrop-blur-lg rounded-xl p-4">
+          <div className="flex items-center justify-center gap-4 mb-4">
+            <Avatar 
+              state={meditationVoiceGuide.state} 
+              size="sm"
+              className="flex-shrink-0"
+            />
+            <div className="flex gap-2">
+              <button
+                onClick={meditationVoiceGuide.toggleVoiceGuide}
+                className={`px-3 py-2 text-sm rounded-md font-medium transition-colors ${
+                  meditationVoiceGuide.isVoiceEnabled 
+                    ? 'bg-green-500 text-white hover:bg-green-600' 
+                    : 'bg-white/20 text-white hover:bg-white/30'
+                }`}
+              >
+                {meditationVoiceGuide.isVoiceEnabled ? '🎙️ Voice On' : '🔇 Voice Off'}
+              </button>
+              {meditationVoiceGuide.isVoiceEnabled && (
+                <button
+                  onClick={meditationVoiceGuide.startListening}
+                  disabled={meditationVoiceGuide.isListening}
+                  className="px-3 py-2 text-sm rounded-md font-medium bg-blue-500 text-white hover:bg-blue-600 disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  {meditationVoiceGuide.isListening ? '👂 Listening' : '💬 Talk'}
+                </button>
+              )}
+            </div>
+          </div>
+          {meditationVoiceGuide.isVoiceEnabled && (
+            <div className="text-center text-sm text-white/70 space-y-1">
+              <p><strong>Voice Commands:</strong></p>
+              <p>&quot;Pause&quot; • &quot;Resume&quot; • &quot;Repeat instruction&quot; • &quot;Next section&quot; • &quot;How much time left&quot;</p>
+            </div>
+          )}
         </div>
 
         {/* Voice Settings */}
