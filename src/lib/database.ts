@@ -55,106 +55,48 @@ export const getPosesFromDatabase = async (): Promise<DatabasePose[]> => {
     const connectionTest = await testSupabaseConnection();
     
     if (!connectionTest) {
-      console.log('Supabase connection test failed, falling back to sample data for testing');
+      console.log('Supabase connection test failed, falling back to comprehensive sample data');
       
-      // Return sample data for testing when connection fails, using correct schema
-      const samplePoses: DatabasePose[] = [
-        {
-          id: 'sample-1',
-          slug: 'mountain-pose',
-          name: 'Mountain Pose',
-          sanskrit: 'Tadasana',
-          category: 'standing',
-          level: 'beginner',
-          plane: 'frontal',
-          thumbnail_url: '/images/poses/mountain-pose.jpg',
-          icon: '🏔️',
-          meta: {},
-          cues: ['Stand tall', 'Ground through feet', 'Reach crown up'],
-          benefits: ['Improves posture', 'Strengthens legs', 'Promotes focus'],
-          created_at: new Date().toISOString(),
-          hold_time: 30,
-          image_url: '/images/poses/mountain-pose.jpg',
-          instructions: 'Stand tall with feet hip-width apart. Engage leg muscles. Reach crown of head toward ceiling.',
-          modifications: 'Use wall for support if needed',
-          contraindications: 'None for most practitioners',
-          anatomical_focus: ['Legs', 'Core', 'Spine'],
-          other_side_slug: null,
-          intensity: 2,
-          sort_order: 1,
-          family: 'standing',
-          sides: 'both',
-          aka: ['Samasthiti'],
-          related_next_slugs: ['forward-fold'],
-          counterpose_slugs: ['childs-pose'],
-          transitions_in: [],
-          transitions_out: ['forward-fold']
-        },
-        {
-          id: 'sample-2',
-          slug: 'downward-dog',
-          name: 'Downward Dog',
-          sanskrit: 'Adho Mukha Svanasana',
-          category: 'inversion',
-          level: 'beginner',
-          plane: 'sagittal',
-          thumbnail_url: '/images/poses/downward-dog.jpg',
-          icon: '🐕',
-          meta: {},
-          cues: ['Start on hands and knees', 'Tuck toes', 'Lift hips up'],
-          benefits: ['Strengthens arms and legs', 'Stretches hamstrings', 'Energizes the body'],
-          created_at: new Date().toISOString(),
-          hold_time: 60,
-          image_url: '/images/poses/downward-dog.jpg',
-          instructions: 'Start on hands and knees. Tuck toes and lift hips. Straighten legs as much as possible.',
-          modifications: 'Bend knees if hamstrings are tight',
-          contraindications: 'Wrist injuries, High blood pressure',
-          anatomical_focus: ['Arms', 'Legs', 'Back'],
-          other_side_slug: null,
-          intensity: 3,
-          sort_order: 2,
-          family: 'inversion',
-          sides: 'both',
-          aka: ['Down Dog'],
-          related_next_slugs: ['plank'],
-          counterpose_slugs: ['childs-pose'],
-          transitions_in: ['plank'],
-          transitions_out: ['plank', 'low-lunge']
-        },
-        {
-          id: 'sample-3',
-          slug: 'childs-pose',
-          name: 'Child\'s Pose',
-          sanskrit: 'Balasana',
-          category: 'restorative',
-          level: 'beginner',
-          plane: 'sagittal',
-          thumbnail_url: '/images/poses/childs-pose.jpg',
-          icon: '🧘',
-          meta: {},
-          cues: ['Kneel on floor', 'Sit back on heels', 'Fold forward'],
-          benefits: ['Calms the nervous system', 'Stretches back and hips', 'Relieves stress'],
-          created_at: new Date().toISOString(),
-          hold_time: 90,
-          image_url: '/images/poses/childs-pose.jpg',
-          instructions: 'Kneel on the floor. Sit back on heels. Fold forward with arms extended.',
-          modifications: 'Place pillow between calves and thighs if knees are tight',
-          contraindications: 'Knee injuries',
-          anatomical_focus: ['Back', 'Hips', 'Shoulders'],
-          other_side_slug: null,
-          intensity: 1,
-          sort_order: 3,
-          family: 'restorative',
-          sides: 'both',
-          aka: ['Balasana'],
-          related_next_slugs: ['table-top'],
-          counterpose_slugs: ['camel'],
-          transitions_in: ['downward-dog'],
-          transitions_out: ['table-top']
-        }
-      ];
+      // Import the existing POSES data and convert it to DatabasePose format
+      const { POSES, EXTENDED_POSES } = await import('./yoga-data');
       
-      console.log(`Returning ${samplePoses.length} sample poses for testing`);
+      // Combine both pose collections
+      const allPoses = [...POSES, ...EXTENDED_POSES];
+      
+      // Convert POSES to DatabasePose format 
+      const samplePoses: DatabasePose[] = allPoses.map((pose, index) => ({
+        id: `pose-${index + 1}`,
+        slug: pose.name.toLowerCase().replace(/[^a-z0-9]+/g, '-'),
+        name: pose.name,
+        sanskrit: pose.sanskrit,
+        category: pose.family.toLowerCase(),
+        level: pose.intensity <= 2 ? 'beginner' : pose.intensity >= 4 ? 'advanced' : 'intermediate',
+        plane: pose.plane.toLowerCase(),
+        thumbnail_url: `/images/poses/${pose.name.toLowerCase().replace(/[^a-z0-9]+/g, '-')}.jpg`,
+        icon: pose.icon,
+        meta: {},
+        cues: [`Hold for ${pose.defaultSeconds} seconds`, 'Focus on breathing', 'Maintain alignment'],
+        benefits: [`Targets ${pose.groups.join(', ')}`, `${pose.intensity}/5 intensity level`, `${pose.chakra} chakra activation`],
+        created_at: new Date().toISOString(),
+        hold_time: pose.defaultSeconds,
+        image_url: `/images/poses/${pose.name.toLowerCase().replace(/[^a-z0-9]+/g, '-')}.jpg`,
+        instructions: `Practice ${pose.name} (${pose.sanskrit}) focusing on ${pose.groups.join(', ')}.`,
+        modifications: pose.intensity >= 3 ? 'Use props for support if needed' : 'Can be held longer for deeper stretch',
+        contraindications: pose.intensity >= 4 ? 'Avoid if you have injuries in target areas' : 'Generally safe for most practitioners',
+        anatomical_focus: pose.groups,
+        other_side_slug: null,
+        intensity: pose.intensity,
+        sort_order: index + 1,
+        family: pose.family.toLowerCase(),
+        sides: 'both',
+        aka: [pose.sanskrit],
+        related_next_slugs: [],
+        counterpose_slugs: [],
+        transitions_in: [],
+        transitions_out: []
+      }));
+      
+      console.log(`Returning ${samplePoses.length} poses converted from yoga-data.ts (${POSES.length} original + ${EXTENDED_POSES.length} extended)`);
       return samplePoses;
     }
     
