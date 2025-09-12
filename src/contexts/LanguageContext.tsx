@@ -19,6 +19,7 @@ const translations = {
     'nav.poses': 'Pose Library',
     'nav.flows': 'Create Flow',
     'nav.meditation': 'Meditation',
+    'nav.manual': 'Manual',
     'nav.about': 'About',
     'nav.pricing': 'Pricing',
     'nav.contact': 'Contact',
@@ -36,6 +37,7 @@ const translations = {
     'nav.flows': 'Flow Erstellen',
     
     'nav.meditation': 'Meditation',
+    'nav.manual': 'Handbuch',
     'nav.about': 'Über uns',
     'nav.pricing': 'Preise',
     'nav.contact': 'Kontakt',
@@ -53,6 +55,7 @@ const translations = {
     'nav.flows': 'Creează flux',
     
     'nav.meditation': 'Meditație',
+    'nav.manual': 'Manual',
     'nav.about': 'Despre noi',
     'nav.pricing': 'Prețuri',
     'nav.contact': 'Contact',
@@ -70,6 +73,7 @@ const translations = {
     'nav.flows': 'Создать поток',
     
     'nav.meditation': 'Медитация',
+    'nav.manual': 'Руководство',
     'nav.about': 'О нас',
     'nav.pricing': 'Цены',
     'nav.contact': 'Контакты',
