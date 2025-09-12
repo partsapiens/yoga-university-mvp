@@ -12,6 +12,7 @@ import { StatsCards } from '@/components/dashboard/StatsCards';
 import { StatsSkeleton } from '@/components/dashboard/StatsSkeleton';
 import { RecentAchievements } from '@/components/dashboard/RecentAchievements';
 import { AIInsightsDashboard } from '@/components/dashboard/AIInsightsDashboard';
+import { PlatformAnalytics } from '@/components/dashboard/PlatformAnalytics';
 
 const DashboardPage = async () => {
   const data = await fetchDashboardData();
@@ -35,6 +36,12 @@ const DashboardPage = async () => {
           <div>
             <SectionHeader title="AI Progress Insights" />
             <AIInsightsDashboard sessions={data.practiceSessions} />
+          </div>
+          
+          {/* Platform Intelligence Section */}
+          <div>
+            <SectionHeader title="Platform Intelligence" />
+            <PlatformAnalytics />
           </div>
           
           <div className="grid gap-6 md:grid-cols-2">
