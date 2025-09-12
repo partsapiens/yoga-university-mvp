@@ -49,7 +49,7 @@ export const metadata: Metadata = {
         url: '/og-image.png',
         width: 1200,
         height: 630,
-        alt: 'Yoga Flow University - AI-Powered Yoga Platform',
+        alt: 'Yoga Flow University - ✨-Powered Yoga Platform',
       },
     ],
   },

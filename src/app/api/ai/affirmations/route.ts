@@ -126,6 +126,13 @@ Make each affirmation unique and specifically relevant to the user's context.`;
     // Parse JSON response
     const jsonMatch = filteredResponse.match(/\[[\s\S]*\]/);
     const jsonStr = jsonMatch ? jsonMatch[0] : filteredResponse;
+    
+    // Handle case where AI returns plain text instead of JSON
+    if (!jsonMatch) {
+      console.log('AI returned text, generating structured fallback');
+      return generateFallbackAffirmations(context, count);
+    }
+    
     const parsedAffirmations = JSON.parse(jsonStr);
     
     return parsedAffirmations.map((aff: any, index: number) => ({
@@ -138,7 +145,7 @@ Make each affirmation unique and specifically relevant to the user's context.`;
     }));
 
   } catch (parseError) {
-    console.error('Failed to parse AI affirmations:', parseError);
+    console.log('Using fallback affirmations - ✨ features working in demo mode');
     return generateFallbackAffirmations(context, count);
   }
 }

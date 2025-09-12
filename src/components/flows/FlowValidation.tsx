@@ -236,7 +236,7 @@ export function FlowValidation({ flow, totalSeconds, className = '', onSaferAlte
             <div className="flex items-center gap-2">
               <Zap size={16} className="text-blue-600 dark:text-blue-400" />
               <span className="text-sm font-medium text-blue-800 dark:text-blue-200">
-                AI-Optimized Safer Alternative Available
+                ✨-Optimized Safer Alternative Available
               </span>
             </div>
             <button

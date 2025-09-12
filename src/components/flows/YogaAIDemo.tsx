@@ -27,7 +27,7 @@ const YogaFlowGenerator = () => {
     
     try {
       // This would call your backend API that interfaces with OpenAI
-      const response = await fetch('/api/generate-flow', {
+      const response = await fetch('/api/ai/generateFlow', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -162,7 +162,7 @@ const YogaFlowGenerator = () => {
             <div className="text-center py-12">
               <Sparkles className="w-12 h-12 text-gray-400 mx-auto mb-4" />
               <p className="text-gray-500">
-                Your AI-generated yoga flow will appear here
+                Your ✨-generated yoga flow will appear here
               </p>
             </div>
           )}
@@ -181,7 +181,7 @@ const YogaChatbot = () => {
   const [messages, setMessages] = useState<ChatMessage[]>([
     {
       role: 'assistant',
-      content: 'Hello! I\'m your AI yoga assistant. Ask me about poses, sequences, yoga philosophy, or any practice questions you have!'
+      content: 'Hello! I\'m your ✨ yoga assistant. Ask me about poses, sequences, yoga philosophy, or any practice questions you have!'
     }
   ]);
   const [inputMessage, setInputMessage] = useState('');
@@ -197,7 +197,7 @@ const YogaChatbot = () => {
 
     try {
       // This would call your backend API
-      const response = await fetch('/api/yoga-chat', {
+      const response = await fetch('/api/ai/manual-chat', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ 
@@ -221,7 +221,7 @@ const YogaChatbot = () => {
 
   return (
     <div className="max-w-2xl mx-auto p-6 bg-white rounded-lg shadow-lg">
-      <h2 className="text-2xl font-bold text-gray-800 mb-4">AI Yoga Assistant</h2>
+      <h2 className="text-2xl font-bold text-gray-800 mb-4">✨ Yoga Assistant</h2>
       
       <div className="h-96 overflow-y-auto border border-gray-200 rounded-lg p-4 mb-4 space-y-4">
         {messages.map((message, index) => (
@@ -283,10 +283,10 @@ export default function YogaAIDemo() {
       <div className="container mx-auto px-4">
         <div className="text-center mb-8">
           <h1 className="text-4xl font-bold text-gray-800 mb-4">
-            AI-Powered Yoga Platform Demo
+            Yoga Platform
           </h1>
           <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-            Experience how OpenAI integration can transform your yoga practice with personalized flows and intelligent assistance
+            Transform your yoga practice with personalized flows and intelligent assistance
           </p>
         </div>
 
