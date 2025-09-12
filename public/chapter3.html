@@ -22,16 +22,38 @@
     ul,ol{margin:0 0 8px 1.25rem}
     .note{border-left:4px solid var(--accent);padding:10px 12px;background:#141921;border-radius:8px;margin:10px 0;color:#d8e5ff}
     footer{max-width:var(--max);margin:24px auto 80px;padding:0 20px;color:var(--muted)}
+    .breadcrumb{margin-bottom:24px}
+    .breadcrumb a{color:var(--accent);text-decoration:none}
+    .breadcrumb a:hover{text-decoration:underline}
+    .breadcrumb span{color:var(--muted);margin:0 8px}
+    .chapter-nav{background:linear-gradient(180deg,rgba(255,255,255,.04),rgba(255,255,255,.02));border:1px solid #26303a;border-radius:var(--radius);padding:16px;margin-bottom:16px}
+    .chapter-nav h4{margin:0 0 8px;color:var(--brand);font-size:.9rem}
+    .chapter-nav a{color:var(--accent);text-decoration:none;font-size:.9rem}
+    .chapter-nav a:hover{text-decoration:underline}
   </style>
 </head>
 <body>
   <header>
+    <div class="breadcrumb">
+      <a href="/manual">← Manual Index</a>
+      <span>/</span>
+      <span>Chapter 3</span>
+    </div>
     <h1>Chapter 3 — Integration & Sun Salutations</h1>
     <p class="subtitle" style="color:var(--muted)">YogaFlow University edition with Sanskrit pose names and alignment / cue bullets.</p>
   </header>
 
   <main>
     <nav>
+      <div class="chapter-nav">
+        <h4>Manual Navigation</h4>
+        <a href="/manual/index.html">Manual Index</a><br>
+        <a href="chapter1.html">Chapter 1</a><br>
+        <a href="chapter2.html">Chapter 2</a><br>
+        <strong>Chapter 3</strong><br>
+        <a href="chapter4.html">Chapter 4</a>
+      </div>
+      
       <h3>On this page</h3>
       <a href="#integration">Integration Series</a>
       <a href="#sunA">Sun Salutation A</a>
