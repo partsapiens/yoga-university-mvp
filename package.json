@@ -9,10 +9,6 @@
     "start": "next start",
     "lint": "next lint",
     "test": "vitest run",
-    "build:manual": "node scripts/reflow-manual.js",
-    "build:manual:old": "tsx scripts/prepare-manual-from-pages.ts && tsx scripts/build-manual-index.ts",
-    "process:pages": "tsx scripts/process-chapters-to-pages.ts",
-    "build:manual:full": "npm run build:manual && npm run process:pages",
     "precommit": "node scripts/scan-secrets.cjs"
   },
   "dependencies": {

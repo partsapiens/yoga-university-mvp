@@ -105,7 +105,7 @@ export default function PricingPage() {
       category: "Training Materials",
       explorer: "❌",
       practitioner: "Basic guides",
-      teacher: "Complete training manual"
+      teacher: "Advanced training resources"
     }
   ];
 

@@ -48,7 +48,7 @@ export default function TermsPage() {
                 <li>Yoga flow creation tools with AI assistance</li>
                 <li>Comprehensive pose library with instructions</li>
                 <li>Meditation and breathing exercise sessions</li>
-                <li>Educational manual and teacher training resources</li>
+                <li>Educational resources and teacher training content</li>
                 <li>Practice tracking and progress analytics</li>
               </ul>
             </div>

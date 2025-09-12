@@ -212,7 +212,7 @@ export default function AboutPage() {
               {
                 name: "Sofia Rodriguez",
                 role: "Studio Owner, Barcelona",
-                text: "We've integrated this into our teacher training program. The comprehensive manual is a game-changer.",
+                text: "We've integrated this into our teacher training program. The comprehensive platform is a game-changer.",
                 rating: 5
               }
             ].map((testimonial, index) => (
@@ -297,11 +297,11 @@ export default function AboutPage() {
                 <ArrowRight className="ml-2 w-5 h-5" />
               </Link>
               <Link
-                href="/manual"
+                href="/flows/create"
                 className="inline-flex items-center px-6 py-3 border border-white text-base font-medium rounded-md text-white hover:bg-white hover:text-blue-600 transition-colors"
               >
-                Read Training Manual
-                <BookOpen className="ml-2 w-5 h-5" />
+                Create Flow
+                <ArrowRight className="ml-2 w-5 h-5" />
               </Link>
             </div>
           </div>

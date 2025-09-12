@@ -1,7 +1,0 @@
-# Page 28
-
-MOVEMENTCue Action on beat for 2 full repetitions Cue Breath on beat for 2 full repetitions COACHINGShare options to regress or progressOffer basic, muscle action and thematic cues COUNTDOWNFrom 8 or 4 and cue what is next ForexampleinBasicCrunches:Findthebeatofthemusicthen:MOVEMENT:Lift,lower,lift,lowerExhale,Inhale,Exhale,InhaleCOACHING:LiftyourfeetuptointensitytheworkinyourlegsTaketabletoplegstosupportyourbackTakeaconfidentexhalewitheachcrunch!COUNTDOWNLast…4…3…releasein2…1MUSCLE ACTION DRILL Muscle Action Drills are repeated muscle action to create a desired outcome or teach a skill. Use the Music Formula to cue Muscle Action Drills. For example, to teach hip extension and hamstring activation, add a pulse in Three-Leg Dog:“Inhale Three-Leg Dog, Lift your right leg high”Pulse, pulse, exhale, exhale Extend your heel up and point your toes down Kick your heel towards the sky to tone your glute Last 8…MUSIC FORMULAThe Music Formula can be utilized in certain sections of class such as Core or during Muscle Action Drills. Music helps to connect the class together and when used well, can lower the Rate of Perceived Exertion. The music’s beat drives the Music Formula. Movement > Coaching > Countdown
-
-
----
-[← Prev](/pages/page-027.md) &nbsp; [Top](/index.md) &nbsp; [Next →](/pages/page-029.md)

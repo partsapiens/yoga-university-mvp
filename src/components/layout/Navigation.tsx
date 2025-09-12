@@ -46,7 +46,6 @@ export const Navigation = ({ userRole }: NavigationProps) => {
     { href: '/dashboard', label: t('nav.dashboard') },
     { href: '/poses', label: t('nav.poses') },
     { href: '/flows/create', label: t('nav.flows') },
-    { href: '/manual/page/1', label: t('nav.manual') },
     { href: '/meditation', label: t('nav.meditation') },
     { href: '/about', label: t('nav.about') },
     { href: '/pricing', label: t('nav.pricing') },
@@ -109,8 +108,6 @@ export const Navigation = ({ userRole }: NavigationProps) => {
       // Basic voice commands
       if (command.includes('go home') || command.includes('home page')) {
         window.location.href = '/';
-      } else if (command.includes('manual') || command.includes('guide')) {
-        window.location.href = '/manual/page/1';
       } else if (command.includes('meditation') || command.includes('meditate')) {
         window.location.href = '/meditation';
       } else if (command.includes('poses') || command.includes('pose library')) {
@@ -124,7 +121,7 @@ export const Navigation = ({ userRole }: NavigationProps) => {
       } else {
         console.log('Command not recognized:', command);
         // Show a visual feedback that command wasn't recognized
-        alert(`Command "${command}" not recognized. Try saying: "go home", "manual", "meditation", "poses", "create flow", "dashboard", or "search"`);
+        alert(`Command "${command}" not recognized. Try saying: "go home", "meditation", "poses", "create flow", "dashboard", or "search"`);
       }
     };
 

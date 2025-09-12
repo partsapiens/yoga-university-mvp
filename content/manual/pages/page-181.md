@@ -1,7 +1,0 @@
-# Page 181
-
-Spine (cont.)“Transition:Pressuptotabletopandstanduponyourknees.EXCamelPoseSetup Cue: 1. Bring your hands to your low back, pointing your finger tips down2. Send your hips forward, as you walk your gaze up and back along the ceilingDeepening Cue: 1. Push into your shins or feet to feel your glutes and hamstrings support you2. Hug your inner thighs together and spiral them back to real ease your low back Transition: Lower down to your back, plant your feet down.INBridgePoseSetup Cue: 1. Bend your knees and bring your feet in line with your hips near your glutes2. Press into your feet to lift your hipsDisengage the BreathDeepening Cue: 1. Squeeze your inner thighs together to connect to your core2. Draw your chin away from your chest to extend your neck and throatEXReclinedBoundAngleSetup Cue: 1. Bring the soles of your feet together and allow your knees to open to the sides2. Option to bring one hand to your belly and the other to your heart*Theme Action Cue: Pause here for a few breaths. Take this moment to appreciate how hard you’ve worked thus far. posesSPINEINHighPlankEXLowertoyourbellyINCobraPoseEXLower,gazerightINBowPoseEXLower,gazeleftINCenter,pressuptoTableTopEXCamelPoseLowertoyourbackINBridgePoseEXReclinedBoundAnglePose
-
-
----
-[← Prev](/pages/page-180.md) &nbsp; [Top](/index.md) &nbsp; [Next →](/pages/page-182.md)

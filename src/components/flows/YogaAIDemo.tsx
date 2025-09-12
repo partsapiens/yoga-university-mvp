@@ -197,7 +197,7 @@ const YogaChatbot = () => {
 
     try {
       // This would call your backend API
-      const response = await fetch('/api/ai/manual-chat', {
+      const response = await fetch('/api/ai/yoga-chat', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ 

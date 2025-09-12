@@ -18,7 +18,6 @@ const translations = {
     'nav.dashboard': 'Dashboard',
     'nav.poses': 'Pose Library',
     'nav.flows': 'Create Flow',
-    'nav.manual': 'Manual',
     'nav.meditation': 'Meditation',
     'nav.about': 'About',
     'nav.pricing': 'Pricing',
@@ -35,7 +34,7 @@ const translations = {
     'nav.dashboard': 'Dashboard',
     'nav.poses': 'Asana-Bibliothek',
     'nav.flows': 'Flow Erstellen',
-    'nav.manual': 'Handbuch',
+    
     'nav.meditation': 'Meditation',
     'nav.about': 'Über uns',
     'nav.pricing': 'Preise',
@@ -52,7 +51,7 @@ const translations = {
     'nav.dashboard': 'Tablou de bord',
     'nav.poses': 'Biblioteca de posturi',
     'nav.flows': 'Creează flux',
-    'nav.manual': 'Manual',
+    
     'nav.meditation': 'Meditație',
     'nav.about': 'Despre noi',
     'nav.pricing': 'Prețuri',
@@ -69,7 +68,7 @@ const translations = {
     'nav.dashboard': 'Панель управления',
     'nav.poses': 'Библиотека поз',
     'nav.flows': 'Создать поток',
-    'nav.manual': 'Руководство',
+    
     'nav.meditation': 'Медитация',
     'nav.about': 'О нас',
     'nav.pricing': 'Цены',

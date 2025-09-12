@@ -1,7 +1,0 @@
-# Page 64
-
-3 .13 Transition“Inhale, Exhale lower down, Bring your right ear to the mat...”—Rest, look left3-5 BTransition“Press up to all fours, Stand on your knees, Bring your palms to your lower back, Point your fingers down, Inhale...”ExhaleCamel - Ustrasana2-3 BTransition“Place your hands on your lower back, Inhale rise up, Exhale sit on your heels...”—Sit on your heels3-5 BTransition“Lie down on your back, Bend your knees, Plant your feet hip width distance...”InhaleBridge Pose - Setu Bandha Sarvangasana2-3 BExhaleReclined Bound Angle Pose - Supta Baddha Konasana2-3 BSURRENDER SERIES 1:53 - 2:00Transition“Draw your knees into your chest, Roll up to a seat, Extend your legs with a slight bend in your knees, Inhale...”ExhaleSeated Forward Fold - Paschimottanasana2-3 BTransition“Slowly lower onto your back, Inhale bend your knees...”ExhaleHappy Baby Pose - Ananda Balasana2-3 BTransition“Pull your right knee to your chest, Extend your left leg long, Inhale...”ExhaleSupine Twist - Jathara Parivartanasana2-3 BTransition“Pull your left knee to your chest, Extend your right leg long, Inhale...”ExhaleSupine Twist - Jathara Parivartanasana2-3 BTransition“Hug your knees into your chest, Inhale...”ExhaleCorpse Pose - SavasanaTransition“Reach your arms and legs long, Roll to either side...”BreatheFetal PositionTransition“Draw your knees in toward your chest, Press up to a seat...”2-3 BInhaleDraw your thumbs to third eye center1 BExhaleBow forward “Namaste”1 B
-
-
----
-[← Prev](/pages/page-063.md) &nbsp; [Top](/index.md) &nbsp; [Next →](/pages/page-065.md)
