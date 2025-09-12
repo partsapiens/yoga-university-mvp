@@ -191,23 +191,23 @@ export const Navigation = ({ userRole }: NavigationProps) => {
 
   return (
     <nav className="bg-white dark:bg-gray-900 shadow-sm border-b border-gray-200 dark:border-gray-700 sticky top-0 z-50">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="container-wide">
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
-          <Link href="/" className="flex items-center space-x-2">
+          <Link href="/" className="flex items-center space-x-2 touch-target">
             <span className="text-2xl">🧘‍♀️</span>
-            <span className="text-xl font-bold text-blue-600 dark:text-blue-400">
+            <span className="text-responsive-lg font-bold text-blue-600 dark:text-blue-400">
               Yoga Flow
             </span>
           </Link>
 
           {/* Main Navigation - Desktop */}
-          <div className="hidden lg:flex items-center space-x-6">
+          <div className="hidden lg:flex items-center space-x-4 xl:space-x-6">
             {navItems.map((item) => (
               <Link
                 key={item.href}
                 href={item.href}
-                className="text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors font-medium"
+                className="nav-item-responsive text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors font-medium"
               >
                 {item.label}
               </Link>
@@ -215,11 +215,11 @@ export const Navigation = ({ userRole }: NavigationProps) => {
           </div>
 
           {/* Right Side Tools */}
-          <div className="flex items-center space-x-3">
+          <div className="flex items-center space-x-2 md:space-x-3">
             {/* Search Button */}
             <button
               onClick={() => setSearchOpen(!searchOpen)}
-              className="p-2 text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
+              className="touch-target p-2 text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors rounded-lg"
               aria-label="Search"
             >
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
