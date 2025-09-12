@@ -20,6 +20,8 @@ import YogaAIDemo from "@/components/flows/YogaAIDemo";
 import { FlowTemplates } from "@/components/flows/FlowTemplates";
 import { QuickActions } from "@/components/dashboard/QuickActions";
 import { PoseAnalysisSettings, ProgressTracking } from "@/components/pose-analysis";
+import { PersonalizedAffirmations } from "@/components/ai/PersonalizedAffirmations";
+import { AdaptiveFlow } from "@/components/ai/AdaptiveFlow";
 import { Focus, TimingMode, PoseId, SavedFlow, Pose } from "@/types/yoga";
 import { POSES } from "@/lib/yoga-data";
 import {
@@ -64,7 +66,20 @@ export default function CreateFlowPage() {
   const [userId, setUserId] = useState<string | null>(null);
   const [saveToDatabase, setSaveToDatabase] = useState(false);
 
-  // --- Persistence State ---
+  // User profile for personalization
+  const [userProfile, setUserProfile] = useState({
+    experience: 'intermediate' as 'beginner' | 'intermediate' | 'advanced',
+    physicalLimitations: [] as string[],
+    preferences: ['mindful transitions', 'hip openers'] as string[],
+    pastPerformance: {
+      completionRate: 85,
+      averageDifficulty: 3,
+      struggledWith: [] as string[],
+      excelsAt: ['balance poses'] as string[]
+    }
+  });
+
+  // Persistence State
   const [localSaved, setLocalSaved] = useLocalStorage<SavedFlow[]>('yoga_saved_flows', []);
   const [sessionSaved, setSessionSaved] = useState<SavedFlow[]>([]);
   const savedFlows = saveToDevice ? localSaved : sessionSaved;
@@ -374,6 +389,22 @@ export default function CreateFlowPage() {
     setFlowName('');
   };
 
+  const handleFlowAdapted = (adaptedFlow: any, insights: any) => {
+    if (adaptedFlow.poses) {
+      setFlow(adaptedFlow.poses);
+    }
+    if (adaptedFlow.durations) {
+      const newOverrides: Record<number, number> = {};
+      adaptedFlow.durations.forEach((duration: number, index: number) => {
+        if (duration !== (secondsPerPose[index] || 30)) {
+          newOverrides[index] = duration;
+        }
+      });
+      setOverrides(newOverrides);
+    }
+    console.log('Flow adapted with insights:', insights);
+  };
+
   // --- Player Handlers ---
   const handlePlay = useCallback(() => { if (flow.length === 0) return; setCurrentPoseIndex(0); setTimeInPose(0); setPlaybackState('playing'); }, [flow.length]);
   const handlePause = useCallback(() => setPlaybackState('paused'), []);
@@ -461,6 +492,39 @@ export default function CreateFlowPage() {
           <div className="mt-6">
             <ControlPanel {...{ minutes, setMinutes, intensity, setIntensity, focus, setFocus, breathingCues, setBreathingCues, saferSequencing, setSaferSequencing, saveToDevice, setSaveToDevice, timingMode, setTimingMode, secPerBreath, setSecPerBreath, transitionSec, setTransitionSec, cooldownMin, setCooldownMin, onAutoGenerate: handleGenerate, flowName, setFlowName, onSaveFlow: handleSaveFlow }} />
           </div>
+        )}
+        
+        {/* Personalized Affirmations for Flow */}
+        {flow.length > 0 && (
+          <PersonalizedAffirmations
+            context="flow"
+            userProfile={{
+              experience: userProfile.experience,
+              preferredTone: 'empowering',
+              goals: userProfile.preferences,
+              challenges: userProfile.physicalLimitations
+            }}
+            sessionData={{
+              focusArea: focus.toLowerCase().replace('-', ' '),
+              duration: minutes,
+              timeOfDay: 'afternoon'
+            }}
+            className="mt-6"
+          />
+        )}
+
+        {/* Adaptive Flow Modifications */}
+        {flow.length > 0 && (
+          <AdaptiveFlow
+            currentFlow={{
+              poses: flow,
+              durations: secondsPerPose,
+              totalDuration: totalSeconds
+            }}
+            userProfile={userProfile}
+            onFlowAdapted={handleFlowAdapted}
+            className="mt-6"
+          />
         )}
         
         {/* Auto-save Section */}
