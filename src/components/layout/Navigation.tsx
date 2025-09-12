@@ -88,10 +88,9 @@ export const Navigation = ({ userRole }: NavigationProps) => {
     // In a real app, you would use i18n library like next-intl or react-i18next
     console.log('Language changed to:', newLang);
     
-    // You could also trigger a re-render of components with translated content
-    // For now, we'll just show a message to the user
+    // Show user feedback about language functionality
     if (newLang !== 'en') {
-      console.log(`Language switching to ${newLang} - Translation system would be implemented here`);
+      alert(`Language "${newLang.toUpperCase()}" selected. Full translation support coming soon!`);
     }
   };
 
@@ -199,12 +198,12 @@ export const Navigation = ({ userRole }: NavigationProps) => {
               <select
                 value={language}
                 onChange={(e) => handleLanguageChange(e.target.value)}
-                className="text-sm bg-transparent border border-gray-300 dark:border-gray-600 rounded-md px-2 py-1 text-gray-700 dark:text-gray-300 focus:outline-none focus:border-blue-500"
+                className="text-sm bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-md px-2 py-1 text-gray-700 dark:text-gray-300 focus:outline-none focus:border-blue-500"
+                title="Language selection (currently for display only)"
               >
-                <option value="en">EN</option>
-                <option value="de">DE</option>
-                <option value="ro">RO</option>
-                <option value="ru">RU</option>
+                <option value="en" className="bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300">EN</option>
+                <option value="de" className="bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300">DE</option>
+                <option value="ru" className="bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300">RU</option>
               </select>
             </div>
 

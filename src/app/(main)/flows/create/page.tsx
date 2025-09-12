@@ -7,7 +7,6 @@ import { ControlPanel } from "@/components/flows/ControlPanel";
 import { SuggestionsGrid } from "@/components/flows/SuggestionsGrid";
 import { CombinedPoseLibrary } from "@/components/flows/CombinedPoseLibrary";
 import { GeneratePreviewModal } from "@/components/flows/GeneratePreviewModal";
-import { Player } from "@/components/flows/Player";
 import { SavedFlows } from "@/components/flows/SavedFlows";
 import { PoseLibrarySidebar } from "@/components/flows/PoseLibrarySidebar";
 import { ExportFlow } from "@/components/flows/ExportFlow";
@@ -119,7 +118,7 @@ export default function CreateFlowPage() {
     }
   }, 1000); // Timer runs every second, tempo is handled by adjusting duration
 
-  // --- AI Flow Generation Handler ---
+  // --- 🤖 Flow Generation Handler ---
   const handleGenerate = async () => {
     try {
       const requestData = {
@@ -154,7 +153,7 @@ export default function CreateFlowPage() {
         setPreview(smartGenerate(minutes, intensity, focus));
       }
     } catch (error) {
-      console.error('Error generating AI flow:', error);
+      console.error('Error generating 🤖 flow:', error);
       // Fallback to legacy generation
       setPreview(smartGenerate(minutes, intensity, focus));
     }
@@ -452,7 +451,7 @@ export default function CreateFlowPage() {
   });
 
   return (
-    <div className="min-h-screen bg-background text-foreground pb-40">
+    <div className="min-h-screen bg-background text-foreground">
       <header className="mx-auto max-w-7xl px-4 py-6">
         <div className="flex items-center justify-between mb-4">
           <div>
@@ -462,7 +461,7 @@ export default function CreateFlowPage() {
           <KeyboardShortcuts />
         </div>
         
-        {/* AI Yoga Flow Generator */}
+        {/* 🤖 Yoga Flow Generator */}
         <div className="mt-6">
           <YogaAIDemo />
         </div>
@@ -551,10 +550,10 @@ export default function CreateFlowPage() {
       </header>
       
       {/* Main content area with sidebar */}
-      <div className="mx-auto max-w-7xl px-4 pb-16">
+      <div className="mx-auto max-w-7xl px-4">
         <SavedFlows flows={savedFlows} onLoad={handleLoadFlow} onDelete={handleDeleteFlow} />
         
-        {/* Combined Flow Management: Your Flow + Quick Actions + AI Flow Review */}
+        {/* Combined Flow Management: Your Flow + Quick Actions + 🤖 Flow Review */}
         <FlowManagement
           flow={flow}
           secondsPerPose={secondsPerPose}
@@ -575,7 +574,7 @@ export default function CreateFlowPage() {
         />
         
         <div className="space-y-6 mt-6">
-          {/* AI-Powered Flow Validation */}
+          {/* 🤖-Powered Flow Validation */}
           <FlowValidation 
             flow={flow} 
             totalSeconds={totalSeconds} 
@@ -583,7 +582,7 @@ export default function CreateFlowPage() {
             className="mt-6"
           />
           
-          {/* Combined AI Suggestions and Search Library */}
+          {/* Combined 🤖 Suggestions and Search Library */}
           <CombinedPoseLibrary onAddPose={addPose} />
 
           {/* Export Flow Section */}
@@ -600,33 +599,7 @@ export default function CreateFlowPage() {
         </div>
       </div>
       
-      {flow.length > 0 && <Player {...{ 
-        isPlaying: playbackState === 'playing', 
-        isPaused: playbackState === 'paused', 
-        currentPoseId: flow[currentPoseIndex], 
-        nextPoseId: flow[currentPoseIndex + 1], 
-        timeInPose, 
-        currentPoseDuration: tempoAdjust(secondsPerPose[currentPoseIndex] ?? 0, playbackRate), 
-        sessionTotalSeconds: totalSeconds, 
-        sessionTimeRemaining, 
-        onPlay: handlePlay, 
-        onPause: handlePause, 
-        onResume: handleResume, 
-        onStop: handleStop, 
-        onNext: handleNext, 
-        onPrev: handlePrev, 
-        playbackRate, 
-        adjustRate,
-        flow,
-        secondsPerPose,
-        onRemovePose: removePose,
-        onUpdatePoseDuration: updatePoseDuration,
-        timingMode,
-        secPerBreath,
-        onMovePose: movePose,
-        dragIndexRef: dragIndex,
-        activePoseIndex: playbackState !== 'idle' ? currentPoseIndex : -1
-      }} />}
+
       <GeneratePreviewModal isOpen={!!preview} onClose={() => setPreview(null)} preview={preview} onShuffle={handleGenerate} onAccept={acceptPreview} />
     </div>
   );

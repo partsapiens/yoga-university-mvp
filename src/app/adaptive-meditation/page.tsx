@@ -37,7 +37,7 @@ export default function AdaptiveMeditationPage() {
             🧘‍♀️ Adaptive Meditation Center
           </h1>
           <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-            Experience personalized meditation powered by mood detection, sentiment analysis, and adaptive AI recommendations.
+            Experience personalized meditation powered by mood detection, sentiment analysis, and adaptive 🤖 recommendations.
           </p>
         </div>
 
@@ -148,13 +148,13 @@ export default function AdaptiveMeditationPage() {
 
               {/* Feature Highlights */}
               <div className="bg-gradient-to-r from-blue-50 to-purple-50 rounded-lg p-6">
-                <h3 className="text-lg font-semibold text-gray-800 mb-4">✨ AI-Powered Features</h3>
+                <h3 className="text-lg font-semibold text-gray-800 mb-4">✨ 🤖-Powered Features</h3>
                 <div className="grid md:grid-cols-3 gap-4">
                   <div className="bg-white/50 rounded-lg p-4">
                     <div className="text-2xl mb-2">🧠</div>
                     <h4 className="font-medium text-gray-700 mb-1">Sentiment Analysis</h4>
                     <p className="text-sm text-gray-600">
-                      Advanced AI analyzes your text input to understand your emotional state
+                      Advanced 🤖 analyzes your text input to understand your emotional state
                     </p>
                   </div>
                   <div className="bg-white/50 rounded-lg p-4">
