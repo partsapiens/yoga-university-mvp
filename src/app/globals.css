@@ -64,8 +64,12 @@
 }
 
 @layer components {
+  /* Enhanced responsive button system */
   .btn {
     @apply inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none ring-offset-background;
+    /* Enhanced touch targets for mobile */
+    min-height: 44px; /* iOS minimum touch target */
+    min-width: 44px;
   }
 
   .btn-primary {
@@ -82,10 +86,127 @@
 
   .input {
     @apply flex h-10 w-full rounded-md border border-input bg-transparent px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50;
+    /* Enhanced mobile input styling */
+    min-height: 44px;
   }
 
   .card {
     @apply rounded-lg border bg-card text-card-foreground shadow-sm;
+  }
+
+  /* Enhanced responsive container system */
+  .container-responsive {
+    @apply w-full mx-auto px-4;
+    max-width: 100%;
+  }
+  
+  /* Responsive container sizes */
+  @media (min-width: 640px) {
+    .container-responsive {
+      @apply px-6;
+      max-width: 640px;
+    }
+  }
+  
+  @media (min-width: 768px) {
+    .container-responsive {
+      @apply px-8;
+      max-width: 768px;
+    }
+  }
+  
+  @media (min-width: 1024px) {
+    .container-responsive {
+      max-width: 1024px;
+    }
+  }
+  
+  @media (min-width: 1280px) {
+    .container-responsive {
+      max-width: 1280px;
+    }
+  }
+  
+  @media (min-width: 1536px) {
+    .container-responsive {
+      max-width: 1536px;
+    }
+  }
+
+  /* Responsive grid system */
+  .grid-responsive {
+    @apply grid gap-4;
+    grid-template-columns: 1fr;
+  }
+  
+  @media (min-width: 640px) {
+    .grid-responsive-sm-2 {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  
+  @media (min-width: 768px) {
+    .grid-responsive-md-2 {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    .grid-responsive-md-3 {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+  
+  @media (min-width: 1024px) {
+    .grid-responsive-lg-2 {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    .grid-responsive-lg-3 {
+      grid-template-columns: repeat(3, 1fr);
+    }
+    .grid-responsive-lg-4 {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+
+  /* Enhanced card system with better responsive behavior */
+  .card-responsive {
+    @apply rounded-lg border bg-card text-card-foreground shadow-sm p-4;
+    width: 100%;
+    box-sizing: border-box;
+  }
+  
+  @media (min-width: 768px) {
+    .card-responsive {
+      @apply p-6;
+    }
+  }
+
+  /* Responsive spacing utilities */
+  .space-responsive {
+    @apply space-y-4;
+  }
+  
+  @media (min-width: 768px) {
+    .space-responsive {
+      @apply space-y-6;
+    }
+  }
+  
+  @media (min-width: 1024px) {
+    .space-responsive {
+      @apply space-y-8;
+    }
+  }
+
+  /* Touch-friendly navigation elements */
+  .nav-item-responsive {
+    @apply inline-flex items-center justify-center px-3 py-2 text-sm font-medium transition-colors;
+    min-height: 44px;
+    min-width: 44px;
+  }
+  
+  @media (min-width: 768px) {
+    .nav-item-responsive {
+      @apply px-4 py-2;
+    }
   }
 }
 
@@ -199,7 +320,8 @@
   /* Mobile responsive adjustments for manual */
   @media (max-width: 768px) {
     .manual-content {
-      @apply text-sm;
+      @apply text-sm leading-relaxed;
+      padding: 1rem;
     }
     
     .sanskrit-term {
@@ -207,7 +329,133 @@
     }
     
     .concept-box {
-      @apply p-3 text-sm;
+      @apply p-3 text-sm mx-2;
+    }
+    
+    .manual-content h2 {
+      @apply text-xl;
+    }
+    
+    .manual-content h3 {
+      @apply text-lg;
+    }
+  }
+
+  /* Enhanced responsive typography system */
+  .text-responsive-xs {
+    @apply text-xs;
+  }
+  
+  @media (min-width: 768px) {
+    .text-responsive-xs {
+      @apply text-sm;
+    }
+  }
+  
+  .text-responsive-sm {
+    @apply text-sm;
+  }
+  
+  @media (min-width: 768px) {
+    .text-responsive-sm {
+      @apply text-base;
+    }
+  }
+  
+  .text-responsive-base {
+    @apply text-sm;
+  }
+  
+  @media (min-width: 640px) {
+    .text-responsive-base {
+      @apply text-base;
+    }
+  }
+  
+  @media (min-width: 1024px) {
+    .text-responsive-base {
+      @apply text-lg;
+    }
+  }
+  
+  .text-responsive-lg {
+    @apply text-base;
+  }
+  
+  @media (min-width: 640px) {
+    .text-responsive-lg {
+      @apply text-lg;
+    }
+  }
+  
+  @media (min-width: 1024px) {
+    .text-responsive-lg {
+      @apply text-xl;
+    }
+  }
+  
+  .text-responsive-xl {
+    @apply text-lg;
+  }
+  
+  @media (min-width: 640px) {
+    .text-responsive-xl {
+      @apply text-xl;
+    }
+  }
+  
+  @media (min-width: 1024px) {
+    .text-responsive-xl {
+      @apply text-2xl;
+    }
+  }
+
+  /* Responsive heading system */
+  .heading-responsive-1 {
+    @apply text-2xl font-bold;
+  }
+  
+  @media (min-width: 640px) {
+    .heading-responsive-1 {
+      @apply text-3xl;
+    }
+  }
+  
+  @media (min-width: 1024px) {
+    .heading-responsive-1 {
+      @apply text-4xl;
+    }
+  }
+  
+  .heading-responsive-2 {
+    @apply text-xl font-bold;
+  }
+  
+  @media (min-width: 640px) {
+    .heading-responsive-2 {
+      @apply text-2xl;
+    }
+  }
+  
+  @media (min-width: 1024px) {
+    .heading-responsive-2 {
+      @apply text-3xl;
+    }
+  }
+  
+  .heading-responsive-3 {
+    @apply text-lg font-semibold;
+  }
+  
+  @media (min-width: 640px) {
+    .heading-responsive-3 {
+      @apply text-xl;
+    }
+  }
+  
+  @media (min-width: 1024px) {
+    .heading-responsive-3 {
+      @apply text-2xl;
     }
   }
 
@@ -690,21 +938,297 @@
 
   /* Responsive Design for Mountain Meditation */
   @media (max-width: 1200px) {
-    .breathing-sphere { width: 280px; height: 280px; }
-    .person { width: 150px; height: 180px; }
+    .breathing-sphere { 
+      width: 280px; 
+      height: 280px; 
+    }
+    .person { 
+      width: 150px; 
+      height: 180px; 
+    }
   }
 
   @media (max-width: 768px) {
+    .hero-container {
+      height: 100vh;
+      min-height: 600px;
+    }
+    
     .breathing-sphere {
-        width: 220px;
-        height: 220px;
-        right: 10%;
-        top: 35%;
+      width: 220px;
+      height: 220px;
+      right: 10%;
+      top: 35%;
     }
+    
     .person-container {
-        bottom: 30%;
-        left: 10%;
+      bottom: 30%;
+      left: 10%;
     }
-    .person { width: 120px; height: 150px; }
+    
+    .person { 
+      width: 120px; 
+      height: 150px; 
+    }
+    
+    /* Optimize mountain layers for mobile */
+    .mountains {
+      height: 35%;
+    }
+    
+    /* Adjust cloud animations for smaller screens */
+    .cloud1, .cloud2 {
+      animation-duration: 20s;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .hero-container {
+      height: 100vh;
+      min-height: 500px;
+    }
+    
+    .breathing-sphere {
+      width: 180px;
+      height: 180px;
+      right: 5%;
+      top: 30%;
+    }
+    
+    .person-container {
+      bottom: 25%;
+      left: 5%;
+    }
+    
+    .person { 
+      width: 100px; 
+      height: 130px; 
+    }
+    
+    .person-body {
+      width: 50px;
+      height: 70px;
+    }
+    
+    .person-head {
+      width: 35px;
+      height: 35px;
+      bottom: 60px;
+    }
+    
+    .person-arms {
+      width: 80px;
+      height: 30px;
+      bottom: 40px;
+    }
+    
+    .person-legs {
+      width: 70px;
+      height: 20px;
+    }
+    
+    /* Optimize particles for mobile performance */
+    .particle:nth-child(n+4) {
+      display: none;
+    }
+  }
+  
+  /* Landscape mobile optimization */
+  @media (max-width: 768px) and (orientation: landscape) {
+    .hero-container {
+      height: 100vh;
+      min-height: 400px;
+    }
+    
+    .breathing-sphere {
+      width: 200px;
+      height: 200px;
+      right: 15%;
+      top: 20%;
+    }
+    
+    .person-container {
+      bottom: 15%;
+      left: 15%;
+    }
+    
+    .mountains {
+      height: 30%;
+    }
+  }
+}
+
+/* Additional responsive utilities */
+@layer utilities {
+  /* Enhanced responsive containers */
+  .container-full {
+    @apply w-full max-w-none px-4;
+  }
+  
+  @media (min-width: 640px) {
+    .container-full {
+      @apply px-6;
+    }
+  }
+  
+  @media (min-width: 1024px) {
+    .container-full {
+      @apply px-8;
+    }
+  }
+  
+  .container-content {
+    @apply w-full max-w-4xl mx-auto px-4;
+  }
+  
+  @media (min-width: 640px) {
+    .container-content {
+      @apply px-6;
+    }
+  }
+  
+  @media (min-width: 1024px) {
+    .container-content {
+      @apply px-8;
+    }
+  }
+  
+  .container-wide {
+    @apply w-full max-w-6xl mx-auto px-4;
+  }
+  
+  @media (min-width: 640px) {
+    .container-wide {
+      @apply px-6;
+    }
+  }
+  
+  @media (min-width: 1024px) {
+    .container-wide {
+      @apply px-8;
+    }
+  }
+
+  /* Responsive flex utilities */
+  .flex-responsive {
+    @apply flex flex-col gap-4;
+  }
+  
+  @media (min-width: 768px) {
+    .flex-responsive {
+      @apply flex-row gap-6;
+    }
+  }
+  
+  .flex-responsive-reverse {
+    @apply flex flex-col-reverse gap-4;
+  }
+  
+  @media (min-width: 768px) {
+    .flex-responsive-reverse {
+      @apply flex-row gap-6;
+    }
+  }
+
+  /* Responsive spacing */
+  .p-responsive {
+    @apply p-4;
+  }
+  
+  @media (min-width: 768px) {
+    .p-responsive {
+      @apply p-6;
+    }
+  }
+  
+  @media (min-width: 1024px) {
+    .p-responsive {
+      @apply p-8;
+    }
+  }
+  
+  .py-responsive {
+    @apply py-8;
+  }
+  
+  @media (min-width: 768px) {
+    .py-responsive {
+      @apply py-12;
+    }
+  }
+  
+  @media (min-width: 1024px) {
+    .py-responsive {
+      @apply py-16;
+    }
+  }
+  
+  .px-responsive {
+    @apply px-4;
+  }
+  
+  @media (min-width: 640px) {
+    .px-responsive {
+      @apply px-6;
+    }
+  }
+  
+  @media (min-width: 1024px) {
+    .px-responsive {
+      @apply px-8;
+    }
+  }
+
+  /* Responsive visibility utilities */
+  .mobile-only {
+    @apply block;
+  }
+  
+  @media (min-width: 768px) {
+    .mobile-only {
+      @apply hidden;
+    }
+  }
+  
+  .tablet-up {
+    @apply hidden;
+  }
+  
+  @media (min-width: 768px) {
+    .tablet-up {
+      @apply block;
+    }
+  }
+  
+  .desktop-only {
+    @apply hidden;
+  }
+  
+  @media (min-width: 1024px) {
+    .desktop-only {
+      @apply block;
+    }
+  }
+
+  /* Touch-friendly sizing */
+  .touch-target {
+    min-height: 44px;
+    min-width: 44px;
+  }
+  
+  .touch-target-large {
+    min-height: 48px;
+    min-width: 48px;
+  }
+
+  /* Responsive text alignment */
+  .text-center-mobile {
+    @apply text-center;
+  }
+  
+  @media (min-width: 768px) {
+    .text-center-mobile {
+      @apply text-left;
+    }
   }
 }
