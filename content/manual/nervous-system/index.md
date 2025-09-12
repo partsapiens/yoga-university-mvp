@@ -2,7 +2,7 @@
 title: Nervous System
 slug: nervous-system
 group: Anatomy
-order: 37
+order: 38
 summary: >-
   SENSORY DIVISION Sensory receptors are divided into three classes based either
   on their location in the body or the location of the stimuli to which they

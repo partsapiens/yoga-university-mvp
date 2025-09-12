@@ -2,7 +2,7 @@
 title: Breath
 slug: breath
 group: Anatomy
-order: 38
+order: 39
 summary: >-
   ANATOMY OF BREATH Diaphragm ADome shaped muscle that divides ribs fromabdomen
   horizontally through the center of the body. The diaphragm pulls down to

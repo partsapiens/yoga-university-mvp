@@ -2,7 +2,7 @@
 title: 'Fascia, Ligaments and Tendons'
 slug: fascia-ligaments-and-tendons
 group: Anatomy
-order: 34
+order: 35
 summary: >-
   FASCIA- Continuous sheet of fibrous tissue locatedbeneath the skin that
   connects everything inthe body. Everything from bone to muscle fibers to nerve

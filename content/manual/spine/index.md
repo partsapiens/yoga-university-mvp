@@ -2,7 +2,7 @@
 title: Spine
 slug: spine
 group: Anatomy
-order: 32
+order: 33
 summary: >-
   joint movement.EFFICIENCY OF MOVEMENT Efficiency of movement occurs when using
   theleast amount of physical, metabolic, and mental effort (energy) with each

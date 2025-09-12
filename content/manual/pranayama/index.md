@@ -2,7 +2,7 @@
 title: Pranayama
 slug: pranayama
 group: History and Philosophy
-order: 43
+order: 44
 summary: >-
   – rhythmic control of breathPida – pain, suffering, pressurePinda – fetus or
   embryoPrasarita – spread out, stretched outRaja – a king or rulerSalabha – a

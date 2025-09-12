@@ -2,7 +2,7 @@
 title: Bandhas
 slug: bandhas
 group: History and Philosophy
-order: 44
+order: 45
 summary: >-
   Bandha translatestolockandreferstostopping
   theoutflowofenergyandreversingittodrawinward.AnotherwaytothinkofBandhaisasa

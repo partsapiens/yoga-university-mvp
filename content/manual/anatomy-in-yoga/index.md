@@ -2,7 +2,7 @@
 title: Anatomy in Yoga
 slug: anatomy-in-yoga
 group: Anatomy
-order: 30
+order: 31
 summary: >-
   --- [← Prev](/pages/page-218.md) &nbsp; [Top](/index.md) &nbsp; [Next
   →](/pages/page-220.md) Page 220 5 .3 PLANES OF MOTION All basic movements of

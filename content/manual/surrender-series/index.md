@@ -2,16 +2,101 @@
 title: Surrender Series
 slug: surrender-series
 group: Postures
-order: 24
+order: 25
 summary: >-
-  1:53 - 2:00Transition“Draw your knees into your chest, Roll up to a seat,
-  Extend your legs with a slight bend in your knees, Inhale...”ExhaleSeated
-  Forward Fold - Paschimottanasana…
+  Seated Forward Fold PaschimottanasanaHappy Baby Pose Ananda BalasanaSupine
+  Twist Jathara ParivartanasanaCorpse Pose SavasanaEasy Pose Sukhasana1:23 -
+  1:33 1:53 - 2:001:47 - 1:491:4…
 tags: []
 ---
 # Surrender Series
 
-1:53 - 2:00Transition“Draw your knees into your chest, Roll up to a seat, Extend your legs with a slight bend in your knees, Inhale...”ExhaleSeated Forward Fold - Paschimottanasana2-3 BTransition“Slowly lower onto your back, Inhale bend your knees...”ExhaleHappy Baby Pose - Ananda Balasana2-3 BTransition“Pull your right knee to your chest, Extend your left leg long, Inhale...”ExhaleSupine Twist - Jathara Parivartanasana2-3 BTransition“Pull your left knee to your chest, Extend your right leg long, Inhale...”ExhaleSupine Twist - Jathara Parivartanasana2-3 BTransition“Hug your knees into your chest, Inhale...”ExhaleCorpse Pose - SavasanaTransition“Reach your arms and legs long, Roll to either side...”BreatheFetal PositionTransition“Draw your knees in toward your chest, Press up to a seat...”2-3 BInhaleDraw your thumbs to third eye center1 BExhaleBow forward “Namaste”1 B
+Seated Forward Fold PaschimottanasanaHappy Baby Pose Ananda BalasanaSupine Twist Jathara ParivartanasanaCorpse Pose SavasanaEasy Pose Sukhasana1:23 - 1:33
+
+1:53 - 2:001:47 - 1:491:49 - 1:531:33 - 1:38
+3. 3
+
+---
+[← Prev](/pages/page-053.md) &nbsp; [Top](/index.md) &nbsp; [Next →](/pages/page-055.md)
+
+# INTENTION SERIES
+
+INTENTION SERIES
+INTEGRATION SERIES
+SUNSALUTATION B[ both sides, 3 sets ]
+
+---
+[← Prev](/pages/page-054.md) &nbsp; [Top](/index.md) &nbsp; [Next →](/pages/page-056.md)
+
+# 3. 5
+
+3. 5
+SUNSALUTATION A[ 3 sets ]
+CORE SERIES
+CRESCENT LUNGE SERIESPART 1[ both sides ]
+CRESCENT LUNGE SERIESPART 2
+3. 5
+
+---
+[← Prev](/pages/page-055.md) &nbsp; [Top](/index.md) &nbsp; [Next →](/pages/page-057.md)
+
+# SPINE SERIES
+
+BALANCING SERIES[ both sides ]
+SPINE SERIES
+
+---
+[← Prev](/pages/page-056.md) &nbsp; [Top](/index.md) &nbsp; [Next →](/pages/page-058.md)
+
+# 3. 7
+
+3. 7
+TRIANGLE SERIES[ both sides ]
+HIP SERIES[ both sides ]
+SURRENDER SERIES
+3. 7
+
+---
+[← Prev](/pages/page-057.md) &nbsp; [Top](/index.md) &nbsp; [Next →](/pages/page-059.md)
+
+# Page 59
+
+3. 8© Yoga Flow YOGA C1 Transition ChartINTEGRATION SERIES —Child’s Pose - Balasana2 minTransition“Inhale Table Top...”ExhaleDownward Facing Dog - Adho Mukha Svanasana1 minTransition“Inhale look forward, Exhale Ragdoll walk to the top of your mat...”ExhaleRagdoll - Uttanasana1 minTransition“Release your fingertips to the mat, Toe-heel your feet together, Inhale roll yourself up to standing...”INTENTION SERIES 1:04 - 1:05ExhaleStand at Attention - Samasthiti3BSUN SALUTATION A Surya Namaskar A [ 3 sets ]1:05 - 1:101st set - flow slow 2-3 breathsTransition“Open your eyes, Release your arms down...”InhaleMountain Pose - TadasanaExhaleStanding Forward Fold - UttanasanaInhaleHalfway Lift - Ardha UttanasanaExhaleHigh Plank to Low Plank - Chaturanga DandasanaInhaleUpward Facing Dog - Urdhva Mukha SvanasanaExhaleDownward Facing Dog - Adho Mukha Svanasana2-3 BTransition“Inhale look forward, Exhale walk to the top of your mat...”InhaleHalfway Lift - Ardha UttanasanaExhaleStanding Forward Fold - Uttanasana2nd and 3rd set - vinyasa, flow 1 breath to 1 movementInhaleMountain Pose - TadasanaExhaleStanding Forward Fold - UttanasanaInhaleHalfway Lift - Ardha UttanasanaExhaleHigh Plank to Low Plank - Chaturanga DandasanaInhaleUpward Facing Dog - Urdhva Mukha SvanasanaExhaleDownward Facing Dog - Adho Mukha Svanasana2-3 BTransition“Inhale look forward, Exhale walk to the top of your mat...”InhaleHalfway Lift - Ardha UttanasanaExhaleStanding Forward Fold - UttanasanaSUN SALUTATION B Surya Namaskar B [ 3 sets ] 1:10 - 1:201st set - flow slow 2-3 breathsInhaleChairPose-Utkatasana
+
+---
+[← Prev](/pages/page-058.md) &nbsp; [Top](/index.md) &nbsp; [Next →](/pages/page-060.md)
+
+# Page 60
+
+3. 9ExhaleStanding Forward Fold - UttanasanaInhaleHalfway Lift - Ardha UttanasanaExhaleHigh Plank to Low Plank - Chaturanga DandasanaInhaleUpward Facing Dog - Urdhva Mukha SvanasanaExhaleDownward Facing Dog - Adho Mukha SvanasanaTransition“Inhale lift your right leg high, Exhale Low Lunge...”InhaleWarrior Two - Virabhadrasana II ExhaleExtended Side Angle - Utthita ParsvakonasanaInhaleReverse Warrior - Parivrtta Virabhadrasana II ExhaleHigh Plank to Low Plank - Chaturanga DandasanaInhaleUpward Facing Dog - Urdhva Mukha SvanasanaExhaleDownward Facing Dog - Adho Mukha SvanasanaTransition“Inhale lift your left leg high, Exhale Low Lunge...”InhaleWarrior Two - Virabhadrasana II ExhaleExtended Side Angle - Utthita ParsvakonasanaInhaleReverse Warrior - Parivrtta Virabhadrasana II ExhaleHigh Plank to Low Plank - Chaturanga DandasanaInhaleUpward Facing Dog - Urdhva Mukha SvanasanaExhaleDownward Facing Dog - Adho Mukha Svanasana2-3 BTransition“Inhale look forward, Exhale walk to the top of your mat...”InhaleHalfway Lift - Ardha UttanasanaExhaleStanding Forward Fold - Uttanasana2nd and 3rd set - vinyasa, flow one breath to one movementInhaleChair Pose - UtkatasanaExhaleStanding Forward Fold - UttanasanaInhaleHalfway Lift - Ardha UttanasanaExhaleHigh Plank to Low Plank - Chaturanga DandasanaInhaleUpward Facing Dog - Urdhva Mukha SvanasanaExhaleDownward Facing Dog - Adho Mukha SvanasanaTransition“Inhale lift your right leg high, Exhale Low Lunge...”InhaleWarrior Two - Virabhadrasana II ExhaleExtended Side Angle - Utthita ParsvakonasanaInhaleReverse Warrior - Parivrtta Virabhadrasana II ExhaleHigh Plank to Low Plank - Chaturanga DandasanaInhaleUpward Facing Dog - Urdhva Mukha SvanasanaExhaleDownward Facing Dog - Adho Mukha SvanasanaTransition“Inhale lift your left leg high, Exhale Low Lunge...”InhaleWarrior Two - Virabhadrasana II
+
+---
+[← Prev](/pages/page-059.md) &nbsp; [Top](/index.md) &nbsp; [Next →](/pages/page-061.md)
+
+# Page 61
+
+3 .10 © Yoga Flow YOGA ExhaleExtended Side Angle - Utthita ParsvakonasanaInhaleReverse Warrior - Parivrtta VirabhadrasanaExhaleHigh Plank to Low Plank - Chaturanga DandasanaInhaleUpward Facing Dog - Urdhva Mukha SvanasanaExhaleDownward Facing Dog - Adho Mukha Svanasana2-3 BCORE SERIES 1:20 - 1:23Transition“Inhale look forward, Exhale walk through to a seat and lie on your back...”On ActionReclined Bound Angle Pose Sit Ups30 secsOn ActionBicycle Sit Ups1 minTransition“Draw your knees into your chest, Roll up to a seat...”On ActionBoat Pose - Navasana2-3 BTransition“Cross your ankles, Place your hands on the floor, Inhale step back to High Plank...”ExhaleHigh Plank to Low Plank - Chaturanga DandasanaInhaleUpward Facing Dog - Urdhva Mukha SvanasanaExhaleDownward Facing Dog - Adho Mukha SvanasanaCRESCENT LUNGE SERIES [ both sides] 1:23 - 1:33Transition“Inhale lift you right leg high, Exhale Low Lunge...”InhaleCrescent Lunge - Anjaneyasana2-3 BTransition“Inhale, Exhale bring your hands to heart center, Inhale lengthen your spine forward...”ExhaleRevolved Crescent Lunge2-3 BExhaleRunner’s Lunge2-3 BTransition“Inhale up to your palms, Exhale High Plank...”InhaleSide Plank - Vasisthasana2-3 BExhaleHigh Plank to Low Plank - Chaturanga DandasanaInhaleUpward Facing Dog - Urdhva Mukha SvanasanaExhaleDownward Facing Dog - Adho Mukha Svanasana2-3 BTransition“Inhale lift your left leg high, Exhale Low Lunge.”InhaleCrescent Lunge - Anjaneyasana2-3 BExhaleRevolved Crescent Lunge - Parivrtta Anjaneyasana2-3 BExhaleRunner’s Lunge2-3 BTransition“Inhale up to your palms, Exhale High Plank...”InhaleSide Plank - Vasisthasana2-3 BExhaleHigh Plank to Low Plank - Chaturanga DandasanaInhaleUpward Facing Dog - Urdhva Mukha SvanasanaExhaleDownward Facing Dog - Adho Mukha Svanasana2-3 BTransition“Inhale look forward, Exhale walk to the top of your mat...”InhaleHalfway Lift - Ardha Uttanasana
+
+---
+[← Prev](/pages/page-060.md) &nbsp; [Top](/index.md) &nbsp; [Next →](/pages/page-062.md)
+
+# Page 62
+
+3 .11 ExhaleStanding Forward Fold - UttanasanaInhaleChair Pose - UtkatasanaTransitionInhale, Exhale bring your hands to heart center, Inhale lengthen your spine forward...ExhalePrayer Twist - Parivrtta Utkatasana (twist right)2-3 BTransition“Inhale, Exhale Standing Forward Fold, Toe-heel your feet hips width distance, Inhale...”ExhaleHands to Feet (Gorilla Variation) - Padhastasana2-3 BTransition“Release your hands from under your feet, Toe-heel your feet back to touch...”InhaleChair Pose - UtkatasanaTransitionInhale, Exhale bring your hands to heart center, Inhale lengthen your spine forward...ExhalePrayer Twist - Parivrtta Utkatasana (twist left)2-3 BTransition“Inhale, Exhale Standing Forward Fold, Inhale plant your hands under your shoulders...”ExhaleCrow Pose - Bakasana2-3 BRest in Child’s Pose - Balasana2-3 BExhaleDownward Facing Dog - Adho Mukha Svanasana2-3 BTransition“Inhale look forward, Exhale walk to the top of your mat...”InhaleHalfway Lift - Ardha UttanasanaExhaleStanding Forward Fold - UttanasanaBALANCING SERIES [ both sides] 1:33 - 1:38InhaleChair Pose - UtkatasanaExhaleEagle Pose - Garudasana (right)2-3 BInhaleChair Pose - UtkatasanaExhaleEagle Pose - Garudasana (left)2-3 BInhaleMountain Pose - TadasanaExhaleDancer’s Pose - Natarajasana (right)2-3 BInhaleMountain Pose - TadasanaExhaleDancer’s Pose - Natarajasana (left)2-3 BExhaleStand at Attention - Samasthiti2-3 BInhaleTree Pose - Vrksasana (right foot up)2-3 BExhaleStand at Attention - Samasthiti2-3 BInhaleTree Pose - Vrksasana (left foot up)2-3 BExhaleStand at Attention - Samasthiti2-3 BInhaleMountain Pose - TadasanaExhaleStanding Forward Fold - UttanasanaInhaleHalfway Lift - Ardha UttanasanaExhaleHigh Plank to Low Plank - Chaturanga DandasanaInhaleUpward Facing Dog - Urdhva Mukha SvanasanaExhaleDownward Facing Dog - Adho Mukah Svanasana
+
+---
+[← Prev](/pages/page-061.md) &nbsp; [Top](/index.md) &nbsp; [Next →](/pages/page-063.md)
+
+# Page 63
+
+3 .12 © Yoga Flow YOGA TRIANGLE SERIES [ both sides] 1:38 - 1:47Transition“Inhale lift your right leg high, Exhale Low Lunge...”InhaleWarrior One - Virabhadrasana I2-3 BExhaleWarrior Two - Virabhadrasana II1 BTransition“Inhale straighten your right leg...”ExhaleTriangle - Trikonasa2-3 BTransition“Inhale rise, Exhale pivot your feet parallel to the short edge of your mat, Inhale reach your chest high...”ExhaleWide Leg Forward Fold - Prasarita Padottanasana2-3 BTransition“Inhale rise up, Exhale Warrior Two, Inhale...”ExhaleHigh Plank to Low Plank - Chaturanga DandasanaInhaleUpward Facing Dog - Urdhva Mukha SvanasanaExhaleDownward Facing Dog - Adho Mukha SvanasanaTransition“Inhale lift your left leg high, Exhale Low Lunge...”InhaleWarrior One - Virabhadrasana I2-3 BExhaleWarrior Two - Virabhadrasana II1BTransition“Inhale straighten your left leg...”ExhaleTriangle - Trikonasa2-3 BTransition“Inhale rise, Exhale pivot your feet parallel to the short edge of your mat, Inhale reach your chest high...”ExhaleWide Leg Forward Fold - Prasarita Padottanasana2-3 BTransition“Inhale rise up, Exhale Warrior Two, Inhale...”ExhaleHigh Plank to Low Plank - Chaturanga DandasanaInhaleUpward Facing Dog - Urdhva Mukha SvanasanaExhaleDownward Facing Dog - Adho Mukha SvanasanaHIP SERIES [ both sides] 1:47 - 1:49Transition“Inhale lift your right leg high...”ExhaleHalf Pigeon - Eka Pada Rajakapotasana2-3 BExhaleDownward Facing Dog - Adho Mukha SvanasanaTransition“Inhale lift your left leg high...”ExhaleHalf Pigeon - Eka Pada Rajakapotasana2-3 BExhaleDownward Facing Dog - Adho Mukha Svanasana2-3 BTransition“Inhale High Plank, Exhale slowly lower down to the mat, Place your hands lightly under your shoulders...”SPINE SERIES 1:49 - 1:53InhaleCobra - Bhujangasana2-3 BTransition“Inhale, Exhale lower down, Bring your left ear to the mat...”—Rest, Look right3-5 BTransition“Bring your chin back to center, Reach back and capture the outside edges of your feet...”InhaleFloor Bow - Dhanurasana2-3 B
+
+---
+[← Prev](/pages/page-062.md) &nbsp; [Top](/index.md) &nbsp; [Next →](/pages/page-064.md)
+
+# Page 64
+
+3 .13 Transition“Inhale, Exhale lower down, Bring your right ear to the mat...”—Rest, look left3-5 BTransition“Press up to all fours, Stand on your knees, Bring your palms to your lower back, Point your fingers down, Inhale...”ExhaleCamel - Ustrasana2-3 BTransition“Place your hands on your lower back, Inhale rise up, Exhale sit on your heels...”—Sit on your heels3-5 BTransition“Lie down on your back, Bend your knees, Plant your feet hip width distance...”InhaleBridge Pose - Setu Bandha Sarvangasana2-3 BExhaleReclined Bound Angle Pose - Supta Baddha Konasana2-3 BSURRENDER SERIES 1:53 - 2:00Transition“Draw your knees into your chest, Roll up to a seat, Extend your legs with a slight bend in your knees, Inhale...”ExhaleSeated Forward Fold - Paschimottanasana2-3 BTransition“Slowly lower onto your back, Inhale bend your knees...”ExhaleHappy Baby Pose - Ananda Balasana2-3 BTransition“Pull your right knee to your chest, Extend your left leg long, Inhale...”ExhaleSupine Twist - Jathara Parivartanasana2-3 BTransition“Pull your left knee to your chest, Extend your right leg long, Inhale...”ExhaleSupine Twist - Jathara Parivartanasana2-3 BTransition“Hug your knees into your chest, Inhale...”ExhaleCorpse Pose - SavasanaTransition“Reach your arms and legs long, Roll to either side...”BreatheFetal PositionTransition“Draw your knees in toward your chest, Press up to a seat...”2-3 BInhaleDraw your thumbs to third eye center1 BExhaleBow forward “Namaste”1 B
 
 ---
 [← Prev](/pages/page-063.md) &nbsp; [Top](/index.md) &nbsp; [Next →](/pages/page-065.md)

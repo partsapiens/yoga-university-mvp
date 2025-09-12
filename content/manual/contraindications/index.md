@@ -2,7 +2,7 @@
 title: Contraindications
 slug: contraindications
 group: Assists and Options
-order: 29
+order: 30
 summary: >-
   forward fold. If the injury resides in the lumbar spine, limit backbends
   potentially only to Cobra or variations of Shalabasana. Fifty percent of

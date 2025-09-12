@@ -2,7 +2,7 @@
 title: Bones
 slug: bones
 group: Anatomy
-order: 31
+order: 32
 summary: >-
   of the neck. As the head shifts forward, the neck extensor muscles must work
   harder to keep the head and visionupright. Over time, the increased chronic

@@ -2,7 +2,7 @@
 title: Props
 slug: props
 group: Assists and Options
-order: 27
+order: 28
 summary: >-
   to support thefoundational form of a pose for a student?- Blocks, Straps, Roll
   ed Mats/ Towels Muscle Action- How would you use props to support the muscle

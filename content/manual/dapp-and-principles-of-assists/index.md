@@ -2,7 +2,7 @@
 title: DAPP and Principles of Assists
 slug: dapp-and-principles-of-assists
 group: Assists and Options
-order: 26
+order: 27
 summary: >-
   IntentionThe intention of an adjustment is to set the student up for success.
   Adjust or “assist” thestudent to foster proper and healthy alignment. All your

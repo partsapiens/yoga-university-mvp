@@ -2,7 +2,7 @@
 title: Joints
 slug: joints
 group: Anatomy
-order: 33
+order: 34
 summary: >-
   for Maximum Support- Track your knees in line with your big and middle toes-
   Watch for knocked knees or bow legged knees- Watch for Knees straight vs.

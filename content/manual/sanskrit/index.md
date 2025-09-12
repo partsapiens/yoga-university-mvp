@@ -2,7 +2,7 @@
 title: Sanskrit
 slug: sanskrit
 group: History and Philosophy
-order: 42
+order: 43
 summary: >-
   is the classical language of India. Itsmodern form is Hindi and is one of the
   22 official languages of India. Sanskrit is one of the earliest members of the

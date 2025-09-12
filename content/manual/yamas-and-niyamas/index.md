@@ -2,7 +2,7 @@
 title: Yamas and Niyamas
 slug: yamas-and-niyamas
 group: History and Philosophy
-order: 41
+order: 42
 summary: >-
   The yamas and niyamas are the first two limbs of the eight-limbed path. They
   are the most concrete places to start, as they relate directly to howyou

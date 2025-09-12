@@ -2,7 +2,7 @@
 title: Common Physical Challenges
 slug: common-physical-challenges
 group: Assists and Options
-order: 28
+order: 29
 summary: >-
   SHOULDERS The student can feel pain in the shoulders if thethoracic spine is
   rotated somewhere around T4 or T5. It is best to refer a student to a

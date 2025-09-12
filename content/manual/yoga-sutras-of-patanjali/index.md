@@ -2,7 +2,7 @@
 title: Yoga Sutras of Patanjali
 slug: yoga-sutras-of-patanjali
 group: History and Philosophy
-order: 40
+order: 41
 summary: >-
   - Pranayama-transformation
   ofindividualenergy-physiologicalandpsychological-into cosmic energy-

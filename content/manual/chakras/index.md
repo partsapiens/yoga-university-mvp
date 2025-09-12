@@ -2,7 +2,7 @@
 title: Chakras
 slug: chakras
 group: History and Philosophy
-order: 45
+order: 46
 summary: >-
   canbeseenasadoorwaythroughwhichweperceiveourown
   reality.Thechakrasaresituatedalongthespinalcolumn, wherever

@@ -2,7 +2,7 @@
 title: Sankalpa
 slug: sankalpa
 group: History and Philosophy
-order: 39
+order: 40
 summary: >-
   WHY Having a sankalpagives you a clear reason to guide your efforts, actions
   and choices. With all the changes in the world, our families, our friends, our

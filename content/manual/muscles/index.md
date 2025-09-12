@@ -2,7 +2,7 @@
 title: Muscles
 slug: muscles
 group: Anatomy
-order: 35
+order: 36
 summary: >-
   under the fascia in Yoga and create mobility.- If we allow any part of our
   bodies to remainimmobile, the fascia become less flexible and eventually

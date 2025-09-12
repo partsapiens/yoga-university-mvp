@@ -2,7 +2,7 @@
 title: Reading Different Bodies
 slug: reading-different-bodies
 group: Anatomy
-order: 36
+order: 37
 summary: >-
   As human beings our bodies are similar in many ways. Similar bones, joints and
   soft tissuestructures carry us through the postures of life. There are also
