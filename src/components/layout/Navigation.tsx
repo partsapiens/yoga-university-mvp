@@ -104,7 +104,7 @@ export const Navigation = ({ userRole }: NavigationProps) => {
 
     setIsVoiceListening(true);
 
-    recognition.onresult = (event) => {
+    recognition.onresult = (event: any) => {
       const command = event.results[0][0].transcript.toLowerCase();
       console.log('Voice command:', command);
       
@@ -130,7 +130,7 @@ export const Navigation = ({ userRole }: NavigationProps) => {
       }
     };
 
-    recognition.onerror = (event) => {
+    recognition.onerror = (event: any) => {
       console.error('Voice recognition error:', event.error);
       setIsVoiceListening(false);
     };
