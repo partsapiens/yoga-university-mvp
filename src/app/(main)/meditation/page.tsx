@@ -17,7 +17,7 @@ interface MeditationSession {
   id: string;
   name: string;
   duration: number; // in minutes
-  type: 'guided' | 'timer' | 'breathing' | 'ai-guided';
+  type: 'guided' | 'timer' | 'breathing';
   description: string;
 }
 
@@ -32,13 +32,6 @@ interface SessionStats {
 
 // Sample meditation techniques
 const MEDITATION_TECHNIQUES: MeditationSession[] = [
-  {
-    id: 'ai-guided',
-    name: '✨ AI-Guided Meditation',
-    duration: 0, // Variable duration
-    type: 'ai-guided',
-    description: 'Personalized meditation created just for you based on your current mood and needs.'
-  },
   {
     id: 'mindfulness-5',
     name: 'Mindfulness Meditation',
@@ -156,11 +149,6 @@ export default function MeditationPage() {
   };
 
   const startSession = (session: MeditationSession) => {
-    if (session.type === 'ai-guided') {
-      setShowMoodInput(true);
-      return;
-    }
-    
     setSelectedSession(session);
     setTimeRemaining(session.duration * 60);
     setIsPlaying(true);
@@ -440,16 +428,9 @@ export default function MeditationPage() {
                 >
                   <div className="flex justify-between items-start mb-2">
                     <h3 className="font-semibold text-lg">{session.name}</h3>
-                    {session.type !== 'ai-guided' && (
-                      <span className="bg-purple-100 text-purple-800 text-sm px-2 py-1 rounded">
-                        {session.duration} min
-                      </span>
-                    )}
-                    {session.type === 'ai-guided' && (
-                      <span className="bg-gradient-to-r from-blue-100 to-purple-100 text-purple-800 text-sm px-2 py-1 rounded">
-                        Personalized
-                      </span>
-                    )}
+                    <span className="bg-purple-100 text-purple-800 text-sm px-2 py-1 rounded">
+                      {session.duration} min
+                    </span>
                   </div>
                   <p className="text-gray-600 text-sm mb-3">{session.description}</p>
                   <div className="flex justify-between items-center">

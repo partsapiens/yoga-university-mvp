@@ -20,20 +20,20 @@ const HomePage = () => {
             </h1>
             
             <p className="text-xl text-white/90 mb-8 max-w-3xl mx-auto drop-shadow-md">
-              Create personalized yoga flows with AI assistance, track your practice, 
+              Create personalized yoga flows with intelligent assistance, track your practice, 
               and grow your teaching skills in our comprehensive platform.
             </p>
             
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link
                 href="/flows/create"
-                className="bg-white/20 backdrop-blur-sm hover:bg-white/30 text-white border border-white/30 px-8 py-4 rounded-lg font-semibold transition-all duration-300 hover:scale-105"
+                className="bg-white/90 backdrop-blur-sm hover:bg-white text-gray-900 border-2 border-white px-8 py-4 rounded-lg font-semibold transition-all duration-300 hover:scale-105 shadow-lg"
               >
                 Start Creating Flows
               </Link>
               <Link
                 href="/poses"
-                className="bg-blue-600/80 backdrop-blur-sm hover:bg-blue-700/80 text-white border border-blue-500/50 px-8 py-4 rounded-lg font-semibold transition-all duration-300 hover:scale-105"
+                className="bg-blue-600 backdrop-blur-sm hover:bg-blue-700 text-white border-2 border-blue-500 px-8 py-4 rounded-lg font-semibold transition-all duration-300 hover:scale-105 shadow-lg"
               >
                 Explore Pose Library
               </Link>
@@ -53,7 +53,7 @@ const HomePage = () => {
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div className="bg-gray-50 p-6 rounded-lg">
-              <h3 className="text-xl font-semibold mb-3">AI-Powered Flow Creation</h3>
+              <h3 className="text-xl font-semibold mb-3">🤖 Intelligent Flow Creation</h3>
               <p className="text-gray-600">Generate personalized yoga sequences based on your goals.</p>
             </div>
             
