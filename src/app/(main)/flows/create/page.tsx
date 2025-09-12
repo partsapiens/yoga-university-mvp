@@ -12,6 +12,7 @@ import { SavedFlows } from "@/components/flows/SavedFlows";
 import { PoseLibrarySidebar } from "@/components/flows/PoseLibrarySidebar";
 import { ExportFlow } from "@/components/flows/ExportFlow";
 import { FlowManagement } from "@/components/flows/FlowManagement";
+import { FlowValidation } from "@/components/flows/FlowValidation";
 import { AutoSave } from "@/components/flows/AutoSave";
 import { KeyboardShortcuts, useKeyboardShortcuts } from "@/components/flows/KeyboardShortcuts";
 import { FlowNameInput } from "@/components/flows/FlowNameInput";
@@ -341,6 +342,11 @@ export default function CreateFlowPage() {
     setFlowName(name);
   };
 
+  const handleSaferAlternative = (saferFlow: PoseId[]) => {
+    setFlow(saferFlow);
+    setOverrides({}); // Reset overrides for the new flow
+  };
+
   const handleSelectTemplate = (template: any) => {
     setFlow(template.poses);
     setOverrides({});
@@ -494,6 +500,14 @@ export default function CreateFlowPage() {
         />
         
         <div className="space-y-6 mt-6">
+          {/* AI-Powered Flow Validation */}
+          <FlowValidation 
+            flow={flow} 
+            totalSeconds={totalSeconds} 
+            onSaferAlternative={handleSaferAlternative}
+            className="mt-6"
+          />
+          
           {/* Combined AI Suggestions and Search Library */}
           <CombinedPoseLibrary onAddPose={addPose} />
 
