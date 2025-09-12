@@ -121,6 +121,26 @@ export default function ManualPage() {
                 Read Chapter 4
               </a>
             </div>
+
+            <div 
+              className="rounded-2xl p-6 transition-all duration-200 hover:transform hover:-translate-y-1 hover:border-blue-400"
+              style={{
+                background: 'linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.02))',
+                border: '1px solid #26303a'
+              }}
+            >
+              <h2 className="text-xl font-semibold text-teal-300 mt-0 mb-3">Chapter 5</h2>
+              <h3 className="text-lg font-medium mb-3">Yoga Philosophy & Lifestyle</h3>
+              <p className="mb-4 text-gray-400 leading-relaxed">
+                Dive deep into yoga philosophy, the eight limbs of yoga, and how to integrate ancient wisdom into modern teaching and daily life.
+              </p>
+              <a 
+                href="/chapter5.html"
+                className="inline-block bg-teal-300 text-gray-900 py-2.5 px-5 rounded-lg font-semibold no-underline transition-all duration-200 hover:bg-blue-400"
+              >
+                Read Chapter 5
+              </a>
+            </div>
           </div>
         </main>
 
