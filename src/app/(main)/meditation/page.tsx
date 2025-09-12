@@ -8,6 +8,7 @@ import { MeditationInput, MeditationScript, MeditationRecommendation } from '@/t
 import { MoodInput } from '@/components/meditation/MoodInput';
 import { GuidedMeditationPlayer } from '@/components/meditation/GuidedMeditationPlayer';
 import { BreathingOrb } from '@/components/meditation/BreathingOrb';
+import { EvolvingBreathingOrb } from '@/components/meditation/EvolvingBreathingOrb';
 import { MeditationRecommendations } from '@/components/meditation/MeditationRecommendations';
 import { Avatar } from '@/components/Avatar';
 import { PersonalizedAffirmations } from '@/components/ai/PersonalizedAffirmations';
@@ -506,67 +507,100 @@ export default function MeditationPage() {
             </div>
           </div>
 
-          {/* Timer and Breathing Visualizer */}
-          <div className="bg-white/70 backdrop-blur-sm rounded-lg p-6 shadow-lg">
-            <h2 className="text-2xl font-semibold mb-6">
-              {selectedSession ? selectedSession.name : 'Select a Session'}
+          {/* Enhanced Breathing Meditation Visualizer */}
+          <div className="bg-white/70 backdrop-blur-sm rounded-lg p-6 shadow-lg min-h-[600px]">
+            <h2 className="text-2xl font-semibold mb-6 text-center">
+              {selectedSession ? selectedSession.name : 'Breathing Meditation'}
             </h2>
             
             {selectedSession ? (
               <div className="text-center">
                 {/* Timer Display */}
-                <div className="mb-8">
-                  <div className="text-6xl font-mono font-bold text-purple-600 mb-4">
+                <div className="mb-6">
+                  <div className="text-4xl font-mono font-bold text-purple-600 mb-2">
                     {formatTime(timeRemaining)}
                   </div>
-                  <div className="text-gray-600">
+                  <div className="text-gray-600 text-sm">
                     {selectedSession.duration} minute session
                   </div>
                 </div>
 
-                {/* Breathing Visualizer for breathing exercises */}
-                {selectedSession.type === 'breathing' && (
-                  <div className="mb-8">
-                    <BreathingOrb
-                      isActive={isPlaying}
-                      pattern={{
+                {/* Enhanced Breathing Visualizer */}
+                <div className="mb-6">
+                  <EvolvingBreathingOrb
+                    isActive={isPlaying}
+                    sessionCount={sessionStats.totalSessions}
+                    pattern={
+                      selectedSession.type === 'breathing' ? {
                         name: 'Box Breathing',
                         inhale: 4,
                         hold1: 4,
                         exhale: 4,
                         hold2: 4,
                         description: '4-4-4-4 pattern for stress relief and focus'
-                      }}
-                    />
-                  </div>
-                )}
+                      } : {
+                        name: 'Natural Breathing',
+                        inhale: 4,
+                        exhale: 4,
+                        description: 'Natural breathing rhythm'
+                      }
+                    }
+                    onBreathCycle={(phase) => {
+                      // Optional: Add breath cycle callbacks for additional features
+                    }}
+                    onEvolution={(stage) => {
+                      // Optional: Handle evolution events
+                      console.log('Evolved to:', stage.name);
+                    }}
+                  />
+                </div>
 
                 {/* Control Buttons */}
                 <div className="flex justify-center gap-4">
                   <button
                     onClick={togglePlayPause}
-                    className={`px-6 py-3 rounded-lg font-semibold text-white transition-colors ${
+                    className={`px-6 py-3 rounded-lg font-semibold text-white transition-all transform hover:scale-105 ${
                       isPlaying 
-                        ? 'bg-orange-500 hover:bg-orange-600' 
-                        : 'bg-green-500 hover:bg-green-600'
-                    }`}
+                        ? 'bg-orange-500 hover:bg-orange-600 shadow-orange-200' 
+                        : 'bg-green-500 hover:bg-green-600 shadow-green-200'
+                    } shadow-lg`}
                   >
-                    {isPlaying ? 'Pause' : 'Play'}
+                    {isPlaying ? '⏸ Pause' : '▶ Play'}
                   </button>
                   <button
                     onClick={resetTimer}
-                    className="bg-gray-500 hover:bg-gray-600 text-white px-6 py-3 rounded-lg font-semibold transition-colors"
+                    className="bg-gray-500 hover:bg-gray-600 text-white px-6 py-3 rounded-lg font-semibold transition-all transform hover:scale-105 shadow-lg"
                   >
-                    Reset
+                    ⏹ Reset
                   </button>
                 </div>
               </div>
             ) : (
-              <div className="text-center text-gray-500 py-16">
-                <p className="text-lg mb-4">Choose a meditation session to begin</p>
-                <p className="text-sm">
-                  Select from guided meditations, breathing exercises, or set a custom timer
-                </p>
+              <div className="text-center">
+                {/* Default Breathing Meditation when no session selected */}
+                <div className="mb-6">
+                  <EvolvingBreathingOrb
+                    isActive={false}
+                    sessionCount={sessionStats.totalSessions}
+                    pattern={{
+                      name: 'Natural Breathing',
+                      inhale: 4,
+                      exhale: 4,
+                      description: 'Start with natural breathing rhythm'
+                    }}
+                  />
+                </div>
+                <div className="text-gray-500 space-y-2">
+                  <p className="text-lg font-medium">Ready to Begin Your Journey</p>
+                  <p className="text-sm">
+                    Select a session from the left to start your breathing meditation practice
+                  </p>
+                  <div className="mt-4 p-4 bg-blue-50 rounded-lg">
+                    <p className="text-xs text-blue-700">
+                      <strong>🌟 Evolution System:</strong> Complete sessions to unlock new breathing orb stages and features!
+                    </p>
+                  </div>
+                </div>
               </div>
             )}
           </div>
