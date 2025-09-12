@@ -84,109 +84,111 @@ export const Footer = () => {
   return (
     <footer className="bg-gray-900 text-white">
       {/* Main Footer Content */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-          {/* Brand Section */}
-          <div className="lg:col-span-2">
-            <div className="flex items-center space-x-2 mb-4">
-              <span className="text-3xl">🧘‍♀️</span>
-              <span className="text-2xl font-bold text-blue-400">Yoga Flow University</span>
-            </div>
-            <p className="text-gray-300 mb-6 max-w-md">
-              Empowering yoga practitioners and teachers with intelligent flow creation, 
-              comprehensive pose libraries, and mindful meditation practices.
-            </p>
+      <div className="py-responsive">
+        <div className="container-wide">
+          <div className="grid-responsive grid-responsive-md-2 grid-responsive-lg-4 gap-6 lg:gap-8">
+            {/* Brand Section */}
+            <div className="lg:col-span-2">
+              <div className="flex items-center space-x-2 mb-4 md:mb-6">
+                <span className="text-3xl">🧘‍♀️</span>
+                <span className="text-responsive-xl font-bold text-blue-400">Yoga Flow University</span>
+              </div>
+              <p className="text-responsive-sm text-gray-300 mb-6 max-w-md leading-relaxed">
+                Empowering yoga practitioners and teachers with intelligent flow creation, 
+                comprehensive pose libraries, and mindful meditation practices.
+              </p>
 
-            {/* Social Links */}
-            <div>
-              <h3 className="font-semibold text-white mb-3">Connect With Us</h3>
-              <div className="flex space-x-4">
-                {socialLinks.map((social) => (
-                  <a
-                    key={social.name}
-                    href={social.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-gray-400 hover:text-blue-400 transition-colors"
-                    aria-label={social.name}
-                  >
-                    {social.icon}
-                  </a>
-                ))}
+              {/* Social Links */}
+              <div>
+                <h3 className="heading-responsive-3 text-white mb-3">Connect With Us</h3>
+                <div className="flex flex-wrap gap-3">
+                  {socialLinks.map((social) => (
+                    <a
+                      key={social.name}
+                      href={social.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="touch-target p-3 text-gray-400 hover:text-blue-400 transition-colors rounded-lg border border-gray-700 hover:border-blue-400"
+                      aria-label={social.name}
+                    >
+                      {social.icon}
+                    </a>
+                  ))}
+                </div>
               </div>
             </div>
-          </div>
 
-          {/* Quick Links */}
-          <div>
-            <h3 className="font-semibold text-white mb-4">Quick Links</h3>
-            <ul className="space-y-3">
-              {quickLinks.map((link) => (
-                <li key={link.name}>
-                  <Link
-                    href={link.href}
-                    className="text-gray-400 hover:text-blue-400 transition-colors text-sm"
-                  >
-                    {link.name}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
+            {/* Quick Links */}
+            <div>
+              <h3 className="heading-responsive-3 text-white mb-4">Quick Links</h3>
+              <ul className="space-responsive">
+                {quickLinks.map((link) => (
+                  <li key={link.name}>
+                    <Link
+                      href={link.href}
+                      className="text-responsive-sm text-gray-400 hover:text-blue-400 transition-colors block py-1 touch-target"
+                    >
+                      {link.name}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
 
-          {/* Legal Links */}
-          <div>
-            <h3 className="font-semibold text-white mb-4">Legal & Support</h3>
-            <ul className="space-y-3">
-              {legalLinks.map((link) => (
-                <li key={link.name}>
-                  <Link
-                    href={link.href}
-                    className="text-gray-400 hover:text-blue-400 transition-colors text-sm"
+            {/* Legal Links */}
+            <div>
+              <h3 className="heading-responsive-3 text-white mb-4">Legal & Support</h3>
+              <ul className="space-responsive">
+                {legalLinks.map((link) => (
+                  <li key={link.name}>
+                    <Link
+                      href={link.href}
+                      className="text-responsive-sm text-gray-400 hover:text-blue-400 transition-colors block py-1 touch-target"
+                    >
+                      {link.name}
+                    </Link>
+                  </li>
+                ))}
+                <li>
+                  <a
+                    href="mailto:support@yogaflowuniversity.com"
+                    className="text-responsive-sm text-gray-400 hover:text-blue-400 transition-colors block py-1 touch-target"
                   >
-                    {link.name}
-                  </Link>
+                    Contact Support
+                  </a>
                 </li>
-              ))}
-              <li>
-                <a
-                  href="mailto:support@yogaflowuniversity.com"
-                  className="text-gray-400 hover:text-blue-400 transition-colors text-sm"
-                >
-                  Contact Support
-                </a>
-              </li>
-            </ul>
+              </ul>
+            </div>
           </div>
         </div>
       </div>
 
       {/* Bottom Bar */}
       <div className="border-t border-gray-800">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-          <div className="flex flex-col md:flex-row justify-between items-center">
-            <div className="text-gray-400 text-sm mb-4 md:mb-0 flex items-center gap-4">
+        <div className="container-wide py-6">
+          <div className="flex-responsive items-center justify-between">
+            <div className="text-center-mobile text-gray-400 text-responsive-xs mb-4 md:mb-0 flex-responsive items-center gap-4">
               <span>© {new Date().getFullYear()} Yoga Flow University. All rights reserved.</span>
               <span className="hidden md:inline text-gray-500">•</span>
               <div className="flex items-center gap-2">
-                <span className="text-sm font-medium text-blue-400">
+                <span className="text-responsive-sm font-medium text-blue-400">
                   {yogisInspired.toLocaleString()}
                 </span>
-                <span className="text-xs text-gray-400">
+                <span className="text-responsive-xs text-gray-400">
                   Yogis Inspired
                 </span>
               </div>
             </div>
             
             {/* Social Links */}
-            <div className="flex items-center space-x-6">
-              <span className="text-gray-400 text-sm">Follow us:</span>
-              <div className="flex space-x-4">
+            <div className="flex items-center justify-center md:justify-start space-x-4 lg:space-x-6">
+              <span className="text-responsive-xs text-gray-400">Follow us:</span>
+              <div className="flex space-x-3">
                 <a
                   href="https://instagram.com/yogaflowuniversity"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-gray-400 hover:text-blue-400 transition-colors"
+                  className="touch-target p-2 text-gray-400 hover:text-blue-400 transition-colors rounded-lg"
                   aria-label="Follow us on Instagram"
                 >
                   <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
@@ -197,7 +199,7 @@ export const Footer = () => {
                   href="https://youtube.com/@yogaflowuniversity"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-gray-400 hover:text-blue-400 transition-colors"
+                  className="touch-target p-2 text-gray-400 hover:text-blue-400 transition-colors rounded-lg"
                   aria-label="Subscribe to our YouTube channel"
                 >
                   <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
@@ -208,7 +210,7 @@ export const Footer = () => {
                   href="https://facebook.com/yogaflowuniversity"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-gray-400 hover:text-blue-400 transition-colors"
+                  className="touch-target p-2 text-gray-400 hover:text-blue-400 transition-colors rounded-lg"
                   aria-label="Like us on Facebook"
                 >
                   <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
@@ -219,7 +221,7 @@ export const Footer = () => {
                   href="https://linkedin.com/company/yogaflowuniversity"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-gray-400 hover:text-blue-400 transition-colors"
+                  className="touch-target p-2 text-gray-400 hover:text-blue-400 transition-colors rounded-lg"
                   aria-label="Connect with us on LinkedIn"
                 >
                   <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
@@ -231,8 +233,6 @@ export const Footer = () => {
           </div>
         </div>
       </div>
-
-
     </footer>
   );
 };
