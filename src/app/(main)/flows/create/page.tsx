@@ -222,12 +222,20 @@ export default function CreateFlowPage() {
 
   // Check authentication status
   useEffect(() => {
-    // Simple check for authentication - in a real app, this would check actual auth state
+    // Check for real authentication state - in production, this would check actual auth tokens
     const checkAuth = () => {
-      // Placeholder auth check - replace with actual authentication logic
-      const mockUserId = 'user-' + Math.random().toString(36).substr(2, 9);
-      setUserId(mockUserId);
-      setIsLoggedIn(true); // For demo purposes, assume user is logged in
+      // Check for authentication token or session
+      const authToken = localStorage.getItem('authToken') || sessionStorage.getItem('authToken');
+      const isAuthenticated = Boolean(authToken);
+      
+      if (isAuthenticated) {
+        const mockUserId = 'user-' + Math.random().toString(36).substr(2, 9);
+        setUserId(mockUserId);
+        setIsLoggedIn(true);
+      } else {
+        setUserId(null);
+        setIsLoggedIn(false);
+      }
     };
     
     checkAuth();
@@ -538,10 +546,10 @@ export default function CreateFlowPage() {
         
         {/* Authentication notice for saving */}
         {!isLoggedIn && (
-          <div className="mt-4 p-3 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg text-center">
-            <p className="text-sm text-blue-800 dark:text-blue-200">
-              <strong>Note:</strong> You can create flows without logging in, but saving and exporting requires authentication.
-              <a href="/login" className="ml-2 text-blue-600 dark:text-blue-400 hover:underline">
+          <div className="mt-4 p-3 bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 rounded-lg text-center">
+            <p className="text-sm text-amber-800 dark:text-amber-200">
+              <strong>Creating as Guest:</strong> You can build flows freely! Sign in to save, export, and access your flows later.
+              <a href="/login" className="ml-2 text-amber-600 dark:text-amber-400 hover:underline">
                 Sign in here
               </a>
             </p>
@@ -586,15 +594,76 @@ export default function CreateFlowPage() {
           <CombinedPoseLibrary onAddPose={addPose} />
 
           {/* Export Flow Section */}
-          {flow.length > 0 && isLoggedIn && (
-            <ExportFlow
-              flow={flow}
-              flowName={flowName}
-              totalDuration={totalSeconds}
-              onExportPDF={handleExportPDF}
-              onGenerateShareLink={handleGenerateShareLink}
-              onSaveAsJSON={handleSaveAsJSON}
-            />
+          {flow.length > 0 && (
+            <>
+              {isLoggedIn ? (
+                <ExportFlow
+                  flow={flow}
+                  flowName={flowName}
+                  totalDuration={totalSeconds}
+                  onExportPDF={handleExportPDF}
+                  onGenerateShareLink={handleGenerateShareLink}
+                  onSaveAsJSON={handleSaveAsJSON}
+                />
+              ) : (
+                <div className="bg-card border border-border rounded-lg p-4 mt-6">
+                  <h3 className="text-lg font-semibold mb-4 flex items-center gap-2">
+                    <span>🔒</span>
+                    Export & Share - Sign In Required
+                  </h3>
+                  
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-3 mb-4">
+                    {/* Share Link - Available for everyone */}
+                    <button
+                      onClick={handleGenerateShareLink}
+                      className="flex items-center gap-2 p-3 border border-border rounded-lg hover:bg-muted/50 transition-colors"
+                    >
+                      <span className="text-blue-500">🔗</span>
+                      <div className="text-left">
+                        <div className="font-medium text-sm">Share Link</div>
+                        <div className="text-xs text-muted-foreground">Copy URL (works without login)</div>
+                      </div>
+                    </button>
+                    
+                    {/* PDF Export - Requires login */}
+                    <div className="flex items-center gap-2 p-3 border border-border rounded-lg opacity-50 cursor-not-allowed">
+                      <span className="text-red-500">📄</span>
+                      <div className="text-left">
+                        <div className="font-medium text-sm">Export PDF</div>
+                        <div className="text-xs text-muted-foreground">Requires sign in</div>
+                      </div>
+                    </div>
+                    
+                    {/* JSON Download - Requires login */}
+                    <div className="flex items-center gap-2 p-3 border border-border rounded-lg opacity-50 cursor-not-allowed">
+                      <span className="text-green-500">💾</span>
+                      <div className="text-left">
+                        <div className="font-medium text-sm">Save to Device</div>
+                        <div className="text-xs text-muted-foreground">Requires sign in</div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg p-4">
+                    <p className="text-sm text-blue-800 dark:text-blue-200 mb-3">
+                      <strong>Sign in to unlock full export features:</strong>
+                    </p>
+                    <ul className="text-sm text-blue-700 dark:text-blue-300 mb-4 space-y-1">
+                      <li>• Save flows as PDF with professional formatting</li>
+                      <li>• Download flows as JSON files for backup</li>
+                      <li>• Save flows to your personal library</li>
+                      <li>• Access your flows from any device</li>
+                    </ul>
+                    <a 
+                      href="/login" 
+                      className="inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors text-sm"
+                    >
+                      Sign In Now
+                    </a>
+                  </div>
+                </div>
+              )}
+            </>
           )}
         </div>
       </div>
