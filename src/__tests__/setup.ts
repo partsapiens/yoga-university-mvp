@@ -1,5 +1,12 @@
+import React from 'react';
 import '@testing-library/jest-dom';
 import { vi } from 'vitest';
+import dotenv from 'dotenv';
+
+dotenv.config({ path: '.env.test' });
+
+console.log('Supabase URL from setup.ts:', process.env.NEXT_PUBLIC_SUPABASE_URL);
+
 
 // Mock Next.js router
 vi.mock('next/router', () => ({

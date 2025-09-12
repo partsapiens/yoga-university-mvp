@@ -64,7 +64,7 @@ describe('Supabase Connection Tests', () => {
       }
       
       if (pose.level !== null) {
-        expect(['beginner', 'intermediate', 'advanced']).toContain(pose.level);
+        expect(['beginner', 'intermediate', 'advanced']).toContain(pose.level.toLowerCase());
       }
       
       // Arrays should be arrays

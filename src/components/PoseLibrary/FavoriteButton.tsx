@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { analytics } from '../../utils/analytics';
 
 interface FavoriteButtonProps {
@@ -11,13 +11,25 @@ export default function FavoriteButton({ poseId, poseName = '', className = "" }
   const [isFavorite, setIsFavorite] = useState(false);
 
   useEffect(() => {
-    // Load favorite status from localStorage
-    const favorites = JSON.parse(localStorage.getItem('yogaFavorites') || '[]');
-    setIsFavorite(favorites.includes(poseId));
+    try {
+      // Load favorite status from localStorage
+      const favorites = JSON.parse(localStorage.getItem('yogaFavorites') || '[]');
+      setIsFavorite(favorites.includes(poseId));
+    } catch (error) {
+      console.error("Failed to parse favorites from localStorage", error);
+      setIsFavorite(false);
+    }
   }, [poseId]);
 
   const toggleFavorite = () => {
-    const favorites = JSON.parse(localStorage.getItem('yogaFavorites') || '[]');
+    let favorites = [];
+    try {
+      favorites = JSON.parse(localStorage.getItem('yogaFavorites') || '[]');
+    } catch (error) {
+      console.error("Failed to parse favorites from localStorage", error);
+      favorites = [];
+    }
+
     let newFavorites;
     const willBeFavorite = !isFavorite;
     

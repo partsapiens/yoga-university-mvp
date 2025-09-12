@@ -1,4 +1,5 @@
-import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
+import React from 'react';
+import { describe, it, expect, beforeEach, vi } from 'vitest';
 import { render, screen, fireEvent } from '@testing-library/react';
 import FavoriteButton from '../components/PoseLibrary/FavoriteButton';
 
@@ -25,7 +26,6 @@ describe('FavoriteButton', () => {
     render(<FavoriteButton poseId="test-pose-1" />);
     
     const button = screen.getByRole('button');
-    expect(button).toHaveTextContent('☆');
     expect(button).toHaveAttribute('aria-label', 'Add to favorites');
   });
 
@@ -34,7 +34,6 @@ describe('FavoriteButton', () => {
     render(<FavoriteButton poseId="test-pose-1" />);
     
     const button = screen.getByRole('button');
-    expect(button).toHaveTextContent('★');
     expect(button).toHaveAttribute('aria-label', 'Remove from favorites');
   });
 

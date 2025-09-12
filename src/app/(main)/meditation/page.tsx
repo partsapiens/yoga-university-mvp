@@ -2,6 +2,10 @@
 
 import React, { useState, useEffect } from 'react';
 import { useLocalStorage } from '@/hooks/useLocalStorage';
+import BreathingOrb from '@/components/meditation/BreathingOrb';
+// import { useTTS } from '@/hooks/useTTS';
+import { supabase } from '@/utils/supabaseClient';
+import { Session } from '@supabase/supabase-js';
 
 // Types for meditation features
 interface MeditationSession {
@@ -18,50 +22,29 @@ interface SessionStats {
   totalSessions: number;
 }
 
-// Sample meditation techniques
-const MEDITATION_TECHNIQUES: MeditationSession[] = [
-  {
-    id: 'mindfulness-5',
-    name: 'Mindfulness Meditation',
-    duration: 5,
-    type: 'guided',
-    description: 'A gentle introduction to mindfulness practice with breath awareness.'
-  },
-  {
-    id: 'breathing-box',
-    name: 'Box Breathing',
-    duration: 10,
-    type: 'breathing',
-    description: 'Systematic 4-4-4-4 breathing pattern for stress relief and focus.'
-  },
-  {
-    id: 'body-scan',
-    name: 'Body Scan Meditation',
-    duration: 15,
-    type: 'guided',
-    description: 'Progressive relaxation through mindful body awareness.'
-  },
-  {
-    id: 'loving-kindness',
-    name: 'Loving Kindness',
-    duration: 12,
-    type: 'guided',
-    description: 'Cultivate compassion and positive emotions toward self and others.'
-  }
-];
-
 export default function MeditationPage() {
   const [selectedSession, setSelectedSession] = useState<MeditationSession | null>(null);
   const [isPlaying, setIsPlaying] = useState(false);
   const [timeRemaining, setTimeRemaining] = useState(0);
   const [customDuration, setCustomDuration] = useState(10);
   
-  // Local storage for session tracking
   const [sessionStats, setSessionStats] = useLocalStorage<SessionStats>('meditation_stats', {
     streak: 0,
     lastSession: null,
     totalSessions: 0
   });
+
+  const [mood, setMood] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+  const [generatedScript, setGeneratedScript] = useState<string | null>(null);
+  const [phases, setPhases] = useState(null);
+
+  // const { speak, cancel, pause, resume } = useTTS(generatedScript || '', {
+  //   onEnd: () => {
+  //     setIsPlaying(false);
+  //     handleSessionComplete();
+  //   },
+  // });
 
   // Timer logic
   useEffect(() => {
@@ -72,14 +55,13 @@ export default function MeditationPage() {
         setTimeRemaining(time => {
           if (time <= 1) {
             setIsPlaying(false);
+            // cancel(); // Stop TTS
             handleSessionComplete();
             return 0;
           }
           return time - 1;
         });
       }, 1000);
-    } else if (!isPlaying && interval) {
-      clearInterval(interval);
     }
     
     return () => {
@@ -87,56 +69,99 @@ export default function MeditationPage() {
     };
   }, [isPlaying, timeRemaining]);
 
-  const handleSessionComplete = () => {
+  const handleSessionComplete = async () => {
     const today = new Date().toDateString();
-    const lastSessionDate = sessionStats.lastSession;
-    
-    // Calculate streak
-    let newStreak = sessionStats.streak;
-    if (lastSessionDate) {
-      const yesterday = new Date();
-      yesterday.setDate(yesterday.getDate() - 1);
-      
-      if (lastSessionDate === yesterday.toDateString()) {
-        newStreak += 1; // Continue streak
-      } else if (lastSessionDate !== today) {
-        newStreak = 1; // Start new streak
-      }
-    } else {
-      newStreak = 1; // First session
-    }
-    
-    setSessionStats({
-      streak: newStreak,
+    setSessionStats(prevStats => ({
+      streak: prevStats.lastSession === new Date(Date.now() - 86400000).toDateString() ? prevStats.streak + 1 : 1,
       lastSession: today,
-      totalSessions: sessionStats.totalSessions + 1
-    });
+      totalSessions: prevStats.totalSessions + 1,
+    }));
+
+    const { data: { user } } = await supabase.auth.getUser();
+
+    if (user && selectedSession) {
+      const { error } = await supabase.from('meditation_sessions').insert({
+        user_id: user.id,
+        duration_minutes: selectedSession.duration,
+        mood_input: mood,
+        generated_script: phases, // Store the structured JSON
+      });
+
+      if (error) {
+        console.error('Error logging meditation session:', error);
+      }
+    }
   };
 
   const startSession = (session: MeditationSession) => {
     setSelectedSession(session);
     setTimeRemaining(session.duration * 60);
     setIsPlaying(true);
+    // The speak() call is now in a useEffect triggered by isPlaying and generatedScript
   };
 
-  const startCustomTimer = () => {
-    const customSession: MeditationSession = {
-      id: 'custom-timer',
-      name: 'Custom Timer',
-      duration: customDuration,
-      type: 'timer',
-      description: 'Personal meditation timer'
-    };
-    startSession(customSession);
+  // useEffect(() => {
+  //   if (isPlaying && generatedScript) {
+  //     speak();
+  //   }
+  // }, [isPlaying, generatedScript, speak]);
+
+  const handleGenerateSession = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!mood || customDuration <= 0) return alert('Please describe your mood and set a valid duration.');
+
+    setIsLoading(true);
+    setGeneratedScript(null);
+    setPhases(null);
+    setSelectedSession(null);
+    // cancel();
+
+    try {
+      const response = await fetch('/api/meditation/generate', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ mood, duration: customDuration }),
+      });
+
+      if (!response.ok) throw new Error('Failed to generate script');
+
+      const data = await response.json();
+      setGeneratedScript(data.script);
+      setPhases(data.phases);
+
+      const aiSession: MeditationSession = {
+        id: 'ai-generated',
+        name: `Meditation for ${mood.substring(0, 20)}...`,
+        duration: customDuration,
+        type: 'guided',
+        description: data.script,
+      };
+      startSession(aiSession);
+
+    } catch (error) {
+      console.error('Error generating session:', error);
+      alert('There was an error generating your meditation. Please try again.');
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const togglePlayPause = () => {
-    setIsPlaying(!isPlaying);
+    if (!selectedSession) return;
+    if (isPlaying) {
+      // pause();
+      setIsPlaying(false);
+    } else {
+      // resume();
+      setIsPlaying(true);
+    }
   };
 
   const resetTimer = () => {
+    if (!selectedSession) return;
+    // cancel();
     setIsPlaying(false);
-    setTimeRemaining(selectedSession?.duration ? selectedSession.duration * 60 : 0);
+    setTimeRemaining(selectedSession.duration * 60);
   };
 
   const formatTime = (seconds: number) => {
@@ -150,9 +175,9 @@ export default function MeditationPage() {
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="text-center mb-8">
-          <h1 className="text-4xl font-bold text-gray-900 mb-4">Meditation Center</h1>
+          <h1 className="text-4xl font-bold text-gray-900 mb-4">AI Meditation Center</h1>
           <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-            Find inner peace and enhance your yoga practice with guided meditations and breathing exercises.
+            Describe your state of mind and let our AI create a personalized meditation session just for you.
           </p>
         </div>
 
@@ -177,125 +202,112 @@ export default function MeditationPage() {
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-          {/* Meditation Techniques List */}
           <div className="bg-white/70 backdrop-blur-sm rounded-lg p-6 shadow-lg">
-            <h2 className="text-2xl font-semibold mb-6">Guided Sessions</h2>
-            <div className="space-y-4">
-              {MEDITATION_TECHNIQUES.map((session) => (
-                <div
-                  key={session.id}
-                  className="border border-gray-200 rounded-lg p-4 hover:shadow-md transition-shadow cursor-pointer"
-                  onClick={() => startSession(session)}
-                >
-                  <div className="flex justify-between items-start mb-2">
-                    <h3 className="font-semibold text-lg">{session.name}</h3>
-                    <span className="bg-purple-100 text-purple-800 text-sm px-2 py-1 rounded">
-                      {session.duration} min
-                    </span>
-                  </div>
-                  <p className="text-gray-600 text-sm mb-3">{session.description}</p>
-                  <div className="flex justify-between items-center">
-                    <span className="text-xs text-gray-500 capitalize">{session.type}</span>
-                    <button className="bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-md text-sm transition-colors">
-                      Start Session
-                    </button>
-                  </div>
+            <h2 className="text-2xl font-semibold mb-6">Create Your Meditation</h2>
+            <p className="text-gray-600 mb-6">
+              Describe how you're feeling or what you want to focus on. The AI will generate a personalized meditation for you.
+            </p>
+            <form onSubmit={handleGenerateSession}>
+              <div className="space-y-4">
+                <div>
+                  <label htmlFor="mood" className="block text-sm font-medium text-gray-700 mb-1">
+                    How are you feeling right now?
+                  </label>
+                  <textarea
+                    id="mood"
+                    value={mood}
+                    onChange={(e) => setMood(e.target.value)}
+                    placeholder="e.g., 'I feel stressed about work' or 'I want to find some morning focus'"
+                    className="w-full border border-gray-300 rounded-md px-3 py-2 focus:ring-purple-500 focus:border-purple-500"
+                    rows={3}
+                  />
                 </div>
-              ))}
-            </div>
-
-            {/* Custom Timer */}
-            <div className="mt-8 border-t pt-6">
-              <h3 className="text-lg font-semibold mb-4">Custom Timer</h3>
-              <div className="flex items-center gap-4">
-                <input
-                  type="number"
-                  min="1"
-                  max="60"
-                  value={customDuration}
-                  onChange={(e) => setCustomDuration(parseInt(e.target.value) || 10)}
-                  className="border border-gray-300 rounded-md px-3 py-2 w-20 text-center"
-                />
-                <span className="text-gray-600">minutes</span>
-                <button
-                  onClick={startCustomTimer}
-                  className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md transition-colors"
-                >
-                  Start Timer
-                </button>
+                <div>
+                  <label htmlFor="duration" className="block text-sm font-medium text-gray-700 mb-1">
+                    Duration (minutes)
+                  </label>
+                  <input
+                    type="number"
+                    id="duration"
+                    min="1"
+                    max="60"
+                    value={customDuration}
+                    onChange={(e) => setCustomDuration(parseInt(e.target.value) || 10)}
+                    className="border border-gray-300 rounded-md px-3 py-2 w-24 text-center"
+                  />
+                </div>
               </div>
-            </div>
+              <button
+                type="submit"
+                disabled={isLoading}
+                className="mt-6 w-full bg-purple-600 hover:bg-purple-700 text-white font-semibold px-4 py-3 rounded-md transition-colors disabled:bg-purple-300"
+              >
+                {isLoading ? 'Generating...' : 'Create My Meditation'}
+              </button>
+            </form>
           </div>
 
-          {/* Timer and Breathing Visualizer */}
           <div className="bg-white/70 backdrop-blur-sm rounded-lg p-6 shadow-lg">
-            <h2 className="text-2xl font-semibold mb-6">
-              {selectedSession ? selectedSession.name : 'Select a Session'}
+            <h2 className="text-2xl font-semibold mb-6" data-testid="session-title">
+              {selectedSession ? selectedSession.name : 'Your Session'}
             </h2>
             
-            {selectedSession ? (
+            {isLoading && (
+              <div className="text-center text-gray-500 py-16">
+                <p className="text-lg mb-4">Generating your personalized meditation...</p>
+              </div>
+            )}
+
+            {!isLoading && !selectedSession && (
+              <div className="text-center text-gray-500 py-16">
+                <p className="text-lg mb-4">Create your personalized meditation to begin</p>
+                <p className="text-sm">Describe your mood and choose a duration to get started.</p>
+              </div>
+            )}
+
+            {selectedSession && (
               <div className="text-center">
-                {/* Timer Display */}
                 <div className="mb-8">
                   <div className="text-6xl font-mono font-bold text-purple-600 mb-4">
                     {formatTime(timeRemaining)}
                   </div>
-                  <div className="text-gray-600">
-                    {selectedSession.duration} minute session
-                  </div>
                 </div>
 
-                {/* Breathing Visualizer for breathing exercises */}
-                {selectedSession.type === 'breathing' && (
-                  <div className="mb-8">
-                    <div className="relative mx-auto w-32 h-32">
-                      <div className={`absolute inset-0 rounded-full border-4 border-blue-300 ${
-                        isPlaying ? 'animate-pulse' : ''
-                      }`}></div>
-                      <div className="absolute inset-4 rounded-full bg-blue-200 flex items-center justify-center">
-                        <span className="text-sm font-medium text-blue-800">
-                          {isPlaying ? 'Breathe' : 'Paused'}
-                        </span>
-                      </div>
-                    </div>
-                    <p className="mt-4 text-sm text-gray-600">
-                      Inhale for 4 • Hold for 4 • Exhale for 4 • Hold for 4
-                    </p>
-                  </div>
-                )}
-
-                {/* Control Buttons */}
-                <div className="flex justify-center gap-4">
+                <div className="flex justify-center gap-4 mb-8">
                   <button
                     onClick={togglePlayPause}
+                    disabled={!selectedSession}
                     className={`px-6 py-3 rounded-lg font-semibold text-white transition-colors ${
                       isPlaying 
                         ? 'bg-orange-500 hover:bg-orange-600' 
                         : 'bg-green-500 hover:bg-green-600'
-                    }`}
+                    } disabled:bg-gray-400`}
                   >
                     {isPlaying ? 'Pause' : 'Play'}
                   </button>
                   <button
                     onClick={resetTimer}
-                    className="bg-gray-500 hover:bg-gray-600 text-white px-6 py-3 rounded-lg font-semibold transition-colors"
+                    disabled={!selectedSession}
+                    className="bg-gray-500 hover:bg-gray-600 text-white px-6 py-3 rounded-lg font-semibold transition-colors disabled:bg-gray-400"
                   >
                     Reset
                   </button>
                 </div>
-              </div>
-            ) : (
-              <div className="text-center text-gray-500 py-16">
-                <p className="text-lg mb-4">Choose a meditation session to begin</p>
-                <p className="text-sm">
-                  Select from guided meditations, breathing exercises, or set a custom timer
-                </p>
+
+                <div className="mb-8">
+                  <BreathingOrb isPlaying={isPlaying} />
+                </div>
+
+                {generatedScript && (
+                  <div className="text-left bg-gray-50 p-4 rounded-lg max-h-48 overflow-y-auto">
+                     <p className="text-gray-700 whitespace-pre-wrap">{generatedScript}</p>
+                  </div>
+                )}
               </div>
             )}
           </div>
         </div>
 
-        {/* TODO: Add more features */}
         <div className="mt-8 bg-yellow-50 border border-yellow-200 rounded-lg p-4">
           <h3 className="font-semibold text-yellow-800 mb-2">Coming Soon</h3>
           <ul className="text-sm text-yellow-700 space-y-1">
