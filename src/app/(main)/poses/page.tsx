@@ -126,8 +126,6 @@ const PoseLibraryPage = () => {
 
   // Filter and search logic
   useEffect(() => {
-    if (poses.length === 0) return; // Don't filter if poses haven't loaded yet
-    
     let filtered = [...poses];
 
     // Use semantic search results if available and enabled

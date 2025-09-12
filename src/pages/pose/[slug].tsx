@@ -1,6 +1,6 @@
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
-import { supabase } from '../../utils/supabaseClient';
+import { getPosesFromDatabase } from '../../lib/database';
 import PoseVideo from '../../components/PoseLibrary/PoseVideo';
 import TTSPlayback from '../../components/PoseLibrary/TTSPlayback';
 import UserNotes from '../../components/PoseLibrary/UserNotes';
@@ -11,29 +11,73 @@ import AddToFlowButton from '../../components/PoseLibrary/AddToFlowButton';
 interface DetailedPose {
   id: string;
   slug: string;
-  name_en: string;
-  name_sanskrit: string;
-  family_id: string;
-  intensity: number;
-  image_url?: string;
+  name: string;
+  sanskrit: string | null;
+  family: string | null;
+  intensity: number | null;
+  image_url?: string | null;
   meta?: any;
   video_url?: string;
-  teaching_cues?: string;
+  instructions?: string | null;
 }
 
 export default function PoseDetailPage() {
   const router = useRouter();
   const { slug } = router.query;
   const [pose, setPose] = useState<DetailedPose | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [notFound, setNotFound] = useState(false);
 
   useEffect(() => {
     if (!slug) return;
-    supabase.from('poses').select('*').eq('slug', slug).single().then(({ data }) => setPose(data));
+    
+    const loadPose = async () => {
+      try {
+        setLoading(true);
+        console.log('Loading pose with slug:', slug);
+        const poses = await getPosesFromDatabase();
+        console.log('Found poses:', poses.length);
+        
+        const foundPose = poses.find(p => p.slug === slug);
+        if (foundPose) {
+          console.log('Found pose:', foundPose);
+          setPose(foundPose);
+        } else {
+          console.error('Pose not found with slug:', slug);
+          console.log('Available slugs:', poses.map(p => p.slug));
+          setNotFound(true);
+        }
+      } catch (error) {
+        console.error('Error loading pose:', error);
+        setNotFound(true);
+      } finally {
+        setLoading(false);
+      }
+    };
+    
+    loadPose();
   }, [slug]);
+
+  if (loading) return <div className="max-w-2xl mx-auto p-6">Loading...</div>;
+  
+  if (notFound) {
+    return (
+      <div className="max-w-2xl mx-auto p-6">
+        <h1 className="text-2xl font-bold mb-4">Pose Not Found</h1>
+        <p className="mb-4">Sorry, we couldn't find the pose you're looking for.</p>
+        <button 
+          onClick={() => router.push('/poses')}
+          className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
+        >
+          Back to Pose Library
+        </button>
+      </div>
+    );
+  }
 
   if (!pose) return <div className="max-w-2xl mx-auto p-6">Loading...</div>;
 
-  const teachingCues = pose.teaching_cues || `Practice ${pose.name_en} with awareness. Focus on your breath and alignment.`;
+  const teachingCues = pose.instructions || `Practice ${pose.name} with awareness. Focus on your breath and alignment.`;
 
   return (
     <div className="max-w-4xl mx-auto p-6 dark:bg-gray-900 min-h-screen">
@@ -44,26 +88,30 @@ export default function PoseDetailPage() {
             <div className="flex justify-between items-start mb-4">
               <div>
                 <h1 className="text-3xl font-bold dark:text-white">
-                  {pose.name_en} 
+                  {pose.name} 
                   <span className="text-gray-500 dark:text-gray-400 text-lg ml-2">
-                    ({pose.name_sanskrit})
+                    ({pose.sanskrit || 'Sanskrit name'})
                   </span>
                 </h1>
                 <div className="flex items-center space-x-4 mt-2">
-                  <span className="text-blue-700 dark:text-blue-400">{pose.family_id}</span>
-                  <span className="font-semibold dark:text-white">Intensity: {pose.intensity}/5</span>
+                  <span className="text-blue-700 dark:text-blue-400">{pose.family || 'Unknown'}</span>
+                  <span className="font-semibold dark:text-white">Intensity: {pose.intensity || 3}/5</span>
                 </div>
               </div>
               <div className="flex space-x-2">
-                <FavoriteButton poseId={pose.id} className="text-2xl text-yellow-500" />
-                <AddToFlowButton pose={pose} />
+                <FavoriteButton poseId={pose.id} poseName={pose.name} className="text-2xl text-yellow-500" />
+                <AddToFlowButton pose={{
+                  id: pose.id,
+                  name_en: pose.name,
+                  slug: pose.slug
+                }} />
               </div>
             </div>
 
             {pose.image_url && (
               <img 
                 src={pose.image_url} 
-                alt={pose.name_en} 
+                alt={pose.name} 
                 className="w-full rounded mb-4 max-h-96 object-cover" 
               />
             )}
@@ -72,7 +120,7 @@ export default function PoseDetailPage() {
             {pose.video_url && (
               <div className="mb-6">
                 <h3 className="font-bold mb-2 dark:text-white">Video Demonstration</h3>
-                <PoseVideo url={pose.video_url} title={`${pose.name_en} demonstration`} />
+                <PoseVideo url={pose.video_url} title={`${pose.name} demonstration`} />
               </div>
             )}
 
