@@ -149,6 +149,7 @@ export const GoalsCard: React.FC<GoalsCardProps> = ({ goals }) => {
           <CardTitle className="flex items-center gap-2">
             <Target className="h-5 w-5" />
             Goals
+            <span className="text-xs bg-yellow-100 text-yellow-800 px-2 py-1 rounded-full">Demo</span>
           </CardTitle>
           <Button
             onClick={() => setShowGoalSetter(true)}

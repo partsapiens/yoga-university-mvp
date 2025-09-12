@@ -45,16 +45,16 @@ vi.mock('../components/meditation/GuidedMeditationPlayer', () => ({
   GuidedMeditationPlayer: () => <div>Guided Meditation Player</div>,
 }));
 
-vi.mock('../components/meditation/BreathingOrb', () => ({
-  BreathingOrb: () => <div>Breathing Orb</div>,
+vi.mock('../components/meditation/EvolvingBreathingOrb', () => ({
+  EvolvingBreathingOrb: () => <div>Breathing Orb</div>,
 }));
 
 vi.mock('../components/meditation/MeditationRecommendations', () => ({
   MeditationRecommendations: () => <div>Meditation Recommendations</div>,
 }));
 
-vi.mock('../components/Avatar', () => ({
-  Avatar: ({ state }: { state: string }) => <div data-testid="avatar">Avatar - {state}</div>,
+vi.mock('../components/ai/PersonalizedAffirmations', () => ({
+  PersonalizedAffirmations: () => <div>Personalized Affirmations</div>,
 }));
 
 describe('MeditationPage with Voice Control', () => {
@@ -62,35 +62,22 @@ describe('MeditationPage with Voice Control', () => {
     vi.clearAllMocks();
   });
 
-  it('renders the meditation page with voice control section', () => {
+  it('renders the meditation page', () => {
     render(<MeditationPage />);
     
     expect(screen.getByText('Meditation Center')).toBeInTheDocument();
-    expect(screen.getByText('Voice Control')).toBeInTheDocument();
-    expect(screen.getByTestId('avatar')).toBeInTheDocument();
   });
 
-  it('displays voice control buttons', () => {
+  it('displays empty state message when there are no sessions', () => {
     render(<MeditationPage />);
     
-    expect(screen.getByText('🔇 Voice Off')).toBeInTheDocument();
-    expect(screen.getByText(/Try saying/)).toBeInTheDocument();
-    expect(screen.getByText(/Start meditation/)).toBeInTheDocument();
-  });
-
-  it('shows voice commands help text', () => {
-    render(<MeditationPage />);
-    
-    expect(screen.getByText(/"Start meditation"/)).toBeInTheDocument();
-    expect(screen.getByText(/"Pause"/)).toBeInTheDocument();
-    expect(screen.getByText(/"Set timer to 10 minutes"/)).toBeInTheDocument();
-    expect(screen.getByText(/"How much time left"/)).toBeInTheDocument();
+    expect(screen.getByText('Welcome to the Meditation Center')).toBeInTheDocument();
+    expect(screen.getByText('Explore Guided Sessions')).toBeInTheDocument();
   });
 
   it('displays meditation session options', () => {
     render(<MeditationPage />);
     
-    expect(screen.getByText('✨ AI-Guided Meditation')).toBeInTheDocument();
     expect(screen.getByText('Mindfulness Meditation')).toBeInTheDocument();
     expect(screen.getByText('Box Breathing')).toBeInTheDocument();
     expect(screen.getByText('Body Scan Meditation')).toBeInTheDocument();
@@ -106,15 +93,6 @@ describe('MeditationPage with Voice Control', () => {
     expect(screen.getByRole('button', { name: /Start Timer/i })).toBeInTheDocument();
   });
 
-  it('shows session stats', () => {
-    render(<MeditationPage />);
-    
-    expect(screen.getByText('Your Practice')).toBeInTheDocument();
-    expect(screen.getByText('Day Streak')).toBeInTheDocument();
-    expect(screen.getByText('Total Sessions')).toBeInTheDocument();
-    expect(screen.getByText('Minutes Practiced')).toBeInTheDocument();
-  });
-
   it('handles custom timer input changes', () => {
     render(<MeditationPage />);
     
@@ -124,23 +102,26 @@ describe('MeditationPage with Voice Control', () => {
     expect(timerInput).toHaveValue(15);
   });
 
-  it('can start meditation sessions', () => {
+  it('can start meditation sessions', async () => {
     render(<MeditationPage />);
     
-    const startButtons = screen.getAllByText('Start Session');
-    expect(startButtons).toHaveLength(5); // 5 meditation techniques
+    const mindfulnessMeditation = screen.getByText('Mindfulness Meditation');
+    const startButton = mindfulnessMeditation.closest('div.border')?.querySelector('button');
+
+    if (startButton) {
+      fireEvent.click(startButton);
+    }
     
-    fireEvent.click(startButtons[1]); // Click on Mindfulness Meditation
-    
-    // Should show timer interface
-    expect(screen.getByText('5 minute session')).toBeInTheDocument();
+    await waitFor(() => {
+      expect(screen.getByText(/5 minute session/i)).toBeInTheDocument();
+    });
   });
 
   it('displays breathing visualizer for breathing exercises', () => {
     render(<MeditationPage />);
     
     const breathingSession = screen.getByText('Box Breathing');
-    const breathingButton = breathingSession.closest('div')?.querySelector('button');
+    const breathingButton = breathingSession.closest('div.border')?.querySelector('button');
     
     if (breathingButton) {
       fireEvent.click(breathingButton);
@@ -148,27 +129,21 @@ describe('MeditationPage with Voice Control', () => {
     }
   });
 
-  it('shows timer controls when session is active', () => {
+  it('shows timer controls when session is active', async () => {
     render(<MeditationPage />);
     
     // Start a session
-    const startButtons = screen.getAllByText('Start Session');
-    fireEvent.click(startButtons[1]);
-    
-    // Should show play/pause controls
-    expect(screen.getByText('Play')).toBeInTheDocument();
-    expect(screen.getByText('Reset')).toBeInTheDocument();
-  });
+    const mindfulnessMeditation = screen.getByText('Mindfulness Meditation');
+    const startButton = mindfulnessMeditation.closest('div.border')?.querySelector('button');
 
-  it('handles AI-guided meditation selection', () => {
-    render(<MeditationPage />);
-    
-    const aiMeditationButton = screen.getByText('✨ AI-Guided Meditation').closest('div')?.querySelector('button');
-    
-    if (aiMeditationButton) {
-      fireEvent.click(aiMeditationButton);
-      // Should show mood input (mocked component)
-      expect(screen.getByText('Mood Input Component')).toBeInTheDocument();
+    if (startButton) {
+      fireEvent.click(startButton);
     }
+
+    // Should show play/pause controls
+    await waitFor(() => {
+      expect(screen.getByRole('button', { name: /pause/i })).toBeInTheDocument();
+      expect(screen.getByRole('button', { name: /reset/i })).toBeInTheDocument();
+    });
   });
 });

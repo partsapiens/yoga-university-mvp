@@ -1,3 +1,4 @@
+import * as React from 'react';
 import { useState } from 'react';
 
 interface SearchBarProps {
@@ -42,10 +43,12 @@ export default function SearchBar({ value, onChange, suggestions = [] }: SearchB
         aria-label="Search poses"
       />
       {showSuggestions && filteredSuggestions.length > 0 && (
-        <div className="absolute bg-white dark:bg-gray-700 shadow-lg rounded z-10 w-full border dark:border-gray-600 mt-1">
+        <div role="listbox" className="absolute bg-white dark:bg-gray-700 shadow-lg rounded z-10 w-full border dark:border-gray-600 mt-1">
           {filteredSuggestions.map((suggestion, index) => (
             <div 
               key={index}
+              role="option"
+              aria-selected={false}
               className="p-2 hover:bg-blue-100 dark:hover:bg-gray-600 cursor-pointer dark:text-white" 
               onClick={() => selectSuggestion(suggestion)}
             >

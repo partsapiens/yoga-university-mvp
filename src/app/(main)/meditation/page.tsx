@@ -10,6 +10,9 @@ import { BreathingOrb } from '@/components/meditation/BreathingOrb';
 import { EvolvingBreathingOrb } from '@/components/meditation/EvolvingBreathingOrb';
 import { MeditationRecommendations } from '@/components/meditation/MeditationRecommendations';
 import { PersonalizedAffirmations } from '@/components/ai/PersonalizedAffirmations';
+import { EmptyState } from '@/components/ui/EmptyState';
+import { Button } from '@/components/ui/Button';
+import { PlayCircle } from 'lucide-react';
 
 // Types for meditation features
 interface MeditationSession {
@@ -334,28 +337,43 @@ export default function MeditationPage() {
         </div>
 
         {/* Session Stats */}
-        <div className="bg-white/70 backdrop-blur-sm rounded-lg p-6 mb-8 shadow-lg">
-          <h2 className="text-xl font-semibold mb-4">Your Practice</h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <div className="text-center">
-              <div className="text-2xl font-bold text-purple-600">{sessionStats.streak}</div>
-              <div className="text-sm text-gray-600">Day Streak</div>
+        {sessionStats.totalSessions > 0 ? (
+          <div className="bg-white/70 backdrop-blur-sm rounded-lg p-6 mb-8 shadow-lg">
+            <h2 className="text-xl font-semibold mb-4">Your Practice</h2>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div className="text-center">
+                <div className="text-2xl font-bold text-purple-600">{sessionStats.streak}</div>
+                <div className="text-sm text-gray-600">Day Streak</div>
+              </div>
+              <div className="text-center">
+                <div className="text-2xl font-bold text-blue-600">{sessionStats.totalSessions}</div>
+                <div className="text-sm text-gray-600">Total Sessions</div>
+              </div>
+              <div className="text-center">
+                <div className="text-2xl font-bold text-green-600">{sessionStats.totalMinutes}</div>
+                <div className="text-sm text-gray-600">Minutes Practiced</div>
+              </div>
             </div>
-            <div className="text-center">
-              <div className="text-2xl font-bold text-blue-600">{sessionStats.totalSessions}</div>
-              <div className="text-sm text-gray-600">Total Sessions</div>
-            </div>
-            <div className="text-center">
-              <div className="text-2xl font-bold text-green-600">{sessionStats.totalMinutes}</div>
-              <div className="text-sm text-gray-600">Minutes Practiced</div>
+            <div className="mt-4 text-center">
+              <div className="text-sm font-medium text-gray-800">
+                {sessionStats.lastSession ? `Last session: ${sessionStats.lastSession}` : 'Ready for your first session!'}
+              </div>
             </div>
           </div>
-          <div className="mt-4 text-center">
-            <div className="text-sm font-medium text-gray-800">
-              {sessionStats.lastSession ? `Last session: ${sessionStats.lastSession}` : 'Ready for your first session!'}
-            </div>
+        ) : (
+          <div className="mb-8">
+            <EmptyState
+              icon={<PlayCircle className="h-16 w-16 text-purple-400" />}
+              title="Welcome to the Meditation Center"
+              description="Find your calm and begin your journey towards mindfulness. Select a guided session or start a timer to begin."
+              action={
+                <Button onClick={() => document.getElementById('guided-sessions')?.scrollIntoView({ behavior: 'smooth' })}>
+                  Explore Guided Sessions
+                </Button>
+              }
+            />
           </div>
-        </div>
+        )}
 
         {/* ✨-Powered Recommendations Section */}
         <div className="mb-8">
@@ -410,14 +428,13 @@ export default function MeditationPage() {
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           {/* Meditation Techniques List */}
-          <div className="bg-white/70 backdrop-blur-sm rounded-lg p-6 shadow-lg">
+          <div id="guided-sessions" className="bg-white/70 backdrop-blur-sm rounded-lg p-6 shadow-lg">
             <h2 className="text-2xl font-semibold mb-6">Guided Sessions</h2>
             <div className="space-y-4">
               {MEDITATION_TECHNIQUES.map((session) => (
                 <div
                   key={session.id}
                   className="border border-gray-200 rounded-lg p-4 hover:shadow-md transition-shadow cursor-pointer"
-                  onClick={() => startSession(session)}
                 >
                   <div className="flex justify-between items-start mb-2">
                     <h3 className="font-semibold text-lg">{session.name}</h3>
@@ -428,7 +445,10 @@ export default function MeditationPage() {
                   <p className="text-gray-600 text-sm mb-3">{session.description}</p>
                   <div className="flex justify-between items-center">
                     <span className="text-xs text-gray-500 capitalize">{session.type}</span>
-                    <button className="bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-md text-sm transition-colors">
+                    <button
+                      onClick={() => startSession(session)}
+                      className="bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-md text-sm transition-colors"
+                    >
                       Start Session
                     </button>
                   </div>
@@ -511,6 +531,7 @@ export default function MeditationPage() {
                 <div className="flex justify-center gap-4">
                   <button
                     onClick={togglePlayPause}
+                    aria-label={isPlaying ? "Pause" : "Play"}
                     className={`px-6 py-3 rounded-lg font-semibold text-white transition-all transform hover:scale-105 ${
                       isPlaying 
                         ? 'bg-orange-500 hover:bg-orange-600 shadow-orange-200' 
@@ -521,6 +542,7 @@ export default function MeditationPage() {
                   </button>
                   <button
                     onClick={resetTimer}
+                    aria-label="Reset"
                     className="bg-gray-500 hover:bg-gray-600 text-white px-6 py-3 rounded-lg font-semibold transition-all transform hover:scale-105 shadow-lg"
                   >
                     ⏹ Reset

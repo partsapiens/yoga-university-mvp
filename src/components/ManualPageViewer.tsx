@@ -156,42 +156,37 @@ export default function ManualPageViewer({ pageNumber }: ManualPageViewerProps) 
     });
     return processed;
   };
+
+  // Load manifest and page data
   useEffect(() => {
-    fetch('/manual/page-manifest.json')
-      .then(res => res.json())
-      .then((data: PageManifest) => setManifest(data))
-      .catch(err => console.error('Failed to load manifest:', err));
-  }, []);
+    const loadData = async () => {
+      setLoading(true);
+      setError(null);
 
-  // Load page data when pageNumber changes
-  useEffect(() => {
-    if (!manifest) return;
-    
-    if (pageNumber < 1 || pageNumber > manifest.totalPages) {
-      setError(`Page ${pageNumber} not found. Valid pages: 1-${manifest.totalPages}`);
-      setLoading(false);
-      return;
-    }
+      try {
+        const manifestRes = await fetch('/manual/page-manifest.json');
+        if (!manifestRes.ok) throw new Error('Failed to load manifest');
+        const newManifest: PageManifest = await manifestRes.json();
+        setManifest(newManifest);
 
-    setLoading(true);
-    setError(null);
+        if (pageNumber < 1 || pageNumber > newManifest.totalPages) {
+          throw new Error(`Page ${pageNumber} not found. Valid pages: 1-${newManifest.totalPages}`);
+        }
 
-    const pageFile = `page_${String(pageNumber).padStart(3, '0')}.json`;
-    
-    fetch(`/manual/pages-data/${pageFile}`)
-      .then(res => {
-        if (!res.ok) throw new Error(`Failed to load page ${pageNumber}`);
-        return res.json();
-      })
-      .then((data: PageData) => {
-        setPageData(data);
-        setLoading(false);
-      })
-      .catch(err => {
+        const pageFile = `page_${String(pageNumber).padStart(3, '0')}.json`;
+        const pageRes = await fetch(`/manual/pages-data/${pageFile}`);
+        if (!pageRes.ok) throw new Error(`Failed to load page ${pageNumber}`);
+        const newPageData: PageData = await pageRes.json();
+        setPageData(newPageData);
+      } catch (err: any) {
         setError(err.message);
+      } finally {
         setLoading(false);
-      });
-  }, [pageNumber, manifest]);
+      }
+    };
+
+    loadData();
+  }, [pageNumber]);
 
   // Toggle dark mode and save preferences
   const toggleDarkMode = () => {

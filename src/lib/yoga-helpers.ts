@@ -105,11 +105,11 @@ export function calculateTransitionScore(fromPose: any, toPose: any): number {
 
   // Check if poses have direct transition relationship
   if (fromPose.transitions_out?.includes(toPose.slug) || fromPose.transitions_out?.includes(toPose.id)) {
-    score += 10; // Strong direct transition
+    score += 50; // Strong direct transition
   }
   
   if (toPose.transitions_in?.includes(fromPose.slug) || toPose.transitions_in?.includes(fromPose.id)) {
-    score += 10; // Strong incoming transition
+    score += 50; // Strong incoming transition
   }
 
   // Check related next poses
@@ -170,38 +170,10 @@ export function selectBestTransitionPoses(currentPose: any, candidatePoses: any[
     score: calculateTransitionScore(currentPose, pose)
   }));
 
-  // Sort by score (descending) and add some randomness for variety
-  scoredPoses.sort((a, b) => {
-    const scoreDiff = b.score - a.score;
-    if (scoreDiff === 0) {
-      return Math.random() - 0.5; // Random for equal scores
-    }
-    return scoreDiff;
-  });
+  // Sort by score (descending)
+  scoredPoses.sort((a, b) => b.score - a.score);
 
-  // Select top candidates but introduce some randomness to avoid predictability
-  const topCandidates = Math.min(count * 2, scoredPoses.length);
-  const selected: any[] = [];
-  
-  for (let i = 0; i < count && i < candidatePoses.length; i++) {
-    // Bias toward higher scored poses but allow some variety
-    const maxIndex = Math.min(topCandidates, scoredPoses.length);
-    const weightedIndex = Math.floor(Math.random() * Math.random() * maxIndex);
-    
-    if (scoredPoses[weightedIndex] && !selected.includes(scoredPoses[weightedIndex].pose)) {
-      selected.push(scoredPoses[weightedIndex].pose);
-      scoredPoses.splice(weightedIndex, 1); // Remove to avoid duplicates
-    }
-  }
-
-  // Fill remaining slots with random selection if needed
-  while (selected.length < count && scoredPoses.length > 0) {
-    const randomIndex = Math.floor(Math.random() * scoredPoses.length);
-    selected.push(scoredPoses[randomIndex].pose);
-    scoredPoses.splice(randomIndex, 1);
-  }
-
-  return selected;
+  return scoredPoses.slice(0, count).map(p => p.pose);
 }
 
 /**

@@ -366,19 +366,17 @@ const PoseLibraryPage = () => {
             </div>
 
             {/* Pose Grid */}
-            {loading ? (
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-                {Array.from({ length: 8 }).map((_, i) => (
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+              {loading ? (
+                Array.from({ length: 12 }).map((_, i) => (
                   <SkeletonLoader key={i} />
-                ))}
-              </div>
-            ) : (
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-                {filteredPoses.map(pose => (
+                ))
+              ) : (
+                filteredPoses.map(pose => (
                   <PoseCard key={pose.id} pose={pose} />
-                ))}
-              </div>
-            )}
+                ))
+              )}
+            </div>
 
             {filteredPoses.length === 0 && !loading && (
               <div className="text-center py-12">

@@ -3,6 +3,7 @@ import Image from 'next/image';
 import FavoriteButton from './FavoriteButton';
 import AddToFlowButton from './AddToFlowButton';
 import { analytics } from '../../utils/analytics';
+import { Card } from '@/components/ui/Card';
 
 interface Pose {
   id: string;
@@ -36,8 +37,8 @@ export default function PoseCard({ pose }: PoseCardProps) {
   };
 
   return (
-    <div 
-      className="bg-white dark:bg-gray-800 shadow rounded-md p-3 transition hover:shadow-lg focus:shadow-lg focus:ring-2 focus:ring-blue-500 flex flex-col items-center relative group"
+    <Card
+      className="p-4 flex flex-col items-center text-center relative group transition-all duration-300 hover:shadow-xl hover:-translate-y-1"
       data-pose-card
       tabIndex={0}
       role="button"
@@ -50,35 +51,31 @@ export default function PoseCard({ pose }: PoseCardProps) {
         }
       }}
     >
-      {/* Favorite button - appears on hover */}
-      <div className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 transition-opacity">
+      <div className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 transition-opacity z-10">
         <FavoriteButton poseId={pose.id} poseName={pose.name_en} className="text-yellow-500" />
       </div>
       
-      <Link href={`/pose/${pose.slug}`} onClick={handleViewPose} tabIndex={-1}>
-        <div className="cursor-pointer flex flex-col items-center">
-          <div className="h-24 w-24 relative mb-2 rounded overflow-hidden">
-            <Image 
-              src={pose.thumbnail_url || pose.icon_url || '/images/pose-placeholder.svg'} 
-              alt={pose.name_en} 
-              fill
-              className="object-cover"
-              sizes="96px"
-              loading="lazy"
-            />
-          </div>
-          <div className="font-semibold text-center dark:text-white">{pose.name_en}</div>
-          <div className="text-sm text-gray-500 dark:text-gray-400 text-center">{pose.name_sanskrit}</div>
-          <div className="mt-1 text-xs bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 px-2 py-0.5 rounded">
-            {pose.family_id}
-          </div>
+      <Link href={`/pose/${pose.slug}`} onClick={handleViewPose} tabIndex={-1} className="flex flex-col items-center w-full">
+        <div className="w-full aspect-square relative mb-4 rounded-lg overflow-hidden">
+          <Image
+            src={pose.thumbnail_url || pose.icon_url || '/images/pose-placeholder.svg'}
+            alt={pose.name_en}
+            fill
+            className="object-cover"
+            sizes="(max-width: 768px) 50vw, (max-width: 1200px) 33vw, 25vw"
+            loading="lazy"
+          />
+        </div>
+        <h3 className="font-semibold text-lg leading-tight dark:text-white">{pose.name_en}</h3>
+        <p className="text-sm text-muted-foreground dark:text-gray-400">{pose.name_sanskrit}</p>
+        <div className="mt-2 text-xs bg-secondary dark:bg-secondary text-secondary-foreground dark:text-secondary-foreground px-2 py-1 rounded-full">
+          {pose.family_id}
         </div>
       </Link>
       
-      {/* Add to Flow button - appears on hover */}
-      <div className="mt-2 opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 transition-opacity">
-        <AddToFlowButton pose={pose} className="text-xs" />
+      <div className="mt-4 opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 transition-opacity">
+        <AddToFlowButton pose={pose} />
       </div>
-    </div>
+    </Card>
   );
 }

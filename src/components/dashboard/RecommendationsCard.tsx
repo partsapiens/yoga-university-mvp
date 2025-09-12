@@ -14,7 +14,10 @@ interface RecommendationsCardProps {
 export const RecommendationsCard: React.FC<RecommendationsCardProps> = ({ items }) => (
   <Card className="flex flex-col">
     <CardHeader>
-      <CardTitle>Recommendations</CardTitle>
+      <CardTitle className="flex items-center gap-2">
+        Recommendations
+        <span className="text-xs bg-yellow-100 text-yellow-800 px-2 py-1 rounded-full">Demo</span>
+      </CardTitle>
     </CardHeader>
     <CardContent>
       {items.length === 0 ? (

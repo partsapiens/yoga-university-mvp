@@ -20,25 +20,25 @@ export default function ImprintPage() {
           <div className="prose max-w-none">
             <h2 className="text-xl font-semibold text-gray-900 mb-4">Company Information</h2>
             <div className="mb-6">
-              <p className="mb-2"><strong>Company Name:</strong> Yoga Flow University GmbH</p>
-              <p className="mb-2"><strong>Address:</strong> Musterstraße 123</p>
-              <p className="mb-2"><strong>City:</strong> Berlin, 10115</p>
-              <p className="mb-2"><strong>Country:</strong> Germany</p>
+              <p className="mb-2"><strong>Company Name:</strong> Yoga Flow University</p>
+              <p className="mb-2"><strong>Address:</strong> 123 Wellness Way</p>
+              <p className="mb-2"><strong>City:</strong> San Francisco, CA 94107</p>
+              <p className="mb-2"><strong>Country:</strong> USA</p>
             </div>
 
             <h2 className="text-xl font-semibold text-gray-900 mb-4">Contact Information</h2>
             <div className="mb-6">
-              <p className="mb-2"><strong>Phone:</strong> +49 (0) 30 12345678</p>
-              <p className="mb-2"><strong>Email:</strong> info@yogaflowuniversity.com</p>
+              <p className="mb-2"><strong>Phone:</strong> (555) 123-4567</p>
+              <p className="mb-2"><strong>Email:</strong> contact@yogaflowuniversity.com</p>
               <p className="mb-2"><strong>Website:</strong> https://yogaflowuniversity.com</p>
             </div>
 
             <h2 className="text-xl font-semibold text-gray-900 mb-4">Legal Representatives</h2>
             <div className="mb-6">
-              <p className="mb-2"><strong>Managing Director:</strong> Dr. Sarah Müller</p>
-              <p className="mb-2"><strong>Registration:</strong> HRB 123456 B (Amtsgericht Berlin)</p>
-              <p className="mb-2"><strong>Tax ID:</strong> DE123456789</p>
-              <p className="mb-2"><strong>VAT ID:</strong> DE123456789</p>
+              <p className="mb-2"><strong>Managing Director:</strong> Alex Doe</p>
+              <p className="mb-2"><strong>Registration:</strong> C1234567</p>
+              <p className="mb-2"><strong>Tax ID:</strong> 12-3456789</p>
+              <p className="mb-2"><strong>VAT ID:</strong> 123456789</p>
             </div>
 
             <h2 className="text-xl font-semibold text-gray-900 mb-4">Disclaimer</h2>

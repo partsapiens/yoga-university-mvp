@@ -64,7 +64,7 @@ function splitByTOC(full:string, toc: Toc){
 function writeChapters(chunks: {title:string; body:string}[], toc:Toc){
   fs.mkdirSync(OUT_DIR, { recursive: true });
   const backupDir = path.join(OUT_DIR, `_backup_${Date.now()}`);
-  const existing = fs.readdirSync(OUT_DIR).filter(d => d !== "pages" && d !== "toc.json" && d !== "manifest.json");
+  const existing = fs.readdirSync(OUT_DIR).filter(d => d !== "pages" && d !== "toc.json" && d !== "manifest.json" && !d.startsWith("_backup_"));
   if (existing.length){
     fs.mkdirSync(backupDir, { recursive: true });
     for (const d of existing){ fs.renameSync(path.join(OUT_DIR, d), path.join(backupDir, d)); }

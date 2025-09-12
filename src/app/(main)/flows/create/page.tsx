@@ -3,13 +3,11 @@
 import React, { useMemo, useState, useRef, useEffect, useCallback } from "react";
 import { useLocalStorage } from "@/hooks/useLocalStorage";
 import { useTimer } from "@/hooks/useTimer";
-import { ControlPanel } from "@/components/flows/ControlPanel";
 import { SuggestionsGrid } from "@/components/flows/SuggestionsGrid";
 import { CombinedPoseLibrary } from "@/components/flows/CombinedPoseLibrary";
 import { GeneratePreviewModal } from "@/components/flows/GeneratePreviewModal";
 import { SavedFlows } from "@/components/flows/SavedFlows";
 import { PoseLibrarySidebar } from "@/components/flows/PoseLibrarySidebar";
-import { ExportFlow } from "@/components/flows/ExportFlow";
 import { FlowManagement } from "@/components/flows/FlowManagement";
 import { FlowValidation } from "@/components/flows/FlowValidation";
 import { AutoSave } from "@/components/flows/AutoSave";
@@ -21,6 +19,7 @@ import { QuickActions } from "@/components/dashboard/QuickActions";
 import { PoseAnalysisSettings, ProgressTracking } from "@/components/pose-analysis";
 import { PersonalizedAffirmations } from "@/components/ai/PersonalizedAffirmations";
 import { AdaptiveFlow } from "@/components/ai/AdaptiveFlow";
+import { ActionBar } from "@/components/flows/ActionBar";
 import { Focus, TimingMode, PoseId, SavedFlow, Pose } from "@/types/yoga";
 import { POSES } from "@/lib/yoga-data";
 import {
@@ -44,7 +43,7 @@ const clamp = (n: number, min: number, max: number) => Math.max(min, Math.min(ma
 
 export default function CreateFlowPage() {
   // --- Core Flow State ---
-  const [flow, setFlow] = useState<PoseId[]>([PoseId.DownDog, PoseId.Warrior1Right, PoseId.ForwardFold, PoseId.Child, PoseId.Butterfly]);
+  const [flow, setFlow] = useState<PoseId[]>([]);
   const [overrides, setOverrides] = useState<Record<number, number>>({});
 
   // --- Control Panel State ---
@@ -452,154 +451,64 @@ export default function CreateFlowPage() {
 
   return (
     <div className="min-h-screen bg-background text-foreground">
-      <header className="mx-auto max-w-7xl px-4 py-6">
-        <div className="flex items-center justify-between mb-4">
-          <div>
-            <h1 className="text-3xl font-semibold tracking-tight">Create your sequence</h1>
-
-          </div>
-          <KeyboardShortcuts />
-        </div>
-        
-        {/* ✨ Yoga Flow Generator */}
-        <div className="mt-6">
-          <YogaAIDemo />
-        </div>
-        
-        {/* Quick Start Section */}
-        <div className="mt-6">
-          <QuickActions />
-        </div>
-
-        {/* Flow Templates Section */}
-        <div className="mt-6">
-          <FlowTemplates onSelectTemplate={handleSelectTemplate} onCreateOwn={handleCreateOwn} />
-        </div>
-
-        {/* Pose Analysis Settings */}
-        <div className="mt-6">
-          <PoseAnalysisSettings />
-        </div>
-
-        {/* Progress Tracking */}
-        <div className="mt-6">
-          <ProgressTracking />
-        </div>
-        
-        {/* Conditional Settings Section - only shown when creating own template */}
-        {showCustomSettings && (
-          <div className="mt-6">
-            <ControlPanel {...{ minutes, setMinutes, intensity, setIntensity, focus, setFocus, breathingCues, setBreathingCues, saferSequencing, setSaferSequencing, saveToDevice, setSaveToDevice, timingMode, setTimingMode, secPerBreath, setSecPerBreath, transitionSec, setTransitionSec, cooldownMin, setCooldownMin, onAutoGenerate: handleGenerate, flowName, setFlowName, onSaveFlow: handleSaveFlow }} />
-          </div>
-        )}
-        
-        {/* Personalized Affirmations for Flow */}
-        {flow.length > 0 && (
-          <PersonalizedAffirmations
-            context="flow"
-            userProfile={{
-              experience: userProfile.experience,
-              preferredTone: 'empowering',
-              goals: userProfile.preferences,
-              challenges: userProfile.physicalLimitations
-            }}
-            sessionData={{
-              focusArea: focus.toLowerCase().replace('-', ' '),
-              duration: minutes,
-              timeOfDay: 'afternoon'
-            }}
-            className="mt-6"
-          />
-        )}
-
-        {/* Adaptive Flow Modifications */}
-        {flow.length > 0 && (
-          <AdaptiveFlow
-            currentFlow={{
-              poses: flow,
-              durations: secondsPerPose,
-              totalDuration: totalSeconds
-            }}
-            userProfile={userProfile}
-            onFlowAdapted={handleFlowAdapted}
-            className="mt-6"
-          />
-        )}
-        
-        {/* Auto-save Section */}
-        <div className="mt-4">
-          <AutoSave 
-            flow={flow}
-            overrides={overrides}
-            flowName={flowName}
-            onRestoreFlow={handleRestoreFlow}
-          />
-        </div>
-        
-        {/* Authentication notice for saving */}
+      <div className="container mx-auto px-4 py-6">
         {!isLoggedIn && (
-          <div className="mt-4 p-3 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg text-center">
-            <p className="text-sm text-blue-800 dark:text-blue-200">
-              <strong>Note:</strong> You can create flows without logging in, but saving and exporting requires authentication.
-              <a href="/login" className="ml-2 text-blue-600 dark:text-blue-400 hover:underline">
-                Sign in here
-              </a>
-            </p>
+          <div className="mb-6 p-4 bg-yellow-100 border-l-4 border-yellow-500 text-yellow-800 rounded-r-lg">
+            <h3 className="font-bold">Demo Mode</h3>
+            <p>You are not logged in. Your flows will not be saved. <a href="/login" className="font-bold underline">Log in</a> to save your progress.</p>
           </div>
         )}
-      </header>
-      
-      {/* Main content area with sidebar */}
-      <div className="mx-auto max-w-7xl px-4">
-        <SavedFlows flows={savedFlows} onLoad={handleLoadFlow} onDelete={handleDeleteFlow} />
-        
-        {/* Combined Flow Management: Your Flow + Quick Actions + ✨ Flow Review */}
-        <FlowManagement
-          flow={flow}
-          secondsPerPose={secondsPerPose}
-          totalSeconds={totalSeconds}
-          onRemovePose={removePose}
-          onUpdatePoseDuration={updatePoseDuration}
-          timingMode={timingMode}
-          secPerBreath={secPerBreath}
-          onMovePose={movePose}
-          dragIndexRef={dragIndex}
-          activePoseIndex={playbackState !== 'idle' ? currentPoseIndex : -1}
-          timeInPose={timeInPose}
-          onDuplicateFlow={handleDuplicateFlow}
-          onReverseFlow={handleReverseFlow}
-          onClearFlow={handleClearFlow}
-          onShuffleFlow={handleShuffleFlow}
-          className="mt-6"
-        />
-        
-        <div className="space-y-6 mt-6">
-          {/* ✨-Powered Flow Validation */}
-          <FlowValidation 
-            flow={flow} 
-            totalSeconds={totalSeconds} 
-            onSaferAlternative={handleSaferAlternative}
-            className="mt-6"
-          />
-          
-          {/* Combined ✨ Suggestions and Search Library */}
-          <CombinedPoseLibrary onAddPose={addPose} />
+        <header className="mb-8">
+          <h1 className="text-4xl font-bold">Create Flow</h1>
+          <p className="text-lg text-muted-foreground mt-1">Design your perfect yoga sequence.</p>
+        </header>
 
-          {/* Export Flow Section */}
-          {flow.length > 0 && isLoggedIn && (
-            <ExportFlow
-              flow={flow}
-              flowName={flowName}
-              totalDuration={totalSeconds}
-              onExportPDF={handleExportPDF}
-              onGenerateShareLink={handleGenerateShareLink}
-              onSaveAsJSON={handleSaveAsJSON}
-            />
-          )}
+        <div className="grid lg:grid-cols-2 gap-8 mb-8">
+          <div className="bg-secondary p-6 rounded-2xl">
+            <h2 className="text-2xl font-bold mb-4">Quick Start</h2>
+            <p className="text-muted-foreground mb-4">Choose a template to get started quickly.</p>
+            <FlowTemplates onSelectTemplate={handleSelectTemplate} onCreateOwn={handleCreateOwn} />
+          </div>
+          <div className="bg-secondary p-6 rounded-2xl">
+            <h2 className="text-2xl font-bold mb-4">AI-Powered Generation</h2>
+            <p className="text-muted-foreground mb-4">Let our AI create a flow for you based on your needs.</p>
+            <YogaAIDemo />
+          </div>
+        </div>
+
+        <div className="space-y-8">
+          <FlowManagement
+            flow={flow}
+            secondsPerPose={secondsPerPose}
+            totalSeconds={totalSeconds}
+            onRemovePose={removePose}
+            onUpdatePoseDuration={updatePoseDuration}
+            timingMode={timingMode}
+            secPerBreath={secPerBreath}
+            onMovePose={movePose}
+            dragIndexRef={dragIndex}
+            activePoseIndex={playbackState !== 'idle' ? currentPoseIndex : -1}
+            timeInPose={timeInPose}
+            onDuplicateFlow={handleDuplicateFlow}
+            onReverseFlow={handleReverseFlow}
+            onClearFlow={handleClearFlow}
+            onShuffleFlow={handleShuffleFlow}
+          />
+          <CombinedPoseLibrary onAddPose={addPose} />
         </div>
       </div>
-      
-
+      <ActionBar
+        isLoggedIn={isLoggedIn}
+        flowName={flowName}
+        onSave={handleSaveFlow}
+        onShare={handleGenerateShareLink}
+        onExportPDF={handleExportPDF}
+        onSaveJSON={handleSaveAsJSON}
+        playbackState={playbackState}
+        onPlay={handlePlay}
+        onPause={handlePause}
+        onStop={handleStop}
+      />
       <GeneratePreviewModal isOpen={!!preview} onClose={() => setPreview(null)} preview={preview} onShuffle={handleGenerate} onAccept={acceptPreview} />
     </div>
   );

@@ -86,7 +86,10 @@ export const NotificationsPanel: React.FC<NotificationsPanelProps> = ({ notifica
       <CardHeader>
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <CardTitle>Notifications</CardTitle>
+            <CardTitle className="flex items-center gap-2">
+              Notifications
+              <span className="text-xs bg-yellow-100 text-yellow-800 px-2 py-1 rounded-full">Demo</span>
+            </CardTitle>
             {unreadCount > 0 && (
               <span className="bg-red-500 text-white text-xs px-2 py-0.5 rounded-full">
                 {unreadCount}

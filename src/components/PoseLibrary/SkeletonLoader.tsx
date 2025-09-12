@@ -1,9 +1,14 @@
-export default function SkeletonLoader({ count = 4 }) {
+import React from 'react';
+import { Card } from '@/components/ui/Card';
+
+const SkeletonLoader = () => {
   return (
-    <>  
-      {[...Array(count)].map((_, i) => (
-        <div key={i} className="bg-gray-200 animate-pulse rounded-md h-32 w-full" />
-      ))}
-    </>
+    <Card className="flex flex-col items-center p-4 animate-pulse">
+      <div className="w-24 h-24 bg-gray-300 dark:bg-gray-700 rounded-lg mb-4" />
+      <div className="w-3/4 h-4 bg-gray-300 dark:bg-gray-700 rounded mb-2" />
+      <div className="w-1/2 h-4 bg-gray-300 dark:bg-gray-700 rounded" />
+    </Card>
   );
-}
+};
+
+export default SkeletonLoader;

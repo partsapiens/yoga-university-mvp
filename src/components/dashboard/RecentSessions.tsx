@@ -115,17 +115,12 @@ export const RecentSessions: React.FC<RecentSessionsProps> = ({ sessions }) => {
           sessions.length === 0 ? (
             <EmptyState 
               icon="🧘‍♀️"
-              title="Start Your Yoga Journey" 
-              description="You haven't practiced any flows yet. Ready to begin your yoga adventure?" 
+              title="Start your first flow to see stats here"
+              description="Your practice sessions will appear here once you complete a flow."
               action={
-                <div className="flex flex-col sm:flex-row gap-2">
-                  <Button onClick={() => window.location.href = '/poses'}>
-                    Explore Poses
-                  </Button>
-                  <Button variant="outline" onClick={() => window.location.href = '/flows/create'}>
-                    Create Flow
-                  </Button>
-                </div>
+                <Button onClick={() => window.location.href = '/flows/create'}>
+                  Create a New Flow
+                </Button>
               }
             />
           ) : (

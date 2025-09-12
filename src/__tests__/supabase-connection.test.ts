@@ -2,8 +2,10 @@
 // Run this when network/connection issues are resolved
 // Usage: npm test -- --run src/__tests__/supabase-connection.test.ts
 
-import { describe, it, expect, beforeEach } from 'vitest';
+import { describe, it, expect, beforeEach, vi } from 'vitest';
 import { getPosesFromDatabase, testSupabaseConnection, debugDatabaseConnection } from '../lib/database';
+
+vi.mock('../utils/supabaseClient');
 
 describe('Supabase Connection Tests', () => {
   it('should be able to connect to Supabase', async () => {

@@ -1,12 +1,13 @@
-import { useRouter } from 'next/router';
+"use client";
+
 import { useEffect, useState } from 'react';
-import { supabase } from '../../utils/supabaseClient';
-import PoseVideo from '../../components/PoseLibrary/PoseVideo';
-import TTSPlayback from '../../components/PoseLibrary/TTSPlayback';
-import UserNotes from '../../components/PoseLibrary/UserNotes';
-import CommentsSection from '../../components/PoseLibrary/CommentsSection';
-import FavoriteButton from '../../components/PoseLibrary/FavoriteButton';
-import AddToFlowButton from '../../components/PoseLibrary/AddToFlowButton';
+import { supabase } from '../../../utils/supabaseClient';
+import PoseVideo from '../../../../components/PoseLibrary/PoseVideo';
+import TTSPlayback from '../../../../components/PoseLibrary/TTSPlayback';
+import UserNotes from '../../../../components/PoseLibrary/UserNotes';
+import CommentsSection from '../../../../components/PoseLibrary/CommentsSection';
+import FavoriteButton from '../../../../components/PoseLibrary/FavoriteButton';
+import AddToFlowButton from '../../../../components/PoseLibrary/AddToFlowButton';
 
 interface DetailedPose {
   id: string;
@@ -21,9 +22,8 @@ interface DetailedPose {
   teaching_cues?: string;
 }
 
-export default function PoseDetailPage() {
-  const router = useRouter();
-  const { slug } = router.query;
+export default function PoseDetailPage({ params }: { params: { slug: string } }) {
+  const { slug } = params;
   const [pose, setPose] = useState<DetailedPose | null>(null);
 
   useEffect(() => {
@@ -55,7 +55,7 @@ export default function PoseDetailPage() {
                 </div>
               </div>
               <div className="flex space-x-2">
-                <FavoriteButton poseId={pose.id} className="text-2xl text-yellow-500" />
+                <FavoriteButton poseId={pose.id} poseName={pose.name_en} className="text-2xl text-yellow-500" />
                 <AddToFlowButton pose={pose} />
               </div>
             </div>

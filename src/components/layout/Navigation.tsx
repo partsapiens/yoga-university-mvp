@@ -304,7 +304,8 @@ export const Navigation = ({ userRole }: NavigationProps) => {
               <span className="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full"></span>
             </button>
 
-            {/* Language Switcher */}
+            {/* Language Switcher (temporarily hidden) */}
+            {/*
             <div className="relative">
               <select
                 value={language}
@@ -317,6 +318,7 @@ export const Navigation = ({ userRole }: NavigationProps) => {
                 <option value="ru" className="bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300">RU</option>
               </select>
             </div>
+            */}
 
             {/* Contact Icon */}
             <Link 

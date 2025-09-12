@@ -5,6 +5,8 @@ import { Camera, CameraOff, Settings, Eye, EyeOff, RotateCcw } from 'lucide-reac
 import { PoseDetector, PoseAnalysisResult, analyzeDownwardDog, analyzeWarriorI, analyzeGenericPose } from '@/lib/pose-detection';
 import { PoseAnalytics, PoseSession } from '@/lib/pose-analytics';
 import { PoseId } from '@/types/yoga';
+import { Button } from '@/components/ui/Button';
+import { PoseAnalysisDemo } from './PoseAnalysisDemo';
 
 interface PoseAnalysisProps {
   currentPoseId: PoseId;
@@ -126,7 +128,7 @@ export function PoseAnalysis({
       }
     } catch (err) {
       console.error('Failed to start camera:', err);
-      setError('Unable to access camera. Please grant camera permissions and try again.');
+      setError('camera_denied');
     } finally {
       setIsLoading(false);
     }
@@ -310,6 +312,8 @@ export function PoseAnalysis({
             onClick={() => setShowCamera(!showCamera)}
             className="p-1 text-gray-400 hover:text-white transition-colors"
             title={showCamera ? 'Hide camera' : 'Show camera'}
+            aria-label={showCamera ? 'Hide camera' : 'Show camera'}
+            onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') setShowCamera(!showCamera); }}
           >
             {showCamera ? <Eye size={16} /> : <EyeOff size={16} />}
           </button>
@@ -317,6 +321,8 @@ export function PoseAnalysis({
             onClick={resetAnalysis}
             className="p-1 text-gray-400 hover:text-white transition-colors"
             title="Reset analysis"
+            aria-label="Reset analysis"
+            onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') resetAnalysis(); }}
           >
             <RotateCcw size={16} />
           </button>
@@ -326,6 +332,8 @@ export function PoseAnalysis({
               isCameraActive ? 'text-green-400 hover:text-green-300' : 'text-gray-400 hover:text-white'
             }`}
             title={isCameraActive ? 'Stop camera' : 'Start camera'}
+            aria-label={isCameraActive ? 'Stop camera' : 'Start camera'}
+            onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') toggleCamera(); }}
           >
             {isCameraActive ? <Camera size={16} /> : <CameraOff size={16} />}
           </button>
@@ -369,23 +377,25 @@ export function PoseAnalysis({
           )}
 
           {/* Error Overlay */}
-          {error && (
-            <div className="absolute inset-0 bg-red-900 bg-opacity-90 flex items-center justify-center p-4">
-              <div className="text-white text-center">
-                <div className="mb-2">⚠️</div>
-                <div className="text-sm">{error}</div>
-                <button
-                  onClick={() => {
-                    setError(null);
-                    if (isInitialized) startCamera();
-                  }}
-                  className="mt-2 px-3 py-1 bg-red-600 hover:bg-red-700 text-white text-xs rounded transition-colors"
-                >
-                  Retry
-                </button>
-              </div>
+          {error === 'camera_denied' && (
+            <div className="absolute inset-0 bg-gray-800 flex flex-col items-center justify-center p-4">
+              <CameraOff className="w-12 h-12 text-gray-500 mb-4" />
+              <h4 className="text-lg font-semibold text-white mb-2">Camera Access Denied</h4>
+              <p className="text-gray-400 text-center text-sm mb-4">
+                To analyze your pose, we need access to your camera. Please grant permission in your browser settings.
+              </p>
+              <Button onClick={() => { setError(null); startCamera(); }}>
+                Retry Camera Access
+              </Button>
+              <p className="text-xs text-gray-500 mt-4">Alternatively, view a demo below.</p>
             </div>
           )}
+        </div>
+      )}
+
+      {error === 'camera_denied' && (
+        <div className="p-4">
+          <PoseAnalysisDemo />
         </div>
       )}
 
