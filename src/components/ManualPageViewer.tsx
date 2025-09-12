@@ -38,7 +38,6 @@ export default function ManualPageViewer({ pageNumber }: ManualPageViewerProps) 
   const [manifest, setManifest] = useState<PageManifest | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [isDarkMode, setIsDarkMode] = useState(false);
   const [showSidebar, setShowSidebar] = useState(false);
   const [isBookmarked, setIsBookmarked] = useState(false);
   const [fontSize, setFontSize] = useState<'small' | 'medium' | 'large'>('medium');
@@ -48,12 +47,14 @@ export default function ManualPageViewer({ pageNumber }: ManualPageViewerProps) 
   const [highlightMode, setHighlightMode] = useState(false);
   const [highlights, setHighlights] = useState<string[]>([]);
 
+  // Check if dark mode is enabled globally
+  const isDarkMode = typeof document !== 'undefined' && document.documentElement.classList.contains('dark');
+
   // Load preferences from localStorage
   useEffect(() => {
     const savedPrefs = localStorage.getItem('manual-preferences');
     if (savedPrefs) {
       const prefs = JSON.parse(savedPrefs);
-      setIsDarkMode(prefs.isDarkMode || false);
       setFontSize(prefs.fontSize || 'medium');
       setLineHeight(prefs.lineHeight || 'normal');
     }
@@ -84,7 +85,7 @@ export default function ManualPageViewer({ pageNumber }: ManualPageViewerProps) 
 
   // Save preferences to localStorage
   const savePreferences = () => {
-    const prefs = { isDarkMode, fontSize, lineHeight };
+    const prefs = { fontSize, lineHeight };
     localStorage.setItem('manual-preferences', JSON.stringify(prefs));
   };
 
@@ -192,12 +193,6 @@ export default function ManualPageViewer({ pageNumber }: ManualPageViewerProps) 
         setLoading(false);
       });
   }, [pageNumber, manifest]);
-
-  // Toggle dark mode and save preferences
-  const toggleDarkMode = () => {
-    setIsDarkMode(!isDarkMode);
-    setTimeout(savePreferences, 100);
-  };
 
   // Update font size and save preferences
   const updateFontSize = (newSize: 'small' | 'medium' | 'large') => {
@@ -374,15 +369,6 @@ export default function ManualPageViewer({ pageNumber }: ManualPageViewerProps) 
                 title="Notes"
               >
                 <StickyNote className="w-5 h-5" />
-              </button>
-              
-              {/* Dark Mode Toggle */}
-              <button
-                onClick={toggleDarkMode}
-                className={`p-2 rounded-md transition-colors ${isDarkMode ? 'hover:bg-gray-700' : 'hover:bg-gray-100'}`}
-                title="Toggle Dark Mode"
-              >
-                {isDarkMode ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
               </button>
             </div>
           </div>

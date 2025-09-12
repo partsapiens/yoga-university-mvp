@@ -82,7 +82,7 @@ export const Footer = () => {
   ];
 
   return (
-    <footer className="bg-gray-900 text-white">
+    <footer className="bg-gray-900 dark:bg-gray-950 text-white">
       {/* Main Footer Content */}
       <div className="py-responsive">
         <div className="container-wide">
@@ -91,16 +91,16 @@ export const Footer = () => {
             <div className="lg:col-span-2">
               <div className="flex items-center space-x-2 mb-4 md:mb-6">
                 <span className="text-3xl">🧘‍♀️</span>
-                <span className="text-responsive-xl font-bold text-blue-400">Yoga Flow University</span>
+                <span className="text-responsive-xl font-bold text-blue-400 dark:text-blue-300">Yoga Flow University</span>
               </div>
-              <p className="text-responsive-sm text-gray-300 mb-6 max-w-md leading-relaxed">
+              <p className="text-responsive-sm text-gray-300 dark:text-gray-400 mb-6 max-w-md leading-relaxed">
                 Empowering yoga practitioners and teachers with intelligent flow creation, 
                 comprehensive pose libraries, and mindful meditation practices.
               </p>
 
               {/* Social Links */}
               <div>
-                <h3 className="heading-responsive-3 text-white mb-3">Connect With Us</h3>
+                <h3 className="heading-responsive-3 text-white dark:text-gray-100 mb-3">Connect With Us</h3>
                 <div className="flex flex-wrap gap-3">
                   {socialLinks.map((social) => (
                     <a
@@ -108,7 +108,7 @@ export const Footer = () => {
                       href={social.href}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="touch-target p-3 text-gray-400 hover:text-blue-400 transition-colors rounded-lg border border-gray-700 hover:border-blue-400"
+                      className="touch-target p-3 text-gray-400 dark:text-gray-500 hover:text-blue-400 dark:hover:text-blue-300 transition-colors rounded-lg border border-gray-700 dark:border-gray-600 hover:border-blue-400 dark:hover:border-blue-300"
                       aria-label={social.name}
                     >
                       {social.icon}
@@ -120,7 +120,7 @@ export const Footer = () => {
 
             {/* Quick Links */}
             <div>
-              <h3 className="heading-responsive-3 text-white mb-4">Quick Links</h3>
+              <h3 className="heading-responsive-3 text-white dark:text-gray-100 mb-4">Quick Links</h3>
               <ul className="space-responsive">
                 {quickLinks.map((link) => (
                   <li key={link.name}>

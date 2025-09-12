@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { UserRole } from '@/types';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 // Type declarations for speech recognition API
 declare global {
@@ -16,13 +17,13 @@ interface NavigationProps {
 }
 
 export const Navigation = ({ userRole }: NavigationProps) => {
+  const { language, setLanguage, t } = useLanguage();
   const [mobileOpen, setMobileOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
   const [darkMode, setDarkMode] = useState(false);
   const [ttsEnabled, setTtsEnabled] = useState(false);
   const [voiceControlEnabled, setVoiceControlEnabled] = useState(false);
   const [isVoiceListening, setIsVoiceListening] = useState(false);
-  const [language, setLanguage] = useState('en');
   const [searchQuery, setSearchQuery] = useState('');
 
   // Load preferences from localStorage
@@ -30,12 +31,10 @@ export const Navigation = ({ userRole }: NavigationProps) => {
     const savedDarkMode = localStorage.getItem('darkMode') === 'true';
     const savedTts = localStorage.getItem('ttsEnabled') === 'true';
     const savedVoiceControl = localStorage.getItem('voiceControlEnabled') === 'true';
-    const savedLanguage = localStorage.getItem('language') || 'en';
     
     setDarkMode(savedDarkMode);
     setTtsEnabled(savedTts);
     setVoiceControlEnabled(savedVoiceControl);
-    setLanguage(savedLanguage);
     
     // Apply dark mode class
     if (savedDarkMode) {
@@ -44,13 +43,13 @@ export const Navigation = ({ userRole }: NavigationProps) => {
   }, []);
 
   const navItems = [
-    { href: '/dashboard', label: 'Dashboard' },
-    { href: '/poses', label: 'Pose Library' },
-    { href: '/flows/create', label: 'Create Flow' },
-    { href: '/manual/page/1', label: 'Manual' },
-    { href: '/meditation', label: 'Meditation' },
-    { href: '/about', label: 'About' },
-    { href: '/pricing', label: 'Pricing' },
+    { href: '/dashboard', label: t('nav.dashboard') },
+    { href: '/poses', label: t('nav.poses') },
+    { href: '/flows/create', label: t('nav.flows') },
+    { href: '/manual/page/1', label: t('nav.manual') },
+    { href: '/meditation', label: t('nav.meditation') },
+    { href: '/about', label: t('nav.about') },
+    { href: '/pricing', label: t('nav.pricing') },
   ];
 
   const toggleDarkMode = () => {
@@ -142,8 +141,7 @@ export const Navigation = ({ userRole }: NavigationProps) => {
   };
 
   const handleLanguageChange = (newLang: string) => {
-    setLanguage(newLang);
-    localStorage.setItem('language', newLang);
+    setLanguage(newLang as 'en' | 'de' | 'ro' | 'ru');
     
     // Apply language to document for basic support
     document.documentElement.lang = newLang;
@@ -154,23 +152,18 @@ export const Navigation = ({ userRole }: NavigationProps) => {
     const messages = {
       en: 'Language set to English',
       de: 'Sprache auf Deutsch eingestellt',
-      ru: 'Язык установлен на русский'
+      ru: 'Язык установлен на русский',
+      ro: 'Limba setată în română'
     };
     
     const message = messages[newLang as keyof typeof messages] || messages.en;
     
-    // Use a more elegant notification instead of alert
-    // In a real app, this would use a toast notification system
     console.log(message);
     
     // For now, show a brief visual feedback
-    const button = document.querySelector(`option[value="${newLang}"]`);
-    if (button) {
-      // Simple feedback - could be enhanced with a proper notification system
-      setTimeout(() => {
-        console.log(`Translation system activated for ${newLang.toUpperCase()}`);
-      }, 100);
-    }
+    setTimeout(() => {
+      console.log(`Translation system activated for ${newLang.toUpperCase()}`);
+    }, 100);
   };
 
   const handleSearch = (e: React.FormEvent) => {
@@ -310,10 +303,11 @@ export const Navigation = ({ userRole }: NavigationProps) => {
                 value={language}
                 onChange={(e) => handleLanguageChange(e.target.value)}
                 className="text-sm bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-md px-2 py-1 text-gray-700 dark:text-gray-300 focus:outline-none focus:border-blue-500"
-                title="Language selection (currently for display only)"
+                title="Language selection"
               >
                 <option value="en" className="bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300">EN</option>
                 <option value="de" className="bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300">DE</option>
+                <option value="ro" className="bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300">RO</option>
                 <option value="ru" className="bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300">RU</option>
               </select>
             </div>
