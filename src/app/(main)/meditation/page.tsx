@@ -2,7 +2,6 @@
 
 import React, { useState, useEffect } from 'react';
 import { useLocalStorage } from '@/hooks/useLocalStorage';
-import { useMeditationVoiceGuide } from '@/hooks/useMeditationVoiceGuide';
 import { generateMeditationScript } from '@/lib/api/ai';
 import { MeditationInput, MeditationScript, MeditationRecommendation } from '@/types/ai';
 import { MoodInput } from '@/components/meditation/MoodInput';
@@ -10,7 +9,6 @@ import { GuidedMeditationPlayer } from '@/components/meditation/GuidedMeditation
 import { BreathingOrb } from '@/components/meditation/BreathingOrb';
 import { EvolvingBreathingOrb } from '@/components/meditation/EvolvingBreathingOrb';
 import { MeditationRecommendations } from '@/components/meditation/MeditationRecommendations';
-import { Avatar } from '@/components/Avatar';
 import { PersonalizedAffirmations } from '@/components/ai/PersonalizedAffirmations';
 
 // Types for meditation features
@@ -242,59 +240,6 @@ export default function MeditationPage() {
     }
   };
 
-  // Voice guide integration for meditation
-  const meditationVoiceGuide = useMeditationVoiceGuide({
-    onStartMeditation: () => {
-      if (!selectedSession) {
-        // Start a default 10-minute session
-        const defaultSession: MeditationSession = {
-          id: 'default-meditation',
-          name: 'Voice-Started Meditation',
-          duration: 10,
-          type: 'timer',
-          description: 'Meditation started by voice command'
-        };
-        startSession(defaultSession);
-      } else if (!isPlaying) {
-        setIsPlaying(true);
-      }
-    },
-    onPauseMeditation: () => {
-      if (isPlaying) {
-        setIsPlaying(false);
-      }
-    },
-    onResumeMeditation: () => {
-      if (!isPlaying && selectedSession) {
-        setIsPlaying(true);
-      }
-    },
-    onStopMeditation: () => {
-      setIsPlaying(false);
-      setSelectedSession(null);
-      setTimeRemaining(0);
-    },
-    onSetTimer: (minutes: number) => {
-      const timerSession: MeditationSession = {
-        id: `voice-timer-${minutes}`,
-        name: `${minutes} Minute Timer`,
-        duration: minutes,
-        type: 'timer',
-        description: `Timer set by voice command for ${minutes} minutes`
-      };
-      startSession(timerSession);
-    },
-    onAddTime: (minutes: number) => {
-      if (selectedSession) {
-        setTimeRemaining(prev => prev + (minutes * 60));
-      }
-    },
-    onGetTimeRemaining: () => formatTimeForSpeech(timeRemaining),
-    onResetTimer: resetTimer,
-    isPlaying,
-    timeRemaining
-  });
-
   // Show AI meditation player if generated
   if (showPlayer && generatedScript) {
     return (
@@ -464,46 +409,6 @@ export default function MeditationPage() {
                   Start Timer
                 </button>
               </div>
-            </div>
-
-            {/* Voice Control */}
-            <div className="mt-8 border-t pt-6">
-              <h3 className="text-lg font-semibold mb-4">Voice Control</h3>
-              <div className="flex items-center gap-4 mb-4">
-                <Avatar 
-                  state={meditationVoiceGuide.state} 
-                  size="sm"
-                  className="flex-shrink-0"
-                />
-                <div className="flex gap-2">
-                  <button
-                    onClick={meditationVoiceGuide.toggleVoiceGuide}
-                    className={`px-3 py-2 text-sm rounded-md font-medium transition-colors ${
-                      meditationVoiceGuide.isVoiceEnabled 
-                        ? 'bg-green-500 text-white hover:bg-green-600' 
-                        : 'bg-gray-500 text-white hover:bg-gray-600'
-                    }`}
-                  >
-                    {meditationVoiceGuide.isVoiceEnabled ? '🎙️ Voice On' : '🔇 Voice Off'}
-                  </button>
-                  {meditationVoiceGuide.isVoiceEnabled && (
-                    <button
-                      onClick={meditationVoiceGuide.startListening}
-                      disabled={meditationVoiceGuide.isListening}
-                      className="px-3 py-2 text-sm rounded-md font-medium bg-blue-500 text-white hover:bg-blue-600 disabled:opacity-50 disabled:cursor-not-allowed"
-                    >
-                      {meditationVoiceGuide.isListening ? '👂 Listening' : '💬 Talk'}
-                    </button>
-                  )}
-                </div>
-              </div>
-              {meditationVoiceGuide.isVoiceEnabled && (
-                <div className="text-sm text-gray-600 space-y-1">
-                  <p><strong>Try saying:</strong></p>
-                  <p>&quot;Start meditation&quot; • &quot;Pause&quot; • &quot;Set timer to 10 minutes&quot;</p>
-                  <p>&quot;How much time left&quot; • &quot;Add 5 minutes&quot; • &quot;Stop meditation&quot;</p>
-                </div>
-              )}
             </div>
           </div>
 

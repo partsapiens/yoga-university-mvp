@@ -490,7 +490,7 @@ export const MoodInput: React.FC<MoodInputProps> = ({ onGenerate, isGenerating =
         {/* Enhanced mode benefits */}
         {useEnhancedMode && (
           <div className="text-center text-sm text-gray-600 space-y-1">
-            <p>🤖 AI will analyze your words and create a personalized experience</p>
+            <p>✨ AI will analyze your words and create a personalized experience</p>
             <p>🎯 Automatically selects optimal style, duration, and breathing pattern</p>
           </div>
         )}

@@ -53,7 +53,7 @@ const HomePage = () => {
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div className="bg-gray-50 p-6 rounded-lg">
-              <h3 className="text-xl font-semibold mb-3">🤖 Intelligent Flow Creation</h3>
+              <h3 className="text-xl font-semibold mb-3">✨ Intelligent Flow Creation</h3>
               <p className="text-gray-600">Generate personalized yoga sequences based on your goals.</p>
             </div>
             

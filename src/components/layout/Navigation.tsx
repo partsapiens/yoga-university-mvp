@@ -3,6 +3,14 @@ import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { UserRole } from '@/types';
 
+// Type declarations for speech recognition API
+declare global {
+  interface Window {
+    SpeechRecognition: any;
+    webkitSpeechRecognition: any;
+  }
+}
+
 interface NavigationProps {
   userRole?: UserRole;
 }
@@ -12,6 +20,8 @@ export const Navigation = ({ userRole }: NavigationProps) => {
   const [searchOpen, setSearchOpen] = useState(false);
   const [darkMode, setDarkMode] = useState(false);
   const [ttsEnabled, setTtsEnabled] = useState(false);
+  const [voiceControlEnabled, setVoiceControlEnabled] = useState(false);
+  const [isVoiceListening, setIsVoiceListening] = useState(false);
   const [language, setLanguage] = useState('en');
   const [searchQuery, setSearchQuery] = useState('');
 
@@ -19,10 +29,12 @@ export const Navigation = ({ userRole }: NavigationProps) => {
   useEffect(() => {
     const savedDarkMode = localStorage.getItem('darkMode') === 'true';
     const savedTts = localStorage.getItem('ttsEnabled') === 'true';
+    const savedVoiceControl = localStorage.getItem('voiceControlEnabled') === 'true';
     const savedLanguage = localStorage.getItem('language') || 'en';
     
     setDarkMode(savedDarkMode);
     setTtsEnabled(savedTts);
+    setVoiceControlEnabled(savedVoiceControl);
     setLanguage(savedLanguage);
     
     // Apply dark mode class
@@ -35,7 +47,7 @@ export const Navigation = ({ userRole }: NavigationProps) => {
     { href: '/dashboard', label: 'Dashboard' },
     { href: '/poses', label: 'Pose Library' },
     { href: '/flows/create', label: 'Create Flow' },
-    { href: '/manual', label: 'Manual' },
+    { href: '/manual/page/1', label: 'Manual' },
     { href: '/meditation', label: 'Meditation' },
     { href: '/about', label: 'About' },
     { href: '/pricing', label: 'Pricing' },
@@ -54,30 +66,80 @@ export const Navigation = ({ userRole }: NavigationProps) => {
     }
   };
 
-  const toggleTTS = () => {
-    const newTts = !ttsEnabled;
-    setTtsEnabled(newTts);
-    localStorage.setItem('ttsEnabled', newTts.toString());
+  const toggleVoiceControl = () => {
+    const newVoiceControl = !voiceControlEnabled;
+    setVoiceControlEnabled(newVoiceControl);
+    localStorage.setItem('voiceControlEnabled', newVoiceControl.toString());
     
-    // Basic TTS functionality implementation
-    if (newTts) {
-      console.log('Text-to-Speech enabled');
-      // Test TTS availability
-      if ('speechSynthesis' in window) {
-        console.log('TTS is available in this browser');
+    if (newVoiceControl) {
+      console.log('Voice control enabled');
+      // Test voice recognition availability
+      if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
+        console.log('Voice recognition is available');
       } else {
-        console.log('TTS not supported in this browser');
-        alert('Text-to-Speech is not supported in your browser');
-        setTtsEnabled(false);
-        localStorage.setItem('ttsEnabled', 'false');
+        console.log('Voice recognition not supported in this browser');
+        alert('Voice recognition is not supported in your browser');
+        setVoiceControlEnabled(false);
+        localStorage.setItem('voiceControlEnabled', 'false');
       }
     } else {
-      console.log('Text-to-Speech disabled');
-      // Stop any ongoing speech
-      if ('speechSynthesis' in window) {
-        window.speechSynthesis.cancel();
-      }
+      console.log('Voice control disabled');
+      setIsVoiceListening(false);
     }
+  };
+
+  const startVoiceListening = () => {
+    if (!voiceControlEnabled) return;
+    
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    if (!SpeechRecognition) {
+      alert('Voice recognition is not supported in your browser');
+      return;
+    }
+
+    const recognition = new SpeechRecognition();
+    recognition.continuous = false;
+    recognition.interimResults = false;
+    recognition.lang = 'en-US';
+
+    setIsVoiceListening(true);
+
+    recognition.onresult = (event) => {
+      const command = event.results[0][0].transcript.toLowerCase();
+      console.log('Voice command:', command);
+      
+      // Basic voice commands
+      if (command.includes('go home') || command.includes('home page')) {
+        window.location.href = '/';
+      } else if (command.includes('manual') || command.includes('guide')) {
+        window.location.href = '/manual/page/1';
+      } else if (command.includes('meditation') || command.includes('meditate')) {
+        window.location.href = '/meditation';
+      } else if (command.includes('poses') || command.includes('pose library')) {
+        window.location.href = '/poses';
+      } else if (command.includes('create flow') || command.includes('new flow')) {
+        window.location.href = '/flows/create';
+      } else if (command.includes('dashboard')) {
+        window.location.href = '/dashboard';
+      } else if (command.includes('search')) {
+        setSearchOpen(true);
+      } else {
+        console.log('Command not recognized:', command);
+        // Show a visual feedback that command wasn't recognized
+        alert(`Command "${command}" not recognized. Try saying: "go home", "manual", "meditation", "poses", "create flow", "dashboard", or "search"`);
+      }
+    };
+
+    recognition.onerror = (event) => {
+      console.error('Voice recognition error:', event.error);
+      setIsVoiceListening(false);
+    };
+
+    recognition.onend = () => {
+      setIsVoiceListening(false);
+    };
+
+    recognition.start();
   };
 
   const handleLanguageChange = (newLang: string) => {
@@ -148,21 +210,47 @@ export const Navigation = ({ userRole }: NavigationProps) => {
               </svg>
             </button>
 
-            {/* TTS Toggle */}
+            {/* Voice Control Toggle */}
             <button
-              onClick={toggleTTS}
+              onClick={toggleVoiceControl}
               className={`p-2 rounded-lg transition-colors ${
-                ttsEnabled 
+                voiceControlEnabled 
                   ? 'text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/20' 
                   : 'text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400'
               }`}
-              aria-label="Toggle Text-to-Speech"
-              title="Text-to-Speech"
+              aria-label="Toggle Voice Control"
+              title="Voice Control"
             >
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 4V2a1 1 0 011-1h4a1 1 0 011 1v2m-6 0h10a1 1 0 011 1v14a1 1 0 01-1 1H7a1 1 0 01-1-1V5a1 1 0 011-1z" />
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z" />
               </svg>
             </button>
+
+            {/* Voice Listening Button - Only show when voice control is enabled */}
+            {voiceControlEnabled && (
+              <button
+                onClick={startVoiceListening}
+                disabled={isVoiceListening}
+                className={`p-2 rounded-lg transition-colors ${
+                  isVoiceListening 
+                    ? 'bg-red-500 text-white animate-pulse' 
+                    : 'bg-green-500 hover:bg-green-600 text-white'
+                }`}
+                aria-label={isVoiceListening ? 'Listening...' : 'Start Voice Command'}
+                title={isVoiceListening ? 'Listening...' : 'Speak a command'}
+              >
+                {isVoiceListening ? (
+                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 10a1 1 0 011-1h4a1 1 0 011 1v4a1 1 0 01-1 1h-4a1 1 0 01-1-1v-4z" />
+                  </svg>
+                ) : (
+                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z" />
+                  </svg>
+                )}
+              </button>
+            )}
 
             {/* Dark Mode Toggle */}
             <button

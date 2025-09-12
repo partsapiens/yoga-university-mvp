@@ -86,7 +86,7 @@ export const Footer = () => {
       {/* Main Footer Content */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-          {/* Brand and Yogis Inspired Counter */}
+          {/* Brand Section */}
           <div className="lg:col-span-2">
             <div className="flex items-center space-x-2 mb-4">
               <span className="text-3xl">🧘‍♀️</span>
@@ -96,18 +96,6 @@ export const Footer = () => {
               Empowering yoga practitioners and teachers with intelligent flow creation, 
               comprehensive pose libraries, and mindful meditation practices.
             </p>
-            
-            {/* Yogis Inspired Counter - Smaller and More Subtle */}
-            <div className="bg-gradient-to-r from-gray-700 to-gray-600 rounded-lg p-3 mb-6">
-              <div className="text-center">
-                <div className="text-lg font-medium text-white mb-1">
-                  {yogisInspired.toLocaleString()}
-                </div>
-                <div className="text-gray-300 text-xs">
-                  Yogis Inspired
-                </div>
-              </div>
-            </div>
 
             {/* Social Links */}
             <div>
@@ -177,8 +165,17 @@ export const Footer = () => {
       <div className="border-t border-gray-800">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
           <div className="flex flex-col md:flex-row justify-between items-center">
-            <div className="text-gray-400 text-sm mb-4 md:mb-0">
-              © {new Date().getFullYear()} Yoga Flow University. All rights reserved.
+            <div className="text-gray-400 text-sm mb-4 md:mb-0 flex items-center gap-4">
+              <span>© {new Date().getFullYear()} Yoga Flow University. All rights reserved.</span>
+              <span className="hidden md:inline text-gray-500">•</span>
+              <div className="flex items-center gap-2">
+                <span className="text-sm font-medium text-blue-400">
+                  {yogisInspired.toLocaleString()}
+                </span>
+                <span className="text-xs text-gray-400">
+                  Yogis Inspired
+                </span>
+              </div>
             </div>
             
             {/* Social Links */}

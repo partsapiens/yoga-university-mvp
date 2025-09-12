@@ -49,7 +49,7 @@ const YogaFlowGenerator = () => {
       <div className="mb-8">
         <h2 className="text-3xl font-bold text-gray-800 dark:text-gray-200 mb-2 flex items-center gap-2">
           <Sparkles className="text-purple-600" />
-          🤖 Yoga Flow Generator
+          ✨ Yoga Flow Generator
         </h2>
         <p className="text-gray-600 dark:text-gray-400">
           Create personalized yoga sequences tailored to your needs and goals
@@ -126,7 +126,7 @@ const YogaFlowGenerator = () => {
             ) : (
               <>
                 <Sparkles className="w-5 h-5" />
-                Generate 🤖 Flow
+                Generate ✨ Flow
               </>
             )}
           </button>
