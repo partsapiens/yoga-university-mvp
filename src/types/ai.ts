@@ -171,6 +171,12 @@ export interface UserMeditationProfile {
   recentMoods: string[];
   meditationGoals: string[];
   lastRecommendationDate?: string;
+  moodPatterns?: {
+    dominantMood: string;
+    moodTrend: 'improving' | 'declining' | 'stable';
+    stressIndicators: string[];
+    effectiveStyles: string[];
+  };
 }
 
 export interface RecommendationContext {
@@ -187,4 +193,38 @@ export interface RecommendationContext {
   }>;
   currentMood?: string;
   availableTime?: number;
+  sentimentAnalysis?: {
+    mood: string;
+    confidence: number;
+    emotions: Array<{ emotion: string; intensity: number }>;
+    needsAttention: boolean;
+    suggestedStyle: string;
+    reasoning: string;
+  };
+  moodHistory?: Array<{
+    timestamp: string;
+    mood: string;
+    confidence: number;
+  }>;
+}
+
+// Enhanced recommendation input with mood analysis
+export interface EnhancedRecommendationInput extends RecommendationInput {
+  textInput?: string;
+  moodHistory?: Array<{
+    timestamp: string;
+    mood: string;
+    confidence: number;
+  }>;
+  biometricData?: {
+    heartRate?: number;
+    heartRateVariability?: number;
+    stressLevel?: 'low' | 'medium' | 'high';
+    sleepQuality?: number;
+  };
+  previousRecommendationFeedback?: Array<{
+    recommendationId: string;
+    helpful: boolean;
+    reason?: string;
+  }>;
 }

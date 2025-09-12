@@ -125,53 +125,62 @@ export const MoodInput: React.FC<MoodInputProps> = ({ onGenerate, isGenerating =
     }
   };
 
-  // Enhanced AI-powered submission
+  // Enhanced AI-powered submission with sentiment analysis
   const handleEnhancedSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
     if (!conversationalInput && !formData.mood) return;
 
     try {
-      const aiSelectInput: AISelectInput = {
-        userText: conversationalInput || `I'm feeling ${formData.mood} and ${showCustomGoal ? customGoal : formData.goal}`,
-        timeOfDay: getTimeOfDay(),
-        preferredDuration: formData.duration,
-        recentSessions: [], // TODO: Get from user data
-        userMood: formData.mood as any
-      };
-
-      const response = await fetch('/api/ai/ai-select', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(aiSelectInput)
-      });
-
-      if (!response.ok) {
-        throw new Error('Failed to get AI recommendation');
-      }
-
-      const recommendation: AISelectOutput = await response.json();
+      // Use our new sentiment analysis service
+      const { analyzeSentiment } = await import('@/lib/services/sentimentAnalysis');
+      const { MoodTrackingService } = await import('@/lib/services/moodTracking');
       
-      // For now, convert back to MeditationInput format for compatibility
+      const userText = conversationalInput || `I'm feeling ${formData.mood} and ${showCustomGoal ? customGoal : formData.goal}`;
+      
+      // Analyze sentiment and extract mood/style recommendations
+      const sentimentResult = await analyzeSentiment(userText, 'meditation request');
+      
+      // Save mood data for tracking
+      const moodTracker = MoodTrackingService.getInstance();
+      moodTracker.saveMoodEntry(sentimentResult, userText);
+      
+      // Create enhanced meditation input
       const meditationInput: MeditationInput = {
-        mood: formData.mood,
+        mood: sentimentResult.mood,
         goal: conversationalInput || (showCustomGoal ? customGoal : formData.goal),
-        duration: recommendation.duration,
+        duration: formData.duration,
         experience: formData.experience,
-        style: recommendation.style as any,
+        style: sentimentResult.suggestedStyle as any,
         timeOfDay: getTimeOfDay(),
         pastSessions: 0,
         currentStreak: 0
       };
 
+      // Show brief sentiment feedback to user (optional)
+      if (sentimentResult.confidence > 0.7) {
+        console.log(`Detected mood: ${sentimentResult.mood} (${Math.round(sentimentResult.confidence * 100)}% confidence)`);
+      }
+
       onGenerate(meditationInput);
     } catch (error) {
-      console.error('Enhanced mode failed, falling back to simple mode:', error);
-      handleSubmit(e);
+      console.error('Enhanced sentiment analysis failed, falling back to simple mode:', error);
+      // Fallback to regular processing
+      const meditationInput: MeditationInput = {
+        mood: formData.mood || 'neutral',
+        goal: conversationalInput || (showCustomGoal ? customGoal : formData.goal),
+        duration: formData.duration,
+        experience: formData.experience,
+        style: formData.style,
+        timeOfDay: getTimeOfDay(),
+        pastSessions: 0,
+        currentStreak: 0
+      };
+      onGenerate(meditationInput);
     }
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
     const finalGoal = showCustomGoal ? customGoal : formData.goal;
@@ -186,6 +195,46 @@ export const MoodInput: React.FC<MoodInputProps> = ({ onGenerate, isGenerating =
     };
 
     onGenerate(input);
+  };
+
+  // Enhanced conversational processing
+  const handleConversationalSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!conversationalInput.trim()) return;
+
+    try {
+      // Use sentiment analysis to extract mood and generate recommendations
+      const { analyzeSentiment } = await import('@/lib/services/sentimentAnalysis');
+      const sentimentResult = await analyzeSentiment(conversationalInput, 'meditation request');
+      
+      // Create MeditationInput from sentiment analysis
+      const input: MeditationInput = {
+        mood: sentimentResult.mood,
+        goal: conversationalInput,
+        duration: formData.duration,
+        experience: formData.experience,
+        style: sentimentResult.suggestedStyle as any,
+        timeOfDay: getTimeOfDay(),
+        pastSessions: 0,
+        currentStreak: 0
+      };
+
+      onGenerate(input);
+    } catch (error) {
+      console.error('Failed to process conversational input:', error);
+      // Fallback to regular processing
+      const input: MeditationInput = {
+        mood: 'neutral',
+        goal: conversationalInput,
+        duration: formData.duration,
+        experience: formData.experience,
+        style: 'mindfulness',
+        timeOfDay: getTimeOfDay(),
+        pastSessions: 0,
+        currentStreak: 0
+      };
+      onGenerate(input);
+    }
   };
 
   return (
