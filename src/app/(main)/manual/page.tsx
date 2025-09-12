@@ -47,12 +47,12 @@ export default function ManualPage() {
         </div>
       </div>
 
-      {/* Learning 🤖 Section */}
+      {/* Learning ✨ Section */}
       <div className="mb-8 not-prose">
         <div className="text-center mb-6">
           <div className="flex items-center justify-center mb-2">
             <Sparkles className="w-6 h-6 text-purple-600 mr-2" />
-            <h2 className="text-2xl font-bold text-gray-900">🤖 Learning Assistant</h2>
+            <h2 className="text-2xl font-bold text-gray-900">✨ Learning Assistant</h2>
           </div>
           <p className="text-gray-600 max-w-2xl mx-auto">
             Enhance your learning with intelligent tools designed to help you master yoga philosophy, 
@@ -65,7 +65,7 @@ export default function ManualPage() {
           <div className="lg:col-span-1">
             <div className="mb-3 flex items-center">
               <Sparkles className="w-5 h-5 text-purple-600 mr-2" />
-              <h3 className="text-lg font-semibold text-gray-900">🤖 Ask Questions</h3>
+              <h3 className="text-lg font-semibold text-gray-900">✨ Ask Questions</h3>
             </div>
             <ManualAssistant />
           </div>

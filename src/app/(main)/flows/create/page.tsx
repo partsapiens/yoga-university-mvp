@@ -118,7 +118,7 @@ export default function CreateFlowPage() {
     }
   }, 1000); // Timer runs every second, tempo is handled by adjusting duration
 
-  // --- 🤖 Flow Generation Handler ---
+  // --- ✨ Flow Generation Handler ---
   const handleGenerate = async () => {
     try {
       const requestData = {
@@ -153,7 +153,7 @@ export default function CreateFlowPage() {
         setPreview(smartGenerate(minutes, intensity, focus));
       }
     } catch (error) {
-      console.error('Error generating 🤖 flow:', error);
+      console.error('Error generating ✨ flow:', error);
       // Fallback to legacy generation
       setPreview(smartGenerate(minutes, intensity, focus));
     }
@@ -461,7 +461,7 @@ export default function CreateFlowPage() {
           <KeyboardShortcuts />
         </div>
         
-        {/* 🤖 Yoga Flow Generator */}
+        {/* ✨ Yoga Flow Generator */}
         <div className="mt-6">
           <YogaAIDemo />
         </div>
@@ -553,7 +553,7 @@ export default function CreateFlowPage() {
       <div className="mx-auto max-w-7xl px-4">
         <SavedFlows flows={savedFlows} onLoad={handleLoadFlow} onDelete={handleDeleteFlow} />
         
-        {/* Combined Flow Management: Your Flow + Quick Actions + 🤖 Flow Review */}
+        {/* Combined Flow Management: Your Flow + Quick Actions + ✨ Flow Review */}
         <FlowManagement
           flow={flow}
           secondsPerPose={secondsPerPose}
@@ -574,7 +574,7 @@ export default function CreateFlowPage() {
         />
         
         <div className="space-y-6 mt-6">
-          {/* 🤖-Powered Flow Validation */}
+          {/* ✨-Powered Flow Validation */}
           <FlowValidation 
             flow={flow} 
             totalSeconds={totalSeconds} 
@@ -582,7 +582,7 @@ export default function CreateFlowPage() {
             className="mt-6"
           />
           
-          {/* Combined 🤖 Suggestions and Search Library */}
+          {/* Combined ✨ Suggestions and Search Library */}
           <CombinedPoseLibrary onAddPose={addPose} />
 
           {/* Export Flow Section */}
