@@ -8,19 +8,20 @@ export const Footer = () => {
 
   // Load and increment Yogis Inspired counter
   useEffect(() => {
-    const today = new Date().toDateString();
-    const lastVisit = localStorage.getItem('lastVisitDate');
-    const currentCount = parseInt(localStorage.getItem('yogisInspiredCount') || '42000', 10);
-
-    if (lastVisit !== today) {
-      // New day, increment counter
-      const newCount = currentCount + 1;
-      setYogisInspired(newCount);
-      localStorage.setItem('yogisInspiredCount', newCount.toString());
-      localStorage.setItem('lastVisitDate', today);
-    } else {
-      setYogisInspired(currentCount);
+    // Use lifetime count instead of daily
+    let currentCount = parseInt(localStorage.getItem('yogisInspiredLifetimeCount') || '42000', 10);
+    
+    // Check if this is first visit ever
+    const hasVisited = localStorage.getItem('hasVisitedBefore');
+    
+    if (!hasVisited) {
+      // New visitor, increment lifetime counter
+      currentCount = currentCount + 1;
+      localStorage.setItem('yogisInspiredLifetimeCount', currentCount.toString());
+      localStorage.setItem('hasVisitedBefore', 'true');
     }
+    
+    setYogisInspired(currentCount);
   }, []);
 
   const socialLinks = [
@@ -92,21 +93,18 @@ export const Footer = () => {
               <span className="text-2xl font-bold text-blue-400">Yoga Flow University</span>
             </div>
             <p className="text-gray-300 mb-6 max-w-md">
-              Empowering yoga practitioners and teachers with AI-powered flow creation, 
+              Empowering yoga practitioners and teachers with intelligent flow creation, 
               comprehensive pose libraries, and mindful meditation practices.
             </p>
             
-            {/* Yogis Inspired Counter */}
-            <div className="bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg p-4 mb-6">
+            {/* Yogis Inspired Counter - Smaller and More Subtle */}
+            <div className="bg-gradient-to-r from-gray-700 to-gray-600 rounded-lg p-3 mb-6">
               <div className="text-center">
-                <div className="text-3xl font-bold text-white mb-1">
+                <div className="text-lg font-medium text-white mb-1">
                   {yogisInspired.toLocaleString()}
                 </div>
-                <div className="text-blue-100 text-sm font-medium">
-                  Yogis Inspired Today
-                </div>
-                <div className="text-blue-200 text-xs mt-1">
-                  Counter increments once per unique visitor per day
+                <div className="text-gray-300 text-xs">
+                  Yogis Inspired
                 </div>
               </div>
             </div>

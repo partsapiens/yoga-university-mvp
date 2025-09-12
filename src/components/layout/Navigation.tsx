@@ -35,7 +35,6 @@ export const Navigation = ({ userRole }: NavigationProps) => {
     { href: '/dashboard', label: 'Dashboard' },
     { href: '/poses', label: 'Pose Library' },
     { href: '/flows/create', label: 'Create Flow' },
-    { href: '/ai-guide', label: 'AI Guide' },
     { href: '/manual', label: 'Manual' },
     { href: '/meditation', label: 'Meditation' },
     { href: '/about', label: 'About' },
