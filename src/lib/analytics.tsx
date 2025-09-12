@@ -143,6 +143,53 @@ class PrivacyFriendlyAnalytics {
       label: feature,
     });
   }
+
+  // Enhanced analytics for AI insights
+  public trackContentEngagement(contentType: string, contentId: string, timeSpent: number, completionRate?: number): void {
+    this.track({
+      action: 'content_engagement',
+      category: 'content',
+      label: `${contentType}:${contentId}`,
+      value: timeSpent, // seconds
+      nonInteraction: false,
+    });
+
+    if (completionRate !== undefined) {
+      this.track({
+        action: 'content_completion',
+        category: 'content',
+        label: `${contentType}:${contentId}`,
+        value: Math.round(completionRate * 100), // percentage
+      });
+    }
+  }
+
+  public trackSessionQuality(sessionType: string, duration: number, qualityScore: number): void {
+    this.track({
+      action: 'session_quality',
+      category: 'practice',
+      label: sessionType,
+      value: qualityScore, // 1-10 scale
+    });
+  }
+
+  public trackContentPreference(contentType: string, preferenceAction: 'like' | 'save' | 'share' | 'skip'): void {
+    this.track({
+      action: 'content_preference',
+      category: 'engagement',
+      label: `${contentType}:${preferenceAction}`,
+    });
+  }
+
+  public trackOptimalSessionLength(sessionType: string, plannedDuration: number, actualDuration: number): void {
+    const completionRate = Math.min(actualDuration / plannedDuration, 1);
+    this.track({
+      action: 'session_duration_analysis',
+      category: 'optimization',
+      label: sessionType,
+      value: Math.round(completionRate * 100),
+    });
+  }
 }
 
 // Singleton instance
@@ -159,6 +206,16 @@ export const useAnalytics = () => {
   const trackFlowCreation = (length: number, duration: number) => analytics.trackFlowCreation(length, duration);
   const trackSearch = (query: string, results?: number) => analytics.trackSearch(query, results);
   const trackFeatureUsage = (feature: string) => analytics.trackFeatureUsage(feature);
+  
+  // Enhanced analytics for AI insights
+  const trackContentEngagement = (contentType: string, contentId: string, timeSpent: number, completionRate?: number) => 
+    analytics.trackContentEngagement(contentType, contentId, timeSpent, completionRate);
+  const trackSessionQuality = (sessionType: string, duration: number, qualityScore: number) =>
+    analytics.trackSessionQuality(sessionType, duration, qualityScore);
+  const trackContentPreference = (contentType: string, preferenceAction: 'like' | 'save' | 'share' | 'skip') =>
+    analytics.trackContentPreference(contentType, preferenceAction);
+  const trackOptimalSessionLength = (sessionType: string, plannedDuration: number, actualDuration: number) =>
+    analytics.trackOptimalSessionLength(sessionType, plannedDuration, actualDuration);
 
   return {
     trackPageView,
@@ -168,6 +225,10 @@ export const useAnalytics = () => {
     trackFlowCreation,
     trackSearch,
     trackFeatureUsage,
+    trackContentEngagement,
+    trackSessionQuality,
+    trackContentPreference,
+    trackOptimalSessionLength,
     enableAnalytics: () => analytics.enableAnalytics(),
     disableAnalytics: () => analytics.disableAnalytics(),
   };
