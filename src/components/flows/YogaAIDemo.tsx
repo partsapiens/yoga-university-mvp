@@ -45,13 +45,13 @@ const YogaFlowGenerator = () => {
   };
 
   return (
-    <div className="max-w-4xl mx-auto p-6 bg-white rounded-lg shadow-lg">
+    <div className="max-w-4xl mx-auto p-6 bg-white dark:bg-gray-800 rounded-lg shadow-lg">
       <div className="mb-8">
-        <h2 className="text-3xl font-bold text-gray-800 mb-2 flex items-center gap-2">
+        <h2 className="text-3xl font-bold text-gray-800 dark:text-gray-200 mb-2 flex items-center gap-2">
           <Sparkles className="text-purple-600" />
-          AI Yoga Flow Generator
+          🤖 Yoga Flow Generator
         </h2>
-        <p className="text-gray-600">
+        <p className="text-gray-600 dark:text-gray-400">
           Create personalized yoga sequences tailored to your needs and goals
         </p>
       </div>
@@ -60,14 +60,14 @@ const YogaFlowGenerator = () => {
         {/* Preferences Form */}
         <div className="space-y-6">
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2 flex items-center gap-2">
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2 flex items-center gap-2">
               <Clock className="w-4 h-4" />
               Practice Duration
             </label>
             <select
               value={preferences.duration}
               onChange={(e) => setPreferences({...preferences, duration: parseInt(e.target.value)})}
-              className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+              className="w-full p-3 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
             >
               <option value={15}>15 minutes</option>
               <option value={30}>30 minutes</option>
@@ -78,14 +78,14 @@ const YogaFlowGenerator = () => {
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2 flex items-center gap-2">
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2 flex items-center gap-2">
               <User className="w-4 h-4" />
               Experience Level
             </label>
             <select
               value={preferences.level}
               onChange={(e) => setPreferences({...preferences, level: e.target.value})}
-              className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+              className="w-full p-3 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
             >
               <option value="beginner">Beginner</option>
               <option value="intermediate">Intermediate</option>
@@ -94,14 +94,14 @@ const YogaFlowGenerator = () => {
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2 flex items-center gap-2">
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2 flex items-center gap-2">
               <Target className="w-4 h-4" />
               Primary Focus
             </label>
             <select
               value={preferences.focus}
               onChange={(e) => setPreferences({...preferences, focus: e.target.value})}
-              className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+              className="w-full p-3 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
             >
               <option value="flexibility">Flexibility</option>
               <option value="strength">Strength</option>
@@ -126,7 +126,7 @@ const YogaFlowGenerator = () => {
             ) : (
               <>
                 <Sparkles className="w-5 h-5" />
-                Generate AI Flow
+                Generate 🤖 Flow
               </>
             )}
           </button>

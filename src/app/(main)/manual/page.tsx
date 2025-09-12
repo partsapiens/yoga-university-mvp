@@ -47,7 +47,7 @@ export default function ManualPage() {
         </div>
       </div>
 
-      {/* Learning Assistant Section */}
+      {/* Learning 🤖 Section */}
       <div className="mb-8 not-prose">
         <div className="text-center mb-6">
           <div className="flex items-center justify-center mb-2">
