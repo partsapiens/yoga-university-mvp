@@ -60,12 +60,24 @@ export const getPosesFromDatabase = async (): Promise<DatabasePose[]> => {
       // Import the existing POSES data and convert it to DatabasePose format
       const { POSES, EXTENDED_POSES } = await import('./yoga-data');
       
-      // Combine both pose collections
-      const allPoses = [...POSES, ...EXTENDED_POSES];
+      // Convert POSES to DatabasePose format (with id field)
+      const posesWithIds = POSES.map((pose, index) => ({
+        ...pose,
+        id: pose.id || `pose-original-${index + 1}` // Use existing id or generate one
+      }));
       
-      // Convert POSES to DatabasePose format 
+      // Convert EXTENDED_POSES to match POSES format (add id field)
+      const extendedPosesWithIds = EXTENDED_POSES.map((pose, index) => ({
+        ...pose,
+        id: `pose-extended-${index + 1}` // Generate unique id for extended poses
+      }));
+      
+      // Combine both pose collections
+      const allPoses = [...posesWithIds, ...extendedPosesWithIds];
+      
+      // Convert to DatabasePose format 
       const samplePoses: DatabasePose[] = allPoses.map((pose, index) => ({
-        id: `pose-${index + 1}`,
+        id: pose.id || `pose-${index + 1}`,
         slug: pose.name.toLowerCase().replace(/[^a-z0-9]+/g, '-'),
         name: pose.name,
         sanskrit: pose.sanskrit,

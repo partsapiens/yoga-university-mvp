@@ -126,7 +126,7 @@ export function PoseAnalysis({
       }
     } catch (err) {
       console.error('Failed to start camera:', err);
-      setError('Unable to access camera. Please grant camera permissions and try again.');
+      setError('camera_denied'); // Set specific error type for better handling
     } finally {
       setIsLoading(false);
     }
@@ -370,20 +370,51 @@ export function PoseAnalysis({
 
           {/* Error Overlay */}
           {error && (
-            <div className="absolute inset-0 bg-red-900 bg-opacity-90 flex items-center justify-center p-4">
-              <div className="text-white text-center">
-                <div className="mb-2">⚠️</div>
-                <div className="text-sm">{error}</div>
-                <button
-                  onClick={() => {
-                    setError(null);
-                    if (isInitialized) startCamera();
-                  }}
-                  className="mt-2 px-3 py-1 bg-red-600 hover:bg-red-700 text-white text-xs rounded transition-colors"
-                >
-                  Retry
-                </button>
-              </div>
+            <div className="absolute inset-0 bg-gray-900 bg-opacity-95 flex items-center justify-center p-4">
+              {error === 'camera_denied' ? (
+                <div className="text-white text-center max-w-sm">
+                  <div className="text-4xl mb-4">📹</div>
+                  <h3 className="text-lg font-semibold mb-2">Camera Access Needed</h3>
+                  <p className="text-sm text-gray-300 mb-4">
+                    To provide real-time pose feedback, please allow camera access in your browser.
+                  </p>
+                  <div className="space-y-2">
+                    <button
+                      onClick={() => {
+                        setError(null);
+                        if (isInitialized) startCamera();
+                      }}
+                      className="w-full px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-sm rounded transition-colors"
+                    >
+                      Try Again
+                    </button>
+                    <a
+                      href="/poses"
+                      className="block w-full px-4 py-2 bg-gray-600 hover:bg-gray-700 text-white text-sm rounded transition-colors text-center"
+                    >
+                      Browse Pose Library Instead
+                    </a>
+                  </div>
+                  <div className="mt-4 p-3 bg-blue-900/30 rounded text-xs text-blue-200">
+                    <p className="font-medium mb-1">Help: Enable camera access</p>
+                    <p>Click the camera icon in your browser's address bar and select "Allow"</p>
+                  </div>
+                </div>
+              ) : (
+                <div className="text-white text-center">
+                  <div className="mb-2">⚠️</div>
+                  <div className="text-sm mb-3">{error}</div>
+                  <button
+                    onClick={() => {
+                      setError(null);
+                      if (isInitialized) startCamera();
+                    }}
+                    className="px-4 py-2 bg-red-600 hover:bg-red-700 text-white text-sm rounded transition-colors"
+                  >
+                    Retry
+                  </button>
+                </div>
+              )}
             </div>
           )}
         </div>

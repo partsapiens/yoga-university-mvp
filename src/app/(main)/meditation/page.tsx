@@ -111,6 +111,7 @@ export default function MeditationPage() {
         setTimeRemaining(time => {
           if (time <= 1) {
             setIsPlaying(false);
+            console.log('Session completed - triggering handleSessionComplete');
             handleSessionComplete();
             return 0;
           }
@@ -127,8 +128,13 @@ export default function MeditationPage() {
   }, [isPlaying, timeRemaining]);
 
   const handleSessionComplete = () => {
+    console.log('handleSessionComplete called');
+    console.log('Current sessionStats:', sessionStats);
+    
     const today = new Date().toDateString();
     const lastSessionDate = sessionStats.lastSession;
+    
+    console.log('Today:', today, 'Last session:', lastSessionDate);
     
     // Calculate streak
     let newStreak = sessionStats.streak;
@@ -145,16 +151,25 @@ export default function MeditationPage() {
       newStreak = 1; // First session
     }
     
-    const sessionDuration = selectedSession?.duration || Math.floor((generatedScript?.totalDuration || 0) / 60);
+    const sessionDuration = selectedSession?.duration || Math.floor((generatedScript?.totalDuration || 0) / 60) || 5; // Default 5 min
     
-    setSessionStats({
+    const newStats = {
       streak: newStreak,
       lastSession: today,
       totalSessions: sessionStats.totalSessions + 1,
       totalMinutes: sessionStats.totalMinutes + sessionDuration,
       favoriteStyle: sessionStats.favoriteStyle,
       averageRating: sessionStats.averageRating
-    });
+    };
+    
+    console.log('Setting new stats:', newStats);
+    setSessionStats(newStats);
+    
+    // Verify localStorage was updated
+    setTimeout(() => {
+      const stored = localStorage.getItem('meditation_stats');
+      console.log('Stored in localStorage:', stored);
+    }, 100);
   };
 
   const startSession = (session: MeditationSession) => {
