@@ -1,9 +1,12 @@
-import React, { useEffect, useCallback } from 'react';
+import React, { useEffect, useCallback, useState } from 'react';
 import { POSES } from '@/lib/yoga-data';
 import { PoseId } from '@/types/yoga';
 import { Avatar } from '@/components/Avatar';
 import { useYogaVoiceGuide } from '@/hooks/useYogaVoiceGuide';
 import { PoseCard } from './PoseCard';
+import { PoseAnalysis, usePoseAnalysisSettings } from '@/components/pose-analysis';
+import { PoseAnalysisResult } from '@/lib/pose-detection';
+import { Camera, CameraOff } from 'lucide-react';
 
 interface PlayerProps {
   isPlaying: boolean;
@@ -43,6 +46,11 @@ export function Player({
 }: PlayerProps) {
   const currentPose = currentPoseId ? POSES.find(p => p.id === currentPoseId) : null;
   const nextPose = nextPoseId ? POSES.find(p => p.id === nextPoseId) : null;
+  
+  // Pose Analysis State
+  const poseAnalysisSettings = usePoseAnalysisSettings();
+  const [poseAnalysisEnabled, setPoseAnalysisEnabled] = useState(false);
+  const [currentAnalysis, setCurrentAnalysis] = useState<PoseAnalysisResult | null>(null);
 
   // Voice guide integration
   const voiceGuide = useYogaVoiceGuide({
@@ -56,6 +64,29 @@ export function Player({
       }
     }
   });
+
+  // Auto-enable pose analysis when flow starts if setting is enabled
+  useEffect(() => {
+    if (poseAnalysisSettings.enabled && poseAnalysisSettings.autoStart && isPlaying && !poseAnalysisEnabled) {
+      setPoseAnalysisEnabled(true);
+    }
+  }, [isPlaying, poseAnalysisSettings.enabled, poseAnalysisSettings.autoStart, poseAnalysisEnabled]);
+
+  // Handle pose analysis updates
+  const handleAnalysisUpdate = useCallback((result: PoseAnalysisResult) => {
+    setCurrentAnalysis(result);
+    
+    // Voice feedback integration if enabled
+    if (poseAnalysisSettings.voiceFeedback && voiceGuide.isVoiceEnabled && result.accuracy < 60) {
+      // Provide voice correction occasionally for low accuracy
+      if (Math.random() < 0.1) { // 10% chance to avoid spam
+        const suggestion = result.suggestions[0];
+        if (suggestion) {
+          voiceGuide.speakResponse(suggestion);
+        }
+      }
+    }
+  }, [poseAnalysisSettings.voiceFeedback, voiceGuide]);
 
   // Guide through pose when starting a new pose
   useEffect(() => {
@@ -121,6 +152,19 @@ export function Player({
 
   return (
     <div className="fixed bottom-0 left-0 right-0 bg-card/95 border-t border-border shadow-lg backdrop-blur-sm">
+      {/* Pose Analysis Panel - Show above flow when enabled */}
+      {poseAnalysisEnabled && currentPoseId && (
+        <div className="border-b border-border">
+          <PoseAnalysis
+            currentPoseId={currentPoseId}
+            poseName={currentPose?.name || 'Current Pose'}
+            isActive={poseAnalysisEnabled && (isPlaying || isPaused)}
+            onAnalysisUpdate={handleAnalysisUpdate}
+            className="max-h-80"
+          />
+        </div>
+      )}
+      
       {/* Flow Sequence Display - Only show when flow exists */}
       {flow.length > 0 && (
         <div className="border-b border-border p-4 max-h-48 overflow-y-auto">
@@ -163,7 +207,7 @@ export function Player({
       
       <div className="p-2">
         <div className="flex items-center gap-3">
-          {/* Avatar and Voice Controls - Smaller */}
+          {/* Avatar and Controls */}
           <div className="flex items-center gap-2">
             <Avatar 
               state={voiceGuide.state} 
@@ -188,6 +232,20 @@ export function Player({
                   className="px-1.5 py-0.5 text-xs rounded-md font-medium bg-blue-500 text-white hover:bg-blue-600 disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   {voiceGuide.isListening ? '👂' : '💬'}
+                </button>
+              )}
+              {/* Pose Analysis Toggle */}
+              {poseAnalysisSettings.enabled && (
+                <button
+                  onClick={() => setPoseAnalysisEnabled(!poseAnalysisEnabled)}
+                  className={`px-1.5 py-0.5 text-xs rounded-md font-medium transition-colors ${
+                    poseAnalysisEnabled 
+                      ? 'bg-purple-500 text-white hover:bg-purple-600' 
+                      : 'bg-gray-500 text-white hover:bg-gray-600'
+                  }`}
+                  title={poseAnalysisEnabled ? 'Disable pose analysis' : 'Enable pose analysis'}
+                >
+                  {poseAnalysisEnabled ? <Camera size={12} /> : <CameraOff size={12} />}
                 </button>
               )}
             </div>
@@ -236,7 +294,7 @@ export function Player({
                   <div className="font-bold text-lg leading-tight truncate">{currentPose.name}</div>
                   <div className="text-xs text-muted-foreground truncate italic">{currentPose.sanskrit}</div>
                   
-                  {/* Compact Timer */}
+                  {/* Compact Timer with Analysis Feedback */}
                   <div className="flex items-center gap-2 mt-1">
                     <div className="text-sm font-mono font-bold tabular-nums">
                       {formatTime(Math.max(0, currentPoseDuration - timeInPose))}
@@ -247,6 +305,16 @@ export function Player({
                         style={{ width: `${poseProgress}%` }}
                       />
                     </div>
+                    {/* Analysis Accuracy Indicator */}
+                    {currentAnalysis && poseAnalysisEnabled && (
+                      <div className={`text-xs font-bold px-1.5 py-0.5 rounded ${
+                        currentAnalysis.accuracy >= 80 ? 'bg-green-100 text-green-800' :
+                        currentAnalysis.accuracy >= 60 ? 'bg-yellow-100 text-yellow-800' :
+                        'bg-red-100 text-red-800'
+                      }`}>
+                        {currentAnalysis.accuracy}%
+                      </div>
+                    )}
                   </div>
                 </div>
 

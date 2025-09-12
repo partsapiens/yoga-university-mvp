@@ -19,6 +19,7 @@ import { FlowNameInput } from "@/components/flows/FlowNameInput";
 import YogaAIDemo from "@/components/flows/YogaAIDemo";
 import { FlowTemplates } from "@/components/flows/FlowTemplates";
 import { QuickActions } from "@/components/dashboard/QuickActions";
+import { PoseAnalysisSettings, ProgressTracking } from "@/components/pose-analysis";
 import { Focus, TimingMode, PoseId, SavedFlow, Pose } from "@/types/yoga";
 import { POSES } from "@/lib/yoga-data";
 import {
@@ -445,6 +446,16 @@ export default function CreateFlowPage() {
           <FlowTemplates onSelectTemplate={handleSelectTemplate} onCreateOwn={handleCreateOwn} />
         </div>
 
+        {/* Pose Analysis Settings */}
+        <div className="mt-6">
+          <PoseAnalysisSettings />
+        </div>
+
+        {/* Progress Tracking */}
+        <div className="mt-6">
+          <ProgressTracking />
+        </div>
+        
         {/* Conditional Settings Section - only shown when creating own template */}
         {showCustomSettings && (
           <div className="mt-6">
