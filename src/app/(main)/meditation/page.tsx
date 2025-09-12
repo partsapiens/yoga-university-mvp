@@ -338,35 +338,35 @@ export default function MeditationPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-50 via-blue-50 to-indigo-50 py-8">
+    <div className="min-h-screen bg-gradient-to-br from-purple-50 via-blue-50 to-indigo-50 dark:from-gray-900 dark:via-gray-900 dark:to-gray-800 py-8">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="text-center mb-8">
-          <h1 className="text-4xl font-bold text-gray-900 mb-4">Meditation Center</h1>
-          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+          <h1 className="text-4xl font-bold text-gray-900 dark:text-white mb-4">Meditation Center</h1>
+          <p className="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
             Find inner peace and enhance your yoga practice with guided meditations and breathing exercises.
           </p>
         </div>
 
         {/* Session Stats */}
-        <div className="bg-white/70 backdrop-blur-sm rounded-lg p-6 mb-8 shadow-lg">
-          <h2 className="text-xl font-semibold mb-4">Your Practice</h2>
+        <div className="bg-white/70 dark:bg-gray-800/70 backdrop-blur-sm rounded-lg p-6 mb-8 shadow-lg">
+          <h2 className="text-xl font-semibold mb-4 text-gray-900 dark:text-white">Your Practice</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <div className="text-center">
-              <div className="text-2xl font-bold text-purple-600">{sessionStats.streak}</div>
-              <div className="text-sm text-gray-600">Day Streak</div>
+              <div className="text-2xl font-bold text-purple-600 dark:text-purple-400">{sessionStats.streak}</div>
+              <div className="text-sm text-gray-600 dark:text-gray-300">Day Streak</div>
             </div>
             <div className="text-center">
-              <div className="text-2xl font-bold text-blue-600">{sessionStats.totalSessions}</div>
-              <div className="text-sm text-gray-600">Total Sessions</div>
+              <div className="text-2xl font-bold text-blue-600 dark:text-blue-400">{sessionStats.totalSessions}</div>
+              <div className="text-sm text-gray-600 dark:text-gray-300">Total Sessions</div>
             </div>
             <div className="text-center">
-              <div className="text-2xl font-bold text-green-600">{sessionStats.totalMinutes}</div>
-              <div className="text-sm text-gray-600">Minutes Practiced</div>
+              <div className="text-2xl font-bold text-green-600 dark:text-green-400">{sessionStats.totalMinutes}</div>
+              <div className="text-sm text-gray-600 dark:text-gray-300">Minutes Practiced</div>
             </div>
           </div>
           <div className="mt-4 text-center">
-            <div className="text-sm font-medium text-gray-800">
+            <div className="text-sm font-medium text-gray-800 dark:text-gray-200">
               {sessionStats.lastSession ? `Last session: ${sessionStats.lastSession}` : 'Ready for your first session!'}
             </div>
           </div>
@@ -374,37 +374,37 @@ export default function MeditationPage() {
 
         {/* ✨-Powered Recommendations Section */}
         <div className="mb-8">
-          <div className="bg-white/70 backdrop-blur-sm rounded-lg p-6 shadow-lg">
-            <h2 className="text-xl font-semibold mb-4">Recommended for You</h2>
-            <p className="text-sm text-gray-600 mb-6">☀️ Good afternoon! Perfect time for a mindful break:</p>
+          <div className="bg-white/70 dark:bg-gray-800/70 backdrop-blur-sm rounded-lg p-6 shadow-lg">
+            <h2 className="text-xl font-semibold mb-4 text-gray-900 dark:text-white">Recommended for You</h2>
+            <p className="text-sm text-gray-600 dark:text-gray-300 mb-6">☀️ Good afternoon! Perfect time for a mindful break:</p>
             <div className="space-y-4">
-              <div className="border border-gray-200 rounded-lg p-4 hover:shadow-md transition-shadow cursor-pointer hover:bg-gray-50">
+              <div className="border border-gray-200 dark:border-gray-600 rounded-lg p-4 hover:shadow-md transition-shadow cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-700">
                 <div className="flex justify-between items-start mb-2">
-                  <h3 className="font-semibold text-lg">Stress Relief Breathing</h3>
+                  <h3 className="font-semibold text-lg text-gray-900 dark:text-white">Stress Relief Breathing</h3>
                   <div className="flex items-center gap-2">
-                    <span className="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded">12 min</span>
-                    <span className="text-xs text-yellow-600">70% match</span>
+                    <span className="bg-blue-100 dark:bg-blue-800 text-blue-800 dark:text-blue-200 text-xs px-2 py-1 rounded">12 min</span>
+                    <span className="text-xs text-yellow-600 dark:text-yellow-400">70% match</span>
                   </div>
                 </div>
-                <p className="text-gray-600 text-sm mb-3">Calm your mind with focused breathing</p>
+                <p className="text-gray-600 dark:text-gray-300 text-sm mb-3">Calm your mind with focused breathing</p>
                 <div className="flex justify-between items-center">
                   <div className="flex flex-wrap gap-1">
-                    <span className="bg-gray-100 text-gray-700 text-xs px-2 py-1 rounded">stress-relief</span>
-                    <span className="bg-gray-100 text-gray-700 text-xs px-2 py-1 rounded">breathing</span>
+                    <span className="bg-gray-100 dark:bg-gray-600 text-gray-700 dark:text-gray-300 text-xs px-2 py-1 rounded">stress-relief</span>
+                    <span className="bg-gray-100 dark:bg-gray-600 text-gray-700 dark:text-gray-300 text-xs px-2 py-1 rounded">breathing</span>
                   </div>
                   <button className="bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-md text-sm transition-colors">
                     Start Session
                   </button>
                 </div>
-                <div className="mt-3 pt-3 border-t border-gray-100">
-                  <p className="text-xs text-gray-500">
+                <div className="mt-3 pt-3 border-t border-gray-100 dark:border-gray-600">
+                  <p className="text-xs text-gray-500 dark:text-gray-400">
                     💡 <strong>Why this?</strong> A reliable practice for any time of day
                   </p>
                 </div>
               </div>
             </div>
             <div className="mt-6 text-center">
-              <button className="text-blue-600 hover:text-blue-800 text-sm">✨ Get more recommendations</button>
+              <button className="text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 text-sm">✨ Get more recommendations</button>
             </div>
           </div>
         </div>
@@ -425,24 +425,24 @@ export default function MeditationPage() {
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           {/* Meditation Techniques List */}
-          <div className="bg-white/70 backdrop-blur-sm rounded-lg p-6 shadow-lg">
-            <h2 className="text-2xl font-semibold mb-6">Guided Sessions</h2>
+          <div className="bg-white/70 dark:bg-gray-800/70 backdrop-blur-sm rounded-lg p-6 shadow-lg">
+            <h2 className="text-2xl font-semibold mb-6 text-gray-900 dark:text-white">Guided Sessions</h2>
             <div className="space-y-4">
               {MEDITATION_TECHNIQUES.map((session) => (
                 <div
                   key={session.id}
-                  className="border border-gray-200 rounded-lg p-4 hover:shadow-md transition-shadow cursor-pointer"
+                  className="border border-gray-200 dark:border-gray-600 rounded-lg p-4 hover:shadow-md transition-shadow cursor-pointer"
                   onClick={() => startSession(session)}
                 >
                   <div className="flex justify-between items-start mb-2">
-                    <h3 className="font-semibold text-lg">{session.name}</h3>
-                    <span className="bg-purple-100 text-purple-800 text-sm px-2 py-1 rounded">
+                    <h3 className="font-semibold text-lg text-gray-900 dark:text-white">{session.name}</h3>
+                    <span className="bg-purple-100 dark:bg-purple-800 text-purple-800 dark:text-purple-200 text-sm px-2 py-1 rounded">
                       {session.duration} min
                     </span>
                   </div>
-                  <p className="text-gray-600 text-sm mb-3">{session.description}</p>
+                  <p className="text-gray-600 dark:text-gray-300 text-sm mb-3">{session.description}</p>
                   <div className="flex justify-between items-center">
-                    <span className="text-xs text-gray-500 capitalize">{session.type}</span>
+                    <span className="text-xs text-gray-500 dark:text-gray-400 capitalize">{session.type}</span>
                     <button className="bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-md text-sm transition-colors">
                       Start Session
                     </button>
@@ -452,8 +452,8 @@ export default function MeditationPage() {
             </div>
 
             {/* Custom Timer */}
-            <div className="mt-8 border-t pt-6">
-              <h3 className="text-lg font-semibold mb-4">Custom Timer</h3>
+            <div className="mt-8 border-t border-gray-200 dark:border-gray-600 pt-6">
+              <h3 className="text-lg font-semibold mb-4 text-gray-900 dark:text-white">Custom Timer</h3>
               <div className="flex items-center gap-4">
                 <input
                   type="number"
@@ -461,9 +461,9 @@ export default function MeditationPage() {
                   max="60"
                   value={customDuration}
                   onChange={(e) => setCustomDuration(parseInt(e.target.value) || 10)}
-                  className="border border-gray-300 rounded-md px-3 py-2 w-20 text-center"
+                  className="border border-gray-300 dark:border-gray-600 rounded-md px-3 py-2 w-20 text-center bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
                 />
-                <span className="text-gray-600">minutes</span>
+                <span className="text-gray-600 dark:text-gray-300">minutes</span>
                 <button
                   onClick={startCustomTimer}
                   className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md transition-colors"
@@ -475,8 +475,8 @@ export default function MeditationPage() {
           </div>
 
           {/* Enhanced Breathing Meditation Visualizer */}
-          <div className="bg-white/70 backdrop-blur-sm rounded-lg p-6 shadow-lg min-h-[600px]">
-            <h2 className="text-2xl font-semibold mb-6 text-center">
+          <div className="bg-white/70 dark:bg-gray-800/70 backdrop-blur-sm rounded-lg p-6 shadow-lg min-h-[600px]">
+            <h2 className="text-2xl font-semibold mb-6 text-center text-gray-900 dark:text-white">
               {selectedSession ? selectedSession.name : 'Breathing Meditation'}
             </h2>
             
@@ -484,10 +484,10 @@ export default function MeditationPage() {
               <div className="text-center">
                 {/* Timer Display */}
                 <div className="mb-6">
-                  <div className="text-4xl font-mono font-bold text-purple-600 mb-2">
+                  <div className="text-4xl font-mono font-bold text-purple-600 dark:text-purple-400 mb-2">
                     {formatTime(timeRemaining)}
                   </div>
-                  <div className="text-gray-600 text-sm">
+                  <div className="text-gray-600 dark:text-gray-300 text-sm">
                     {selectedSession.duration} minute session
                   </div>
                 </div>

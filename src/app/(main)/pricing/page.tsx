@@ -110,19 +110,19 @@ export default function PricingPage() {
   ];
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
       {/* Hero Section */}
-      <div className="bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50">
+      <div className="bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 dark:from-gray-800 dark:via-gray-800 dark:to-gray-900">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
           <div className="text-center">
-            <h1 className="text-4xl sm:text-5xl font-bold text-gray-900 mb-6">
+            <h1 className="text-4xl sm:text-5xl font-bold text-gray-900 dark:text-white mb-6">
               Choose Your Path
             </h1>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto mb-8">
+            <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto mb-8">
               Whether you&apos;re starting your yoga journey or teaching others, we have a plan that grows with you. 
               All plans include our core features with no hidden fees.
             </p>
-            <div className="inline-flex items-center space-x-2 bg-green-100 text-green-800 px-4 py-2 rounded-full text-sm font-medium">
+            <div className="inline-flex items-center space-x-2 bg-green-100 dark:bg-green-800 text-green-800 dark:text-green-200 px-4 py-2 rounded-full text-sm font-medium">
               <Zap className="w-4 h-4" />
               <span>14-day free trial on all paid plans</span>
             </div>
@@ -136,7 +136,7 @@ export default function PricingPage() {
           {plans.map((plan, index) => (
             <div 
               key={index} 
-              className={`relative bg-white rounded-2xl shadow-lg overflow-hidden ${
+              className={`relative bg-white dark:bg-gray-800 rounded-2xl shadow-lg overflow-hidden ${
                 plan.popular 
                   ? 'ring-2 ring-blue-500 transform scale-105' 
                   : 'hover:shadow-xl transition-shadow'
@@ -152,52 +152,52 @@ export default function PricingPage() {
                 <div className="flex items-center justify-between mb-4">
                   <div className="flex items-center space-x-3">
                     <div className={`w-12 h-12 rounded-full flex items-center justify-center ${
-                      plan.popular ? 'bg-blue-100 text-blue-600' : 'bg-gray-100 text-gray-600'
+                      plan.popular ? 'bg-blue-100 dark:bg-blue-800 text-blue-600 dark:text-blue-400' : 'bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-400'
                     }`}>
                       {plan.icon}
                     </div>
-                    <h3 className="text-2xl font-bold text-gray-900">{plan.name}</h3>
+                    <h3 className="text-2xl font-bold text-gray-900 dark:text-white">{plan.name}</h3>
                   </div>
                 </div>
                 
                 <div className="mb-4">
                   <div className="flex items-baseline">
-                    <span className="text-4xl font-bold text-gray-900">{plan.price}</span>
+                    <span className="text-4xl font-bold text-gray-900 dark:text-white">{plan.price}</span>
                     {plan.period && (
-                      <span className="text-gray-500 ml-1">{plan.period}</span>
+                      <span className="text-gray-500 dark:text-gray-400 ml-1">{plan.period}</span>
                     )}
                   </div>
-                  <p className="text-gray-600 mt-2">{plan.description}</p>
+                  <p className="text-gray-600 dark:text-gray-300 mt-2">{plan.description}</p>
                 </div>
 
                 <button 
                   className={`w-full py-3 px-4 rounded-lg font-semibold transition-colors mb-6 ${
                     plan.popular
                       ? 'bg-blue-600 text-white hover:bg-blue-700'
-                      : 'bg-gray-100 text-gray-900 hover:bg-gray-200'
+                      : 'bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-white hover:bg-gray-200 dark:hover:bg-gray-600'
                   }`}
                 >
                   {plan.cta}
                 </button>
 
                 <div className="space-y-3">
-                  <h4 className="font-semibold text-gray-900">What&apos;s included:</h4>
+                  <h4 className="font-semibold text-gray-900 dark:text-white">What&apos;s included:</h4>
                   {plan.features.map((feature, featureIndex) => (
                     <div key={featureIndex} className="flex items-start space-x-3">
                       <Check className="w-5 h-5 text-green-500 mt-0.5 flex-shrink-0" />
-                      <span className="text-gray-600">{feature}</span>
+                      <span className="text-gray-600 dark:text-gray-300">{feature}</span>
                     </div>
                   ))}
                   
                   {plan.limitations.length > 0 && (
-                    <div className="mt-4 pt-4 border-t border-gray-200">
-                      <h5 className="font-medium text-gray-700 mb-2">Limitations:</h5>
+                    <div className="mt-4 pt-4 border-t border-gray-200 dark:border-gray-600">
+                      <h5 className="font-medium text-gray-700 dark:text-gray-300 mb-2">Limitations:</h5>
                       {plan.limitations.map((limitation, limitIndex) => (
                         <div key={limitIndex} className="flex items-start space-x-3">
                           <div className="w-5 h-5 mt-0.5 flex-shrink-0">
-                            <div className="w-3 h-3 rounded-full bg-gray-300 mt-1"></div>
+                            <div className="w-3 h-3 rounded-full bg-gray-300 dark:bg-gray-600 mt-1"></div>
                           </div>
-                          <span className="text-gray-500 text-sm">{limitation}</span>
+                          <span className="text-gray-500 dark:text-gray-400 text-sm">{limitation}</span>
                         </div>
                       ))}
                     </div>
@@ -210,11 +210,11 @@ export default function PricingPage() {
       </div>
 
       {/* Feature Comparison Table */}
-      <div className="bg-white">
+      <div className="bg-white dark:bg-gray-800">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
           <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-gray-900 mb-4">Compare Plans</h2>
-            <p className="text-lg text-gray-600">
+            <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-4">Compare Plans</h2>
+            <p className="text-lg text-gray-600 dark:text-gray-300">
               See exactly what&apos;s included in each plan to find the perfect fit for your needs.
             </p>
           </div>
@@ -222,20 +222,20 @@ export default function PricingPage() {
           <div className="overflow-x-auto">
             <table className="w-full">
               <thead>
-                <tr className="border-b border-gray-200">
-                  <th className="text-left py-4 pr-6 font-semibold text-gray-900">Features</th>
-                  <th className="text-center px-6 py-4 font-semibold text-gray-900">Explorer</th>
-                  <th className="text-center px-6 py-4 font-semibold text-blue-600">Practitioner</th>
-                  <th className="text-center px-6 py-4 font-semibold text-gray-900">Teacher</th>
+                <tr className="border-b border-gray-200 dark:border-gray-600">
+                  <th className="text-left py-4 pr-6 font-semibold text-gray-900 dark:text-white">Features</th>
+                  <th className="text-center px-6 py-4 font-semibold text-gray-900 dark:text-white">Explorer</th>
+                  <th className="text-center px-6 py-4 font-semibold text-blue-600 dark:text-blue-400">Practitioner</th>
+                  <th className="text-center px-6 py-4 font-semibold text-gray-900 dark:text-white">Teacher</th>
                 </tr>
               </thead>
               <tbody>
                 {features.map((feature, index) => (
-                  <tr key={index} className="border-b border-gray-100">
-                    <td className="py-4 pr-6 font-medium text-gray-900">{feature.category}</td>
-                    <td className="text-center px-6 py-4 text-gray-600">{feature.explorer}</td>
-                    <td className="text-center px-6 py-4 text-gray-600">{feature.practitioner}</td>
-                    <td className="text-center px-6 py-4 text-gray-600">{feature.teacher}</td>
+                  <tr key={index} className="border-b border-gray-100 dark:border-gray-700">
+                    <td className="py-4 pr-6 font-medium text-gray-900 dark:text-white">{feature.category}</td>
+                    <td className="text-center px-6 py-4 text-gray-600 dark:text-gray-300">{feature.explorer}</td>
+                    <td className="text-center px-6 py-4 text-gray-600 dark:text-gray-300">{feature.practitioner}</td>
+                    <td className="text-center px-6 py-4 text-gray-600 dark:text-gray-300">{feature.teacher}</td>
                   </tr>
                 ))}
               </tbody>
@@ -247,45 +247,45 @@ export default function PricingPage() {
       {/* FAQ Section */}
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
         <div className="text-center mb-12">
-          <h2 className="text-3xl font-bold text-gray-900 mb-4">Frequently Asked Questions</h2>
+          <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-4">Frequently Asked Questions</h2>
         </div>
         
         <div className="space-y-8">
           <div>
-            <h3 className="text-lg font-semibold text-gray-900 mb-2">
+            <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">
               Can I change plans at any time?
             </h3>
-            <p className="text-gray-600">
+            <p className="text-gray-600 dark:text-gray-300">
               Yes! You can upgrade or downgrade your plan at any time. Changes take effect immediately, 
               and you&apos;ll be billed or credited proportionally.
             </p>
           </div>
           
           <div>
-            <h3 className="text-lg font-semibold text-gray-900 mb-2">
+            <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">
               Is there a long-term commitment?
             </h3>
-            <p className="text-gray-600">
+            <p className="text-gray-600 dark:text-gray-300">
               No contracts or long-term commitments. You can cancel your subscription at any time 
               and continue using your plan until the end of your billing period.
             </p>
           </div>
           
           <div>
-            <h3 className="text-lg font-semibold text-gray-900 mb-2">
+            <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">
               Do you offer student discounts?
             </h3>
-            <p className="text-gray-600">
+            <p className="text-gray-600 dark:text-gray-300">
               Yes! We offer 50% off for verified students and recent graduates. 
               Contact us with your student ID for more information.
             </p>
           </div>
           
           <div>
-            <h3 className="text-lg font-semibold text-gray-900 mb-2">
+            <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">
               What payment methods do you accept?
             </h3>
-            <p className="text-gray-600">
+            <p className="text-gray-600 dark:text-gray-300">
               We accept all major credit cards, PayPal, and bank transfers. 
               All payments are processed securely through our trusted payment partners.
             </p>

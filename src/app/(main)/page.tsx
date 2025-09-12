@@ -43,28 +43,28 @@ const HomePage = () => {
       </section>
 
       {/* Features Section */}
-      <section className="py-responsive bg-white">
+      <section className="py-responsive bg-white dark:bg-gray-800">
         <div className="container-wide">
           <div className="text-center mb-8 md:mb-12">
-            <h2 className="heading-responsive-2 text-gray-900 mb-4">
+            <h2 className="heading-responsive-2 text-gray-900 dark:text-white mb-4">
               Everything You Need for Your Yoga Journey
             </h2>
           </div>
           
           <div className="grid-responsive grid-responsive-md-3 gap-6">
-            <div className="card-responsive bg-gray-50">
-              <h3 className="heading-responsive-3 mb-3">✨ Intelligent Flow Creation</h3>
-              <p className="text-responsive-sm text-gray-600">Generate personalized yoga sequences based on your goals.</p>
+            <div className="card-responsive bg-gray-50 dark:bg-gray-700">
+              <h3 className="heading-responsive-3 mb-3 text-gray-900 dark:text-white">✨ Intelligent Flow Creation</h3>
+              <p className="text-responsive-sm text-gray-600 dark:text-gray-300">Generate personalized yoga sequences based on your goals.</p>
             </div>
             
-            <div className="card-responsive bg-gray-50">
-              <h3 className="heading-responsive-3 mb-3">Comprehensive Pose Library</h3>
-              <p className="text-responsive-sm text-gray-600">Access detailed instructions for hundreds of poses.</p>
+            <div className="card-responsive bg-gray-50 dark:bg-gray-700">
+              <h3 className="heading-responsive-3 mb-3 text-gray-900 dark:text-white">Comprehensive Pose Library</h3>
+              <p className="text-responsive-sm text-gray-600 dark:text-gray-300">Access detailed instructions for hundreds of poses.</p>
             </div>
             
-            <div className="card-responsive bg-gray-50">
-              <h3 className="heading-responsive-3 mb-3">Guided Meditation</h3>
-              <p className="text-responsive-sm text-gray-600">Enhance your practice with meditation techniques.</p>
+            <div className="card-responsive bg-gray-50 dark:bg-gray-700">
+              <h3 className="heading-responsive-3 mb-3 text-gray-900 dark:text-white">Guided Meditation</h3>
+              <p className="text-responsive-sm text-gray-600 dark:text-gray-300">Enhance your practice with meditation techniques.</p>
             </div>
           </div>
         </div>
