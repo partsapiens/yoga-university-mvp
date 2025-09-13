@@ -2,6 +2,7 @@
 
 import React from 'react';
 import { ManualLayout, ManualTOC, ManualSection, FigureCard } from '@/components/manual';
+import PoseVideo from '@/components/PoseLibrary/PoseVideo';
 
 export default function Chapter2Page() {
   const breadcrumbs = [
@@ -45,6 +46,7 @@ export default function Chapter2Page() {
           
           <article>
             <ManualSection id="introduction" title="The Three Pillars of Practice">
+              <PoseVideo url="https://youtu.be/iNzojmFm_W4" title="The Three Pillars of Practice" className="mb-8" />
               <p className="mb-4 leading-relaxed text-lg">
                 Before exploring specific poses, we must understand the three pillars that support a safe, effective, and transformative yoga practice: Breath (Pranayama), Alignment (Asana), and Presence (Dhyana). These are not separate elements but interconnected aspects of a unified experience.
               </p>

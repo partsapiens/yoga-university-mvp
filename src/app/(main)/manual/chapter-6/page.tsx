@@ -2,6 +2,7 @@
 
 import React from 'react';
 import { ManualLayout, ManualTOC, ManualSection, FigureCard } from '@/components/manual';
+import PoseVideo from '@/components/PoseLibrary/PoseVideo';
 
 export default function Chapter6Page() {
   const breadcrumbs = [
@@ -48,6 +49,7 @@ export default function Chapter6Page() {
           
           <article>
             <ManualSection id="chakras-overview" title="The Subtle Body: An Overview">
+              <PoseVideo url="https://youtu.be/MkVLuiAzPJ4" title="The Subtle Body: An Overview" className="mb-8" />
               <p className="mb-4 leading-relaxed text-lg">
                 Beyond the physical body of muscles and bones lies the subtle body, a network of energy channels (nadis) and centers (chakras). The chakra system provides a profound map for understanding the interplay between our physical, psychological, and spiritual well-being.
               </p>

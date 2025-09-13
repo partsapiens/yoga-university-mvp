@@ -2,6 +2,7 @@
 
 import React from 'react';
 import { ManualLayout, ManualTOC, ManualSection, FigureCard } from '@/components/manual';
+import PoseVideo from '@/components/PoseLibrary/PoseVideo';
 
 export default function Chapter3Page() {
   const breadcrumbs = [
@@ -43,6 +44,7 @@ export default function Chapter3Page() {
           
           <article>
             <ManualSection id="integration" title="The Integration Series">
+              <PoseVideo url="https://youtu.be/OTameg8uBws" title="The Integration Series" className="mb-8" />
               <p className="mb-4 leading-relaxed text-lg">
                 The Integration Series is the gentle beginning of our practice. Its purpose is to transition from the busyness of the outside world to the internal landscape of the body and breath. It's a time to check in, notice sensations, and establish a steady rhythm of breath that will carry you through the practice.
               </p>
