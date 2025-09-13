@@ -1,16 +1,6 @@
-# OpenAI Security Implementation & Production Setup
+# OpenAI Security Implementation & Netlify Deployment Fix
 
-## 🎯 Production Mode Enabled
-
-This repository is now configured for **production use with live OpenAI API calls**. The mock/demo mode has been disabled.
-
-### Current Configuration
-- ✅ `USE_MOCK=false` - Production mode enabled
-- ✅ All API endpoints use real OpenAI calls when `OPENAI_API_KEY` is provided
-- ✅ Graceful fallback to rule-based responses when API is unavailable
-- ✅ Centralized OpenAI client management for consistency
-
-## 🎯 Original Problem Solved
+## 🎯 Problem Solved
 
 ### Original Issues
 1. **Netlify Build Failure**: Configuration expected static export (`out` directory) but Next.js was configured for server-side rendering
@@ -87,47 +77,14 @@ USE_MOCK=false
 **/*key*
 ```
 
-## 🚀 Production OpenAI Integration
-
-### How It Works
-1. **Centralized Client**: All OpenAI calls go through `/src/lib/openai.ts`
-2. **Environment Detection**: Checks for `OPENAI_API_KEY` and `USE_MOCK` settings
-3. **Graceful Fallbacks**: Uses rule-based responses when API is unavailable
-4. **Security**: API key is never exposed to client-side code
-
-### Affected Endpoints
-All these endpoints now use live OpenAI API calls in production:
-
-- `/api/ai-select` - Natural language meditation recommendations
-- `/api/ai-script` - Generated meditation scripts  
-- `/api/ai-recap` - Session summary and insights
-- `/api/flow-suggest` - AI-generated yoga flows
-- `/api/ai/affirmations` - Personalized affirmations
-- `/api/ai/adapt-flow` - Adaptive flow modifications
-- `/api/ai/ai-insights` - Deep insights and analytics
-- `/api/ai/recommendations` - Enhanced recommendations
-
-### Testing Production Setup
-```bash
-# Test health endpoint (should show openai: true)
-curl https://your-app.netlify.app/api/health
-
-# Test AI endpoint with real OpenAI call
-curl -X POST https://your-app.netlify.app/api/ai-select \
-  -H "Content-Type: application/json" \
-  -d '{"userText": "I feel stressed", "preferredDuration": 10}'
-```
-
 ## 🚀 Deployment Instructions
 
 ### 1. Netlify Environment Variables
-Set these in your Netlify dashboard (or your hosting provider):
+Set these in your Netlify dashboard:
 ```
 OPENAI_API_KEY=sk-proj-xxxxxxxxxxxx-your-actual-openai-api-key-here-xxxxxxxxxxxx
 USE_MOCK=false
 ```
-
-**Important**: The `USE_MOCK=false` setting ensures the application uses live OpenAI API calls instead of fallback responses.
 
 ### 2. Deploy Process
 1. Push changes to your repository

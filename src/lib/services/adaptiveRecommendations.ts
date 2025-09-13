@@ -1,8 +1,13 @@
-import { openai, isOpenAIAvailable } from '@/lib/openai';
+import { OpenAI } from 'openai';
 import { EnhancedRecommendationInput, Recommendation, MeditationRecommendation, RecommendationContext } from '@/types/ai';
 import { analyzeSentiment, SentimentResult } from './sentimentAnalysis';
 import { MoodTrackingService } from './moodTracking';
 import { PoseId } from '@/types/yoga';
+
+// Initialize OpenAI client
+const openai = process.env.OPENAI_API_KEY ? new OpenAI({
+  apiKey: process.env.OPENAI_API_KEY,
+}) : null;
 
 /**
  * Enhanced AI recommendation service with mood analysis and adaptive learning
@@ -103,7 +108,7 @@ export class AdaptiveRecommendationService {
     }
 
     // 4. AI-enhanced recommendations (if OpenAI available)
-    if (isOpenAIAvailable() && context.sentimentAnalysis) {
+    if (openai && context.sentimentAnalysis) {
       const aiRecs = await this.generateAIEnhancedRecommendations(context, input);
       recommendations.push(...aiRecs);
     }
@@ -315,7 +320,7 @@ export class AdaptiveRecommendationService {
     context: RecommendationContext,
     input: EnhancedRecommendationInput
   ): Promise<MeditationRecommendation[]> {
-    if (!isOpenAIAvailable()) return [];
+    if (!openai) return [];
 
     try {
       const prompt = `
@@ -343,7 +348,7 @@ Generate a JSON response with a single highly personalized recommendation:
   "personalizedElements": "specific elements tailored to their input"
 }`;
 
-      const response = await openai!.chat.completions.create({
+      const response = await openai.chat.completions.create({
         model: 'gpt-3.5-turbo',
         messages: [
           {

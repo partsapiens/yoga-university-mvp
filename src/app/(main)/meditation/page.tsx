@@ -348,6 +348,30 @@ export default function MeditationPage() {
           </p>
         </div>
 
+        {/* Session Stats */}
+        <div className="bg-white/70 dark:bg-gray-800/70 backdrop-blur-sm rounded-lg p-6 mb-8 shadow-lg">
+          <h2 className="text-xl font-semibold mb-4 text-gray-900 dark:text-white">Your Practice</h2>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div className="text-center">
+              <div className="text-2xl font-bold text-purple-600 dark:text-purple-400">{sessionStats.streak}</div>
+              <div className="text-sm text-gray-600 dark:text-gray-300">Day Streak</div>
+            </div>
+            <div className="text-center">
+              <div className="text-2xl font-bold text-blue-600 dark:text-blue-400">{sessionStats.totalSessions}</div>
+              <div className="text-sm text-gray-600 dark:text-gray-300">Total Sessions</div>
+            </div>
+            <div className="text-center">
+              <div className="text-2xl font-bold text-green-600 dark:text-green-400">{sessionStats.totalMinutes}</div>
+              <div className="text-sm text-gray-600 dark:text-gray-300">Minutes Practiced</div>
+            </div>
+          </div>
+          <div className="mt-4 text-center">
+            <div className="text-sm font-medium text-gray-800 dark:text-gray-200">
+              {sessionStats.lastSession ? `Last session: ${sessionStats.lastSession}` : 'Ready for your first session!'}
+            </div>
+          </div>
+        </div>
+
         {/* ✨-Powered Recommendations Section */}
         <div className="mb-8">
           <div className="bg-white/70 dark:bg-gray-800/70 backdrop-blur-sm rounded-lg p-6 shadow-lg">
@@ -384,6 +408,20 @@ export default function MeditationPage() {
             </div>
           </div>
         </div>
+
+        {/* Personalized Affirmations Section */}
+        <PersonalizedAffirmations
+          context="meditation"
+          userProfile={userProfile}
+          sessionData={{
+            mood: 'calm',
+            timeOfDay: getTimeOfDay(),
+            focusArea: 'mindfulness',
+            duration: customDuration
+          }}
+          onAffirmationSelect={setSelectedAffirmation}
+          className="mb-8"
+        />
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           {/* Meditation Techniques List */}
@@ -699,20 +737,6 @@ export default function MeditationPage() {
             )}
           </div>
         </div>
-
-        {/* Personalized Affirmations Section */}
-        <PersonalizedAffirmations
-          context="meditation"
-          userProfile={userProfile}
-          sessionData={{
-            mood: 'calm',
-            timeOfDay: getTimeOfDay(),
-            focusArea: 'mindfulness',
-            duration: customDuration
-          }}
-          onAffirmationSelect={setSelectedAffirmation}
-          className="mb-8"
-        />
 
         {/* Additional Features */}
         <div className="mt-8 grid grid-cols-1 md:grid-cols-2 gap-6">

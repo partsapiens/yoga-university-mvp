@@ -228,7 +228,7 @@ export const EvolvingBreathingOrb: React.FC<EvolvingBreathingOrbProps> = ({
 
   // Get phase instruction text
   const getPhaseText = () => {
-    if (!isActive) return 'Start';
+    if (!isActive) return 'Press Play to Begin';
     
     switch (currentPhase) {
       case 'inhale':

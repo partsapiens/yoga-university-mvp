@@ -1,4 +1,4 @@
-import { openai, isOpenAIAvailable } from '@/lib/openai';
+import { OpenAI } from 'openai';
 
 // Sentiment analysis types
 export interface SentimentResult {
@@ -21,11 +21,16 @@ export interface MoodPattern {
   context?: string;
 }
 
+// Initialize OpenAI client (will use environment variable)
+const openai = process.env.OPENAI_API_KEY ? new OpenAI({
+  apiKey: process.env.OPENAI_API_KEY,
+}) : null;
+
 /**
  * Analyze sentiment and extract emotional state from user text input
  */
 export async function analyzeSentiment(text: string, context?: string): Promise<SentimentResult> {
-  if (!isOpenAIAvailable()) {
+  if (!openai) {
     // Fallback to rule-based analysis if OpenAI is not available
     return analyzeWithRules(text);
   }
@@ -49,7 +54,7 @@ Please respond with a JSON object containing:
 
 Focus on emotional wellness and provide compassionate, helpful suggestions.`;
 
-    const response = await openai!.chat.completions.create({
+    const response = await openai.chat.completions.create({
       model: 'gpt-3.5-turbo',
       messages: [
         {

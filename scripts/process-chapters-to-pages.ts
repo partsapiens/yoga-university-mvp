@@ -178,6 +178,8 @@ async function processChaptersToPages() {
 }
 
 // Run if called directly
-processChaptersToPages().catch(console.error);
+if (require.main === module) {
+  processChaptersToPages().catch(console.error);
+}
 
 export { processChaptersToPages, applyBrandReplacements };

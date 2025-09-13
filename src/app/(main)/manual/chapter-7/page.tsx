@@ -58,16 +58,16 @@ export default function Chapter7Page() {
 
             <ManualSection id="class-structure" title="Class Structure & Sequencing">
               <p className="mb-4 leading-relaxed">
-                Well-structured classes create a safe container for practice and help students move through different energetic states with intention.
+                Well-structured classes create a safe container for practice and help students move through different energetic states with intention. A thoughtful sequence is a journey with a beginning, a middle, and an end.
               </p>
               <h3 className="text-lg font-medium text-blue-400 mt-6 mb-3">Basic Class Arc</h3>
               <ol className="space-y-2 mb-4 ml-5 list-decimal">
-                <li><strong>Opening/Centering</strong>: Create presence and intention (5-10 minutes)</li>
-                <li><strong>Warm-up</strong>: Awaken the body and breath (10-15 minutes)</li>
-                <li><strong>Standing Poses</strong>: Build heat and strength (15-20 minutes)</li>
-                <li><strong>Peak/Main Practice</strong>: Focus poses or sequences (10-15 minutes)</li>
-                <li><strong>Seated/Floor</strong>: Cool down and release (10-15 minutes)</li>
-                <li><strong>Relaxation</strong>: Integration and rest (5-10 minutes)</li>
+                <li><strong>Opening/Centering</strong>: Create presence and intention (5-10 minutes). This can include a brief meditation, a theme for the class, or a simple breath awareness exercise.</li>
+                <li><strong>Warm-up</strong>: Awaken the body and breath (10-15 minutes). Think Cat-Cow, gentle twists, and Sun Salutation A.</li>
+                <li><strong>Standing Poses</strong>: Build heat and strength (15-20 minutes). This is the core of the physical practice for many classes.</li>
+                <li><strong>Peak/Main Practice</strong>: Focus poses or sequences (10-15 minutes). This could be a peak pose like Bird of Paradise, or a focus on a particular action like hip-opening.</li>
+                <li><strong>Seated/Floor</strong>: Cool down and release (10-15 minutes). This is where you can incorporate deeper stretches and counter-poses.</li>
+                <li><strong>Relaxation</strong>: Integration and rest (5-10 minutes). Savasana is non-negotiable. It is where the body and mind integrate the benefits of the practice.</li>
               </ol>
             </ManualSection>
 
@@ -92,10 +92,10 @@ export default function Chapter7Page() {
               <h3 className="text-lg font-medium text-blue-400 mt-6 mb-3">Getting Started</h3>
               <ul className="space-y-2 mb-4 ml-5">
                 <li><strong>Insurance</strong>: Obtain liability insurance through yoga organizations.</li>
-                <li><strong>Certification</strong>: Complete your training and consider ongoing education.</li>
-                <li><strong>Teaching Opportunities</strong>: Start with studios, community centers, or private clients.</li>
-                <li><strong>Marketing</strong>: Create simple, authentic ways to share your offerings.</li>
-                <li><strong>Continuing Education</strong>: Commit to ongoing learning and development.</li>
+                <li><strong>Certification</strong>: Complete your training and consider ongoing education with reputable schools and teachers.</li>
+                <li><strong>Teaching Opportunities</strong>: Start with studios, community centers, or private clients. Don't be afraid to offer free classes to build your confidence and experience.</li>
+                <li><strong>Marketing</strong>: Create simple, authentic ways to share your offerings. Word of mouth is the most powerful marketing tool.</li>
+                <li><strong>Continuing Education</strong>: Commit to ongoing learning and development. The 200-hour training is just the beginning of your journey as a teacher.</li>
               </ul>
             </ManualSection>
 
@@ -121,7 +121,7 @@ export default function Chapter7Page() {
               >
                 Remember: You are holding space for others' journeys of growth and healing. This is both a privilege and a responsibility that should be honored with integrity and care.
               </div>
-              <div className="mt-6">
+               <div className="mt-6">
                 <h4 className="font-semibold text-blue-300 mb-2">Case Study: Navigating a Student's Trauma Response</h4>
                 <p className="text-sm text-gray-400 leading-relaxed">
                   A teacher cues the class to come into Child's Pose. They notice one student, Maria, has curled into a tight ball, breathing rapidly.
