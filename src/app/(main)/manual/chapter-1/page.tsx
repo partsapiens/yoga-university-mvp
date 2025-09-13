@@ -47,35 +47,232 @@ export default function Chapter1Page() {
           <article>
             <ManualSection id="welcome" title="Welcome to the Journey">
               <PoseVideo url="https://youtu.be/NTVE5KBuHpU" title="Welcome to the Journey" className="mb-8" />
-              <p className="mb-4 leading-relaxed text-lg">
-                Welcome to your YogaFlow Teacher Training—a transformative path of self-discovery, dedicated practice, and the art of guiding others. This manual is more than a textbook; it's your field guide and companion. We encourage you to engage with it fully: write in the margins, highlight what resonates, and let its pages spark new questions and insights.
-              </p>
-              <p className="mb-4 leading-relaxed">
-                You are now an integral part of the YogaFlow teaching community, a network of passionate practitioners and teachers. We are thrilled to support your evolution as both a student and a future leader in the world of yoga.
-              </p>
-              <div className="p-4 bg-blue-900/20 border-l-4 border-blue-400 rounded-r-lg my-6">
-                <h4 className="font-semibold text-blue-300 mb-2">A Journey, Not a Destination</h4>
-                <p className="text-blue-200/90">
-                  This training is designed to be an immersive experience. The skills and knowledge you gain will extend far beyond the yoga mat, influencing how you connect with yourself, interact with others, and navigate the complexities of daily life. Embrace the process with an open heart and a curious mind.
+              
+              <div className="md:grid md:grid-cols-2 gap-8 items-center mb-8">
+                <div>
+                  <p className="mb-4 leading-relaxed text-lg">
+                    Welcome to your YogaFlow Teacher Training—a transformative path of self-discovery, dedicated practice, and the art of guiding others. This manual is more than a textbook; it's your field guide and companion. We encourage you to engage with it fully: write in the margins, highlight what resonates, and let its pages spark new questions and insights.
+                  </p>
+                  <p className="mb-4 leading-relaxed">
+                    You are now an integral part of the YogaFlow teaching community, a network of passionate practitioners and teachers. We are thrilled to support your evolution as both a student and a future leader in the world of yoga.
+                  </p>
+                </div>
+                <div>
+                  <FigureCard title="The Journey of Transformation">
+                    <svg viewBox="0 0 300 200" xmlns="http://www.w3.org/2000/svg" className="w-full max-w-md">
+                      <defs>
+                        <linearGradient id="pathGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                          <stop offset="0%" stopColor="#0f766e" />
+                          <stop offset="50%" stopColor="#0891b2" />
+                          <stop offset="100%" stopColor="#7c3aed" />
+                        </linearGradient>
+                      </defs>
+                      
+                      {/* Journey Path */}
+                      <path 
+                        d="M30 160 Q80 140 150 150 Q220 160 270 140" 
+                        stroke="url(#pathGradient)" 
+                        strokeWidth="4" 
+                        fill="none"
+                        strokeDasharray="8,4"
+                      />
+                      
+                      {/* Milestones */}
+                      <circle cx="30" cy="160" r="8" fill="#0f766e" />
+                      <circle cx="100" cy="145" r="8" fill="#0891b2" />
+                      <circle cx="200" cy="155" r="8" fill="#7c3aed" />
+                      <circle cx="270" cy="140" r="8" fill="#c084fc" />
+                      
+                      {/* Labels */}
+                      <text x="30" y="180" textAnchor="middle" className="fill-current text-xs">Student</text>
+                      <text x="100" y="130" textAnchor="middle" className="fill-current text-xs">Practitioner</text>
+                      <text x="200" y="175" textAnchor="middle" className="fill-current text-xs">Teacher</text>
+                      <text x="270" y="125" textAnchor="middle" className="fill-current text-xs">Leader</text>
+                      
+                      {/* Decorative elements */}
+                      <g transform="translate(150, 50)">
+                        <circle cx="0" cy="0" r="25" fill="none" stroke="currentColor" strokeWidth="2" opacity="0.3" />
+                        <circle cx="0" cy="0" r="15" fill="none" stroke="currentColor" strokeWidth="1" opacity="0.5" />
+                        <path d="M-10,-10 L10,10 M10,-10 L-10,10" stroke="currentColor" strokeWidth="2" opacity="0.7" />
+                      </g>
+                      
+                      <text x="150" y="100" textAnchor="middle" className="fill-current text-sm font-semibold">YogaFlow</text>
+                      <text x="150" y="115" textAnchor="middle" className="fill-current text-xs">Community</text>
+                    </svg>
+                  </FigureCard>
+                </div>
+              </div>
+
+              <div className="p-6 bg-gradient-to-r from-blue-50 to-teal-50 dark:from-blue-900/20 dark:to-teal-900/20 border border-blue-200 dark:border-blue-700 rounded-lg my-8">
+                <h4 className="font-semibold text-blue-700 dark:text-blue-300 mb-3 flex items-center">
+                  <svg className="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                    <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clipRule="evenodd" />
+                  </svg>
+                  A Journey, Not a Destination
+                </h4>
+                <p className="text-blue-700 dark:text-blue-200 leading-relaxed">
+                  This training is designed to be an immersive experience that transforms not just your understanding of yoga, but your entire approach to life. The skills and knowledge you gain will extend far beyond the yoga mat, influencing how you connect with yourself, interact with others, and navigate the complexities of daily life. Embrace the process with an open heart and a curious mind.
                 </p>
+                <div className="mt-4 grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
+                  <div className="flex items-center text-blue-600 dark:text-blue-300">
+                    <span className="w-2 h-2 bg-blue-500 rounded-full mr-2"></span>
+                    Self-Discovery
+                  </div>
+                  <div className="flex items-center text-blue-600 dark:text-blue-300">
+                    <span className="w-2 h-2 bg-blue-500 rounded-full mr-2"></span>
+                    Dedicated Practice
+                  </div>
+                  <div className="flex items-center text-blue-600 dark:text-blue-300">
+                    <span className="w-2 h-2 bg-blue-500 rounded-full mr-2"></span>
+                    Art of Teaching
+                  </div>
+                </div>
+              </div>
+
+              <div className="bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-700 rounded-lg p-6 my-8">
+                <h4 className="font-semibold text-amber-800 dark:text-amber-300 mb-3">💡 Training Philosophy</h4>
+                <p className="text-amber-700 dark:text-amber-200 mb-4">
+                  At YogaFlow University, we believe that the best yoga teachers are those who maintain a beginner's mind while developing deep expertise. This paradox—being both student and teacher—is at the heart of our approach.
+                </p>
+                <blockquote className="border-l-4 border-amber-400 pl-4 italic text-amber-700 dark:text-amber-200">
+                  "In the beginner's mind there are many possibilities, but in the expert's mind there are few." 
+                  <cite className="block text-right text-sm mt-2 not-italic">— Shunryu Suzuki</cite>
+                </blockquote>
               </div>
             </ManualSection>
 
             <ManualSection id="commitments" title="Our Mutual Commitments">
-              <h3 className="text-xl font-semibold text-blue-300 mt-6 mb-4">Our Commitment to You</h3>
-              <p className="mb-4 leading-relaxed">
-                YogaFlow is dedicated to providing an exceptional, practical teacher-training program that meets and exceeds the standards of Yoga Alliance. Upon successful completion, you will be a certified yoga teacher, equipped with the skills and confidence to lead safe, effective, and inspiring classes.
-              </p>
+              <div className="grid md:grid-cols-2 gap-8 mb-8">
+                <div>
+                  <h3 className="text-xl font-semibold text-blue-600 dark:text-blue-300 mt-6 mb-4 flex items-center">
+                    <svg className="w-6 h-6 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M6.267 3.455a3.066 3.066 0 001.745-.723 3.066 3.066 0 013.976 0 3.066 3.066 0 001.745.723 3.066 3.066 0 012.812 2.812c.051.643.304 1.254.723 1.745a3.066 3.066 0 010 3.976 3.066 3.066 0 00-.723 1.745 3.066 3.066 0 01-2.812 2.812 3.066 3.066 0 00-1.745.723 3.066 3.066 0 01-3.976 0 3.066 3.066 0 00-1.745-.723 3.066 3.066 0 01-2.812-2.812 3.066 3.066 0 00-.723-1.745 3.066 3.066 0 010-3.976 3.066 3.066 0 00.723-1.745 3.066 3.066 0 012.812-2.812zm7.44 5.252a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                    </svg>
+                    Our Commitment to You
+                  </h3>
+                  <div className="space-y-4">
+                    <p className="leading-relaxed">
+                      YogaFlow is dedicated to providing an exceptional, practical teacher-training program that meets and exceeds the standards of Yoga Alliance. Upon successful completion, you will be a certified yoga teacher, equipped with the skills and confidence to lead safe, effective, and inspiring classes.
+                    </p>
+                    <div className="bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-700 rounded-lg p-4">
+                      <h4 className="font-semibold text-green-800 dark:text-green-300 mb-2">✅ What You Can Expect:</h4>
+                      <ul className="space-y-1 text-green-700 dark:text-green-200 text-sm">
+                        <li>• Comprehensive 200-hour curriculum</li>
+                        <li>• Expert instruction from certified teachers</li>
+                        <li>• Small class sizes for personalized attention</li>
+                        <li>• Hands-on practice and feedback</li>
+                        <li>• Yoga Alliance certification upon completion</li>
+                        <li>• Ongoing mentorship and support</li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+                
+                <div>
+                  <FigureCard title="Commitment Circle">
+                    <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" className="w-full max-w-sm">
+                      {/* Outer circle */}
+                      <circle cx="100" cy="100" r="80" fill="none" stroke="currentColor" strokeWidth="2" opacity="0.3" />
+                      
+                      {/* Inner elements representing commitment */}
+                      <g transform="translate(100, 70)">
+                        <circle cx="0" cy="0" r="15" fill="#0f766e" opacity="0.8" />
+                        <text x="0" y="5" textAnchor="middle" className="fill-white text-xs font-bold">YOU</text>
+                      </g>
+                      
+                      <g transform="translate(100, 130)">
+                        <circle cx="0" cy="0" r="15" fill="#0891b2" opacity="0.8" />
+                        <text x="0" y="-25" textAnchor="middle" className="fill-current text-xs">YogaFlow</text>
+                        <text x="0" y="5" textAnchor="middle" className="fill-white text-xs font-bold">US</text>
+                      </g>
+                      
+                      {/* Connection lines */}
+                      <line x1="100" y1="85" x2="100" y2="115" stroke="currentColor" strokeWidth="2" opacity="0.6" />
+                      
+                      {/* Surrounding values */}
+                      <g transform="translate(60, 60)">
+                        <circle cx="0" cy="0" r="8" fill="#7c3aed" opacity="0.6" />
+                        <text x="0" y="-15" textAnchor="middle" className="fill-current text-xs">Excellence</text>
+                      </g>
+                      
+                      <g transform="translate(140, 60)">
+                        <circle cx="0" cy="0" r="8" fill="#7c3aed" opacity="0.6" />
+                        <text x="0" y="-15" textAnchor="middle" className="fill-current text-xs">Support</text>
+                      </g>
+                      
+                      <g transform="translate(60, 140)">
+                        <circle cx="0" cy="0" r="8" fill="#7c3aed" opacity="0.6" />
+                        <text x="0" y="25" textAnchor="middle" className="fill-current text-xs">Growth</text>
+                      </g>
+                      
+                      <g transform="translate(140, 140)">
+                        <circle cx="0" cy="0" r="8" fill="#7c3aed" opacity="0.6" />
+                        <text x="0" y="25" textAnchor="middle" className="fill-current text-xs">Community</text>
+                      </g>
+                    </svg>
+                  </FigureCard>
+                </div>
+              </div>
               
-              <h3 className="text-xl font-semibold text-blue-300 mt-6 mb-4">Your Commitment to the Practice</h3>
-              <p className="mb-4">The following principles, drawn from yogic philosophy, form the foundation of our shared journey. Embrace them as tools for growth.</p>
-              <ul className="space-y-3 mb-4 ml-5">
-                <li><strong>Svādhyāya (Self-Study)</strong>: Commit to a rigorous exploration of your own body, breath, and mind. This is the source of authentic teaching.</li>
-                <li><strong>Aparigraha (Non-Attachment)</strong>: Be open to new ideas, unexpected challenges, and personal evolution. Release preconceived notions of what this journey "should" be.</li>
-                <li><strong>Tapas (Discipline/Enthusiasm)</strong>: Consistently challenge yourself, both physically and mentally. This inner fire purifies and strengthens your resolve.</li>
-                <li><strong>Satya & Ahimsā (Truth & Non-Harming)</strong>: Interact with your peers and instructors with integrity and kindness. Offer and receive feedback that is both honest and compassionate.</li>
-                <li><strong>Śaucha, Santosha, Brahmacharya (Purity, Contentment, Moderation)</strong>: Maintain a balanced approach. Take care of your energy, find joy in the process, and practice moderation in all things.</li>
-              </ul>
+              <h3 className="text-xl font-semibold text-blue-600 dark:text-blue-300 mt-8 mb-4 flex items-center">
+                <svg className="w-6 h-6 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                  <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+                Your Commitment to the Practice
+              </h3>
+              <p className="mb-6">The following principles, drawn from yogic philosophy, form the foundation of our shared journey. Embrace them as tools for growth and transformation.</p>
+              
+              <div className="grid gap-6">
+                <div className="border border-teal-200 dark:border-teal-700 rounded-lg p-6 bg-teal-50 dark:bg-teal-900/20">
+                  <h4 className="font-semibold text-teal-800 dark:text-teal-300 mb-2 flex items-center">
+                    <span className="w-8 h-8 bg-teal-600 text-white rounded-full flex items-center justify-center text-sm mr-3">स्व</span>
+                    Svādhyāya (Self-Study)
+                  </h4>
+                  <p className="text-teal-700 dark:text-teal-200">
+                    Commit to a rigorous exploration of your own body, breath, and mind. This is the source of authentic teaching. Your personal practice becomes your greatest teacher and most valuable resource.
+                  </p>
+                </div>
+                
+                <div className="border border-purple-200 dark:border-purple-700 rounded-lg p-6 bg-purple-50 dark:bg-purple-900/20">
+                  <h4 className="font-semibold text-purple-800 dark:text-purple-300 mb-2 flex items-center">
+                    <span className="w-8 h-8 bg-purple-600 text-white rounded-full flex items-center justify-center text-sm mr-3">अप</span>
+                    Aparigraha (Non-Attachment)
+                  </h4>
+                  <p className="text-purple-700 dark:text-purple-200">
+                    Be open to new ideas, unexpected challenges, and personal evolution. Release preconceived notions of what this journey "should" be. Embrace the unknown with curiosity.
+                  </p>
+                </div>
+                
+                <div className="border border-orange-200 dark:border-orange-700 rounded-lg p-6 bg-orange-50 dark:bg-orange-900/20">
+                  <h4 className="font-semibold text-orange-800 dark:text-orange-300 mb-2 flex items-center">
+                    <span className="w-8 h-8 bg-orange-600 text-white rounded-full flex items-center justify-center text-sm mr-3">तप</span>
+                    Tapas (Discipline/Enthusiasm)
+                  </h4>
+                  <p className="text-orange-700 dark:text-orange-200">
+                    Consistently challenge yourself, both physically and mentally. This inner fire purifies and strengthens your resolve. Discipline becomes the foundation of freedom.
+                  </p>
+                </div>
+                
+                <div className="border border-blue-200 dark:border-blue-700 rounded-lg p-6 bg-blue-50 dark:bg-blue-900/20">
+                  <h4 className="font-semibold text-blue-800 dark:text-blue-300 mb-2 flex items-center">
+                    <span className="w-8 h-8 bg-blue-600 text-white rounded-full flex items-center justify-center text-sm mr-3">सत्य</span>
+                    Satya & Ahimsā (Truth & Non-Harming)
+                  </h4>
+                  <p className="text-blue-700 dark:text-blue-200">
+                    Interact with your peers and instructors with integrity and kindness. Offer and receive feedback that is both honest and compassionate. Truth without harm, honesty with love.
+                  </p>
+                </div>
+                
+                <div className="border border-green-200 dark:border-green-700 rounded-lg p-6 bg-green-50 dark:bg-green-900/20">
+                  <h4 className="font-semibold text-green-800 dark:text-green-300 mb-2 flex items-center">
+                    <span className="w-8 h-8 bg-green-600 text-white rounded-full flex items-center justify-center text-sm mr-3">शौच</span>
+                    Śaucha, Santosha, Brahmacharya (Purity, Contentment, Moderation)
+                  </h4>
+                  <p className="text-green-700 dark:text-green-200">
+                    Maintain a balanced approach to all aspects of your training. Take care of your energy, find joy in the process, and practice moderation in all things. Balance creates sustainability.
+                  </p>
+                </div>
+              </div>
             </ManualSection>
 
             <ManualSection id="intention" title="Training Intention & Methodology">
