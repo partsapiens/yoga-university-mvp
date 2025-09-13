@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { ManualLayout, ManualTOC, ManualSection } from '@/components/manual';
+import { ManualLayout, ManualTOC, ManualSection, FigureCard } from '@/components/manual';
 
 export default function Chapter3Page() {
   const breadcrumbs = [
@@ -10,9 +10,10 @@ export default function Chapter3Page() {
   ];
 
   const tocItems = [
-    { id: 'integration', title: 'Integration Series' },
-    { id: 'sunA', title: 'Sun Salutation A' },
-    { id: 'sunB', title: 'Sun Salutation B' }
+    { id: 'integration', title: 'The Integration Series' },
+    { id: 'sunA', title: 'Sun Salutation A (Surya A)' },
+    { id: 'sunB', title: 'Sun Salutation B (Surya B)' },
+    { id: 'reflection', title: 'Reflection & Practice' }
   ];
 
   const chapterNavigation = {
@@ -34,138 +35,101 @@ export default function Chapter3Page() {
       breadcrumbs={breadcrumbs}
     >
       <div className="max-w-7xl mx-auto">
-        <div className="mb-4">
-          <p className="text-gray-400">
-            YogaFlow University edition with Sanskrit pose names and alignment / cue bullets.
-          </p>
-        </div>
-        
-        <div className="grid grid-cols-1 lg:grid-cols-[280px_1fr] gap-6">
+        <div className="grid grid-cols-1 lg:grid-cols-[280px_1fr] gap-8">
           <ManualTOC 
             items={tocItems} 
             chapterNavigation={chapterNavigation}
           />
           
           <article>
-            <ManualSection id="integration" title="Integration Series">
-              <ol className="space-y-4 ml-5">
-                <li>
-                  <strong>Child's Pose — Balasana</strong>
-                  <ul className="mt-1 ml-5 mb-2 space-y-1">
-                    <li>Knees wide or together; big toes touch.</li>
-                    <li>Lengthen spine from sacrum through crown.</li>
-                    <li>Soften shoulders and jaw; deepen breath.</li>
+            <ManualSection id="integration" title="The Integration Series">
+              <p className="mb-4 leading-relaxed text-lg">
+                The Integration Series is the gentle beginning of our practice. Its purpose is to transition from the busyness of the outside world to the internal landscape of the body and breath. It's a time to check in, notice sensations, and establish a steady rhythm of breath that will carry you through the practice.
+              </p>
+              <div className="space-y-6">
+                <div>
+                  <h4 className="font-semibold text-lg text-teal-300">1. Child's Pose — Balasana</h4>
+                  <p className="mb-2">A pose of surrender and grounding. Knees can be together or wide. Forehead rests on the mat, allowing the neck to be long. Focus on deep, diaphragmatic breaths that expand the back body.</p>
+                  <ul className="list-disc ml-5 space-y-1 text-gray-300">
+                    <li><strong>Cueing</strong>: "Settle your hips back towards your heels," "Let your forehead rest heavily on the mat."</li>
+                    <li><strong>Anatomy</strong>: Gently stretches the hips, thighs, and ankles while releasing tension in the back and shoulders.</li>
                   </ul>
-                </li>
-                <li>
-                  <strong>Downward Facing Dog — Adho Mukha Svanasana</strong>
-                  <ul className="mt-1 ml-5 mb-2 space-y-1">
-                    <li>Hands shoulder-width; root through thumb/index.</li>
-                    <li>Lift hips high; lengthen spine.</li>
-                    <li>Micro-bend knees to free low back.</li>
+                </div>
+                <div>
+                  <h4 className="font-semibold text-lg text-teal-300">2. Downward-Facing Dog — Adho Mukha Svanasana</h4>
+                  <p className="mb-2">An inversion that energizes and lengthens the entire body. Hands are shoulder-width, feet are hip-width. Prioritize a long spine over straight legs by bending the knees generously.</p>
+                   <ul className="list-disc ml-5 space-y-1 text-gray-300">
+                    <li><strong>Cueing</strong>: "Press the ground away," "Lift your hips high," "Let your head hang heavy."</li>
+                    <li><strong>Anatomy</strong>: Stretches the hamstrings, calves, and shoulders. Strengthens the arms and legs.</li>
                   </ul>
-                </li>
-                <li>
-                  <strong>Ragdoll — Uttanasana variation</strong>
-                  <ul className="mt-1 ml-5 mb-2 space-y-1">
-                    <li>Feet hip-width; soft knees.</li>
-                    <li>Hinge from hips; hang head heavy.</li>
-                    <li>Optional clasp elbows to traction spine.</li>
+                </div>
+                <div>
+                  <h4 className="font-semibold text-lg text-teal-300">3. Ragdoll — Uttanasana Variation</h4>
+                  <p className="mb-2">A passive forward fold that releases the spine and hamstrings. Feet are hip-width apart with a generous bend in the knees. Clasp opposite elbows and let gravity do the work.</p>
+                  <ul className="list-disc ml-5 space-y-1 text-gray-300">
+                    <li><strong>Cueing</strong>: "Introduce a soft bend in your knees," "Let your head be heavy, your neck be long."</li>
+                    <li><strong>Anatomy</strong>: Releases tension in the lumbar spine and neck. Gently opens the hamstrings.</li>
                   </ul>
-                </li>
-              </ol>
-              <div 
-                className="rounded-lg p-4 my-4"
-                style={{
-                  background: '#141921',
-                  borderLeft: '4px solid #6ea8fe',
-                  color: '#d8e5ff'
-                }}
-              >
-                Objective: awaken breath and hamstrings; set steady drishti and rhythm.
+                </div>
               </div>
             </ManualSection>
 
-            <ManualSection id="sunA" title="Sun Salutation A — Surya Namaskar A">
-              <ol className="space-y-4 ml-5">
-                <li>
-                  <strong>Mountain — Tadasana</strong>
-                  <ul className="mt-1 ml-5 mb-2 space-y-1">
-                    <li>Ground through four corners of feet.</li>
-                    <li>Lift kneecaps, lengthen tailbone.</li>
-                    <li>Draw shoulders back and down; crown to sky.</li>
-                  </ul>
-                </li>
-                <li>
-                  <strong>Extended Mountain — Urdhva Hastasana</strong>
-                  <ul className="mt-1 ml-5 mb-2 space-y-1">
-                    <li>Arms overhead, palms face or touch.</li>
-                    <li>Wrap triceps forward; soften ribs.</li>
-                  </ul>
-                </li>
-                <li>
-                  <strong>Forward Fold — Uttanasana</strong>
-                  <ul className="mt-1 ml-5 mb-2 space-y-1">
-                    <li>Hinge at hips, fold deeply.</li>
-                    <li>Micro-bend knees; relax neck and jaw.</li>
-                  </ul>
-                </li>
-                <li>
-                  <strong>Halfway Lift — Ardha Uttanasana</strong>
-                  <ul className="mt-1 ml-5 mb-2 space-y-1">
-                    <li>Hands to shins or floor; spine long.</li>
-                    <li>Draw navel to spine; extend crown forward.</li>
-                  </ul>
-                </li>
-                <li>
-                  <strong>High to Low Plank — Chaturanga Dandasana</strong>
-                  <ul className="mt-1 ml-5 mb-2 space-y-1">
-                    <li>Shoulders above wrists; core engaged.</li>
-                    <li>Lower halfway with elbows hugging ribs.</li>
-                  </ul>
-                </li>
-                <li>
-                  <strong>Upward Facing Dog — Urdhva Mukha Svanasana</strong>
-                  <ul className="mt-1 ml-5 mb-2 space-y-1">
-                    <li>Press palms and tops of feet; thighs lifted.</li>
-                    <li>Open chest; shoulders over wrists.</li>
-                  </ul>
-                </li>
-                <li>
-                  <strong>Downward Facing Dog — Adho Mukha Svanasana</strong>
-                  <ul className="mt-1 ml-5 mb-2 space-y-1">
-                    <li>Return to steady breath; hold 3–5 cycles.</li>
-                  </ul>
-                </li>
-              </ol>
+            <ManualSection id="sunA" title="Sun Salutation A (Surya Namaskar A)">
+              <p className="mb-4 leading-relaxed">
+                Sun Salutation A is a foundational vinyasa sequence that builds heat, synchronizes breath and movement, and prepares the body for deeper work. It is a complete practice in itself.
+              </p>
+              <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+                <FigureCard caption="1. Tadasana">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><g fill="none" stroke="#a7f3d0" stroke-width="2"><path d="M50 95v-75.5a7.5 7.5 0 0115 0v10m-15-10a7.5 7.5 0 00-15 0v10"/><circle cx="50" cy="12" r="7"/><path d="M35 55h30m-25 15h20m-20-30h20"/></g></svg>
+                </FigureCard>
+                <FigureCard caption="2. Urdhva Hastasana">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><g fill="none" stroke="#a7f3d0" stroke-width="2"><path d="M50 95V45m0-25.5a7.5 7.5 0 0115 0V30m-15-10.5a7.5 7.5 0 00-15 0V30"/><circle cx="50" cy="12" r="7"/><path d="M35 55h30m-25 15h20m-20-30h20"/></g></svg>
+                </FigureCard>
+                <FigureCard caption="3. Uttanasana">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><g fill="none" stroke="#a7f3d0" stroke-width="2"><path d="M50 95V60L70 40m-20 20L30 40m20-20v20"/><circle cx="50" cy="15" r="7"/></g></svg>
+                </FigureCard>
+                <FigureCard caption="4. Ardha Uttanasana">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><g fill="none" stroke="#a7f3d0" stroke-width="2"><path d="M50 95V60L70 50m-20 10L30 50m40-10H30"/><circle cx="50" cy="15" r="7"/></g></svg>
+                </FigureCard>
+                <FigureCard caption="5. Chaturanga">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><g fill="none" stroke="#a7f3d0" stroke-width="2"><path d="M10 70h80l-10-10H20z"/><circle cx="85" cy="50" r="5"/><path d="M25 60v-5h40v5"/></g></svg>
+                </FigureCard>
+                <FigureCard caption="6. Urdhva Mukha">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><g fill="none" stroke="#a7f3d0" stroke-width="2"><path d="M20 90h60v-5H20zm5-5s10-20 25-20 25 20 25 20"/><circle cx="50" cy="25" r="8"/><path d="M50 33v32"/></g></svg>
+                </FigureCard>
+              </div>
             </ManualSection>
 
-            <ManualSection id="sunB" title="Sun Salutation B — Surya Namaskar B">
-              <ol className="space-y-4 ml-5">
-                <li>
-                  <strong>Chair Pose — Utkatasana</strong>
-                  <ul className="mt-1 ml-5 mb-2 space-y-1">
-                    <li>Feet together or hip-width; sit low.</li>
-                    <li>Draw tailbone down, lift chest.</li>
-                  </ul>
-                </li>
-                <li>Flow through <strong>Forward Fold / Halfway Lift / Chaturanga / Up Dog / Down Dog</strong>.</li>
-                <li>
-                  <strong>Warrior I — Virabhadrasana I (Right)</strong>
-                  <ul className="mt-1 ml-5 mb-2 space-y-1">
-                    <li>Front knee over ankle; back heel roots down.</li>
-                    <li>Square hips forward; reach arms overhead.</li>
-                  </ul>
-                </li>
-                <li>Vinyasa back to Down Dog.</li>
-                <li><strong>Warrior I — Virabhadrasana I (Left)</strong> → Vinyasa to Down Dog.</li>
-              </ol>
+            <ManualSection id="sunB" title="Sun Salutation B (Surya Namaskar B)">
+              <p className="mb-4 leading-relaxed">
+                Sun Salutation B introduces more complexity by adding Chair Pose (Utkatasana) and Warrior I (Virabhadrasana I). This sequence builds greater heat and stamina, and more deeply challenges balance and strength.
+              </p>
+              <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+                 <FigureCard caption="1. Utkatasana">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><g fill="none" stroke="#a7f3d0" stroke-width="2"><path d="M50 90l-10-30h20z"/><path d="M50 60V25m0-10a5 5 0 0110 0v10m-10-10a5 5 0 00-10 0v10"/><circle cx="50" cy="10" r="5"/></g></svg>
+                </FigureCard>
+                 <FigureCard caption="2. Virabhadrasana I">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><g fill="none" stroke="#a7f3d0" stroke-width="2"><path d="M30 90h50L70 60H40z"/><path d="M55 60V25m0-10a5 5 0 0110 0v10m-10-10a5 5 0 00-10 0v10"/><circle cx="55" cy="10" r="5"/></g></svg>
+                </FigureCard>
+              </div>
+              <p className="mt-4 leading-relaxed">The flow then continues through the vinyasa (Chaturanga -> Upward-Facing Dog -> Downward-Facing Dog) before repeating Warrior I on the other side.</p>
+            </ManualSection>
+
+            <ManualSection id="reflection" title="Reflection & Practice">
+              <div className="p-4 bg-blue-900/20 border-l-4 border-blue-400 rounded-r-lg my-6">
+                <h4 className="font-semibold text-blue-300 mb-2">Journal Prompts</h4>
+                <ul className="list-disc ml-5 space-y-1 text-blue-200/90">
+                  <li>In Sun Salutation A, where do you feel the most fluid? Where do you feel "stuck"?</li>
+                  <li>How does the addition of Chair and Warrior I in Sun B change the energetic quality of the flow for you?</li>
+                  <li>Practice teaching the Integration series to a friend or family member. What felt natural? What was challenging to articulate?</li>
+                </ul>
+              </div>
             </ManualSection>
           </article>
         </div>
         
-        <footer className="mt-12 pt-6 border-t border-gray-600 text-gray-400">
-          <p>© YogaFlow University — Chapter 3 (Integration & Sun Salutations). For internal training use.</p>
+        <footer className="mt-12 pt-6 border-t border-gray-700 text-center text-gray-500">
+          <p>© YogaFlow University — Chapter 3: Integration & Sun Salutations. For internal training use only.</p>
         </footer>
       </div>
     </ManualLayout>

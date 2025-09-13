@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { ManualLayout, ManualTOC, ManualSection } from '@/components/manual';
+import { ManualLayout, ManualTOC, ManualSection, FigureCard } from '@/components/manual';
 
 export default function Chapter5Page() {
   const breadcrumbs = [
@@ -10,10 +10,10 @@ export default function Chapter5Page() {
   ];
 
   const tocItems = [
-    { id: 'philosophy', title: 'Yoga Philosophy' },
-    { id: 'eight-limbs', title: 'Eight Limbs of Yoga' },
-    { id: 'modern-application', title: 'Modern Application' },
-    { id: 'integration', title: 'Integration in Teaching' }
+    { id: 'philosophy', title: 'Yoga Beyond Asana' },
+    { id: 'eight-limbs', title: 'The Eight-Limbed Path' },
+    { id: 'yamas-niyamas', title: 'Yamas & Niyamas in Detail' },
+    { id: 'integration', title: 'Weaving Philosophy into Class' }
   ];
 
   const chapterNavigation = {
@@ -31,81 +31,91 @@ export default function Chapter5Page() {
 
   return (
     <ManualLayout 
-      title="Chapter 5 — Yoga Philosophy & Lifestyle" 
+      title="Chapter 5 — Yoga Philosophy & The Ethical Path"
       breadcrumbs={breadcrumbs}
     >
       <div className="max-w-7xl mx-auto">
-        <div className="grid grid-cols-1 lg:grid-cols-[280px_1fr] gap-6">
+        <div className="grid grid-cols-1 lg:grid-cols-[280px_1fr] gap-8">
           <ManualTOC 
             items={tocItems} 
             chapterNavigation={chapterNavigation}
           />
           
           <article>
-            <ManualSection id="philosophy" title="Yoga Philosophy">
-              <p className="mb-4 leading-relaxed">
-                Yoga philosophy provides the foundation for understanding yoga as more than physical exercise. It offers a comprehensive framework for living with awareness, purpose, and connection.
+            <ManualSection id="philosophy" title="Yoga Beyond Asana">
+              <p className="mb-4 leading-relaxed text-lg">
+                While asana (physical postures) is the most visible aspect of yoga in the modern world, it is only one piece of a vast and profound system of personal and spiritual development. Yoga philosophy provides the essential map and compass for this journey.
               </p>
               <p className="mb-4 leading-relaxed">
-                The word "yoga" comes from the Sanskrit root "yuj," meaning to unite or join. This union refers to the connection between individual consciousness and universal consciousness, or the integration of body, mind, and spirit.
+                The word "yoga" itself, from the Sanskrit root "yuj," means "to unite" or "to yoke." This refers to the integration of body, mind, and spirit, and the ultimate union of individual consciousness with universal consciousness. This chapter explores the foundational framework for this journey: the Eight Limbs of Yoga.
               </p>
             </ManualSection>
 
-            <ManualSection id="eight-limbs" title="Eight Limbs of Yoga (Ashtanga)">
+            <ManualSection id="eight-limbs" title="The Eight-Limbed Path (Ashtanga Yoga)">
               <p className="mb-4 leading-relaxed">
-                Patanjali's eight-limbed path provides a comprehensive guide for yoga practice and ethical living:
+                As codified by the sage Patanjali in the Yoga Sutras, the Eight-Limbed Path offers a comprehensive guide to living a purposeful and meaningful life. It is a progressive path where each limb builds upon the previous one.
               </p>
-              <ol className="space-y-3 mb-4 ml-5 list-decimal">
-                <li><strong>Yamas (Ethical Restraints)</strong>: Ahimsa (non-violence), Satya (truthfulness), Asteya (non-stealing), Brahmacharya (energy management), Aparigraha (non-possessiveness)</li>
-                <li><strong>Niyamas (Observances)</strong>: Saucha (cleanliness), Santosha (contentment), Tapas (disciplined practice), Svadhyaya (self-study), Ishvara pranidhana (surrender)</li>
-                <li><strong>Asana</strong>: Physical postures that prepare the body for meditation</li>
-                <li><strong>Pranayama</strong>: Breath control practices that regulate life force energy</li>
-                <li><strong>Pratyahara</strong>: Withdrawal of the senses from external distractions</li>
-                <li><strong>Dharana</strong>: Concentration on a single point or object</li>
-                <li><strong>Dhyana</strong>: Sustained meditation or contemplation</li>
-                <li><strong>Samadhi</strong>: Unity consciousness or enlightenment</li>
+              <ol className="space-y-4 mb-4 ml-5 list-decimal">
+                <li><strong>Yamas</strong>: Ethical principles governing our relationship with the outer world.</li>
+                <li><strong>Niyamas</strong>: Personal observances and practices for our inner world.</li>
+                <li><strong>Asana</strong>: Physical postures, designed to prepare the body for stillness and meditation.</li>
+                <li><strong>Pranayama</strong>: Breath regulation techniques to control and cultivate life-force energy (prana).</li>
+                <li><strong>Pratyahara</strong>: The withdrawal of the senses, turning our attention inward.</li>
+                <li><strong>Dharana</strong>: Focused concentration on a single point or object.</li>
+                <li><strong>Dhyana</strong>: A state of meditative absorption, an unbroken flow of concentration.</li>
+                <li><strong>Samadhi</strong>: The state of enlightenment or union, where the sense of individual self dissolves.</li>
               </ol>
             </ManualSection>
 
-            <ManualSection id="modern-application" title="Modern Application">
-              <p className="mb-4 leading-relaxed">
-                While rooted in ancient wisdom, yoga philosophy offers practical guidance for contemporary challenges:
-              </p>
-              <ul className="space-y-2 mb-4 ml-5">
-                <li><strong>Stress Management</strong>: Pranayama and meditation techniques for modern stress.</li>
-                <li><strong>Ethical Living</strong>: The yamas and niyamas as guidelines for conscious living.</li>
-                <li><strong>Self-Awareness</strong>: Svadhyaya as ongoing self-reflection and learning.</li>
-                <li><strong>Non-attachment</strong>: Aparigraha as freedom from excessive materialism.</li>
-                <li><strong>Contentment</strong>: Santosha as finding joy in what is present.</li>
+            <ManualSection id="yamas-niyamas" title="Yamas & Niyamas in Detail">
+              <p className="mb-4 leading-relaxed">The Yamas and Niyamas are the ethical foundation of yoga. They are not rules, but rather invitations to observe our behavior and make conscious choices that lead to greater peace and harmony for ourselves and others.</p>
+
+              <h3 className="text-xl font-semibold text-blue-300 mt-6 mb-4">The 5 Yamas (Social Ethics)</h3>
+              <ul className="space-y-3 mb-4 ml-4">
+                  <li><strong>Ahimsa (Non-harming)</strong>: Compassion and kindness in thought, word, and deed towards all living things, including oneself.</li>
+                  <li><strong>Satya (Truthfulness)</strong>: Speaking and living our truth with integrity and skill.</li>
+                  <li><strong>Asteya (Non-stealing)</strong>: Not taking what is not freely given, including others' time and energy.</li>
+                  <li><strong>Brahmacharya (Energy Moderation)</strong>: Directing our energy wisely, avoiding excess and depletion.</li>
+                  <li><strong>Aparigraha (Non-possessiveness)</strong>: Cultivating generosity and letting go of the need to accumulate or hoard.</li>
               </ul>
+
+              <h3 className="text-xl font-semibold text-blue-300 mt-6 mb-4">The 5 Niyamas (Personal Practices)</h3>
+              <ul className="space-y-3 mb-4 ml-4">
+                  <li><strong>Saucha (Purity/Cleanliness)</strong>: Maintaining cleanliness of body, mind, and environment.</li>
+                  <li><strong>Santosha (Contentment)</strong>: Finding joy and peace with what is, without needing external circumstances to change.</li>
+                  <li><strong>Tapas (Discipline/Enthusiasm)</strong>: The inner fire that fuels our practice and helps us overcome obstacles.</li>
+                  <li><strong>Svadhyaya (Self-study)</strong>: The practice of self-inquiry, reflection, and studying sacred texts.</li>
+                  <li><strong>Ishvara Pranidhana (Surrender)</strong>: Trustfully dedicating our actions and their results to a higher power or the greater whole.</li>
+              </ul>
+              <div className="p-4 bg-blue-900/20 border-l-4 border-blue-400 rounded-r-lg my-6">
+                <h4 className="font-semibold text-blue-300 mb-2">Reflection Prompt</h4>
+                <p className="text-blue-200/90">
+                  Choose one Yama or Niyama to focus on this week. How can you practice it on your yoga mat? How can you practice it in your daily life (at work, in relationships, in your thoughts)?
+                </p>
+              </div>
             </ManualSection>
 
-            <ManualSection id="integration" title="Integration in Teaching">
+            <ManualSection id="integration" title="Weaving Philosophy into Class">
               <p className="mb-4 leading-relaxed">
-                As a yoga teacher, you have the opportunity to weave philosophical concepts into your classes in accessible, relevant ways:
+                Sharing yoga philosophy in a class setting should feel authentic, accessible, and invitational. The goal is not to lecture, but to offer a lens through which students can explore their own experience more deeply.
               </p>
-              <ul className="space-y-2 mb-4 ml-5">
-                <li><strong>Themes</strong>: Build classes around philosophical concepts like letting go, finding balance, or cultivating patience.</li>
-                <li><strong>Language</strong>: Use inclusive language that honors diverse beliefs and backgrounds.</li>
-                <li><strong>Practical Application</strong>: Connect ancient wisdom to everyday challenges students face.</li>
-                <li><strong>Personal Example</strong>: Embody the principles you teach rather than just speaking about them.</li>
+              <ul className="space-y-3 mb-4 ml-5 list-disc">
+                <li><strong>Thematic Teaching</strong>: Build a class around a philosophical concept. For example, a class on <em>Aparigraha</em> might focus on letting go of physical tension and mental expectations.</li>
+                <li><strong>Embodied Language</strong>: Connect concepts to physical sensations. "Can you find a sense of <em>Santosha</em>, or contentment, in this pose, even with the intense sensation?"</li>
+                <li><strong>Lead by Example</strong>: The most powerful way to teach philosophy is to embody it. Your presence, your kindness, and your integrity speak volumes.</li>
               </ul>
-              <div 
-                className="rounded-lg p-4 my-4"
-                style={{
-                  background: '#141921',
-                  borderLeft: '4px solid #6ea8fe',
-                  color: '#d8e5ff'
-                }}
-              >
-                Philosophy is not about preaching or converting. It's about offering tools for students to explore their own path to well-being and self-understanding.
+              <div className="p-4 bg-gray-800/50 border border-gray-700 rounded-lg my-6">
+                <h4 className="font-semibold text-teal-300 mb-2">Case Study: Theming a Class on Satya (Truthfulness)</h4>
+                <p className="text-gray-300">
+                  You could open class by inviting students to notice their "truth" today—their energy level, their physical sensations. The sequence could include heart-opening poses to encourage authentic expression and balancing poses that require honest self-assessment. The closing could be a reflection on speaking and living more truthfully off the mat.
+                </p>
               </div>
             </ManualSection>
           </article>
         </div>
         
-        <footer className="mt-12 pt-6 border-t border-gray-600 text-gray-400">
-          <p>© YogaFlow University — Chapter 5. For internal training use.</p>
+        <footer className="mt-12 pt-6 border-t border-gray-700 text-center text-gray-500">
+          <p>© YogaFlow University — Chapter 5: Yoga Philosophy & The Ethical Path. For internal training use only.</p>
         </footer>
       </div>
     </ManualLayout>
