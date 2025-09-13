@@ -64,7 +64,7 @@ export default function AIGuidePage() {
               </button>
 
               <div className="text-center">
-                <p className="text-sm text-gray-500 mb-2">Don't want to use your camera?</p>
+                <p className="text-sm text-gray-500 mb-2">Don&apos;t want to use your camera?</p>
                 <button
                   onClick={handleTryDemo}
                   className="text-blue-600 hover:text-blue-700 underline text-sm"
@@ -98,7 +98,7 @@ export default function AIGuidePage() {
             </div>
             <h2 className="text-2xl font-semibold mb-4">Camera Access Granted!</h2>
             <p className="text-gray-600 dark:text-gray-300 mb-6">
-              Great! You're ready to start your AI-guided yoga session.
+              Great! You&apos;re ready to start your AI-guided yoga session.
             </p>
             <button
               onClick={handleTryDemo}
@@ -163,15 +163,15 @@ export default function AIGuidePage() {
               <div className="space-y-3 text-sm">
                 <div className="flex items-start gap-3">
                   <span className="font-medium text-blue-600">1.</span>
-                  <p>Click the camera icon in your browser's address bar</p>
+                  <p>Click the camera icon in your browser&apos;s address bar</p>
                 </div>
                 <div className="flex items-start gap-3">
                   <span className="font-medium text-blue-600">2.</span>
-                  <p>Select "Allow" for camera permissions</p>
+                  <p>Select &ldquo;Allow&rdquo; for camera permissions</p>
                 </div>
                 <div className="flex items-start gap-3">
                   <span className="font-medium text-blue-600">3.</span>
-                  <p>Refresh this page and click "Enable Camera" again</p>
+                  <p>Refresh this page and click &ldquo;Enable Camera&rdquo; again</p>
                 </div>
               </div>
 
