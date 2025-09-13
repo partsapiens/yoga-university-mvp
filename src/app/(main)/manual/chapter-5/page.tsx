@@ -2,6 +2,7 @@
 
 import React from 'react';
 import { ManualLayout, ManualTOC, ManualSection, FigureCard } from '@/components/manual';
+import PoseVideo from '@/components/PoseLibrary/PoseVideo';
 
 export default function Chapter5Page() {
   const breadcrumbs = [
@@ -43,6 +44,7 @@ export default function Chapter5Page() {
           
           <article>
             <ManualSection id="philosophy" title="Yoga Beyond Asana">
+              <PoseVideo url="https://youtu.be/Grndmv3Ocdc" title="Yoga Beyond Asana" className="mb-8" />
               <p className="mb-4 leading-relaxed text-lg">
                 While asana (physical postures) is the most visible aspect of yoga in the modern world, it is only one piece of a vast and profound system of personal and spiritual development. Yoga philosophy provides the essential map and compass for this journey.
               </p>
