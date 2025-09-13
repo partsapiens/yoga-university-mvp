@@ -118,6 +118,13 @@ export default function RootLayout({
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         
+        {/* Google AdSense */}
+        <Script
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9900806169268429"
+          strategy="afterInteractive"
+          crossOrigin="anonymous"
+        />
+        
         {/* Google Analytics */}
         {process.env.NODE_ENV === 'production' && (
           <>
