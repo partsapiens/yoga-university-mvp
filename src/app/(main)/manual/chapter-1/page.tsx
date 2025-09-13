@@ -57,12 +57,12 @@ export default function Chapter1Page() {
               </p>
               
               <h3 className="text-lg font-medium text-blue-400 mt-6 mb-3">Your Commitment</h3>
-              <ul className="space-y-2 mb-4 ml-5">
-                <li><strong>Svādhyāya</strong> (self-study): explore and refine body, breath, and mind.</li>
-                <li><strong>Aparigraha</strong> (non-attachment): stay open to change and new directions.</li>
-                <li><strong>Tapas</strong> (discipline): challenge yourself physically and mentally.</li>
-                <li><strong>Satya</strong> & <strong>Ahimsā</strong> (truth & non-harming): offer feedback and interact with integrity.</li>
-                <li><strong>Brahmacharya</strong>, <strong>Śaucha</strong>, <strong>Santosha</strong> (moderation, clarity, contentment): maintain balance and care throughout training.</li>
+              <ul className="space-y-3 mb-4 ml-5">
+                <li><strong>Svādhyāya</strong> (self-study): This is the core of your training. It means dedicating time to not just the physical practice, but also to observing your thoughts, reactions, and progress without judgment. It’s about becoming a student of yourself.</li>
+                <li><strong>Aparigraha</strong> (non-attachment): You may enter this training with fixed ideas about what yoga is or what a teacher should be. Aparigraha invites you to hold those ideas lightly, making space for new perspectives and even a complete shift in your understanding.</li>
+                <li><strong>Tapas</strong> (discipline): This is the focused energy that will carry you through challenges. It’s the commitment to show up for early morning lectures, to practice even when you don’t feel like it, and to engage with difficult concepts. It builds the heat of transformation.</li>
+                <li><strong>Satya</strong> & <strong>Ahimsā</strong> (truth & non-harming): In a group setting, these principles are vital. Offer feedback to your peers from a place of compassion (Ahimsa) and honesty (Satya). Receive feedback with the same grace, knowing it is meant to help you grow.</li>
+                <li><strong>Brahmacharya</strong>, <strong>Śaucha</strong> & <strong>Santosha</strong> (moderation, clarity, contentment): Teacher training can be intense. Practice wise use of your energy (Brahmacharya), maintain clarity in your space and mind (Śaucha), and find moments of gratitude and contentment (Santosha) amidst the hard work.</li>
               </ul>
               
               <div 
@@ -74,6 +74,19 @@ export default function Chapter1Page() {
                 }}
               >
                 You'll get out of this journey exactly what you put into it.
+              </div>
+
+              <div className="mt-6">
+                <h4 className="text-md font-medium text-blue-300 mb-2">Case Study: The Journey of a New Trainee</h4>
+                <p className="text-sm text-gray-400 leading-relaxed">
+                  Meet Alex. Alex started teacher training with a strong asana practice but was nervous about public speaking and philosophy.
+                  <ul className="list-disc ml-5 mt-2 space-y-1">
+                    <li><strong>Weeks 1-3:</strong> Alex focused on <strong>Tapas</strong>, diligently attending every session. Journaling (a form of <strong>Svādhyāya</strong>) revealed a fear of "not knowing enough."</li>
+                    <li><strong>Weeks 4-6:</strong> During a practice teaching session, a peer gave Alex feedback that their cues were hard to follow (<strong>Satya</strong> delivered with <strong>Ahimsa</strong>). Instead of getting defensive, Alex practiced <strong>Aparigraha</strong>, letting go of the need to be perfect.</li>
+                    <li><strong>Weeks 7-9:</strong> Alex began finding joy in the philosophy lectures (<strong>Santosha</strong>) and learned to manage energy levels (<strong>Brahmacharya</strong>).</li>
+                  </ul>
+                  <p className="mt-2 text-sm text-gray-400 leading-relaxed">By the end of the program, Alex wasn't just a knowledgeable teacher, but a more self-aware and resilient individual. Your journey will be your own, with its own unique lessons.</p>
+                </p>
               </div>
             </ManualSection>
 
@@ -103,9 +116,27 @@ export default function Chapter1Page() {
             </ManualSection>
 
             <ManualSection id="journals" title="Journals & Quizzes">
-              <p className="leading-relaxed">
+              <p className="leading-relaxed mb-4">
                 Journaling every practice and lecture is part of svādhyāya and supports certification. Reflect on how your body felt, what you learned about sequencing and cueing, effective demonstrations, adjustments, theming, and at least one takeaway from each class.
               </p>
+              <div className="p-4 rounded-lg bg-gray-800 border border-gray-700">
+                <h4 className="font-semibold text-blue-300 mb-2">Example Journal Entry</h4>
+                <div className="text-sm text-gray-300 space-y-1">
+                  <p><strong>Date:</strong> 2023-10-26</p>
+                  <p><strong>Practice/Lecture:</strong> Vinyasa Flow with emphasis on Warrior II</p>
+                  <p><strong>Body:</strong> My hips felt tight today, especially on the right side in Warrior II. I noticed I was clenching my jaw.</p>
+                  <p><strong>Sequencing/Cueing:</strong> The cue "spin your back heel down as if stamping a seal" really helped me ground my back foot. I also noticed the teacher linked breath to every single movement, even small transitions.</p>
+                  <p><strong>Takeaway:</strong> I realized I hold tension in my jaw during difficult poses. My intention for tomorrow's practice is to consciously soften my face.</p>
+                </div>
+              </div>
+              <div className="mt-6">
+                <h4 className="font-semibold text-blue-300 mb-2">Reflection Prompts</h4>
+                <ul className="list-disc ml-5 space-y-2 text-gray-300">
+                  <li>What was one moment in practice or lecture today where you felt fully present?</li>
+                  <li>What is one belief you hold about yoga or teaching that you are willing to question during this training (Aparigraha)?</li>
+                  <li>How did you practice self-care and moderation (Brahmacharya, Santosha) today, even in a small way?</li>
+                </ul>
+              </div>
             </ManualSection>
 
             <ManualSection id="reading" title="Reading & Resources (Optional)">

@@ -1,0 +1,56 @@
+{
+  "title": "Yoga Flow University Teacher Training Manual",
+  "version": "v2",
+  "totalPages": 7,
+  "pages": [
+    {
+      "page_number": 1,
+      "title": "Welcome & Program Overview",
+      "chapter": "Getting Started",
+      "slug": "01-welcome-and-overview",
+      "summary": "An introduction to the YogaFlow Teacher Training program, including commitments, intentions, and how to set yourself up for success."
+    },
+    {
+      "page_number": 2,
+      "title": "Foundations of Yoga Practice",
+      "chapter": "Core Concepts",
+      "slug": "02-foundations-of-yoga-practice",
+      "summary": "Exploring the foundational principles of yoga, including breath awareness, alignment, personal practice, mindfulness, and safety."
+    },
+    {
+      "page_number": 3,
+      "title": "Integration & Sun Salutations",
+      "chapter": "Core Concepts",
+      "slug": "03-integration-and-sun-salutations",
+      "summary": "This chapter covers the Integration series and the foundational Sun Salutation A and B sequences."
+    },
+    {
+      "page_number": 4,
+      "title": "Assists, Props & Safety",
+      "chapter": "Teaching Skills",
+      "slug": "04-assists-props-and-safety",
+      "summary": "A guide to hands-on assists, intelligent prop use, and safety considerations including contraindications."
+    },
+    {
+      "page_number": 5,
+      "title": "Yoga Philosophy & Lifestyle",
+      "chapter": "Philosophy & Lifestyle",
+      "slug": "05-yoga-philosophy-and-lifestyle",
+      "summary": "An introduction to core yoga philosophy, including the Eight Limbs, Yamas, Niyamas, and key concepts from the Yoga Sutras."
+    },
+    {
+      "page_number": 6,
+      "title": "History & Philosophy",
+      "chapter": "Philosophy & Lifestyle",
+      "slug": "06-history-and-philosophy",
+      "summary": "A deeper dive into the history of yoga, key texts, lineages, and concepts like chakras, bandhas, and pranayama."
+    },
+    {
+      "page_number": 7,
+      "title": "Inclusive Teaching & Self-Paced Lectures",
+      "chapter": "Teaching Skills",
+      "slug": "07-inclusive-teaching-and-self-paced-lectures",
+      "summary": "A guide to inclusive, trauma-aware, and culturally respectful teaching for various populations and themes."
+    }
+  ]
+}

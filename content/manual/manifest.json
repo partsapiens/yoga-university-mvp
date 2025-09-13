@@ -1,0 +1,55 @@
+{
+  "title": "Yoga Flow University Teacher Training Manual",
+  "version": "1.0.0",
+  "chapters": [
+    {
+      "slug": "01-welcome-and-overview",
+      "title": "Welcome & Program Overview",
+      "group": "Getting Started",
+      "order": 1,
+      "summary": "An introduction to the YogaFlow Teacher Training program, including commitments, intentions, and how to set yourself up for success."
+    },
+    {
+      "slug": "02-foundations-of-yoga-practice",
+      "title": "Foundations of Yoga Practice",
+      "group": "Core Concepts",
+      "order": 2,
+      "summary": "Exploring the foundational principles of yoga, including breath awareness, alignment, personal practice, mindfulness, and safety."
+    },
+    {
+      "slug": "03-integration-and-sun-salutations",
+      "title": "Integration & Sun Salutations",
+      "group": "Core Concepts",
+      "order": 3,
+      "summary": "This chapter covers the Integration series and the foundational Sun Salutation A and B sequences."
+    },
+    {
+      "slug": "04-assists-props-and-safety",
+      "title": "Assists, Props & Safety",
+      "group": "Teaching Skills",
+      "order": 4,
+      "summary": "A guide to hands-on assists, intelligent prop use, and safety considerations including contraindications."
+    },
+    {
+      "slug": "05-yoga-philosophy-and-lifestyle",
+      "title": "Yoga Philosophy & Lifestyle",
+      "group": "Philosophy & Lifestyle",
+      "order": 5,
+      "summary": "An introduction to core yoga philosophy, including the Eight Limbs, Yamas, Niyamas, and key concepts from the Yoga Sutras."
+    },
+    {
+      "slug": "06-history-and-philosophy",
+      "title": "History & Philosophy",
+      "group": "Philosophy & Lifestyle",
+      "order": 6,
+      "summary": "A deeper dive into the history of yoga, key texts, lineages, and concepts like chakras, bandhas, and pranayama."
+    },
+    {
+      "slug": "07-inclusive-teaching-and-self-paced-lectures",
+      "title": "Inclusive Teaching & Self-Paced Lectures",
+      "group": "Teaching Skills",
+      "order": 7,
+      "summary": "A guide to inclusive, trauma-aware, and culturally respectful teaching for various populations and themes."
+    }
+  ]
+}
