@@ -3,6 +3,7 @@ import './globals.css'
 import { AuthProvider } from '@/components/auth/AuthProvider'
 import { QueryProvider } from '@/components/providers/QueryProvider'
 import { LanguageProvider } from '@/contexts/LanguageContext'
+import { ThemeProvider } from '@/contexts/ThemeContext'
 import { Toaster } from '@/components/ui/Toaster'
 import type { Metadata } from 'next'
 
@@ -155,16 +156,18 @@ export default function RootLayout({
         />
       </head>
       <body className="h-full bg-gray-50 dark:bg-gray-900 antialiased font-sans">
-        <LanguageProvider>
-          <QueryProvider>
-            <AuthProvider>
-              <div className="min-h-full">
-                {children}
-              </div>
-              <Toaster />
-            </AuthProvider>
-          </QueryProvider>
-        </LanguageProvider>
+        <ThemeProvider>
+          <LanguageProvider>
+            <QueryProvider>
+              <AuthProvider>
+                <div className="min-h-full">
+                  {children}
+                </div>
+                <Toaster />
+              </AuthProvider>
+            </QueryProvider>
+          </LanguageProvider>
+        </ThemeProvider>
       </body>
     </html>
   )
