@@ -67,16 +67,18 @@ describe('MeditationPage with Voice Control', () => {
     render(<MeditationPage />);
     
     expect(screen.getByText('Meditation Center')).toBeInTheDocument();
-    expect(screen.getByText('Your Practice')).toBeInTheDocument();
+    // Your Practice section has been removed
+    expect(screen.queryByText('Your Practice')).not.toBeInTheDocument();
     expect(screen.getByText('Guided Sessions')).toBeInTheDocument();
   });
 
   it('displays meditation session stats', () => {
     render(<MeditationPage />);
     
-    expect(screen.getByText('Day Streak')).toBeInTheDocument();
-    expect(screen.getByText('Total Sessions')).toBeInTheDocument();
-    expect(screen.getByText('Minutes Practiced')).toBeInTheDocument();
+    // Your Practice section has been removed, so these should no longer be present
+    expect(screen.queryByText('Day Streak')).not.toBeInTheDocument();
+    expect(screen.queryByText('Total Sessions')).not.toBeInTheDocument();
+    expect(screen.queryByText('Minutes Practiced')).not.toBeInTheDocument();
   });
 
   it('shows meditation session list', () => {
@@ -109,10 +111,11 @@ describe('MeditationPage with Voice Control', () => {
   it('shows session stats', () => {
     render(<MeditationPage />);
     
-    expect(screen.getByText('Your Practice')).toBeInTheDocument();
-    expect(screen.getByText('Day Streak')).toBeInTheDocument();
-    expect(screen.getByText('Total Sessions')).toBeInTheDocument();
-    expect(screen.getByText('Minutes Practiced')).toBeInTheDocument();
+    // Your Practice section has been removed, so these should no longer be present
+    expect(screen.queryByText('Your Practice')).not.toBeInTheDocument();
+    expect(screen.queryByText('Day Streak')).not.toBeInTheDocument();
+    expect(screen.queryByText('Total Sessions')).not.toBeInTheDocument();
+    expect(screen.queryByText('Minutes Practiced')).not.toBeInTheDocument();
   });
 
   it('handles custom timer input changes', () => {
