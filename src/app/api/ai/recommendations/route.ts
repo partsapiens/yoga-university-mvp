@@ -116,6 +116,12 @@ Return JSON array of recommendations with this format:
     const aiResponse = await generateCompletion(prompt, 'complex', 0.7);
     const filteredResponse = filterContent(aiResponse);
 
+    // Ensure we have a valid response before parsing
+    if (!filteredResponse || typeof filteredResponse !== 'string') {
+      console.warn('Invalid AI response, using fallback');
+      return generateFallbackRecommendations(context);
+    }
+
     // Parse JSON response
     const jsonMatch = filteredResponse.match(/\[[\s\S]*\]/);
     const jsonStr = jsonMatch ? jsonMatch[0] : filteredResponse;
