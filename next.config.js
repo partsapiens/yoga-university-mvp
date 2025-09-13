@@ -10,6 +10,21 @@ const nextConfig = {
   images: {
     unoptimized: true, // Disable image optimization for static export
   },
+  async redirects() {
+    return [
+      // Redirect legacy manual URLs to new React manual page
+      {
+        source: '/manual/index.html',
+        destination: '/manual',
+        permanent: true,
+      },
+      {
+        source: '/manual/index',
+        destination: '/manual',
+        permanent: true,
+      },
+    ]
+  },
 }
 
 export default nextConfig
