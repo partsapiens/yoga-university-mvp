@@ -114,6 +114,9 @@ export default function RootLayout({
         <meta name="theme-color" content="#2563eb" media="(prefers-color-scheme: light)" />
         <meta name="theme-color" content="#1e40af" media="(prefers-color-scheme: dark)" />
         
+        {/* Google AdSense Account Verification */}
+        <meta name="google-adsense-account" content="ca-pub-9900806169268429" />
+        
         {/* Preconnect to external domains for performance */}
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
