@@ -2,6 +2,7 @@
 
 import React from 'react';
 import { ManualLayout, ManualTOC, ManualSection, FigureCard } from '@/components/manual';
+import PoseVideo from '@/components/PoseLibrary/PoseVideo';
 
 export default function Chapter7Page() {
   const breadcrumbs = [
@@ -45,6 +46,7 @@ export default function Chapter7Page() {
           
           <article>
             <ManualSection id="teaching-voice" title="Finding Your Authentic Voice">
+              <PoseVideo url="https://youtu.be/vLBptI0ebac" title="Finding Your Authentic Voice" className="mb-8" />
               <p className="mb-4 leading-relaxed text-lg">
                 Your teaching voice is the unique alchemy of your knowledge, your personality, and your direct experience of yoga. It is not something to be manufactured, but rather something to be uncovered. Authenticity is your greatest asset as a teacher.
               </p>
