@@ -46,66 +46,67 @@ export default function Chapter4Page() {
             <ManualSection id="assists" title="The Art of Hands-on Assists">
               <PoseVideo url="https://youtu.be/wj44gx15U8I" title="The Art of Hands-on Assists" className="mb-8" />
               <p className="mb-4 leading-relaxed text-lg">
-                Physical assists are a powerful form of communication, offering guidance, support, and deeper awareness. However, they must be approached with immense skill, respect, and a clear understanding of consent. The goal of an assist is never to "fix" a pose, but to enhance the student's experience and empower their own discovery.
+                Physical assists, when offered with skill and sensitivity, are a powerful form of non-verbal communication. They can offer guidance, support, stability, and deeper proprioceptive awareness. However, they must be approached with immense skill, deep respect, and a trauma-informed understanding of consent. The primary goal of an assist is never to "fix" or "correct" a pose, but to enhance the student's own inner experience and empower their journey of self-discovery.
               </p>
-              <h3 className="text-xl font-semibold text-blue-300 mt-6 mb-4">The Philosophy of Assisting</h3>
-              <ul className="space-y-3 mb-4 ml-5 list-disc">
-                <li><strong>Intention is Everything</strong>: Before you touch, be clear on your intention. Is it to ground, to lengthen, to stabilize, or to deepen?</li>
-                <li><strong>Assist the Breath</strong>: A good assist supports the student's breath, it doesn't restrict it. Cue them to breathe as you assist.</li>
-                <li><strong>From the Ground Up</strong>: Ensure your own base is stable and grounded before attempting to assist someone else. Use your body weight intelligently.</li>
-                <li><strong>Less is More</strong>: Often, the most profound assists are the most subtle—a gentle hand on the sacrum, a light touch to guide the shoulders.</li>
+              <h3 className="text-xl font-semibold text-blue-300 mt-6 mb-4">The Philosophy and Ethics of Assisting</h3>
+              <ul className="space-y-4 mb-4 ml-5 list-disc">
+                <li><strong>Clarity of Intention</strong>: Before you even approach a student, be crystal clear on your intention. Is this assist to ground them? To guide their energy? To provide stabilizing support? To introduce a deeper sensation? Your touch will transmit your intention.</li>
+                <li><strong>Assist the Breath, Not Just the Body</strong>: A skillful assist supports and enhances the student's breath, it never restricts it. Watch their breath. Cue them to breathe as you assist. A restricted breath is a clear sign to back off.</li>
+                <li><strong>Stable Base, Grounded Presence</strong>: Ensure your own physical base is stable, grounded, and organized before attempting to assist someone else. Use your body weight intelligently and avoid pushing or pulling from an unstable position. Your calm, grounded presence is part of the assist.</li>
+                <li><strong>The Power of Subtlety (Less is More)</strong>: Often, the most profound and informative assists are the most subtle—a gentle, grounding hand on the sacrum in a forward fold, a light touch to guide the shoulder blades down the back. Resist the urge to over-assist.</li>
+                <li><strong>Always Ask Permission</strong>: This is non-negotiable. We will cover consent systems in detail, but the principle is simple: never touch a student without their clear and enthusiastic permission.</li>
               </ul>
                <div className="p-4 bg-gray-800/50 border border-gray-700 rounded-lg my-6">
                 <h4 className="font-semibold text-teal-300 mb-2">Class Example: Assisting in Triangle Pose (Trikonasana)</h4>
                 <p className="text-gray-300">
-                  Instead of pushing a student deeper, stand behind them and place one hand on their sacrum, encouraging length. Use your other hand to gently guide their top shoulder open, creating space in the chest. Cue: "Imagine your spine growing longer as you breathe in."
+                  Instead of pushing a student's torso deeper towards the floor, stand behind them. Place one hand on their sacrum, providing a grounding and stabilizing touch. Use your other hand to gently guide their top shoulder and ribcage skyward, creating space and rotation in the thoracic spine. Cue: "Imagine your spine growing longer out of your hips as you breathe in, and revolve your heart to the sky as you breathe out."
                 </p>
               </div>
             </ManualSection>
 
-            <ManualSection id="props" title="Using Props to Empower">
+            <ManualSection id="props" title="Using Props to Empower and Educate">
               <p className="mb-4 leading-relaxed">
-                Props are not crutches; they are tools of empowerment and exploration. They make poses more accessible, sustainable, and educational. As a teacher, it is your job to destigmatize prop use and champion it as a sign of intelligent practice.
+                Props are not crutches or indicators of weakness; they are sophisticated tools for empowerment, education, and exploration. They make poses more accessible, sustainable, restorative, and educational. As a teacher, it is your job to enthusiastically destigmatize prop use and champion it as a sign of a mature and intelligent practice.
               </p>
-              <h3 className="text-xl font-semibold text-blue-300 mt-6 mb-4">Creative & Effective Prop Use</h3>
+              <h3 className="text-xl font-semibold text-blue-300 mt-6 mb-4">Creative, Effective, and Purposeful Prop Use</h3>
               <ul className="space-y-4 mb-4 ml-5">
-                <li><strong>Blocks</strong>: Not just for height. Use them to activate muscles (squeezing between thighs), provide feedback (placing on the sacrum in a fold), or as a stable support for balancing poses.</li>
-                <li><strong>Straps</strong>: To explore binds without strain, to teach shoulder mobility (flossing), or to provide gentle traction in seated forward folds.</li>
-                <li><strong>Bolsters</strong>: The key to restorative yoga. Used to support the spine in backbends, elevate the hips, or provide comfort in Savasana.</li>
-                <li><strong>Blankets</strong>: For padding sensitive knees, adding height under the hips in seated poses, or providing warmth and weight for relaxation.</li>
+                <li><strong>Blocks (Bring the Floor to You)</strong>: Not just for height in standing poses. Use them to activate adductors (squeezing between thighs in bridge), provide proprioceptive feedback (placing on the sacrum), create space (between hands in Crow pose), or as a stable support for balancing poses like Half Moon.</li>
+                <li><strong>Straps (Extend Your Reach)</strong>: Essential for exploring binds without forcing or straining the shoulder joint. Excellent for teaching shoulder mobility ("flossing"), providing gentle, sustained traction in seated forward folds (Paschimottanasana), or binding in poses like Marichyasana C.</li>
+                <li><strong>Bolsters (The Tool of Surrender)</strong>: The cornerstone of restorative yoga. Used to support the natural curve of the spine in supported backbends, to elevate the hips for greater ease in seated postures, or to provide comfort and grounding in Savasana.</li>
+                <li><strong>Blankets (The Art of Comfort)</strong>: Invaluable for padding sensitive knees or wrists, adding incremental height under the hips in seated poses to allow the pelvis to tilt forward, or providing warmth and a comforting weight for deep relaxation in Savasana.</li>
               </ul>
             </ManualSection>
 
-            <ManualSection id="safety" title="Creating a Safe & Brave Space">
+            <ManualSection id="safety" title="Creating a Safe and Brave Space">
               <p className="mb-4 leading-relaxed">
-                Physical safety is the minimum requirement. Our goal is to create a <em>brave space</em>—an environment where students feel safe enough to be vulnerable, explore their limits wisely, and connect with their authentic selves.
+                Physical safety is the absolute, non-negotiable minimum requirement. Our higher goal is to cultivate a <em>brave space</em>—a carefully held environment where students feel safe enough to be vulnerable, to explore their perceived limits wisely, and to connect with their authentic selves without fear of judgment.
               </p>
-              <h3 className="text-xl font-semibold text-blue-300 mt-6 mb-4">The Foundation of Trust: Consent</h3>
-              <p className="mb-4">Consent is paramount. It must be explicit, enthusiastic, and can be revoked at any time.</p>
-              <ul className="space-y-2 mb-4 ml-5 list-disc">
-                <li><strong>Consent Systems</strong>: At the start of class, clearly explain your system. This could be a "consent coin" (one side for yes, one for no), a simple thumbs-up, or a verbal opt-in.</li>
-                <li><strong>Ongoing Dialogue</strong>: Even with initial consent, check in with quiet questions like, "How does this feel?" or "Is this pressure okay?"</li>
-                <li><strong>Respecting "No"</strong>: A "no" is always honored immediately and without question. Never make a student feel they need to justify their boundary.</li>
+              <h3 className="text-xl font-semibold text-blue-300 mt-6 mb-4">The Unshakeable Foundation of Trust: Consent</h3>
+              <p className="mb-4">Consent for hands-on assists is paramount. It must be explicit, enthusiastic, freely given, and can be revoked at any time for any reason. Silence or ambivalence is not consent.</p>
+              <ul className="space-y-3 mb-4 ml-5 list-disc">
+                <li><strong>Clear and Simple Consent Systems</strong>: At the beginning of every class, clearly and neutrally explain your system. This could be a "consent coin" or card (one side for yes, one for no), a simple thumbs-up/thumbs-down, or a clear verbal opt-in.</li>
+                <li><strong>Consent is an Ongoing Dialogue</strong>: Even with initial consent, the dialogue continues. Before a deeper assist, check in with quiet, respectful questions like, "How does this feel?" or "Is this pressure okay for you?" Be prepared to listen and adapt.</li>
+                <li><strong>Respecting "No" Gracefully</strong>: A "no" (verbal or non-verbal) is always honored immediately, respectfully, and without question. Never make a student feel they need to justify their boundary. A teacher who respects a "no" is a teacher who can be trusted.</li>
               </ul>
                <div className="p-4 bg-blue-900/20 border-l-4 border-blue-400 rounded-r-lg my-6">
-                <h4 className="font-semibold text-blue-300 mb-2">Trauma-Informed Approach</h4>
+                <h4 className="font-semibold text-blue-300 mb-2">A Trauma-Informed Teaching Approach</h4>
                 <p className="text-blue-200/90">
-                  Recognize that trauma is prevalent. Use invitational language ("I invite you to...", "If it feels right..."), avoid surprising or forceful assists, and always give students agency over their own bodies and practice.
+                  Recognize that trauma is prevalent and often invisible. A trauma-informed approach benefits all students. This includes: using invitational language ("I invite you to...", "An option here is..."), avoiding surprising or forceful assists (especially from behind), giving students complete agency over their bodies, and offering choices whenever possible.
                 </p>
               </div>
             </ManualSection>
 
-            <ManualSection id="contraindications" title="Common Contraindications">
+            <ManualSection id="contraindications" title="Common Contraindications & Considerations">
               <p className="mb-4 leading-relaxed">
-                A key part of "do no harm" is understanding when a pose might be inappropriate for a student. While you are not a medical professional, having a working knowledge of common contraindications is essential.
+                A key part of our commitment to "do no harm" (*ahimsa*) is understanding when a particular pose or practice might be inappropriate for a student's condition. While you are not a medical professional and should never diagnose, having a working knowledge of common contraindications is an essential part of responsible teaching.
               </p>
-              <ul className="space-y-3 mb-4 ml-5">
-                <li><strong>High Blood Pressure</strong>: Be cautious with inversions where the head is below the heart for extended periods. Offer alternatives like a gentle forward fold.</li>
-                <li><strong>Pregnancy</strong>: Avoid deep, closed twists, prone positions, and intense core work. Emphasize stability and space for the belly.</li>
-                <li><strong>Disc Issues / Sciatica</strong>: Be mindful of deep forward folds and twists. Prioritize a long spine and often, bent knees.</li>
-                <li><strong>Wrist or Shoulder Injuries</strong>: Offer modifications for weight-bearing poses like Plank or Downward Dog (e.g., fists instead of flat palms, or using forearms).</li>
+              <ul className="space-y-4 mb-4 ml-5">
+                <li><strong>High Blood Pressure (Hypertension)</strong>: Be cautious with sustained inversions where the head is below the heart (e.g., Headstand, Shoulderstand). Offer alternatives like Legs-Up-the-Wall (Viparita Karani) or a supported bridge pose. Breath retention techniques are generally discouraged.</li>
+                <li><strong>Pregnancy</strong>: In the first trimester, the focus is on rest. Later, avoid deep, closed twists; prone positions (lying on the belly); and intense, rectus-abdominus-focused core work. Emphasize pelvic stability, side-body length, and creating space for the belly.</li>
+                <li><strong>Disc Issues / Sciatica</strong>: Be highly mindful of deep, unsupported forward folds and intense twisting motions. Prioritize a long, neutral spine and often, bent knees in forward folds. Strengthening the core and glutes is often beneficial.</li>
+                <li><strong>Wrist or Shoulder Injuries</strong>: Offer modifications for weight-bearing poses. For wrists, suggest fists or forearm variations for Plank and Downward Dog. For shoulders, ensure proper alignment, offer narrower or wider hand positions, and avoid deep binds that cause pain.</li>
               </ul>
-              <p className="mt-4 font-semibold text-yellow-300">The Golden Rule: When in doubt, leave it out. Encourage students to listen to their body and their doctor's advice.</p>
+              <p className="mt-4 font-semibold text-yellow-300"><strong>The Golden Rule:</strong> When in doubt, leave it out. Always empower your students to listen to their body and their healthcare provider's advice above your own cues.</li>
             </ManualSection>
           </article>
         </div>
