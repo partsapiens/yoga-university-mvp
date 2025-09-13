@@ -1,8 +1,9 @@
 "use client";
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import Link from 'next/link';
 import { UserRole } from '@/types';
 import { useLanguage } from '@/contexts/LanguageContext';
+import { useTheme } from '@/contexts/ThemeContext';
 
 interface NavigationProps {
   userRole?: UserRole;
@@ -10,20 +11,10 @@ interface NavigationProps {
 
 export const Navigation = ({ userRole }: NavigationProps) => {
   const { language, setLanguage, t } = useLanguage();
+  const { theme, toggleTheme } = useTheme();
   const [mobileOpen, setMobileOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
-  const [darkMode, setDarkMode] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
-
-  // Load preferences from localStorage
-  useEffect(() => {
-    const savedDarkMode = localStorage.getItem('darkMode') === 'true';
-    setDarkMode(savedDarkMode);
-    
-    if (savedDarkMode) {
-      document.documentElement.classList.add('dark');
-    }
-  }, []);
 
   const navItems = [
     { href: '/dashboard', label: t('nav.dashboard') },
@@ -34,18 +25,6 @@ export const Navigation = ({ userRole }: NavigationProps) => {
     { href: '/about', label: t('nav.about') },
     { href: '/pricing', label: t('nav.pricing') },
   ];
-
-  const toggleDarkMode = () => {
-    const newMode = !darkMode;
-    setDarkMode(newMode);
-    localStorage.setItem('darkMode', newMode.toString());
-    
-    if (newMode) {
-      document.documentElement.classList.add('dark');
-    } else {
-      document.documentElement.classList.remove('dark');
-    }
-  };
 
   const handleLanguageChange = (newLang: string) => {
     setLanguage(newLang as 'en' | 'de' | 'ro' | 'ru');
@@ -102,11 +81,11 @@ export const Navigation = ({ userRole }: NavigationProps) => {
 
             {/* Dark Mode Toggle */}
             <button
-              onClick={toggleDarkMode}
+              onClick={toggleTheme}
               className="p-2 text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors rounded-lg"
               aria-label="Toggle Dark Mode"
             >
-              {darkMode ? (
+              {theme === 'dark' ? (
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
                 </svg>
