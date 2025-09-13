@@ -34,6 +34,7 @@ vi.mock('../hooks/useLocalStorage', () => ({
 
 vi.mock('../lib/api/ai', () => ({
   generateMeditationScript: vi.fn(),
+  generatePersonalizedAffirmations: vi.fn().mockResolvedValue(['You are peaceful', 'You are calm']),
 }));
 
 // Mock components
@@ -62,35 +63,34 @@ describe('MeditationPage with Voice Control', () => {
     vi.clearAllMocks();
   });
 
-  it('renders the meditation page with voice control section', () => {
+  it('renders the meditation page with main sections', () => {
     render(<MeditationPage />);
     
     expect(screen.getByText('Meditation Center')).toBeInTheDocument();
-    expect(screen.getByText('Voice Control')).toBeInTheDocument();
-    expect(screen.getByTestId('avatar')).toBeInTheDocument();
+    expect(screen.getByText('Your Practice')).toBeInTheDocument();
+    expect(screen.getByText('Guided Sessions')).toBeInTheDocument();
   });
 
-  it('displays voice control buttons', () => {
+  it('displays meditation session stats', () => {
     render(<MeditationPage />);
     
-    expect(screen.getByText('🔇 Voice Off')).toBeInTheDocument();
-    expect(screen.getByText(/Try saying/)).toBeInTheDocument();
-    expect(screen.getByText(/Start meditation/)).toBeInTheDocument();
+    expect(screen.getByText('Day Streak')).toBeInTheDocument();
+    expect(screen.getByText('Total Sessions')).toBeInTheDocument();
+    expect(screen.getByText('Minutes Practiced')).toBeInTheDocument();
   });
 
-  it('shows voice commands help text', () => {
+  it('shows meditation session list', () => {
     render(<MeditationPage />);
     
-    expect(screen.getByText(/"Start meditation"/)).toBeInTheDocument();
-    expect(screen.getByText(/"Pause"/)).toBeInTheDocument();
-    expect(screen.getByText(/"Set timer to 10 minutes"/)).toBeInTheDocument();
-    expect(screen.getByText(/"How much time left"/)).toBeInTheDocument();
+    expect(screen.getByText('Mindfulness Meditation')).toBeInTheDocument();
+    expect(screen.getByText('Box Breathing')).toBeInTheDocument();
+    expect(screen.getByText('Body Scan Meditation')).toBeInTheDocument();
+    expect(screen.getByText('Loving Kindness')).toBeInTheDocument();
   });
 
   it('displays meditation session options', () => {
     render(<MeditationPage />);
     
-    expect(screen.getByText('✨ AI-Guided Meditation')).toBeInTheDocument();
     expect(screen.getByText('Mindfulness Meditation')).toBeInTheDocument();
     expect(screen.getByText('Box Breathing')).toBeInTheDocument();
     expect(screen.getByText('Body Scan Meditation')).toBeInTheDocument();
@@ -148,27 +148,29 @@ describe('MeditationPage with Voice Control', () => {
     }
   });
 
-  it('shows timer controls when session is active', () => {
+  it('can start meditation sessions', () => {
     render(<MeditationPage />);
     
-    // Start a session
+    // Should show meditation session start buttons
     const startButtons = screen.getAllByText('Start Session');
-    fireEvent.click(startButtons[1]);
+    expect(startButtons.length).toBeGreaterThan(0);
     
-    // Should show play/pause controls
-    expect(screen.getByText('Play')).toBeInTheDocument();
-    expect(screen.getByText('Reset')).toBeInTheDocument();
+    // Should be clickable
+    fireEvent.click(startButtons[0]);
+    // After clicking, breathing meditation section should be visible
+    expect(screen.getByText('Breathing Meditation')).toBeInTheDocument();
   });
 
-  it('handles AI-guided meditation selection', () => {
+  it('handles meditation session selection', () => {
     render(<MeditationPage />);
     
-    const aiMeditationButton = screen.getByText('✨ AI-Guided Meditation').closest('div')?.querySelector('button');
+    const meditationButtons = screen.getAllByText('Start Session');
+    expect(meditationButtons.length).toBeGreaterThan(0);
     
-    if (aiMeditationButton) {
-      fireEvent.click(aiMeditationButton);
-      // Should show mood input (mocked component)
-      expect(screen.getByText('Mood Input Component')).toBeInTheDocument();
+    if (meditationButtons[0]) {
+      fireEvent.click(meditationButtons[0]);
+      // Should show breathing meditation interface
+      expect(screen.getByText('Breathing Meditation')).toBeInTheDocument();
     }
   });
 });

@@ -4,7 +4,7 @@ import {
   cosineSimilarity, 
   semanticSearch, 
   createPoseSearchText,
-  createManualSearchText,
+  createContentSearchText,
   hybridSearch 
 } from '@/lib/embeddings';
 
@@ -77,7 +77,7 @@ describe('Semantic Search Utilities', () => {
     });
   });
 
-  describe('createManualSearchText', () => {
+  describe('createContentSearchText', () => {
     it('should create searchable text from manual data', () => {
       const item = {
         title: 'Breathing Basics',
@@ -86,7 +86,7 @@ describe('Semantic Search Utilities', () => {
         group: 'Pranayama'
       };
 
-      const searchText = createManualSearchText(item);
+      const searchText = createContentSearchText(item);
       expect(searchText).toContain('breathing basics');
       expect(searchText).toContain('fundamental breathing');
       expect(searchText).toContain('essential for yoga');
