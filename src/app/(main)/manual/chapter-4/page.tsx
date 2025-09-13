@@ -2,6 +2,7 @@
 
 import React from 'react';
 import { ManualLayout, ManualTOC, ManualSection, FigureCard } from '@/components/manual';
+import PoseVideo from '@/components/PoseLibrary/PoseVideo';
 
 export default function Chapter4Page() {
   const breadcrumbs = [
@@ -43,6 +44,7 @@ export default function Chapter4Page() {
           
           <article>
             <ManualSection id="assists" title="The Art of Hands-on Assists">
+              <PoseVideo url="https://youtu.be/wj44gx15U8I" title="The Art of Hands-on Assists" className="mb-8" />
               <p className="mb-4 leading-relaxed text-lg">
                 Physical assists are a powerful form of communication, offering guidance, support, and deeper awareness. However, they must be approached with immense skill, respect, and a clear understanding of consent. The goal of an assist is never to "fix" a pose, but to enhance the student's experience and empower their own discovery.
               </p>
