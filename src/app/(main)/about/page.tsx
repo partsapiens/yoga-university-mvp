@@ -222,7 +222,7 @@ export default function AboutPage() {
                     <Star key={i} className="w-5 h-5 text-yellow-400 fill-current" />
                   ))}
                 </div>
-                <p className="text-gray-700 dark:text-gray-300 mb-4 italic">"{testimonial.text}"</p>
+                <p className="text-gray-700 dark:text-gray-300 mb-4 italic">&ldquo;{testimonial.text}&rdquo;</p>
                 <div>
                   <p className="font-semibold text-gray-900 dark:text-white">{testimonial.name}</p>
                   <p className="text-sm text-gray-600 dark:text-gray-400">{testimonial.role}</p>
@@ -239,7 +239,7 @@ export default function AboutPage() {
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-4">Accreditations & Partnerships</h2>
             <p className="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
-              We're proud to be recognized by leading yoga organizations worldwide.
+              We&apos;re proud to be recognized by leading yoga organizations worldwide.
             </p>
           </div>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8 items-center">

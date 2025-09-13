@@ -1,3 +1,4 @@
+import React from 'react';
 import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import SearchBar from '../components/PoseLibrary/SearchBar';
@@ -28,7 +29,7 @@ describe('SearchBar', () => {
   });
 
   it('shows filtered suggestions when typing', async () => {
-    render(<SearchBar value="dog" onChange={mockOnChange} suggestions={mockSuggestions} />);
+    render(<SearchBar value="" onChange={mockOnChange} suggestions={mockSuggestions} />);
     
     const input = screen.getByRole('textbox');
     fireEvent.change(input, { target: { value: 'dog' } });
@@ -39,7 +40,7 @@ describe('SearchBar', () => {
   });
 
   it('filters suggestions based on input', async () => {
-    render(<SearchBar value="war" onChange={mockOnChange} suggestions={mockSuggestions} />);
+    render(<SearchBar value="" onChange={mockOnChange} suggestions={mockSuggestions} />);
     
     const input = screen.getByRole('textbox');
     fireEvent.change(input, { target: { value: 'war' } });
@@ -51,7 +52,7 @@ describe('SearchBar', () => {
   });
 
   it('selects suggestion when clicked', async () => {
-    render(<SearchBar value="dog" onChange={mockOnChange} suggestions={mockSuggestions} />);
+    render(<SearchBar value="" onChange={mockOnChange} suggestions={mockSuggestions} />);
     
     const input = screen.getByRole('textbox');
     fireEvent.change(input, { target: { value: 'dog' } });
@@ -65,7 +66,7 @@ describe('SearchBar', () => {
   });
 
   it('hides suggestions on blur', async () => {
-    render(<SearchBar value="dog" onChange={mockOnChange} suggestions={mockSuggestions} />);
+    render(<SearchBar value="" onChange={mockOnChange} suggestions={mockSuggestions} />);
     
     const input = screen.getByRole('textbox');
     fireEvent.change(input, { target: { value: 'dog' } });
@@ -83,7 +84,7 @@ describe('SearchBar', () => {
 
   it('limits suggestions to 5 items', async () => {
     const manySuggestions = Array.from({ length: 10 }, (_, i) => `Pose ${i + 1}`);
-    render(<SearchBar value="pose" onChange={mockOnChange} suggestions={manySuggestions} />);
+    render(<SearchBar value="" onChange={mockOnChange} suggestions={manySuggestions} />);
     
     const input = screen.getByRole('textbox');
     fireEvent.change(input, { target: { value: 'pose' } });

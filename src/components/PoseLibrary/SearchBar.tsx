@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 interface SearchBarProps {
   value: string;
@@ -9,6 +9,19 @@ interface SearchBarProps {
 export default function SearchBar({ value, onChange, suggestions = [] }: SearchBarProps) {
   const [showSuggestions, setShowSuggestions] = useState(false);
   const [filteredSuggestions, setFilteredSuggestions] = useState<string[]>([]);
+
+  // Update filtered suggestions when value or suggestions change
+  useEffect(() => {
+    if (value && suggestions.length > 0) {
+      const filtered = suggestions.filter(suggestion =>
+        suggestion.toLowerCase().includes(value.toLowerCase())
+      ).slice(0, 5); // Limit to 5 suggestions
+      setFilteredSuggestions(filtered);
+      // Don't auto-show suggestions unless user is actively typing
+    } else {
+      setFilteredSuggestions([]);
+    }
+  }, [value, suggestions]);
 
   const handleInputChange = (inputValue: string) => {
     onChange(inputValue);

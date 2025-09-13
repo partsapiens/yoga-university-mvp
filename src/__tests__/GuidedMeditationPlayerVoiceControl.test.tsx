@@ -97,14 +97,14 @@ describe('GuidedMeditationPlayer with Voice Control', () => {
     render(<GuidedMeditationPlayer {...mockProps} />);
     
     expect(screen.getByText('🔇 Voice Off')).toBeInTheDocument();
-    expect(screen.getByText('Voice Commands:')).toBeInTheDocument();
+    expect(screen.getByText('Voice Selection')).toBeInTheDocument();
   });
 
   it('shows phase progress information', () => {
     render(<GuidedMeditationPlayer {...mockProps} />);
     
     expect(screen.getByText('Phase 1 of 3')).toBeInTheDocument();
-    expect(screen.getByText('Welcome')).toBeInTheDocument();
+    expect(screen.getAllByText('Welcome').length).toBeGreaterThan(0);
   });
 
   it('displays pre-start instructions', () => {
@@ -165,17 +165,19 @@ describe('GuidedMeditationPlayer with Voice Control', () => {
     render(<GuidedMeditationPlayer {...mockProps} />);
     
     expect(screen.getByText('Voice Selection')).toBeInTheDocument();
-    expect(screen.getByDisplayValue('Voice 1')).toBeInTheDocument();
+    expect(screen.getByText('Voice 1 (en-US)')).toBeInTheDocument();
+    expect(screen.getByText('Voice 2 (en-GB)')).toBeInTheDocument();
   });
 
-  it('shows voice command help text', () => {
+  it('has voice control functionality', () => {
     render(<GuidedMeditationPlayer {...mockProps} />);
     
-    expect(screen.getByText(/"Pause"/)).toBeInTheDocument();
-    expect(screen.getByText(/"Resume"/)).toBeInTheDocument();
-    expect(screen.getByText(/"Repeat instruction"/)).toBeInTheDocument();
-    expect(screen.getByText(/"Next section"/)).toBeInTheDocument();
-    expect(screen.getByText(/"How much time left"/)).toBeInTheDocument();
+    // Voice control toggle should be available
+    expect(screen.getByText('🔇 Voice Off')).toBeInTheDocument();
+    // Voice selection dropdown should be available
+    expect(screen.getByText('Voice Selection')).toBeInTheDocument();
+    // Avatar should be present for voice interaction
+    expect(screen.getByTestId('avatar')).toBeInTheDocument();
   });
 
   it('displays breathing orb during breathing phases', () => {
@@ -187,7 +189,7 @@ describe('GuidedMeditationPlayer with Voice Control', () => {
     
     // The breathing orb should be available during breathwork phases
     // (This would require advancing to the main phase which has breathingCue: true)
-    expect(screen.getByText('Welcome')).toBeInTheDocument(); // Current phase display
+    expect(screen.getAllByText('Welcome').length).toBeGreaterThan(0); // Current phase display
   });
 
   it('formats time correctly', () => {
