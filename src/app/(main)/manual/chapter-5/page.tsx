@@ -97,7 +97,7 @@ export default function Chapter5Page() {
               </ul>
 
                <h3 className="text-lg font-medium text-blue-400 mt-6 mb-3">The Other Limbs</h3>
-                <ol className="space-y-3 mb-4 ml-5 list-decimal" start="3">
+                <ol className="space-y-3 mb-4 ml-5 list-decimal" start={3}>
                     <li><strong>Asana</strong>: Physical postures that prepare the body for meditation</li>
                     <li><strong>Pranayama</strong>: Breath control practices that regulate life force energy</li>
                     <li><strong>Pratyahara</strong>: Withdrawal of the senses from external distractions</li>
