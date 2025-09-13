@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { ManualLayout, ManualTOC, ManualSection } from '@/components/manual';
+import { ManualLayout, ManualTOC, ManualSection, FigureCard } from '@/components/manual';
 
 export default function Chapter4Page() {
   const breadcrumbs = [
@@ -10,10 +10,10 @@ export default function Chapter4Page() {
   ];
 
   const tocItems = [
-    { id: 'assists', title: 'Hands-on Assists' },
-    { id: 'props', title: 'Props & Modifications' },
-    { id: 'safety', title: 'Safety & Consent' },
-    { id: 'contraindications', title: 'Contraindications' }
+    { id: 'assists', title: 'The Art of Hands-on Assists' },
+    { id: 'props', title: 'Using Props to Empower' },
+    { id: 'safety', title: 'Creating a Safe & Brave Space' },
+    { id: 'contraindications', title: 'Common Contraindications' }
   ];
 
   const chapterNavigation = {
@@ -31,86 +31,85 @@ export default function Chapter4Page() {
 
   return (
     <ManualLayout 
-      title="Chapter 4 — Assists, Props & Safety" 
+      title="Chapter 4 — The Art of Teaching: Assists, Props & Safety"
       breadcrumbs={breadcrumbs}
     >
       <div className="max-w-7xl mx-auto">
-        <div className="grid grid-cols-1 lg:grid-cols-[280px_1fr] gap-6">
+        <div className="grid grid-cols-1 lg:grid-cols-[280px_1fr] gap-8">
           <ManualTOC 
             items={tocItems} 
             chapterNavigation={chapterNavigation}
           />
           
           <article>
-            <ManualSection id="assists" title="Hands-on Assists">
-              <p className="mb-4 leading-relaxed">
-                Physical assists in yoga can be powerful tools for helping students deepen their practice, but they require skill, awareness, and consent to be effective and safe.
+            <ManualSection id="assists" title="The Art of Hands-on Assists">
+              <p className="mb-4 leading-relaxed text-lg">
+                Physical assists are a powerful form of communication, offering guidance, support, and deeper awareness. However, they must be approached with immense skill, respect, and a clear understanding of consent. The goal of an assist is never to "fix" a pose, but to enhance the student's experience and empower their own discovery.
               </p>
-              <h3 className="text-lg font-medium text-blue-400 mt-6 mb-3">Principles of Safe Assisting</h3>
-              <ul className="space-y-2 mb-4 ml-5">
-                <li><strong>Always Ask Permission</strong>: Verbal or non-verbal consent systems before any touch.</li>
-                <li><strong>Start Light</strong>: Begin with minimal pressure and gradually increase if appropriate.</li>
-                <li><strong>Wide Base</strong>: Maintain your own stable foundation when assisting.</li>
-                <li><strong>Follow Breath</strong>: Assist on exhalations, avoid forcing during inhalations.</li>
-                <li><strong>Less is More</strong>: Small, focused assists are often more effective than dramatic adjustments.</li>
+              <h3 className="text-xl font-semibold text-blue-300 mt-6 mb-4">The Philosophy of Assisting</h3>
+              <ul className="space-y-3 mb-4 ml-5 list-disc">
+                <li><strong>Intention is Everything</strong>: Before you touch, be clear on your intention. Is it to ground, to lengthen, to stabilize, or to deepen?</li>
+                <li><strong>Assist the Breath</strong>: A good assist supports the student's breath, it doesn't restrict it. Cue them to breathe as you assist.</li>
+                <li><strong>From the Ground Up</strong>: Ensure your own base is stable and grounded before attempting to assist someone else. Use your body weight intelligently.</li>
+                <li><strong>Less is More</strong>: Often, the most profound assists are the most subtle—a gentle hand on the sacrum, a light touch to guide the shoulders.</li>
               </ul>
-            </ManualSection>
-
-            <ManualSection id="props" title="Props & Modifications">
-              <p className="mb-4 leading-relaxed">
-                Props are tools that make yoga accessible to every body. They can provide support, create stability, and help students find ease in challenging poses.
-              </p>
-              <h3 className="text-lg font-medium text-blue-400 mt-6 mb-3">Essential Props</h3>
-              <ul className="space-y-2 mb-4 ml-5">
-                <li><strong>Blocks</strong>: Bring the floor closer, support forward folds, create stability.</li>
-                <li><strong>Straps</strong>: Extend reach, support binding poses, assist stretches.</li>
-                <li><strong>Bolsters</strong>: Support restorative poses, provide comfort in seated positions.</li>
-                <li><strong>Blankets</strong>: Warmth, weight, support, and comfort.</li>
-                <li><strong>Walls</strong>: The most versatile prop available in almost every space.</li>
-              </ul>
-            </ManualSection>
-
-            <ManualSection id="safety" title="Safety & Consent">
-              <p className="mb-4 leading-relaxed">
-                Creating a safe container for practice involves both physical and emotional safety. This includes clear communication about touch, respect for boundaries, and trauma-informed teaching approaches.
-              </p>
-              <h3 className="text-lg font-medium text-blue-400 mt-6 mb-3">Consent Practices</h3>
-              <ul className="space-y-2 mb-4 ml-5">
-                <li><strong>Explicit Permission</strong>: Always ask before providing hands-on assists.</li>
-                <li><strong>Opt-in/Opt-out Systems</strong>: Use cards, hand signals, or verbal cues.</li>
-                <li><strong>Check-ins</strong>: Regularly ask "How does this feel?" during assists.</li>
-                <li><strong>Respect No</strong>: A "no" to touch is always honored without question or justification needed.</li>
-              </ul>
-            </ManualSection>
-
-            <ManualSection id="contraindications" title="Contraindications">
-              <p className="mb-4 leading-relaxed">
-                Understanding when certain poses or practices may not be appropriate is essential for safe teaching. This includes both temporary and permanent contraindications.
-              </p>
-              <h3 className="text-lg font-medium text-blue-400 mt-6 mb-3">Common Considerations</h3>
-              <ul className="space-y-2 mb-4 ml-5">
-                <li><strong>Pregnancy</strong>: Avoid deep twists, backbends, and prone positions.</li>
-                <li><strong>High Blood Pressure</strong>: Limit inversions and avoid long holds in challenging poses.</li>
-                <li><strong>Neck Injuries</strong>: Avoid putting weight on neck, use props for support.</li>
-                <li><strong>Recent Surgery</strong>: Follow medical guidelines and avoid relevant movement patterns.</li>
-                <li><strong>Acute Injuries</strong>: When in doubt, suggest modifications or alternatives.</li>
-              </ul>
-              <div 
-                className="rounded-lg p-4 my-4"
-                style={{
-                  background: '#141921',
-                  borderLeft: '4px solid #6ea8fe',
-                  color: '#d8e5ff'
-                }}
-              >
-                Remember: You are not a medical professional. When in doubt, suggest students consult with their healthcare provider.
+               <div className="p-4 bg-gray-800/50 border border-gray-700 rounded-lg my-6">
+                <h4 className="font-semibold text-teal-300 mb-2">Class Example: Assisting in Triangle Pose (Trikonasana)</h4>
+                <p className="text-gray-300">
+                  Instead of pushing a student deeper, stand behind them and place one hand on their sacrum, encouraging length. Use your other hand to gently guide their top shoulder open, creating space in the chest. Cue: "Imagine your spine growing longer as you breathe in."
+                </p>
               </div>
+            </ManualSection>
+
+            <ManualSection id="props" title="Using Props to Empower">
+              <p className="mb-4 leading-relaxed">
+                Props are not crutches; they are tools of empowerment and exploration. They make poses more accessible, sustainable, and educational. As a teacher, it is your job to destigmatize prop use and champion it as a sign of intelligent practice.
+              </p>
+              <h3 className="text-xl font-semibold text-blue-300 mt-6 mb-4">Creative & Effective Prop Use</h3>
+              <ul className="space-y-4 mb-4 ml-5">
+                <li><strong>Blocks</strong>: Not just for height. Use them to activate muscles (squeezing between thighs), provide feedback (placing on the sacrum in a fold), or as a stable support for balancing poses.</li>
+                <li><strong>Straps</strong>: To explore binds without strain, to teach shoulder mobility (flossing), or to provide gentle traction in seated forward folds.</li>
+                <li><strong>Bolsters</strong>: The key to restorative yoga. Used to support the spine in backbends, elevate the hips, or provide comfort in Savasana.</li>
+                <li><strong>Blankets</strong>: For padding sensitive knees, adding height under the hips in seated poses, or providing warmth and weight for relaxation.</li>
+              </ul>
+            </ManualSection>
+
+            <ManualSection id="safety" title="Creating a Safe & Brave Space">
+              <p className="mb-4 leading-relaxed">
+                Physical safety is the minimum requirement. Our goal is to create a <em>brave space</em>—an environment where students feel safe enough to be vulnerable, explore their limits wisely, and connect with their authentic selves.
+              </p>
+              <h3 className="text-xl font-semibold text-blue-300 mt-6 mb-4">The Foundation of Trust: Consent</h3>
+              <p className="mb-4">Consent is paramount. It must be explicit, enthusiastic, and can be revoked at any time.</p>
+              <ul className="space-y-2 mb-4 ml-5 list-disc">
+                <li><strong>Consent Systems</strong>: At the start of class, clearly explain your system. This could be a "consent coin" (one side for yes, one for no), a simple thumbs-up, or a verbal opt-in.</li>
+                <li><strong>Ongoing Dialogue</strong>: Even with initial consent, check in with quiet questions like, "How does this feel?" or "Is this pressure okay?"</li>
+                <li><strong>Respecting "No"</strong>: A "no" is always honored immediately and without question. Never make a student feel they need to justify their boundary.</li>
+              </ul>
+               <div className="p-4 bg-blue-900/20 border-l-4 border-blue-400 rounded-r-lg my-6">
+                <h4 className="font-semibold text-blue-300 mb-2">Trauma-Informed Approach</h4>
+                <p className="text-blue-200/90">
+                  Recognize that trauma is prevalent. Use invitational language ("I invite you to...", "If it feels right..."), avoid surprising or forceful assists, and always give students agency over their own bodies and practice.
+                </p>
+              </div>
+            </ManualSection>
+
+            <ManualSection id="contraindications" title="Common Contraindications">
+              <p className="mb-4 leading-relaxed">
+                A key part of "do no harm" is understanding when a pose might be inappropriate for a student. While you are not a medical professional, having a working knowledge of common contraindications is essential.
+              </p>
+              <ul className="space-y-3 mb-4 ml-5">
+                <li><strong>High Blood Pressure</strong>: Be cautious with inversions where the head is below the heart for extended periods. Offer alternatives like a gentle forward fold.</li>
+                <li><strong>Pregnancy</strong>: Avoid deep, closed twists, prone positions, and intense core work. Emphasize stability and space for the belly.</li>
+                <li><strong>Disc Issues / Sciatica</strong>: Be mindful of deep forward folds and twists. Prioritize a long spine and often, bent knees.</li>
+                <li><strong>Wrist or Shoulder Injuries</strong>: Offer modifications for weight-bearing poses like Plank or Downward Dog (e.g., fists instead of flat palms, or using forearms).</li>
+              </ul>
+              <p className="mt-4 font-semibold text-yellow-300">The Golden Rule: When in doubt, leave it out. Encourage students to listen to their body and their doctor's advice.</p>
             </ManualSection>
           </article>
         </div>
         
-        <footer className="mt-12 pt-6 border-t border-gray-600 text-gray-400">
-          <p>© YogaFlow University — Chapter 4. For internal training use.</p>
+        <footer className="mt-12 pt-6 border-t border-gray-700 text-center text-gray-500">
+          <p>© YogaFlow University — Chapter 4: The Art of Teaching. For internal training use only.</p>
         </footer>
       </div>
     </ManualLayout>

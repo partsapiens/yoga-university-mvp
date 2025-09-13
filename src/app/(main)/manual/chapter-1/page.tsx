@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { ManualLayout, ManualTOC, ManualSection } from '@/components/manual';
+import { ManualLayout, ManualTOC, ManualSection, FigureCard } from '@/components/manual';
 
 export default function Chapter1Page() {
   const breadcrumbs = [
@@ -10,12 +10,12 @@ export default function Chapter1Page() {
   ];
 
   const tocItems = [
-    { id: 'welcome', title: 'Welcome' },
-    { id: 'commitments', title: 'Program Commitments' },
-    { id: 'intention', title: 'TT Intention & Methodology' },
-    { id: 'setup', title: 'Setup for Success' },
-    { id: 'journals', title: 'Journals & Quizzes' },
-    { id: 'reading', title: 'Reading & Resources' }
+    { id: 'welcome', title: 'Welcome to the Journey' },
+    { id: 'commitments', title: 'Our Mutual Commitments' },
+    { id: 'intention', title: 'Training Intention & Methodology' },
+    { id: 'setup', title: 'Setting Up for Success' },
+    { id: 'journals', title: 'The Power of Self-Reflection' },
+    { id: 'reading', title: 'Further Reading & Resources' }
   ];
 
   const chapterNavigation = {
@@ -37,91 +37,96 @@ export default function Chapter1Page() {
       breadcrumbs={breadcrumbs}
     >
       <div className="max-w-7xl mx-auto">
-        <div className="grid grid-cols-1 lg:grid-cols-[280px_1fr] gap-6">
+        <div className="grid grid-cols-1 lg:grid-cols-[280px_1fr] gap-8">
           <ManualTOC 
             items={tocItems} 
             chapterNavigation={chapterNavigation}
           />
           
           <article>
-            <ManualSection id="welcome" title="Welcome">
-              <p className="mb-4 leading-relaxed">
-                Welcome to your YogaFlow Teacher Training journey—a powerful path of self-discovery, deep practice, and learning to guide others. This manual is your field guide. Carry it, annotate it, and let it inspire new insights. You are now part of the YogaFlow teaching community; we're excited to support your growth and transformation.
+            <ManualSection id="welcome" title="Welcome to the Journey">
+              <p className="mb-4 leading-relaxed text-lg">
+                Welcome to your YogaFlow Teacher Training—a transformative path of self-discovery, dedicated practice, and the art of guiding others. This manual is more than a textbook; it's your field guide and companion. We encourage you to engage with it fully: write in the margins, highlight what resonates, and let its pages spark new questions and insights.
               </p>
-            </ManualSection>
-
-            <ManualSection id="commitments" title="Program Commitments">
-              <h3 className="text-lg font-medium text-blue-400 mt-6 mb-3">Our Commitment</h3>
               <p className="mb-4 leading-relaxed">
-                YogaFlow provides an exceptional, practical teacher-training program aligned with international yoga standards. With successful completion and optional registration with a recognized yoga alliance, you'll be qualified to share yoga professionally.
+                You are now an integral part of the YogaFlow teaching community, a network of passionate practitioners and teachers. We are thrilled to support your evolution as both a student and a future leader in the world of yoga.
               </p>
-              
-              <h3 className="text-lg font-medium text-blue-400 mt-6 mb-3">Your Commitment</h3>
-              <ul className="space-y-2 mb-4 ml-5">
-                <li><strong>Svādhyāya</strong> (self-study): explore and refine body, breath, and mind.</li>
-                <li><strong>Aparigraha</strong> (non-attachment): stay open to change and new directions.</li>
-                <li><strong>Tapas</strong> (discipline): challenge yourself physically and mentally.</li>
-                <li><strong>Satya</strong> & <strong>Ahimsā</strong> (truth & non-harming): offer feedback and interact with integrity.</li>
-                <li><strong>Brahmacharya</strong>, <strong>Śaucha</strong>, <strong>Santosha</strong> (moderation, clarity, contentment): maintain balance and care throughout training.</li>
-              </ul>
-              
-              <div 
-                className="rounded-lg p-4 my-4"
-                style={{
-                  background: '#141921',
-                  borderLeft: '4px solid #6ea8fe',
-                  color: '#d8e5ff'
-                }}
-              >
-                You'll get out of this journey exactly what you put into it.
+              <div className="p-4 bg-blue-900/20 border-l-4 border-blue-400 rounded-r-lg my-6">
+                <h4 className="font-semibold text-blue-300 mb-2">A Journey, Not a Destination</h4>
+                <p className="text-blue-200/90">
+                  This training is designed to be an immersive experience. The skills and knowledge you gain will extend far beyond the yoga mat, influencing how you connect with yourself, interact with others, and navigate the complexities of daily life. Embrace the process with an open heart and a curious mind.
+                </p>
               </div>
             </ManualSection>
 
-            <ManualSection id="intention" title="TT Intention & Methodology">
+            <ManualSection id="commitments" title="Our Mutual Commitments">
+              <h3 className="text-xl font-semibold text-blue-300 mt-6 mb-4">Our Commitment to You</h3>
               <p className="mb-4 leading-relaxed">
-                The intention of YogaFlow Teacher Training is to strengthen your personal practice, equip you to teach confidently and safely, and inspire transformation in yourself and your students.
+                YogaFlow is dedicated to providing an exceptional, practical teacher-training program that meets and exceeds the standards of Yoga Alliance. Upon successful completion, you will be a certified yoga teacher, equipped with the skills and confidence to lead safe, effective, and inspiring classes.
               </p>
-              <ul className="space-y-2 mb-4 ml-5">
-                <li>Foundational sequencing (C1) in the first half of training.</li>
-                <li>Advanced sequencing, theming, and customization in the second half.</li>
-                <li>Lectures in anatomy, yoga philosophy, and inclusive teaching.</li>
-                <li>Practice teaching and group discussions for real-world skills.</li>
-              </ul>
-              <p className="leading-relaxed">
-                Whether or not you teach professionally, these skills influence how you think, connect, and navigate daily life.
-              </p>
-            </ManualSection>
-
-            <ManualSection id="setup" title="Setup for Success">
-              <ul className="space-y-2 ml-5">
-                <li>Embrace learning and participate actively.</li>
-                <li>Practice more days than you don't.</li>
-                <li>Learn and use names; speak kindly and only when necessary.</li>
-                <li>Use inclusive language ("team," "everyone," "friends").</li>
-                <li>Share when it adds value; keep a growth mindset.</li>
+              
+              <h3 className="text-xl font-semibold text-blue-300 mt-6 mb-4">Your Commitment to the Practice</h3>
+              <p className="mb-4">The following principles, drawn from yogic philosophy, form the foundation of our shared journey. Embrace them as tools for growth.</p>
+              <ul className="space-y-3 mb-4 ml-5">
+                <li><strong>Svādhyāya (Self-Study)</strong>: Commit to a rigorous exploration of your own body, breath, and mind. This is the source of authentic teaching.</li>
+                <li><strong>Aparigraha (Non-Attachment)</strong>: Be open to new ideas, unexpected challenges, and personal evolution. Release preconceived notions of what this journey "should" be.</li>
+                <li><strong>Tapas (Discipline/Enthusiasm)</strong>: Consistently challenge yourself, both physically and mentally. This inner fire purifies and strengthens your resolve.</li>
+                <li><strong>Satya & Ahimsā (Truth & Non-Harming)</strong>: Interact with your peers and instructors with integrity and kindness. Offer and receive feedback that is both honest and compassionate.</li>
+                <li><strong>Śaucha, Santosha, Brahmacharya (Purity, Contentment, Moderation)</strong>: Maintain a balanced approach. Take care of your energy, find joy in the process, and practice moderation in all things.</li>
               </ul>
             </ManualSection>
 
-            <ManualSection id="journals" title="Journals & Quizzes">
-              <p className="leading-relaxed">
-                Journaling every practice and lecture is part of svādhyāya and supports certification. Reflect on how your body felt, what you learned about sequencing and cueing, effective demonstrations, adjustments, theming, and at least one takeaway from each class.
+            <ManualSection id="intention" title="Training Intention & Methodology">
+              <p className="mb-4 leading-relaxed">
+                The core intention of this training is twofold: to deepen your personal relationship with yoga, and to empower you to share it with others skillfully and safely. We aim to inspire a profound transformation that ripples from your own practice into the lives of your future students.
               </p>
+              <h4 className="text-lg font-medium text-teal-300 mt-6 mb-3">Our Learning Arc:</h4>
+              <ul className="space-y-3 mb-4 ml-5 list-disc">
+                <li><strong>Foundations (First Half)</strong>: We will immerse ourselves in the foundational YogaFlow sequence (C1), anatomy, key philosophical concepts, and the principles of effective cueing.</li>
+                <li><strong>Expansion (Second Half)</strong>: Building on the foundation, we will explore advanced sequencing, creative theming, hands-on assists, and the business of yoga.</li>
+                <li><strong>Practice & Integration</strong>: Throughout the training, you will engage in daily practice, peer teaching exercises, group discussions, and receive personalized feedback to integrate your learning in a practical way.</li>
+              </ul>
             </ManualSection>
 
-            <ManualSection id="reading" title="Reading & Resources (Optional)">
+            <ManualSection id="setup" title="Setting Up for Success">
+              <p className="mb-4">Your environment and mindset are key. Here’s how to create a supportive container for your learning:</p>
+              <ul className="space-y-3 ml-5 list-disc">
+                <li><strong>Active Participation</strong>: Embrace a "front-row" mindset. Ask questions, volunteer for demonstrations, and engage fully in discussions.</li>
+                <li><strong>Consistent Practice</strong>: Aim to practice yoga more days than you don't. Your personal practice is your most valuable resource.</li>
+                <li><strong>Community & Connection</strong>: Learn and use the names of your fellow trainees. Speak with kindness and intention. Use inclusive language like "team," "everyone," or "this group."</li>
+                <li><strong>Contribution Mindset</strong>: Share your insights and experiences when they can add value to the conversation. Listen with the intent to understand, not just to respond.</li>
+                <li><strong>Growth Mindset</strong>: View challenges as opportunities. Celebrate not just your achievements, but your efforts and learning process.</li>
+              </ul>
+            </ManualSection>
+
+            <ManualSection id="journals" title="The Power of Self-Reflection">
+              <p className="mb-4 leading-relaxed">
+                Consistent journaling (svādhyāya) is a cornerstone of this training and a requirement for certification. Your journal is a private space to process, question, and integrate your experiences.
+              </p>
+              <h4 className="text-lg font-medium text-teal-300 mt-6 mb-3">Reflection Prompts for Your Journal:</h4>
+              <ul className="space-y-2 ml-5 list-disc">
+                <li>After each practice: How did my body feel today? What poses felt challenging, and what felt freeing?</li>
+                <li>During lectures: What single concept was most illuminating? What question arose for me?</li>
+                <li>Observing others teach: What cueing language was particularly effective? How did the teacher create a specific mood or energy?</li>
+                <li>Weekly review: What is my biggest takeaway from this week? Where am I feeling most confident, and where do I need more support?</li>
+              </ul>
+            </ManualSection>
+
+            <ManualSection id="reading" title="Further Reading & Resources">
+              <p className="mb-4">While this manual is your primary text, the following books are highly recommended to enrich your understanding. They are optional but will provide invaluable depth.</p>
               <ul className="space-y-2 ml-5">
-                <li><em>Light on Yoga</em> — B.K.S. Iyengar</li>
-                <li><em>Yoga Sutras of Patanjali</em> — commentary by Swami Satchidananda</li>
-                <li><em>Meditations from the Mat</em> — Rolf Gates</li>
-                <li><em>The Four Agreements</em> — Don Miguel Ruiz</li>
-                <li>Plus other foundational yoga texts of your choice.</li>
+                <li><em>Light on Yoga</em> by B.K.S. Iyengar — The definitive guide to asana.</li>
+                <li><em>The Yoga Sutras of Patanjali</em> (commentary by Swami Satchidananda or Nicolai Bachman) — The foundational text of yoga philosophy.</li>
+                <li><em>The Heart of Yoga: Developing a Personal Practice</em> by T.K.V. Desikachar — A classic on adapting yoga to the individual.</li>
+                <li><em>Meditations from the Mat</em> by Rolf Gates — Daily reflections on the path of yoga.</li>
+                <li><em>The Four Agreements</em> by Don Miguel Ruiz — A practical guide to personal freedom.</li>
               </ul>
             </ManualSection>
           </article>
         </div>
         
-        <footer className="mt-12 pt-6 border-t border-gray-600 text-gray-400">
-          <p>© YogaFlow University — Chapter 1. For internal training use.</p>
+        <footer className="mt-12 pt-6 border-t border-gray-700 text-center text-gray-500">
+          <p>© YogaFlow University — Chapter 1: Welcome & Program Overview. For internal training use only.</p>
         </footer>
       </div>
     </ManualLayout>

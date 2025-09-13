@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { ManualLayout, ManualTOC, ManualSection } from '@/components/manual';
+import { ManualLayout, ManualTOC, ManualSection, FigureCard } from '@/components/manual';
 
 export default function Chapter2Page() {
   const breadcrumbs = [
@@ -10,12 +10,12 @@ export default function Chapter2Page() {
   ];
 
   const tocItems = [
-    { id: 'foundations', title: 'Foundations' },
-    { id: 'breath', title: 'Breath Awareness' },
-    { id: 'alignment', title: 'Basic Alignment' },
-    { id: 'practice', title: 'Personal Practice' },
-    { id: 'mindfulness', title: 'Mindfulness & Presence' },
-    { id: 'safety', title: 'Safety Principles' }
+    { id: 'introduction', title: 'The Three Pillars' },
+    { id: 'breath', title: 'Pillar 1: The Art of Breath' },
+    { id: 'alignment', title: 'Pillar 2: Intelligent Alignment' },
+    { id: 'mindfulness', title: 'Pillar 3: Cultivating Presence' },
+    { id: 'practice', title: 'Your Personal Practice Lab' },
+    { id: 'safety', title: 'Core Safety Principles' }
   ];
 
   const chapterNavigation = {
@@ -37,108 +37,102 @@ export default function Chapter2Page() {
       breadcrumbs={breadcrumbs}
     >
       <div className="max-w-7xl mx-auto">
-        <div className="grid grid-cols-1 lg:grid-cols-[280px_1fr] gap-6">
+        <div className="grid grid-cols-1 lg:grid-cols-[280px_1fr] gap-8">
           <ManualTOC 
             items={tocItems} 
             chapterNavigation={chapterNavigation}
           />
           
           <article>
-            <ManualSection id="foundations" title="Foundations">
-              <p className="mb-4 leading-relaxed">
-                Before diving into specific poses and sequences, it's essential to understand the foundational principles that make yoga practice safe, effective, and transformative. This chapter explores the core elements that every yoga practitioner and teacher must understand.
+            <ManualSection id="introduction" title="The Three Pillars of Practice">
+              <p className="mb-4 leading-relaxed text-lg">
+                Before exploring specific poses, we must understand the three pillars that support a safe, effective, and transformative yoga practice: Breath (Pranayama), Alignment (Asana), and Presence (Dhyana). These are not separate elements but interconnected aspects of a unified experience.
               </p>
               <p className="leading-relaxed">
-                Yoga is more than physical exercise—it's a practice of integration that connects body, breath, and mind. As you develop these foundations, you'll discover how they support not only your personal practice but also your ability to guide others safely and mindfully.
+                Mastering these foundations will not only elevate your personal practice but also provide you with the essential tools to guide others with confidence, clarity, and wisdom.
               </p>
             </ManualSection>
 
-            <ManualSection id="breath" title="Breath Awareness">
-              <h3 className="text-lg font-medium text-blue-400 mt-6 mb-3">The Foundation of Practice</h3>
+            <ManualSection id="breath" title="Pillar 1: The Art of Breath (Pranayama)">
+              <h3 className="text-xl font-semibold text-blue-300 mt-6 mb-4">Breath as the Life-Force</h3>
               <p className="mb-4 leading-relaxed">
-                Breath is the cornerstone of yoga practice. Every movement, every pose, and every transition is an opportunity to deepen your relationship with the breath.
+                In yoga, breath is far more than the simple mechanical act of breathing; it is the carrier of <em>prana</em>, or life-force energy. The quality of our breath directly influences the state of our mind and nervous system. A calm, steady breath leads to a calm, steady mind.
               </p>
-              <ul className="space-y-2 mb-4 ml-5">
-                <li><strong>Natural Breath</strong>: Begin by observing your natural breathing pattern without trying to change it.</li>
-                <li><strong>Ujjayi Breath</strong>: Learn the gentle constriction that creates the characteristic sound of yoga breathing.</li>
-                <li><strong>Breath and Movement</strong>: Understand how to synchronize breath with movement for flowing practice.</li>
-                <li><strong>Breath as Anchor</strong>: Use breath awareness to maintain presence and focus during challenging poses.</li>
+
+              <h4 className="text-lg font-medium text-teal-300 mt-4 mb-3">Key Breath Techniques:</h4>
+              <ul className="space-y-3 mb-4 ml-5">
+                <li><strong>Diaphragmatic Breath</strong>: The foundation of all yogic breathing. Focus on expanding the belly on the inhale and gently contracting it on the exhale. This maximizes oxygen exchange and calms the nervous system.</li>
+                <li><strong>Ujjayi Pranayama (Victorious Breath)</strong>: Create a gentle constriction at the back of the throat, producing a soft, oceanic sound. This helps to heat the body, focus the mind, and link breath with movement.</li>
+                <li><strong>Sama Vritti (Box Breathing)</strong>: Inhale for a count of four, hold for four, exhale for four, and hold for four. This technique is excellent for restoring balance and concentration.</li>
               </ul>
-              <div 
-                className="rounded-lg p-4 my-4"
-                style={{
-                  background: '#141921',
-                  borderLeft: '4px solid #6ea8fe',
-                  color: '#d8e5ff'
-                }}
-              >
-                Remember: If you lose your breath, you've lost your yoga. The breath should always remain steady and accessible.
+
+              <div className="p-4 bg-gray-800/50 border border-gray-700 rounded-lg my-6">
+                <h4 className="font-semibold text-teal-300 mb-2">Cueing Tip: Linking Breath to Movement</h4>
+                <p className="text-gray-300">
+                  Use simple, direct cues. For example: "On your inhale, reach your arms high." (Expansion). "On your exhale, fold forward." (Contraction). This synchronization, or <em>vinyasa</em>, is the heart of a flowing practice.
+                </p>
               </div>
             </ManualSection>
 
-            <ManualSection id="alignment" title="Basic Alignment Principles">
-              <h3 className="text-lg font-medium text-blue-400 mt-6 mb-3">Creating Safe and Stable Foundation</h3>
+            <ManualSection id="alignment" title="Pillar 2: Intelligent Alignment (Asana)">
               <p className="mb-4 leading-relaxed">
-                Proper alignment creates the foundation for safe practice and helps prevent injury while maximizing the benefits of each pose.
+                Alignment in yoga is not about forcing the body into a perfect shape. It's about creating a clear pathway for energy to flow, ensuring safety, and maximizing the pose's benefits. It is always a balance between effort (Sthira) and ease (Sukha).
               </p>
-              <ul className="space-y-2 mb-4 ml-5">
-                <li><strong>Foundation First</strong>: Establish a strong base in every pose, whether through feet, hands, or sitting bones.</li>
-                <li><strong>Spine Awareness</strong>: Maintain the natural curves of the spine while creating length and space.</li>
-                <li><strong>Joint Stacking</strong>: Align joints appropriately to distribute weight evenly and avoid strain.</li>
-                <li><strong>Muscular Engagement</strong>: Use appropriate muscle activation to support poses without unnecessary tension.</li>
-              </ul>
-              <h3 className="text-lg font-medium text-blue-400 mt-6 mb-3">Universal Alignment Principles</h3>
-              <ol className="space-y-2 mb-4 ml-5 list-decimal">
-                <li>Ground through your foundation</li>
-                <li>Engage your core</li>
-                <li>Lengthen your spine</li>
-                <li>Soften where you don't need effort</li>
-                <li>Breathe consciously</li>
+              <h4 className="text-lg font-medium text-teal-300 mt-6 mb-3">Universal Principles of Alignment:</h4>
+              <ol className="space-y-3 mb-4 ml-5 list-decimal">
+                <li><strong>Establish a Foundation</strong>: Root down through the parts of your body touching the earth. Create stability from the ground up.</li>
+                <li><strong>Engage Muscular Energy</strong>: Hug muscles to the bone to support and protect the joints. Draw energy from the periphery to the core.</li>
+                <li><strong>Create Length and Space</strong>: Actively lengthen the spine and extend through the limbs to decompress joints and facilitate energy flow.</li>
+                <li><strong>Soften and Release</strong>: Consciously relax areas of unnecessary tension, such as the jaw, neck, and shoulders.</li>
               </ol>
+               <div className="p-4 bg-blue-900/20 border-l-4 border-blue-400 rounded-r-lg my-6">
+                <h4 className="font-semibold text-blue-300 mb-2">Case Study: Alignment in Downward-Facing Dog</h4>
+                <p className="text-blue-200/90">
+                  A student has a rounded upper back. Instead of telling them to "flatten your back," cue them to "press firmly through your hands, bend your knees generously, and send your hips high." This addresses the root of the issue (tight hamstrings/shoulders) and prioritizes spinal length over straight legs.
+                </p>
+              </div>
             </ManualSection>
 
-            <ManualSection id="practice" title="Developing Personal Practice">
-              <h3 className="text-lg font-medium text-blue-400 mt-6 mb-3">Consistency Over Intensity</h3>
+            <ManualSection id="mindfulness" title="Pillar 3: Cultivating Presence (Dhyana)">
               <p className="mb-4 leading-relaxed">
-                A regular personal practice is essential for both students and teachers. It's through your own practice that you truly understand yoga from the inside out.
+                Mindfulness is the practice of paying attention, on purpose, in the present moment, without judgment. It is the bridge that connects the physical practice of asana with the deeper states of yoga.
               </p>
-              <ul className="space-y-2 mb-4 ml-5">
-                <li><strong>Start Small</strong>: Begin with 10-15 minutes daily rather than longer, inconsistent sessions.</li>
-                <li><strong>Listen to Your Body</strong>: Adapt your practice to how you feel each day.</li>
-                <li><strong>Include All Elements</strong>: Balance asana, pranayama, and meditation in your practice.</li>
-                <li><strong>Practice Teaching</strong>: Regularly practice teaching yourself—out loud.</li>
+              <ul className="space-y-3 mb-4 ml-5 list-disc">
+                <li><strong>The Breath as an Anchor</strong>: When the mind wanders, gently guide its attention back to the rhythm and sensation of the breath.</li>
+                <li><strong>Body Scan Meditation</strong>: Systematically bring awareness to different parts of the body, noticing sensations without needing to change them.</li>
+                <li><strong>Noticing Habits</strong>: Observe your mental and physical habits on the mat. Do you push too hard? Do you give up easily? This self-awareness is key to transformation.</li>
               </ul>
             </ManualSection>
 
-            <ManualSection id="mindfulness" title="Mindfulness & Presence">
+            <ManualSection id="practice" title="Your Personal Practice Lab">
               <p className="mb-4 leading-relaxed">
-                Mindfulness is the quality of attention that allows us to be fully present with whatever is arising in the moment. In yoga practice, mindfulness helps us stay connected to our body's signals, our breath, and our internal experience.
+                Your personal practice is where the theory comes to life. It is your laboratory for exploration, discovery, and embodiment. It doesn't need to be long or intense, but it should be consistent.
               </p>
-              <ul className="space-y-2 mb-4 ml-5">
-                <li><strong>Present Moment Awareness</strong>: Cultivate the ability to notice when your mind wanders and gently return to the present.</li>
-                <li><strong>Non-Judgmental Observation</strong>: Practice observing your experience without immediately labeling it as good or bad.</li>
-                <li><strong>Body Awareness</strong>: Develop sensitivity to physical sensations, tensions, and ease.</li>
-                <li><strong>Emotional Intelligence</strong>: Learn to recognize and work skillfully with emotions that arise during practice.</li>
+              <h4 className="text-lg font-medium text-teal-300 mt-6 mb-3">Building a Sustainable Practice:</h4>
+              <ul className="space-y-2 ml-5">
+                <li><strong>Consistency over Intensity</strong>: 15 minutes daily is more impactful than 90 minutes once a week.</li>
+                <li><strong>Listen Intently</strong>: Adapt your practice to your energy levels, injuries, and needs of the day.</li>
+                <li><strong>Journaling as Inquiry</strong>: After practice, jot down one thing you noticed, one challenge, and one moment of ease.</li>
+                <li><strong>Teach Yourself</strong>: Practice your sequences out loud. This is one of the most effective ways to build confidence and refine your cues.</li>
               </ul>
             </ManualSection>
 
-            <ManualSection id="safety" title="Safety Principles">
+            <ManualSection id="safety" title="Core Safety Principles">
               <p className="mb-4 leading-relaxed">
-                Safety in yoga practice is not just about avoiding injury—it's about creating an environment where students can explore their edge while staying connected to their wisdom and intuition.
+                As a teacher, your primary responsibility is to create a safe and supportive environment. This means prioritizing the well-being of your students above all else.
               </p>
-              <ul className="space-y-2 mb-4 ml-5">
-                <li><strong>No Pain, No Pain</strong>: Distinguish between sensation and pain; pain is always a signal to back off.</li>
-                <li><strong>Individual Anatomy</strong>: Understand that every body is different and poses will look different on everyone.</li>
-                <li><strong>Contraindications</strong>: Learn basic contraindications for common conditions and injuries.</li>
-                <li><strong>Options and Modifications</strong>: Always provide alternatives and encourage students to take what serves them.</li>
-                <li><strong>Creating Safe Space</strong>: Foster an environment of non-competition and self-acceptance.</li>
+              <ul className="space-y-3 mb-4 ml-5 list-disc">
+                <li><strong>"No Pain, No Pain"</strong>: Teach the crucial difference between the discomfort of a muscle stretching (sensation) and the sharp, nervy feeling of joint pain (pain). Pain is always a signal to stop.</li>
+                <li><strong>Honor Individuality</strong>: Every body is unique. Emphasize that poses will look and feel different for everyone. Offer modifications and variations for all levels.</li>
+                <li><strong>Empower Students</strong>: Encourage students to listen to their own bodies and make choices that serve them. Remind them that Child's Pose is always an option.</li>
+                <li><strong>Create a Non-Competitive Space</strong>: Foster an atmosphere of self-acceptance and exploration, rather than achievement or comparison.</li>
               </ul>
             </ManualSection>
           </article>
         </div>
         
-        <footer className="mt-12 pt-6 border-t border-gray-600 text-gray-400">
-          <p>© YogaFlow University — Chapter 2. For internal training use.</p>
+        <footer className="mt-12 pt-6 border-t border-gray-700 text-center text-gray-500">
+          <p>© YogaFlow University — Chapter 2: Foundations of Yoga Practice. For internal training use only.</p>
         </footer>
       </div>
     </ManualLayout>
