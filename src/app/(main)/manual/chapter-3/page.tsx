@@ -112,7 +112,7 @@ export default function Chapter3Page() {
                   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><g fill="none" stroke="#a7f3d0" stroke-width="2"><path d="M30 90h50L70 60H40z"/><path d="M55 60V25m0-10a5 5 0 0110 0v10m-10-10a5 5 0 00-10 0v10"/><circle cx="55" cy="10" r="5"/></g></svg>
                 </FigureCard>
               </div>
-              <p className="mt-4 leading-relaxed">The flow then continues through the vinyasa (Chaturanga -> Upward-Facing Dog -> Downward-Facing Dog) before repeating Warrior I on the other side.</p>
+              <p className="mt-4 leading-relaxed">The flow then continues through the vinyasa (Chaturanga -&gt; Upward-Facing Dog -&gt; Downward-Facing Dog) before repeating Warrior I on the other side.</p>
             </ManualSection>
 
             <ManualSection id="reflection" title="Reflection & Practice">
