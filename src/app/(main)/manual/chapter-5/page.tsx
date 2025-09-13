@@ -106,11 +106,83 @@ export default function Chapter5Page() {
                 <li><strong>Embodied Language</strong>: Connect concepts to physical sensations. "Can you find a sense of <em>Santosha</em>, or contentment, in this pose, even with the intense sensation?"</li>
                 <li><strong>Lead by Example</strong>: The most powerful way to teach philosophy is to embody it. Your presence, your kindness, and your integrity speak volumes.</li>
               </ul>
+
+              <h3 className="text-xl font-semibold text-blue-300 mt-6 mb-4">Practical Class Themes for Each Limb</h3>
+              <div className="space-y-4 mb-6">
+                <div className="p-4 bg-gray-900/50 border border-gray-600 rounded-lg">
+                  <h5 className="font-semibold text-blue-300 mb-2">Ahimsa (Non-harming) Class Theme</h5>
+                  <div className="text-sm space-y-2">
+                    <p><strong>Opening:</strong> "Practice with kindness toward your body today"</p>
+                    <p><strong>Poses:</strong> Gentle flows, supported poses, emphasis on modifications</p>
+                    <p><strong>Language:</strong> "Honor what feels right" / "Be gentle with yourself"</p>
+                    <p><strong>Closing:</strong> Loving-kindness meditation</p>
+                  </div>
+                </div>
+                <div className="p-4 bg-gray-900/50 border border-gray-600 rounded-lg">
+                  <h5 className="font-semibold text-blue-300 mb-2">Tapas (Discipline) Class Theme</h5>
+                  <div className="text-sm space-y-2">
+                    <p><strong>Opening:</strong> "Finding strength and commitment in challenge"</p>
+                    <p><strong>Poses:</strong> Challenging holds, core work, arm balances</p>
+                    <p><strong>Language:</strong> "Stay with your breath in intensity" / "Find ease in effort"</p>
+                    <p><strong>Closing:</strong> Reflection on inner strength</p>
+                  </div>
+                </div>
+                <div className="p-4 bg-gray-900/50 border border-gray-600 rounded-lg">
+                  <h5 className="font-semibold text-blue-300 mb-2">Aparigraha (Non-attachment) Class Theme</h5>
+                  <div className="text-sm space-y-2">
+                    <p><strong>Opening:</strong> "Let go of expectations about your practice today"</p>
+                    <p><strong>Poses:</strong> Flow sequences, transitions, balance challenges</p>
+                    <p><strong>Language:</strong> "Release and receive" / "Fall with grace"</p>
+                    <p><strong>Closing:</strong> Practice letting go in Savasana</p>
+                  </div>
+                </div>
+              </div>
+
+              <h3 className="text-xl font-semibold text-blue-300 mt-6 mb-4">Daily Life Integration Practices</h3>
+              <div className="space-y-3 mb-6">
+                <div className="p-3 bg-blue-900/20 border border-blue-600 rounded-lg">
+                  <h5 className="font-semibold text-blue-300 text-sm">Yamas in Daily Life</h5>
+                  <ul className="list-disc ml-5 space-y-1 text-xs">
+                    <li><strong>Ahimsa:</strong> Notice when you speak harshly to yourself; practice self-compassion</li>
+                    <li><strong>Satya:</strong> Speak only when necessary and speak truthfully; notice when you exaggerate</li>
+                    <li><strong>Asteya:</strong> Arrive on time; give full attention when someone is speaking</li>
+                    <li><strong>Brahmacharya:</strong> Notice where you waste energy; practice moderation in consumption</li>
+                    <li><strong>Aparigraha:</strong> Practice gratitude; notice when you compare or grasp</li>
+                  </ul>
+                </div>
+                <div className="p-3 bg-blue-900/20 border border-blue-600 rounded-lg">
+                  <h5 className="font-semibold text-blue-300 text-sm">Niyamas in Daily Life</h5>
+                  <ul className="list-disc ml-5 space-y-1 text-xs">
+                    <li><strong>Saucha:</strong> Keep living/working space organized; choose nourishing foods</li>
+                    <li><strong>Santosha:</strong> Find one thing to appreciate daily; practice acceptance</li>
+                    <li><strong>Tapas:</strong> Commit to small daily practices; follow through on intentions</li>
+                    <li><strong>Svadhyaya:</strong> Read inspiring texts; practice self-reflection</li>
+                    <li><strong>Ishvara Pranidhana:</strong> Practice releasing control; dedicate actions to something greater</li>
+                  </ul>
+                </div>
+              </div>
+
               <div className="p-4 bg-gray-800/50 border border-gray-700 rounded-lg my-6">
                 <h4 className="font-semibold text-teal-300 mb-2">Case Study: Theming a Class on Satya (Truthfulness)</h4>
                 <p className="text-gray-300">
                   You could open class by inviting students to notice their "truth" today—their energy level, their physical sensations. The sequence could include heart-opening poses to encourage authentic expression and balancing poses that require honest self-assessment. The closing could be a reflection on speaking and living more truthfully off the mat.
                 </p>
+              </div>
+
+              <h3 className="text-xl font-semibold text-blue-300 mt-6 mb-4">Philosophy for Different Student Needs</h3>
+              <div className="space-y-3 mb-6">
+                <div className="p-3 bg-gray-800/50 border border-gray-700 rounded-lg">
+                  <h5 className="font-semibold text-teal-300 text-sm">For Beginners</h5>
+                  <p className="text-xs text-gray-300">Focus on Ahimsa (being kind to yourself) and Santosha (contentment with where you are). Keep concepts simple and embodied.</p>
+                </div>
+                <div className="p-3 bg-gray-800/50 border border-gray-700 rounded-lg">
+                  <h5 className="font-semibold text-teal-300 text-sm">For Experienced Practitioners</h5>
+                  <p className="text-xs text-gray-300">Explore Tapas (discipline) and Svadhyaya (self-study). Challenge them to examine their motivations and attachments.</p>
+                </div>
+                <div className="p-3 bg-gray-800/50 border border-gray-700 rounded-lg">
+                  <h5 className="font-semibold text-teal-300 text-sm">For Those Facing Challenges</h5>
+                  <p className="text-xs text-gray-300">Emphasize Ishvara Pranidhana (surrender) and Aparigraha (letting go). Offer philosophy as support, not another burden.</p>
+                </div>
               </div>
             </ManualSection>
           </article>
