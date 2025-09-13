@@ -68,6 +68,23 @@ export default function Chapter2Page() {
                 <li><strong>Sama Vritti (Box Breathing)</strong>: Inhale for a count of four, hold for four, exhale for four, and hold for four. This technique is excellent for restoring balance and concentration.</li>
               </ul>
 
+              <h4 className="text-lg font-medium text-teal-300 mt-6 mb-3">Breath Practices for Students:</h4>
+              <div className="space-y-4 mb-6">
+                <div className="p-4 bg-gray-900/50 border border-gray-600 rounded-lg">
+                  <h5 className="font-semibold text-blue-300 mb-2">3-Part Breath Exercise (Dirga Pranayama)</h5>
+                  <ol className="list-decimal ml-5 space-y-1 text-sm">
+                    <li>Place one hand on chest, one on belly</li>
+                    <li>Inhale into belly (hand rises), then ribs, then chest</li>
+                    <li>Exhale from chest, ribs, then belly</li>
+                    <li>Practice for 5-10 breaths, feeling the wave-like motion</li>
+                  </ol>
+                </div>
+                <div className="p-4 bg-gray-900/50 border border-gray-600 rounded-lg">
+                  <h5 className="font-semibold text-blue-300 mb-2">Counted Breath (for Anxiety/Focus)</h5>
+                  <p className="text-sm">Inhale for 4 counts, exhale for 6 counts. The longer exhale activates the parasympathetic nervous system, promoting calm.</p>
+                </div>
+              </div>
+
               <div className="p-4 bg-gray-800/50 border border-gray-700 rounded-lg my-6">
                 <h4 className="font-semibold text-teal-300 mb-2">Cueing Tip: Linking Breath to Movement</h4>
                 <p className="text-gray-300">
@@ -87,6 +104,30 @@ export default function Chapter2Page() {
                 <li><strong>Create Length and Space</strong>: Actively lengthen the spine and extend through the limbs to decompress joints and facilitate energy flow.</li>
                 <li><strong>Soften and Release</strong>: Consciously relax areas of unnecessary tension, such as the jaw, neck, and shoulders.</li>
               </ol>
+
+              <h4 className="text-lg font-medium text-teal-300 mt-6 mb-3">Practical Alignment Applications:</h4>
+              <div className="space-y-4 mb-6">
+                <div className="p-4 bg-gray-900/50 border border-gray-600 rounded-lg">
+                  <h5 className="font-semibold text-blue-300 mb-2">Standing Poses: Mountain Pose Foundation</h5>
+                  <ul className="list-disc ml-5 space-y-1 text-sm">
+                    <li>Feet parallel, hip-width apart</li>
+                    <li>Micro-bend in knees to engage quadriceps</li>
+                    <li>Lengthen tailbone toward earth</li>
+                    <li>Crown of head reaching toward sky</li>
+                    <li>Shoulder blades draw down the back</li>
+                  </ul>
+                </div>
+                <div className="p-4 bg-gray-900/50 border border-gray-600 rounded-lg">
+                  <h5 className="font-semibold text-blue-300 mb-2">Forward Folds: Hinge from Hips</h5>
+                  <ul className="list-disc ml-5 space-y-1 text-sm">
+                    <li>Bend knees generously to protect lower back</li>
+                    <li>Lead with chest, not head</li>
+                    <li>Hands to shins, blocks, or floor</li>
+                    <li>Breathe into back ribs</li>
+                  </ul>
+                </div>
+              </div>
+
                <div className="p-4 bg-blue-900/20 border-l-4 border-blue-400 rounded-r-lg my-6">
                 <h4 className="font-semibold text-blue-300 mb-2">Case Study: Alignment in Downward-Facing Dog</h4>
                 <p className="text-blue-200/90">
@@ -104,6 +145,23 @@ export default function Chapter2Page() {
                 <li><strong>Body Scan Meditation</strong>: Systematically bring awareness to different parts of the body, noticing sensations without needing to change them.</li>
                 <li><strong>Noticing Habits</strong>: Observe your mental and physical habits on the mat. Do you push too hard? Do you give up easily? This self-awareness is key to transformation.</li>
               </ul>
+
+              <h4 className="text-lg font-medium text-teal-300 mt-6 mb-3">Mindfulness Techniques for Class:</h4>
+              <div className="space-y-4 mb-6">
+                <div className="p-4 bg-gray-900/50 border border-gray-600 rounded-lg">
+                  <h5 className="font-semibold text-blue-300 mb-2">Opening Awareness Practice</h5>
+                  <p className="text-sm mb-2">Guide students to notice three things:</p>
+                  <ol className="list-decimal ml-5 space-y-1 text-sm">
+                    <li>How their body feels today (tired, energetic, tense?)</li>
+                    <li>The quality of their breath (shallow, deep, irregular?)</li>
+                    <li>The state of their mind (busy, calm, distracted?)</li>
+                  </ol>
+                </div>
+                <div className="p-4 bg-gray-900/50 border border-gray-600 rounded-lg">
+                  <h5 className="font-semibold text-blue-300 mb-2">Mid-Practice Check-ins</h5>
+                  <p className="text-sm">Pause in poses to ask: "What sensations do you notice?" or "Can you soften around intensity while maintaining strength?"</p>
+                </div>
+              </div>
             </ManualSection>
 
             <ManualSection id="practice" title="Your Personal Practice Lab">
@@ -129,6 +187,40 @@ export default function Chapter2Page() {
                 <li><strong>Empower Students</strong>: Encourage students to listen to their own bodies and make choices that serve them. Remind them that Child's Pose is always an option.</li>
                 <li><strong>Create a Non-Competitive Space</strong>: Foster an atmosphere of self-acceptance and exploration, rather than achievement or comparison.</li>
               </ul>
+
+              <h4 className="text-lg font-medium text-teal-300 mt-6 mb-3">Essential Safety Protocols:</h4>
+              <div className="space-y-4 mb-6">
+                <div className="p-4 bg-red-900/20 border border-red-600 rounded-lg">
+                  <h5 className="font-semibold text-red-300 mb-2">Red Flags: When to Stop Immediately</h5>
+                  <ul className="list-disc ml-5 space-y-1 text-sm">
+                    <li>Sharp, shooting pain</li>
+                    <li>Numbness or tingling</li>
+                    <li>Dizziness or nausea</li>
+                    <li>Difficulty breathing</li>
+                    <li>Student appears distressed</li>
+                  </ul>
+                </div>
+                <div className="p-4 bg-yellow-900/20 border border-yellow-600 rounded-lg">
+                  <h5 className="font-semibold text-yellow-300 mb-2">Common Modifications to Offer</h5>
+                  <ul className="list-disc ml-5 space-y-1 text-sm">
+                    <li><strong>Forward Folds</strong>: Bend knees, use blocks under hands</li>
+                    <li><strong>Backbends</strong>: Support with bolster, smaller range of motion</li>
+                    <li><strong>Twists</strong>: Sit on blanket for hip elevation</li>
+                    <li><strong>Inversions</strong>: Legs up wall instead of full inversion</li>
+                  </ul>
+                </div>
+              </div>
+
+              <div className="p-4 bg-blue-900/20 border-l-4 border-blue-400 rounded-r-lg my-6">
+                <h4 className="font-semibold text-blue-300 mb-2">Teaching Technique: The Art of Inclusive Language</h4>
+                <p className="text-blue-200/90 mb-2">
+                  Instead of: "Everyone lift your leg higher" 
+                  <br />Try: "If it serves you, explore lifting your leg a bit more"
+                </p>
+                <p className="text-blue-200/90">
+                  This language honors student autonomy and removes pressure to perform.
+                </p>
+              </div>
             </ManualSection>
           </article>
         </div>
