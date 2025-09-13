@@ -2,6 +2,7 @@
 
 import React from 'react';
 import { ManualLayout, ManualTOC, ManualSection, FigureCard } from '@/components/manual';
+import PoseVideo from '@/components/PoseLibrary/PoseVideo';
 
 export default function Chapter1Page() {
   const breadcrumbs = [
@@ -45,6 +46,7 @@ export default function Chapter1Page() {
           
           <article>
             <ManualSection id="welcome" title="Welcome to the Journey">
+              <PoseVideo url="https://youtu.be/NTVE5KBuHpU" title="Welcome to the Journey" className="mb-8" />
               <p className="mb-4 leading-relaxed text-lg">
                 Welcome to your YogaFlow Teacher Training—a transformative path of self-discovery, dedicated practice, and the art of guiding others. This manual is more than a textbook; it's your field guide and companion. We encourage you to engage with it fully: write in the margins, highlight what resonates, and let its pages spark new questions and insights.
               </p>
