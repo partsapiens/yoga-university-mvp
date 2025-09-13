@@ -22,7 +22,7 @@ export default function PoseVideo({ url, title = "Pose Video", className = "" }:
 
   return (
     <div className={`bg-white dark:bg-gray-800 rounded-lg overflow-hidden ${className}`}>
-      <div className="aspect-w-16 aspect-h-9 relative">
+      <div className="aspect-video relative">
         <iframe 
           src={getEmbedUrl(url)}
           frameBorder="0" 
