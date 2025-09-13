@@ -110,7 +110,136 @@ export default function Chapter6Page() {
               </div>
             </ManualSection>
 
-            {/* ... other chakras ... */}
+            <ManualSection id="chakra-solar" title="3. Solar Plexus Chakra — Manipura">
+              <div className="md:grid md:grid-cols-3 gap-6 items-center">
+                <div className="md:col-span-1">
+                  <FigureCard>
+                    <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                      <defs><filter id="glow3"><feGaussianBlur stdDeviation="3.5" result="coloredBlur"/><feMerge><feMergeNode in="coloredBlur"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs>
+                      <circle cx="100" cy="100" r="60" fill="#fbbf24" fillOpacity="0.3" stroke="#fbbf24" strokeWidth="3" filter="url(#glow3)"/>
+                      <circle cx="100" cy="100" r="30" fill="none" stroke="#fbbf24" strokeWidth="2" strokeDasharray="5,5"/>
+                      <text x="100" y="110" textAnchor="middle" fill="#fef3c7" fontSize="30" fontWeight="bold">RAM</text>
+                    </svg>
+                  </FigureCard>
+                </div>
+                <div className="md:col-span-2">
+                  <p className="mb-4"><strong>Power & Confidence.</strong> Governs personal power, self-esteem, and transformation.</p>
+                  <ul className="space-y-1 mb-4 text-sm">
+                    <li><strong>Element:</strong> Fire</li>
+                    <li><strong>Color:</strong> Yellow</li>
+                    <li><strong>Balanced:</strong> Confident, motivated, strong sense of self, good boundaries.</li>
+                    <li><strong>Imbalanced:</strong> Low self-esteem, people-pleasing, or domineering behavior.</li>
+                    <li><strong>Poses:</strong> Boat pose, twists, core strengthening, Warrior III.</li>
+                    <li><strong>Practice:</strong> Breathwork, setting boundaries, affirmations.</li>
+                  </ul>
+                </div>
+              </div>
+            </ManualSection>
+
+            <ManualSection id="chakra-heart" title="4. Heart Chakra — Anahata">
+              <div className="md:grid md:grid-cols-3 gap-6 items-center">
+                <div className="md:col-span-1">
+                  <FigureCard>
+                    <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                      <defs><filter id="glow4"><feGaussianBlur stdDeviation="3.5" result="coloredBlur"/><feMerge><feMergeNode in="coloredBlur"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs>
+                      <circle cx="100" cy="100" r="60" fill="#22c55e" fillOpacity="0.3" stroke="#22c55e" strokeWidth="3" filter="url(#glow4)"/>
+                      <circle cx="100" cy="100" r="30" fill="none" stroke="#22c55e" strokeWidth="2" strokeDasharray="5,5"/>
+                      <text x="100" y="110" textAnchor="middle" fill="#dcfce7" fontSize="30" fontWeight="bold">YAM</text>
+                    </svg>
+                  </FigureCard>
+                </div>
+                <div className="md:col-span-2">
+                  <p className="mb-4"><strong>Love & Connection.</strong> Center of love, compassion, empathy, and connection.</p>
+                  <ul className="space-y-1 mb-4 text-sm">
+                    <li><strong>Element:</strong> Air</li>
+                    <li><strong>Color:</strong> Green</li>
+                    <li><strong>Balanced:</strong> Loving, compassionate, able to give and receive love.</li>
+                    <li><strong>Imbalanced:</strong> Closed off, overly giving, fear of intimacy, grief.</li>
+                    <li><strong>Poses:</strong> Backbends, Camel, Cobra, chest opening, arm variations.</li>
+                    <li><strong>Practice:</strong> Loving-kindness meditation, gratitude, heart breathing.</li>
+                  </ul>
+                </div>
+              </div>
+            </ManualSection>
+
+            <ManualSection id="chakra-throat" title="5. Throat Chakra — Vishuddha">
+              <div className="md:grid md:grid-cols-3 gap-6 items-center">
+                <div className="md:col-span-1">
+                  <FigureCard>
+                    <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                      <defs><filter id="glow5"><feGaussianBlur stdDeviation="3.5" result="coloredBlur"/><feMerge><feMergeNode in="coloredBlur"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs>
+                      <circle cx="100" cy="100" r="60" fill="#3b82f6" fillOpacity="0.3" stroke="#3b82f6" strokeWidth="3" filter="url(#glow5)"/>
+                      <circle cx="100" cy="100" r="30" fill="none" stroke="#3b82f6" strokeWidth="2" strokeDasharray="5,5"/>
+                      <text x="100" y="110" textAnchor="middle" fill="#dbeafe" fontSize="30" fontWeight="bold">HAM</text>
+                    </svg>
+                  </FigureCard>
+                </div>
+                <div className="md:col-span-2">
+                  <p className="mb-4"><strong>Communication & Truth.</strong> Governs authentic expression and communication.</p>
+                  <ul className="space-y-1 mb-4 text-sm">
+                    <li><strong>Element:</strong> Space/Ether</li>
+                    <li><strong>Color:</strong> Blue</li>
+                    <li><strong>Balanced:</strong> Clear communication, authentic expression, good listening.</li>
+                    <li><strong>Imbalanced:</strong> Fear of speaking, talking too much, or not being heard.</li>
+                    <li><strong>Poses:</strong> Fish pose, shoulder stand (supported), neck stretches, chanting.</li>
+                    <li><strong>Practice:</strong> Mantra, singing, journaling, speaking truth.</li>
+                  </ul>
+                </div>
+              </div>
+            </ManualSection>
+
+            <ManualSection id="chakra-brow" title="6. Third Eye Chakra — Ajna">
+              <div className="md:grid md:grid-cols-3 gap-6 items-center">
+                <div className="md:col-span-1">
+                  <FigureCard>
+                    <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                      <defs><filter id="glow6"><feGaussianBlur stdDeviation="3.5" result="coloredBlur"/><feMerge><feMergeNode in="coloredBlur"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs>
+                      <circle cx="100" cy="100" r="60" fill="#6366f1" fillOpacity="0.3" stroke="#6366f1" strokeWidth="3" filter="url(#glow6)"/>
+                      <circle cx="100" cy="100" r="30" fill="none" stroke="#6366f1" strokeWidth="2" strokeDasharray="5,5"/>
+                      <text x="100" y="110" textAnchor="middle" fill="#e0e7ff" fontSize="30" fontWeight="bold">OM</text>
+                    </svg>
+                  </FigureCard>
+                </div>
+                <div className="md:col-span-2">
+                  <p className="mb-4"><strong>Intuition & Wisdom.</strong> Center of intuition, insight, and inner knowing.</p>
+                  <ul className="space-y-1 mb-4 text-sm">
+                    <li><strong>Element:</strong> Light</li>
+                    <li><strong>Color:</strong> Indigo</li>
+                    <li><strong>Balanced:</strong> Clear intuition, wise discernment, trust in inner knowing.</li>
+                    <li><strong>Imbalanced:</strong> Overthinking, lack of clarity, dismissing intuition.</li>
+                    <li><strong>Poses:</strong> Forward folds, meditation poses, gentle inversions, balancing.</li>
+                    <li><strong>Practice:</strong> Meditation, breathwork, journaling, dream work.</li>
+                  </ul>
+                </div>
+              </div>
+            </ManualSection>
+
+            <ManualSection id="chakra-crown" title="7. Crown Chakra — Sahasrara">
+              <div className="md:grid md:grid-cols-3 gap-6 items-center">
+                <div className="md:col-span-1">
+                  <FigureCard>
+                    <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                      <defs><filter id="glow7"><feGaussianBlur stdDeviation="3.5" result="coloredBlur"/><feMerge><feMergeNode in="coloredBlur"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs>
+                      <circle cx="100" cy="100" r="60" fill="#8b5cf6" fillOpacity="0.3" stroke="#8b5cf6" strokeWidth="3" filter="url(#glow7)"/>
+                      <circle cx="100" cy="100" r="30" fill="none" stroke="#8b5cf6" strokeWidth="2" strokeDasharray="5,5"/>
+                      <text x="100" y="110" textAnchor="middle" fill="#f3e8ff" fontSize="20" fontWeight="bold">SILENCE</text>
+                    </svg>
+                  </FigureCard>
+                </div>
+                <div className="md:col-span-2">
+                  <p className="mb-4"><strong>Connection & Transcendence.</strong> Gateway to higher consciousness and spiritual connection.</p>
+                  <ul className="space-y-1 mb-4 text-sm">
+                    <li><strong>Element:</strong> Thought/Consciousness</li>
+                    <li><strong>Color:</strong> Violet/White</li>
+                    <li><strong>Balanced:</strong> Spiritual connection, sense of purpose, inner peace.</li>
+                    <li><strong>Imbalanced:</strong> Feeling disconnected, lack of purpose, spiritual materialism.</li>
+                    <li><strong>Poses:</strong> Meditation, Savasana, headstand (advanced), pranayama.</li>
+                    <li><strong>Practice:</strong> Meditation, prayer, silence, surrender, service.</li>
+                  </ul>
+                </div>
+              </div>
+
+            </ManualSection>
 
             <ManualSection id="integration" title="Integration in Teaching">
               <div className="p-4 bg-blue-900/20 border-l-4 border-blue-400 rounded-r-lg my-6">
