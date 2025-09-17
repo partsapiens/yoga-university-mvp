@@ -22,17 +22,27 @@ This document explains how to set up and test the OpenAI integration for the Yog
 
 ### 1. Environment Configuration
 
-Create or update your `.env.local` file:
+**Option A: Use `.env.local` (Recommended for local development)**
+
+Create a `.env.local` file in the project root:
 
 ```bash
-# Required for Supabase
-NEXT_PUBLIC_SUPABASE_URL=your_supabase_url
-NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
-
-# OpenAI Configuration
-OPENAI_API_KEY=your_openai_api_key_here
+# Local development - this file should NOT be committed to git
+OPENAI_API_KEY=sk-proj-your-actual-openai-api-key-here
 USE_MOCK=false
 ```
+
+**Option B: Modify `.env` directly**
+
+Uncomment and set the API key in the existing `.env` file:
+
+```bash
+# OpenAI Configuration - Set this in your environment variables
+OPENAI_API_KEY=your_openai_api_key_here  # Uncomment and set your key
+USE_MOCK=false
+```
+
+⚠️ **Important**: If you modify `.env` directly, never commit your actual API key to the repository.
 
 ### 2. Getting an OpenAI API Key
 
@@ -90,10 +100,31 @@ This ensures the application remains functional even without OpenAI access.
 
 If you encounter issues:
 
-1. Check the server logs for "OPENAI_API_KEY missing" warnings
-2. Verify your API key is correctly set in `.env.local`
-3. Restart the development server after changing environment variables
-4. Test individual endpoints with curl commands
+1. **Check API Key Configuration**:
+   - Verify `OPENAI_API_KEY` is uncommented in `.env` or set in `.env.local`
+   - Check server logs for "OPENAI_API_KEY missing" warnings
+   - Ensure the API key starts with `sk-` and is valid
+
+2. **Test Health Endpoint**:
+   ```bash
+   curl http://localhost:3000/api/health
+   ```
+   - Should return `{"status": "healthy", "openai": true}` when configured correctly
+   - Returns `{"status": "unhealthy", "openai": false}` when API key is missing
+
+3. **Common Issues**:
+   - **"AI validation encountered an error"**: Usually means API key is missing or invalid
+   - **Fallback responses**: Indicates the system is using mock mode or API calls are failing
+   - **Server restart required**: After changing environment variables, restart the dev server
+
+4. **Environment Variable Priority**:
+   - `.env.local` overrides `.env`
+   - Use `.env.local` for your actual API key (never commit this file)
+   - Keep `.env` with placeholder values for the repository
+
+5. **Network Issues**:
+   - Ensure you can reach `api.openai.com` from your environment
+   - Check firewall or proxy settings if API calls fail
 
 ## Model Selection
 

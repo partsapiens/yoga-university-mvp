@@ -56,11 +56,30 @@ cd yoga-university-mvp
 # Install dependencies
 npm install
 
+# Set up environment variables (optional - for AI features)
+cp .env.local.example .env.local
+# Edit .env.local to add your OpenAI API key if you want AI features
+
 # Start development server
 npm run dev
 ```
 
 Visit [http://localhost:3000](http://localhost:3000) to see the application.
+
+### ⚙️ AI Features Setup (Optional)
+
+To enable AI-powered features like flow generation and meditation guidance:
+
+1. Get an OpenAI API key from [platform.openai.com](https://platform.openai.com/api-keys)
+2. Add it to `.env.local`:
+   ```bash
+   OPENAI_API_KEY=sk-proj-your-api-key-here
+   USE_MOCK=false
+   ```
+3. Restart the development server
+4. Test with: `./check-openai-config.sh`
+
+**Note**: AI features work in fallback mode without an API key, providing default responses.
 
 ### Build for Production
 
