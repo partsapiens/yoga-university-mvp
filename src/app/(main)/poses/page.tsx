@@ -88,16 +88,11 @@ const PoseLibraryPage = () => {
     const loadPoses = async () => {
       try {
         setLoading(true);
-        console.log('Loading poses from database...');
         
-        // Import debug function dynamically to avoid build issues
-        const { getPosesFromDatabase, debugDatabaseConnection } = await import('@/lib/database');
-        
-        // Run debug to help diagnose issues
-        await debugDatabaseConnection();
+        // Import database function dynamically to avoid build issues
+        const { getPosesFromDatabase } = await import('@/lib/database');
         
         const dbPoses = await getPosesFromDatabase();
-        console.log('Database poses received:', dbPoses.length);
         
         if (dbPoses.length === 0) {
           console.warn('No poses loaded from database - check console for debug information');

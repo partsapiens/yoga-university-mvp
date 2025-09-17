@@ -52,53 +52,39 @@ export default function PoseLibraryPage() {
 
   async function fetchPoses(isInit = false) {
     setLoading(true);
-    console.log('Fetching poses with filters:', filters, 'search:', search, 'sort:', sort);
     
-    let query = supabase.from('poses').select('*');
-
+    // Use the API endpoint instead of direct Supabase calls for better performance
+    const params = new URLSearchParams();
+    
     // Apply filters (family -> category, intensity -> level mapping)
-    if (filters.family) query = query.eq('category', filters.family);
+    if (filters.family) params.set('category', filters.family);
     if (filters.intensity) {
-      // Map intensity numbers to level names
       const level = filters.intensity <= 2 ? 'beginner' : filters.intensity <= 4 ? 'intermediate' : 'advanced';
-      query = query.eq('level', level);
+      params.set('level', level);
     }
+    
+    if (search) params.set('search', search);
+    params.set('page', (page.current + 1).toString());
+    params.set('limit', PAGE_SIZE.toString());
 
-    // Exclude variations from main library unless searching
-    // Variations are typically poses with (Right), (Left), or similar directional indicators
-    if (!search) {
-      query = query.not('name', 'ilike', '%\\(Right\\)%')
-                   .not('name', 'ilike', '%\\(Left\\)%')
-                   .not('name', 'ilike', '%Right%')
-                   .not('name', 'ilike', '%Left%');
-    }
+    try {
+      const response = await fetch(`/api/poses?${params.toString()}`);
+      if (!response.ok) {
+        throw new Error('Failed to fetch poses');
+      }
+      
+      const result = await response.json();
+      const data = result.data || [];
 
-    // Search by name/Sanskrit using correct field names
-    if (search)
-      query = query.or(`name.ilike.%${search}%,sanskrit.ilike.%${search}%,category.ilike.%${search}%`);
+      if (isInit) setPoses(data);
+      else setPoses((prev) => [...prev, ...data]);
 
-    // Sorting using correct field names
-    if (sort === 'alphabetical') query = query.order('name');
-    if (sort === 'intensity') query = query.order('intensity');
-    if (sort === 'recent') query = query.order('created_at', { ascending: false });
-
-    // Pagination
-    query = query.range(page.current * PAGE_SIZE, (page.current + 1) * PAGE_SIZE - 1);
-
-    const { data, error } = await query;
-
-    if (error) {
+      setHasMore(data.length === PAGE_SIZE);
+    } catch (error) {
       console.error('Error fetching poses:', error);
+    } finally {
       setLoading(false);
-      return;
     }
-
-    console.log(`Successfully fetched ${data?.length || 0} poses`);
-    if (isInit) setPoses(data || []);
-    else setPoses((prev) => [...prev, ...(data || [])]);
-
-    setHasMore((data || []).length === PAGE_SIZE);
-    setLoading(false);
   }
 
   useEffect(() => {
