@@ -11,6 +11,12 @@ export default function SharedFlowPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [currentUrl, setCurrentUrl] = useState<string>('');
+  const [isClient, setIsClient] = useState(false);
+
+  // Prevent hydration mismatch
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
 
   const handleSetDocumentTitle = (flowData: FlowExportData) => {
     if (typeof window !== 'undefined') {
@@ -83,6 +89,18 @@ export default function SharedFlowPage() {
     const importUrl = `/flows/create?import=${flowParams.get('data')}`;
     window.location.href = importUrl;
   };
+
+  // Add client-side check to prevent hydration issues
+  if (!isClient) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 dark:from-gray-900 dark:to-gray-800 flex items-center justify-center">
+        <div className="text-center bg-white dark:bg-gray-800 rounded-xl p-8 shadow-lg max-w-md mx-4">
+          <div className="animate-spin rounded-full h-16 w-16 border-b-4 border-indigo-600 mx-auto mb-6"></div>
+          <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-2">Loading...</h2>
+        </div>
+      </div>
+    );
+  }
 
   if (loading) {
     return (
