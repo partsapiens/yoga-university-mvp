@@ -109,34 +109,28 @@ export default function RootLayout({
   return (
     <html lang="en" className="h-full">
       <head>
+        {/* Google AdSense - MUST be first element as per Google guidelines */}
+        <Script
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9900806169268429"
+          strategy="afterInteractive"
+          crossOrigin="anonymous"
+        />
+        
+        {/* Google AdSense Account Verification */}
+        <meta name="google-adsense-account" content="ca-pub-9900806169268429" />
+        
         {/* Viewport meta tag */}
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
         <meta name="theme-color" content="#2563eb" media="(prefers-color-scheme: light)" />
         <meta name="theme-color" content="#1e40af" media="(prefers-color-scheme: dark)" />
         
-        {/* Google AdSense Account Verification */}
-        <meta name="google-adsense-account" content="ca-pub-9900806169268429" />
+        {/* Ad network preconnects for performance */}
+        <link rel="preconnect" href="https://pagead2.googlesyndication.com" />
+        <link rel="preconnect" href="https://googleads.g.doubleclick.net" />
         
         {/* Preconnect to external domains for performance */}
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        
-        {/* Ad network preconnects - Only in production */}
-        {process.env.NODE_ENV === 'production' && (
-          <>
-            <link rel="preconnect" href="https://pagead2.googlesyndication.com" />
-            <link rel="preconnect" href="https://googleads.g.doubleclick.net" />
-          </>
-        )}
-        
-        {/* Google AdSense - Only in production */}
-        {process.env.NODE_ENV === 'production' && (
-          <Script
-            src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9900806169268429"
-            strategy="lazyOnload"
-            crossOrigin="anonymous"
-          />
-        )}
         
         {/* Google Analytics */}
         {process.env.NODE_ENV === 'production' && (
