@@ -1,14 +1,18 @@
 import OpenAI from "openai";
+import getConfig from 'next/config';
+
+const { serverRuntimeConfig } = getConfig() || {};
+const apiKey = serverRuntimeConfig?.OPENAI_API_KEY || process.env.OPENAI_API_KEY;
 
 // Validate environment variables
-if (!process.env.OPENAI_API_KEY && process.env.USE_MOCK !== "true") {
+if (!apiKey && process.env.USE_MOCK !== "true") {
   console.warn("OPENAI_API_KEY missing - API calls will use fallback responses");
 }
 
 // Main OpenAI client - only created when API key is available
-export const openai = process.env.OPENAI_API_KEY 
+export const openai = apiKey
   ? new OpenAI({
-      apiKey: process.env.OPENAI_API_KEY,
+      apiKey,
     })
   : null;
 

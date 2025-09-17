@@ -1,5 +1,8 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  serverRuntimeConfig: {
+    OPENAI_API_KEY: process.env.OPENAI_API_KEY,
+  },
   // Temporarily disable static export for API routes development
   // output: 'export',
   eslint: {
