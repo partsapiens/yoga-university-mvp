@@ -120,15 +120,23 @@ export default function RootLayout({
         {/* Preconnect to external domains for performance */}
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link rel="preconnect" href="https://pagead2.googlesyndication.com" />
-        <link rel="preconnect" href="https://googleads.g.doubleclick.net" />
         
-        {/* Google AdSense */}
-        <Script
-          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9900806169268429"
-          strategy="afterInteractive"
-          crossOrigin="anonymous"
-        />
+        {/* Ad network preconnects - Only in production */}
+        {process.env.NODE_ENV === 'production' && (
+          <>
+            <link rel="preconnect" href="https://pagead2.googlesyndication.com" />
+            <link rel="preconnect" href="https://googleads.g.doubleclick.net" />
+          </>
+        )}
+        
+        {/* Google AdSense - Only in production */}
+        {process.env.NODE_ENV === 'production' && (
+          <Script
+            src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9900806169268429"
+            strategy="lazyOnload"
+            crossOrigin="anonymous"
+          />
+        )}
         
         {/* Google Analytics */}
         {process.env.NODE_ENV === 'production' && (

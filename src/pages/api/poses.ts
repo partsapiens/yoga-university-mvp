@@ -13,6 +13,9 @@ interface QueryFilters {
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method === 'GET') {
     try {
+      // Add cache headers for better performance
+      res.setHeader('Cache-Control', 'public, s-maxage=300, stale-while-revalidate=600');
+      
       const {
         category,
         level,
@@ -21,6 +24,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         page = 1,
         limit = 20
       } = req.query as any;
+
+      // Quick validation
+      const pageNum = Math.max(1, Number(page));
+      const limitNum = Math.min(100, Math.max(1, Number(limit)));
 
       // Start building the query
       let query = supabase
@@ -60,9 +67,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         query = query.in('id', favArray);
       }
 
-      // Apply pagination
-      const pageNum = Number(page);
-      const limitNum = Number(limit);
+      // Apply pagination  
       const from = (pageNum - 1) * limitNum;
       const to = from + limitNum - 1;
 

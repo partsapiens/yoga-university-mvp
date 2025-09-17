@@ -1,26 +1,11 @@
 "use client";
 
 import React, { useMemo, useState, useRef, useEffect, useCallback } from "react";
+import dynamic from "next/dynamic";
 import { useLocalStorage } from "@/hooks/useLocalStorage";
 import { useTimer } from "@/hooks/useTimer";
+import { useKeyboardShortcuts } from "@/components/flows/KeyboardShortcuts";
 import { ControlPanel } from "@/components/flows/ControlPanel";
-import { SuggestionsGrid } from "@/components/flows/SuggestionsGrid";
-import { CombinedPoseLibrary } from "@/components/flows/CombinedPoseLibrary";
-import { GeneratePreviewModal } from "@/components/flows/GeneratePreviewModal";
-import { SavedFlows } from "@/components/flows/SavedFlows";
-import { PoseLibrarySidebar } from "@/components/flows/PoseLibrarySidebar";
-import { ExportFlow } from "@/components/flows/ExportFlow";
-import { FlowManagement } from "@/components/flows/FlowManagement";
-import { FlowValidation } from "@/components/flows/FlowValidation";
-import { AutoSave } from "@/components/flows/AutoSave";
-import { KeyboardShortcuts, useKeyboardShortcuts } from "@/components/flows/KeyboardShortcuts";
-import { FlowNameInput } from "@/components/flows/FlowNameInput";
-import YogaAIDemo from "@/components/flows/YogaAIDemo";
-import { FlowTemplates } from "@/components/flows/FlowTemplates";
-import { QuickActions } from "@/components/dashboard/QuickActions";
-import { PoseAnalysisSettings, ProgressTracking } from "@/components/pose-analysis";
-import { PersonalizedAffirmations } from "@/components/ai/PersonalizedAffirmations";
-import { AdaptiveFlow } from "@/components/ai/AdaptiveFlow";
 import { Focus, TimingMode, PoseId, SavedFlow, Pose } from "@/types/yoga";
 import { POSES } from "@/lib/yoga-data";
 import {
@@ -39,6 +24,79 @@ import {
   generateShareableURL,
   FlowExportData 
 } from "@/lib/flowExport";
+
+// Dynamic imports for heavy components to improve initial page load
+const SuggestionsGrid = dynamic(() => import("@/components/flows/SuggestionsGrid").then(mod => ({ default: mod.SuggestionsGrid })), {
+  loading: () => <div className="animate-pulse bg-gray-200 rounded h-32"></div>
+});
+
+const CombinedPoseLibrary = dynamic(() => import("@/components/flows/CombinedPoseLibrary").then(mod => ({ default: mod.CombinedPoseLibrary })), {
+  loading: () => <div className="animate-pulse bg-gray-200 rounded h-64"></div>
+});
+
+const GeneratePreviewModal = dynamic(() => import("@/components/flows/GeneratePreviewModal").then(mod => ({ default: mod.GeneratePreviewModal })), {
+  ssr: false
+});
+
+const SavedFlows = dynamic(() => import("@/components/flows/SavedFlows").then(mod => ({ default: mod.SavedFlows })), {
+  loading: () => <div className="animate-pulse bg-gray-200 rounded h-40"></div>
+});
+
+const PoseLibrarySidebar = dynamic(() => import("@/components/flows/PoseLibrarySidebar").then(mod => ({ default: mod.PoseLibrarySidebar })), {
+  loading: () => <div className="animate-pulse bg-gray-200 rounded h-96"></div>
+});
+
+const ExportFlow = dynamic(() => import("@/components/flows/ExportFlow").then(mod => ({ default: mod.ExportFlow })), {
+  ssr: false
+});
+
+const FlowManagement = dynamic(() => import("@/components/flows/FlowManagement").then(mod => ({ default: mod.FlowManagement })), {
+  ssr: false
+});
+
+const FlowValidation = dynamic(() => import("@/components/flows/FlowValidation").then(mod => ({ default: mod.FlowValidation })), {
+  ssr: false
+});
+
+const AutoSave = dynamic(() => import("@/components/flows/AutoSave").then(mod => ({ default: mod.AutoSave })), {
+  ssr: false
+});
+
+const KeyboardShortcuts = dynamic(() => import("@/components/flows/KeyboardShortcuts").then(mod => ({ default: mod.KeyboardShortcuts })), {
+  ssr: false
+});
+
+const FlowNameInput = dynamic(() => import("@/components/flows/FlowNameInput").then(mod => ({ default: mod.FlowNameInput })), {
+  loading: () => <div className="animate-pulse bg-gray-200 rounded h-10 w-64"></div>
+});
+
+const YogaAIDemo = dynamic(() => import("@/components/flows/YogaAIDemo"), {
+  loading: () => <div className="animate-pulse bg-gray-200 rounded h-64"></div>
+});
+
+const FlowTemplates = dynamic(() => import("@/components/flows/FlowTemplates").then(mod => ({ default: mod.FlowTemplates })), {
+  loading: () => <div className="animate-pulse bg-gray-200 rounded h-48"></div>
+});
+
+const QuickActions = dynamic(() => import("@/components/dashboard/QuickActions").then(mod => ({ default: mod.QuickActions })), {
+  loading: () => <div className="animate-pulse bg-gray-200 rounded h-32"></div>
+});
+
+const PersonalizedAffirmations = dynamic(() => import("@/components/ai/PersonalizedAffirmations").then(mod => ({ default: mod.PersonalizedAffirmations })), {
+  ssr: false
+});
+
+const AdaptiveFlow = dynamic(() => import("@/components/ai/AdaptiveFlow").then(mod => ({ default: mod.AdaptiveFlow })), {
+  ssr: false
+});
+
+const PoseAnalysisSettings = dynamic(() => import("@/components/pose-analysis").then(mod => ({ default: mod.PoseAnalysisSettings })), {
+  ssr: false
+});
+
+const ProgressTracking = dynamic(() => import("@/components/pose-analysis").then(mod => ({ default: mod.ProgressTracking })), {
+  ssr: false
+});
 
 const clamp = (n: number, min: number, max: number) => Math.max(min, Math.min(max, n));
 

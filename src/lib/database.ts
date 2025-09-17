@@ -49,7 +49,7 @@ function transformDatabasePoseToLegacy(dbPose: DatabasePose): Pose {
 
 export const getPosesFromDatabase = async (): Promise<DatabasePose[]> => {
   try {
-    console.log('Using static fallback pose data for development...');
+    // Using static fallback pose data for development
     
     // Static sample data to avoid import issues
     const samplePoses: DatabasePose[] = [
@@ -61,14 +61,14 @@ export const getPosesFromDatabase = async (): Promise<DatabasePose[]> => {
         category: 'seated',
         level: 'beginner',
         plane: 'sagittal',
-        thumbnail_url: '/images/poses/butterfly-pose.jpg',
+        thumbnail_url: '/images/poses/placeholder.svg',
         icon: '🦋',
         meta: {},
         cues: ['Hold for 60 seconds', 'Focus on breathing', 'Maintain alignment'],
         benefits: ['Targets Hips, Groin', '2/5 intensity level', 'Sacral chakra activation'],
         created_at: new Date().toISOString(),
         hold_time: 60,
-        image_url: '/images/poses/butterfly-pose.jpg',
+        image_url: '/images/poses/placeholder.svg',
         instructions: 'Practice Butterfly Pose (Baddha Konasana) focusing on Hips, Groin.',
         modifications: 'Can be held longer for deeper stretch',
         contraindications: 'Generally safe for most practitioners',
@@ -92,14 +92,14 @@ export const getPosesFromDatabase = async (): Promise<DatabasePose[]> => {
         category: 'standing',
         level: 'beginner',
         plane: 'sagittal',
-        thumbnail_url: '/images/poses/standing-forward-fold.jpg',
+        thumbnail_url: '/images/poses/placeholder.svg',
         icon: '🧎',
         meta: {},
         cues: ['Hold for 60 seconds', 'Focus on breathing', 'Maintain alignment'],
         benefits: ['Targets Hamstrings, Spine', '2/5 intensity level', 'Root chakra activation'],
         created_at: new Date().toISOString(),
         hold_time: 60,
-        image_url: '/images/poses/standing-forward-fold.jpg',
+        image_url: '/images/poses/placeholder.svg',
         instructions: 'Practice Standing Forward Fold (Uttanāsana) focusing on Hamstrings, Spine.',
         modifications: 'Can be held longer for deeper stretch',
         contraindications: 'Generally safe for most practitioners',
@@ -123,14 +123,14 @@ export const getPosesFromDatabase = async (): Promise<DatabasePose[]> => {
         category: 'inversion',
         level: 'intermediate',
         plane: 'sagittal',
-        thumbnail_url: '/images/poses/downward-facing-dog.jpg',
+        thumbnail_url: '/images/poses/placeholder.svg',
         icon: '🐶',
         meta: {},
         cues: ['Hold for 45 seconds', 'Focus on breathing', 'Maintain alignment'],
         benefits: ['Targets Shoulders, Hamstrings, Spine', '3/5 intensity level', 'Heart chakra activation'],
         created_at: new Date().toISOString(),
         hold_time: 45,
-        image_url: '/images/poses/downward-facing-dog.jpg',
+        image_url: '/images/poses/placeholder.svg',
         instructions: 'Practice Downward Facing Dog (Adho Mukha Svanasana) focusing on Shoulders, Hamstrings, Spine.',
         modifications: 'Use props for support if needed',
         contraindications: 'Generally safe for most practitioners',
@@ -154,14 +154,14 @@ export const getPosesFromDatabase = async (): Promise<DatabasePose[]> => {
         category: 'standing',
         level: 'intermediate',
         plane: 'sagittal',
-        thumbnail_url: '/images/poses/warrior-1-right.jpg',
+        thumbnail_url: '/images/poses/placeholder.svg',
         icon: '🛡️',
         meta: {},
         cues: ['Hold for 45 seconds', 'Focus on breathing', 'Maintain alignment'],
         benefits: ['Targets Hips, Quads, Core', '3/5 intensity level', 'Solar Plexus chakra activation'],
         created_at: new Date().toISOString(),
         hold_time: 45,
-        image_url: '/images/poses/warrior-1-right.jpg',
+        image_url: '/images/poses/placeholder.svg',
         instructions: 'Practice Warrior I (Right) (Virabhadrāsana I) focusing on Hips, Quads, Core.',
         modifications: 'Use props for support if needed',
         contraindications: 'Generally safe for most practitioners',
@@ -179,7 +179,6 @@ export const getPosesFromDatabase = async (): Promise<DatabasePose[]> => {
       }
     ];
     
-    console.log(`Returning ${samplePoses.length} static sample poses`);
     return samplePoses;
   } catch (error) {
     console.error('Error in getPosesFromDatabase:', error);
@@ -190,43 +189,26 @@ export const getPosesFromDatabase = async (): Promise<DatabasePose[]> => {
 // Test connection to Supabase
 export const testSupabaseConnection = async (): Promise<boolean> => {
   try {
-    console.log('Testing Supabase connection...');
-    
     // Check if environment variables are set
     const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
     const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
     
     if (!supabaseUrl || !supabaseAnonKey) {
-      console.error('Supabase environment variables not configured:', {
-        url: !!supabaseUrl,
-        key: !!supabaseAnonKey
-      });
       return false;
     }
     
-    console.log('Environment variables check passed');
-    console.log('Supabase URL:', supabaseUrl);
-    console.log('Supabase Key (first 20 chars):', supabaseAnonKey.substring(0, 20) + '...');
+    // Only test connection in development mode to avoid production errors
+    if (process.env.NODE_ENV === 'production') {
+      return false;
+    }
     
-    // Test connection by getting count of poses
+    // Test connection by getting count of poses with shorter timeout
     const { data, error } = await supabase
       .from('poses')
       .select('count', { count: 'exact', head: true });
     
-    if (error) {
-      console.error('Supabase connection test failed:', {
-        message: error.message,
-        details: error.details,
-        hint: error.hint,
-        code: error.code
-      });
-      return false;
-    }
-    
-    console.log('Supabase connection successful');
-    return true;
+    return !error;
   } catch (error) {
-    console.error('Supabase connection test error:', error);
     return false;
   }
 };
