@@ -110,11 +110,11 @@ export default function RootLayout({
     <html lang="en" className="h-full">
       <head>
         {/* Google AdSense - MUST be first element as per Google guidelines */}
-        <Script
+        <script
+          async
           src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9900806169268429"
-          strategy="afterInteractive"
           crossOrigin="anonymous"
-        />
+        ></script>
         
         {/* Google AdSense Account Verification */}
         <meta name="google-adsense-account" content="ca-pub-9900806169268429" />

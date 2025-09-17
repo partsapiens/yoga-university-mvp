@@ -18,6 +18,26 @@ export default function robots(): MetadataRoute.Robots {
         ],
       },
       {
+        userAgent: 'Googlebot',
+        allow: '/',
+        disallow: [
+          '/admin/',
+          '/dashboard', // Private user area
+          '/journal/', // Private user content
+          '/reading/', // Private user content
+        ],
+      },
+      {
+        userAgent: 'AdsBot-Google',
+        allow: '/',
+        disallow: [
+          '/admin/',
+          '/dashboard', // Private user area
+          '/journal/', // Private user content
+          '/reading/', // Private user content
+        ],
+      },
+      {
         userAgent: 'GPTBot', // OpenAI bot
         disallow: '/', // Prevent AI training on our content
       },
