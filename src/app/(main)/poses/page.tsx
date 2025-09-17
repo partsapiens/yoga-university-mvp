@@ -91,16 +91,36 @@ const PoseLibraryPage = () => {
         
         // Import database function dynamically to avoid build issues
         const { getPosesFromDatabase } = await import('@/lib/database');
+        const { EXTENDED_POSES } = await import('@/lib/yoga-data');
         
         const dbPoses = await getPosesFromDatabase();
         
-        if (dbPoses.length === 0) {
-          console.warn('No poses loaded from database - check console for debug information');
+        let finalPoses: ExtendedPose[] = [];
+        
+        if (dbPoses.length < 10) { // If database has fewer than 10 poses, use extended fallback
+          console.warn(`Database returned only ${dbPoses.length} poses - using static fallback data`);
+          // Convert static pose data to ExtendedPose format
+          finalPoses = EXTENDED_POSES.map((pose, index) => ({
+            id: `static-${index}`,
+            slug: pose.name.toLowerCase().replace(/\s+/g, '-'),
+            name_en: pose.name,
+            name_sanskrit: pose.sanskrit,
+            family_id: pose.family,
+            intensity: pose.intensity,
+            thumbnail_url: `/images/poses/placeholder.svg`,
+            icon_url: pose.icon,
+            benefits: [`${pose.intensity}/5 intensity level`, `Targets ${pose.groups.join(', ')}`, `${pose.chakra} chakra activation`],
+            bodyFocus: pose.groups,
+            propsRequired: ['None'],
+            difficulty: pose.intensity <= 2 ? 'beginner' : pose.intensity >= 4 ? 'advanced' : 'intermediate',
+            planeOfMotion: [pose.plane]
+          }));
+        } else {
+          finalPoses = dbPoses.map(transformDatabasePose);
         }
         
-        const transformedPoses = dbPoses.map(transformDatabasePose);
-        setPoses(transformedPoses);
-        setFilteredPoses(transformedPoses);
+        setPoses(finalPoses);
+        setFilteredPoses(finalPoses);
         
         // Load user preferences
         if (typeof window !== 'undefined') {
