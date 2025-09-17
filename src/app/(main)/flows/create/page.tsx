@@ -22,8 +22,10 @@ import {
   downloadFlowAsJSON, 
   printFlowAsPDF, 
   generateShareableURL,
+  parseSharedFlowData,
   FlowExportData 
 } from "@/lib/flowExport";
+import { useSearchParams } from 'next/navigation';
 
 // Dynamic imports for heavy components to improve initial page load
 const SuggestionsGrid = dynamic(() => import("@/components/flows/SuggestionsGrid").then(mod => ({ default: mod.SuggestionsGrid })), {
@@ -101,6 +103,8 @@ const ProgressTracking = dynamic(() => import("@/components/pose-analysis").then
 const clamp = (n: number, min: number, max: number) => Math.max(min, Math.min(max, n));
 
 export default function CreateFlowPage() {
+  const searchParams = useSearchParams();
+  
   // --- Core Flow State ---
   const [flow, setFlow] = useState<PoseId[]>([PoseId.DownDog, PoseId.Warrior1Right, PoseId.ForwardFold, PoseId.Child, PoseId.Butterfly]);
   const [overrides, setOverrides] = useState<Record<number, number>>({});
@@ -121,6 +125,47 @@ export default function CreateFlowPage() {
   const [showCustomSettings, setShowCustomSettings] = useState<boolean>(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userId, setUserId] = useState<string | null>(null);
+
+  // --- Import Flow Functionality ---
+  useEffect(() => {
+    const importData = searchParams?.get('import');
+    if (importData) {
+      try {
+        const flowData = parseSharedFlowData(importData);
+        if (flowData) {
+          // Import the flow data
+          setFlowName(flowData.name || 'Imported Flow');
+          
+          // Convert poses to PoseId array
+          const importedFlow = flowData.poses.map(pose => pose.pose_id as PoseId);
+          setFlow(importedFlow);
+          
+          // Set duration overrides
+          const newOverrides: Record<number, number> = {};
+          flowData.poses.forEach((pose, index) => {
+            if (pose.duration !== 30) { // Default duration
+              newOverrides[index] = pose.duration;
+            }
+          });
+          setOverrides(newOverrides);
+          
+          // Set other parameters based on flow data
+          setMinutes(Math.round(flowData.totalDuration / 60));
+          if (flowData.difficulty === 'beginner') setIntensity(2);
+          else if (flowData.difficulty === 'intermediate') setIntensity(3);
+          else if (flowData.difficulty === 'advanced') setIntensity(4);
+          
+          // Show success message
+          setTimeout(() => {
+            alert(`Flow "${flowData.name}" imported successfully! You can now modify and save it.`);
+          }, 500);
+        }
+      } catch (error) {
+        console.error('Error importing flow:', error);
+        alert('Failed to import flow. The data may be corrupted.');
+      }
+    }
+  }, [searchParams]);
   const [saveToDatabase, setSaveToDatabase] = useState(false);
 
   // User profile for personalization
