@@ -10,7 +10,7 @@
     "lint": "next lint",
     "test": "vitest run",
     "precommit": "node scripts/scan-secrets.cjs",
-    "check-build-secrets": "./scripts/check-build-secrets.sh"
+    "check-build-safety": "./scripts/check-build-safety.sh"
   },
   "dependencies": {
     "@radix-ui/react-dialog": "^1.0.5",

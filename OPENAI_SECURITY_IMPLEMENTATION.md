@@ -19,7 +19,7 @@
 ### Security Verification
 ```bash
 # Test that no secrets are exposed in build output
-npm run check-build-secrets
+npm run check-build-safety
 ```
 
 ## 🎯 Production Mode Enabled

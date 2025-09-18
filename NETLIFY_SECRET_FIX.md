@@ -46,7 +46,7 @@ const nextConfig = {
 
 3. **Added build secret scanning**:
 ```bash
-npm run check-build-secrets
+npm run check-build-safety
 ```
 
 ## Verification
