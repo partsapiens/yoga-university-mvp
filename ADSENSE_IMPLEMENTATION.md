@@ -40,29 +40,71 @@ The following preconnect links are included for optimal performance and are **al
 
 ## Verification Steps
 
+### Automated Verification
+Use the provided verification script to automatically check your AdSense implementation:
+
+```bash
+./scripts/verify-adsense.sh
+```
+
+This script will check:
+- ads.txt accessibility and content
+- robots.txt configuration
+- AdSense script presence in page source
+- Site accessibility
+
+### Manual Verification
+
 1. **Check ads.txt accessibility:**
    ```bash
-   curl https://yogaflowuniversity.com/ads.txt
+   curl https://yourdomain.com/ads.txt
+   ```
+   
+   The response should be:
+   ```
+   google.com, pub-9900806169268429, DIRECT, f08c47fec0942fa0
    ```
 
 2. **Verify script in page source:**
    - View page source and search for "adsbygoogle"
    - Confirm the script is preloaded and loaded correctly
+   - Check for the meta tag: `<meta name="google-adsense-account" content="ca-pub-9900806169268429" />`
 
-3. **Google AdSense Console:**
+3. **Test in incognito mode:**
+   - Open your site in incognito/private browsing mode
+   - This avoids cache issues that might prevent proper verification
+
+4. **Google AdSense Console:**
    - Check AdSense dashboard for site verification status
    - May take 24-48 hours for Google to detect changes
+   - Clear any cached verification attempts if needed
 
 ## Common Issues & Solutions
+
+### ads.txt File Format Issues
+- **BOM (Byte Order Mark) problems**: Ensure the file is saved as plain UTF-8 without BOM
+- **Trailing whitespace**: The ads.txt file has been optimized to remove any trailing whitespace
+- **Line endings**: Use Unix-style line endings (LF) for better compatibility
+- **File encoding**: Must be UTF-8 encoded plain text
+
+### ads.txt Accessibility Issues
+- **404 Not Found**: 
+  - Ensure `ads.txt` is in the `public/` directory, not root
+  - Next.js serves static files from `public/` directory at root URL
+  - Verify deployment correctly copies the file to the web root
+- **Wrong MIME type**: Server should serve ads.txt with `text/plain` MIME type
+- **CDN caching**: If using a CDN, ensure ads.txt is not cached or has a short TTL
+
+### Domain and DNS Issues
+- **Domain mismatch**: Ensure the publisher ID matches the domain being verified
+- **DNS propagation**: Changes may take time to propagate globally
+- **Subdomain vs root domain**: AdSense verification applies to the exact domain used
+- **HTTPS requirements**: Ensure the site is accessible via HTTPS
 
 ### ERR_BLOCKED_BY_CLIENT
 - This error appears when ad blockers are active
 - Normal in development environments
 - Does not affect Google's ability to detect the implementation
-
-### ads.txt Not Found (404)
-- Ensure `ads.txt` is in the `public/` directory, not root
-- Next.js serves static files from `public/` directory at root URL
 
 ### Script Not Loading
 - Check Content Security Policy settings
@@ -73,6 +115,67 @@ The following preconnect links are included for optimal performance and are **al
 - Ensure `robots.txt` allows `Googlebot` and `AdsBot-Google` access to the site
 - The `robots.ts` file has been optimized to explicitly allow AdSense crawlers
 - Static files like `ads.txt` should be accessible to all crawlers
+
+### Alternative Verification Methods
+If ads.txt verification continues to fail, try these alternatives:
+1. **Meta tag verification**: Already included in the layout
+2. **AdSense code snippet**: Can be added to specific pages
+3. **HTML file upload**: Upload a verification HTML file to the site root
+
+## Deployment Configuration
+
+### Netlify Configuration
+Add to your `netlify.toml` to ensure proper MIME types:
+
+```toml
+[[headers]]
+  for = "/ads.txt"
+  [headers.values]
+    Content-Type = "text/plain; charset=utf-8"
+
+[[headers]]
+  for = "/robots.txt"
+  [headers.values]
+    Content-Type = "text/plain; charset=utf-8"
+```
+
+### Vercel Configuration
+Add to `vercel.json`:
+
+```json
+{
+  "headers": [
+    {
+      "source": "/ads.txt",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "text/plain; charset=utf-8"
+        }
+      ]
+    }
+  ]
+}
+```
+
+### Apache Configuration
+Add to `.htaccess`:
+
+```apache
+<Files "ads.txt">
+    ForceType text/plain
+    Header set Content-Type "text/plain; charset=utf-8"
+</Files>
+```
+
+### Nginx Configuration
+Add to server block:
+
+```nginx
+location = /ads.txt {
+    add_header Content-Type text/plain;
+}
+```
 
 ## Publisher Information
 - Publisher ID: `ca-pub-9900806169268429`
