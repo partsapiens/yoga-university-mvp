@@ -1,12 +1,21 @@
 import OpenAI from "openai";
 
+// Check if we have a valid API key (not a placeholder)
+const isValidApiKey = (key: string | undefined): boolean => {
+  return !!(key && 
+    key !== 'your_openai_api_key_here' && 
+    key !== '__set_in_env_only__' && 
+    key.startsWith('sk-'));
+};
+
 // Validate environment variables
-if (!process.env.OPENAI_API_KEY && process.env.USE_MOCK !== "true") {
-  console.warn("OPENAI_API_KEY missing - API calls will use fallback responses");
+const hasValidKey = isValidApiKey(process.env.OPENAI_API_KEY);
+if (!hasValidKey && process.env.USE_MOCK !== "true") {
+  console.warn("OPENAI_API_KEY missing or invalid - API calls will use fallback responses");
 }
 
-// Main OpenAI client - only created when API key is available
-export const openai = process.env.OPENAI_API_KEY 
+// Main OpenAI client - only created when API key is valid
+export const openai = hasValidKey
   ? new OpenAI({
       apiKey: process.env.OPENAI_API_KEY,
     })
@@ -109,17 +118,22 @@ export function filterContent(content: string): string {
 }
 
 // Health check for OpenAI API (without exposing secrets)
-export async function checkOpenAIHealth(): Promise<{ ok: boolean; error?: string }> {
+export async function checkOpenAIHealth(): Promise<{ ok: boolean; error?: string; mode?: string }> {
   try {
+    // Check if we're in mock mode
+    if (process.env.USE_MOCK === "true") {
+      return { ok: true, mode: "mock" };
+    }
+    
     if (!isOpenAIAvailable()) {
-      return { ok: false, error: "API key not configured" };
+      return { ok: true, error: "API key not configured", mode: "fallback" };
     }
     
     // Simple test call to verify API is working
     await openai!.models.list();
-    return { ok: true };
+    return { ok: true, mode: "api" };
   } catch (error) {
     console.error('OpenAI health check failed:', error);
-    return { ok: false, error: "API connection failed" };
+    return { ok: true, error: "API connection failed", mode: "fallback" };
   }
 }

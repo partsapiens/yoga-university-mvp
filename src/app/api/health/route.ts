@@ -8,9 +8,10 @@ export async function GET() {
     return NextResponse.json({
       status: health.ok ? 'healthy' : 'unhealthy',
       openai: health.ok,
+      mode: health.mode || 'unknown',
       timestamp: new Date().toISOString(),
       // Never expose the actual API key or error details
-      ...(health.error && !health.ok ? { message: 'API unavailable' } : {})
+      ...(health.error && health.mode !== 'api' ? { message: health.error } : {})
     });
   } catch (error) {
     console.error('Health check error:', error);
@@ -18,6 +19,7 @@ export async function GET() {
     return NextResponse.json({
       status: 'unhealthy',
       openai: false,
+      mode: 'error',
       timestamp: new Date().toISOString(),
       message: 'Health check failed'
     }, { status: 503 });
