@@ -97,8 +97,12 @@ const PoseLibraryPage = () => {
         
         let finalPoses: ExtendedPose[] = [];
         
-        if (dbPoses.length < 10) { // If database has fewer than 10 poses, use extended fallback
-          console.warn(`Database returned only ${dbPoses.length} poses - using static fallback data`);
+        // Always use database poses first, and only fall back to EXTENDED_POSES if none exist
+        if (dbPoses.length > 0) {
+          console.log(`Using ${dbPoses.length} poses from database (sample data)`);
+          finalPoses = dbPoses.map(transformDatabasePose);
+        } else {
+          console.warn(`Database returned no poses - using static fallback data`);
           // Convert static pose data to ExtendedPose format
           finalPoses = EXTENDED_POSES.map((pose, index) => ({
             id: `static-${index}`,
@@ -115,12 +119,11 @@ const PoseLibraryPage = () => {
             difficulty: pose.intensity <= 2 ? 'beginner' : pose.intensity >= 4 ? 'advanced' : 'intermediate',
             planeOfMotion: [pose.plane]
           }));
-        } else {
-          finalPoses = dbPoses.map(transformDatabasePose);
         }
         
         setPoses(finalPoses);
         setFilteredPoses(finalPoses);
+        
         
         // Load user preferences
         if (typeof window !== 'undefined') {

@@ -1,5 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { supabase } from '../../utils/supabaseClient';
+import { getPosesFromDatabase } from '../../lib/database';
 
 interface QueryFilters {
   category?: string[];
@@ -29,66 +29,84 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       const pageNum = Math.max(1, Number(page));
       const limitNum = Math.min(100, Math.max(1, Number(limit)));
 
-      // Start building the query
-      let query = supabase
-        .from('poses')
-        .select('*', { count: 'exact' });
+      // Get all poses using our centralized database function (with fallback)
+      const allPoses = await getPosesFromDatabase();
+      
+      let filteredPoses = [...allPoses];
 
       // Exclude variations from main library unless searching
-      // Variations are typically poses with (Right), (Left), or similar directional indicators
       if (!search) {
-        // Filter out poses that appear to be variations (contain directional indicators)
-        query = query.not('name', 'ilike', '%\\(Right\\)%')
-                     .not('name', 'ilike', '%\\(Left\\)%')
-                     .not('name', 'ilike', '%Right%')
-                     .not('name', 'ilike', '%Left%');
+        filteredPoses = filteredPoses.filter(pose => 
+          !pose.name.includes('(Right)') && 
+          !pose.name.includes('(Left)') && 
+          !pose.name.includes('Right') && 
+          !pose.name.includes('Left')
+        );
       }
 
       // Apply category filter
       if (category) {
         const categoryArray = Array.isArray(category) ? category : [category];
-        query = query.in('category', categoryArray);
+        filteredPoses = filteredPoses.filter(pose => 
+          pose.category && categoryArray.includes(pose.category)
+        );
       }
 
-      // Apply level filter (changed from energy_level to level)
+      // Apply level filter
       if (level) {
         const levelArray = Array.isArray(level) ? level : [level];
-        query = query.in('level', levelArray);
+        filteredPoses = filteredPoses.filter(pose => 
+          pose.level && levelArray.includes(pose.level)
+        );
       }
 
-      // Apply search filter (using correct field names)
+      // Apply search filter
       if (search) {
-        query = query.or(`name.ilike.%${search}%,sanskrit.ilike.%${search}%,category.ilike.%${search}%`);
+        const searchLower = search.toLowerCase();
+        filteredPoses = filteredPoses.filter(pose => 
+          pose.name.toLowerCase().includes(searchLower) ||
+          (pose.sanskrit && pose.sanskrit.toLowerCase().includes(searchLower)) ||
+          (pose.category && pose.category.toLowerCase().includes(searchLower))
+        );
       }
 
       // Apply favorites filter
       if (favorites) {
         const favArray = Array.isArray(favorites) ? favorites : [favorites];
-        query = query.in('id', favArray);
+        filteredPoses = filteredPoses.filter(pose => favArray.includes(pose.id));
       }
 
-      // Apply pagination  
+      // Sort poses
+      filteredPoses.sort((a, b) => {
+        // First by sort_order
+        if (a.sort_order !== null && b.sort_order !== null) {
+          if (a.sort_order !== b.sort_order) {
+            return a.sort_order - b.sort_order;
+          }
+        } else if (a.sort_order !== null) {
+          return -1;
+        } else if (b.sort_order !== null) {
+          return 1;
+        }
+        
+        // Then by name
+        return a.name.localeCompare(b.name);
+      });
+
+      // Apply pagination
+      const totalCount = filteredPoses.length;
       const from = (pageNum - 1) * limitNum;
-      const to = from + limitNum - 1;
-
-      query = query.range(from, to)
-        .order('sort_order', { ascending: true, nullsFirst: false })
-        .order('name');
-
-      const { data, error, count } = await query;
-      
-      if (error) {
-        return res.status(500).json({ error: error.message });
-      }
+      const to = from + limitNum;
+      const paginatedPoses = filteredPoses.slice(from, to);
 
       // Return data with pagination info
       res.status(200).json({
-        data,
+        data: paginatedPoses,
         pagination: {
           page: pageNum,
           limit: limitNum,
-          total: count || 0,
-          totalPages: Math.ceil((count || 0) / limitNum)
+          total: totalCount,
+          totalPages: Math.ceil(totalCount / limitNum)
         }
       });
     } catch (error) {

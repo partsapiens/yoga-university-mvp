@@ -5,21 +5,11 @@ import { supabase } from "@/utils/supabaseClient";
 // For example, it could include functions for connecting to a database,
 // and for fetching and updating data.
 
-// Example with Supabase
-import { createClient, type SupabaseClient } from '@supabase/supabase-js';
-
-let supabaseClient: SupabaseClient | null = null;
-
-export const getSupabase = (): SupabaseClient | null => {
-  if (supabaseClient) return supabaseClient;
+// Helper function to check if Supabase is properly configured
+export const isSupabaseConfigured = (): boolean => {
   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
   const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
-  if (!supabaseUrl || !supabaseAnonKey) {
-    console.warn('Supabase client not configured');
-    return null;
-  }
-  supabaseClient = createClient(supabaseUrl, supabaseAnonKey);
-  return supabaseClient;
+  return !!(supabaseUrl && supabaseAnonKey);
 };
 
 // Transform database pose to legacy pose format for backward compatibility
@@ -178,8 +168,7 @@ export const getPosesFromDatabase = async (): Promise<DatabasePose[]> => {
   
   try {
     // Check if Supabase is properly configured
-    const supabase = getSupabase();
-    if (!supabase) {
+    if (!isSupabaseConfigured()) {
       console.warn('Supabase not configured - using sample data');
       return samplePoses; // Return sample data when no database connection
     }
@@ -217,10 +206,7 @@ export const getPosesFromDatabase = async (): Promise<DatabasePose[]> => {
 export const testSupabaseConnection = async (): Promise<boolean> => {
   try {
     // Check if environment variables are set
-    const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
-    const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
-    
-    if (!supabaseUrl || !supabaseAnonKey) {
+    if (!isSupabaseConfigured()) {
       return false;
     }
     
