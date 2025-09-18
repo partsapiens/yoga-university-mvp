@@ -8,6 +8,10 @@
 /out/
 /dist/
 
+# Netlify build artifacts that may contain secrets
+/.netlify/
+.netlify/
+
 # local env files
 .env
 .env.*

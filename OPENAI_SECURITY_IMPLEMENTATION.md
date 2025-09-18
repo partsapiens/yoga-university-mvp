@@ -1,5 +1,27 @@
 # OpenAI Security Implementation & Production Setup
 
+## 🚨 CRITICAL SECURITY FIX - Netlify Secret Exposure
+
+### Issue Resolved
+**Problem**: Netlify deployment was failing due to OPENAI_API_KEY being detected in build artifacts:
+- Found in webpack cache files (`.netlify/.next/cache/webpack/*`)
+- Embedded in JavaScript chunks and server files
+- Exposed through `next.config.js` env configuration
+
+**Root Cause**: The `next.config.js` was exposing `OPENAI_API_KEY` to client-side code via the `env` configuration, causing it to be bundled into client-side JavaScript.
+
+**Solution**: 
+- ✅ Removed OPENAI_API_KEY from `next.config.js` env exposure
+- ✅ Updated `.gitignore` to exclude Netlify build artifacts
+- ✅ Added build secret scanning script
+- ✅ All OpenAI calls remain server-side only via API routes
+
+### Security Verification
+```bash
+# Test that no secrets are exposed in build output
+npm run check-build-secrets
+```
+
 ## 🎯 Production Mode Enabled
 
 This repository is now configured for **production use with live OpenAI API calls**. The mock/demo mode has been disabled.

@@ -1,7 +1,9 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  // DO NOT expose OPENAI_API_KEY to client-side code
+  // OpenAI calls should only happen server-side via API routes
   env: {
-    OPENAI_API_KEY: process.env.OPENAI_API_KEY,
+    // Add other non-secret environment variables here if needed
   },
   // Temporarily disable static export for API routes development
   // output: 'export',
