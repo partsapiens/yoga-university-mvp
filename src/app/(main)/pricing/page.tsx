@@ -13,14 +13,13 @@ export default function PricingPage() {
         "Access to 100+ basic poses",
         "5 guided flows per month",
         "Basic meditation sessions",
-        "Community forum access",
         "Mobile app access"
       ],
       limitations: [
         "Limited pose library",
         "Basic flow builder",
         "No offline access",
-        "Community support only"
+        "Basic email support only"
       ],
       cta: "Start Free",
       popular: false,
@@ -37,7 +36,6 @@ export default function PricingPage() {
         "Advanced pose variations and modifications",
         "Offline access to all content",
         "Progress tracking and analytics",
-        "Personalized recommendations",
         "Priority email support",
         "Monthly live Q&A sessions"
       ],
@@ -60,8 +58,7 @@ export default function PricingPage() {
         "Advanced anatomy and alignment guides",
         "Business and marketing resources",
         "1-on-1 mentorship sessions",
-        "Teacher certification pathway",
-        "Studio management tools"
+        "Teacher certification pathway"
       ],
       limitations: [],
       cta: "Start Free Trial",
@@ -97,7 +94,7 @@ export default function PricingPage() {
     },
     {
       category: "Support",
-      explorer: "Community forum",
+      explorer: "Email support",
       practitioner: "Priority email support",
       teacher: "1-on-1 mentorship"
     },
