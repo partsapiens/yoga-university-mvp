@@ -1,6 +1,8 @@
 import type { RecommendationInput, Recommendation, FormCheckInput, FormFeedback, MeditationInput, MeditationScript, MeditationPhase, BreathingPattern } from '@/types/ai';
 import type { SavedFlow } from '@/types/yoga';
 import { PoseId } from '@/types/yoga';
+import { generateCompletion, isOpenAIAvailable } from '@/lib/openai';
+import { POSES } from '@/lib/yoga-data';
 
 export async function fetchRecommendations(input: RecommendationInput): Promise<Recommendation[]> {
   // Base recommendations by focus area
@@ -92,6 +94,48 @@ export async function fetchRecommendations(input: RecommendationInput): Promise<
 }
 
 export async function checkForm(input: FormCheckInput): Promise<FormFeedback[]> {
+  // Try AI-generated feedback first if available
+  if (isOpenAIAvailable()) {
+    try {
+      return await generateAIFormFeedback(input);
+    } catch (error) {
+      console.warn('AI form check failed, using fallback:', error);
+    }
+  }
+  
+  // Fallback to curated feedback
+  return generateCuratedFormFeedback(input);
+}
+
+async function generateAIFormFeedback(input: FormCheckInput): Promise<FormFeedback[]> {
+  const pose = POSES.find(p => p.id === input.pose);
+  if (!pose) {
+    return [{ message: 'Pose not found in database' }];
+  }
+
+  const prompt = `Provide 2-3 specific form tips for ${pose.name} (${pose.sanskrit}) yoga pose.
+
+User notes: ${input.notes || 'None'}
+
+Focus on:
+- Proper alignment and safety
+- Common mistakes to avoid
+- Breathing guidance
+- Modifications if needed
+
+Keep tips concise and actionable. Avoid medical claims.`;
+
+  const response = await generateCompletion(prompt, 'simple', 0.3);
+  
+  // Parse response into feedback items
+  const feedbackLines = response.split('\n').filter(line => line.trim().length > 0);
+  
+  return feedbackLines.slice(0, 3).map(line => ({
+    message: line.replace(/^[-•*]\s*/, '').trim() // Remove bullet points
+  }));
+}
+
+function generateCuratedFormFeedback(input: FormCheckInput): FormFeedback[] {
   // Simulate more realistic AI feedback based on pose and notes
   const poseSpecificFeedback: Record<string, string[]> = {
     [PoseId.DownDog]: [
