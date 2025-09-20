@@ -66,7 +66,29 @@ const translations = {
     'manual.chapter.teacher': 'Teacher',
     'manual.chapter.leader': 'Leader',
     'manual.chapter.yogaflow': 'YogaFlow',
-    'manual.chapter.community': 'Community'
+    'manual.chapter.community': 'Community',
+    
+    // Homepage content sections
+    'home.features.title': 'Everything You Need for Your Yoga Journey',
+    'home.features.subtitle': 'Discover the power of AI-enhanced yoga practice with our comprehensive platform',
+    'home.features.flow.title': 'Intelligent Flow Creation',
+    'home.features.flow.description': 'Generate personalized yoga sequences powered by AI, tailored to your goals, experience level, and preferences.',
+    'home.features.library.title': 'Comprehensive Pose Library', 
+    'home.features.library.description': 'Access detailed instructions, modifications, and benefits for hundreds of yoga poses with expert guidance.',
+    'home.features.meditation.title': 'Guided Meditation',
+    'home.features.meditation.description': 'Enhance your practice with meditation techniques, breathing exercises, and mindfulness training.',
+    'home.stats.poses': 'Yoga Poses',
+    'home.stats.flows': 'Flow Combinations',
+    'home.stats.sessions': 'Meditation Sessions',
+    'home.cta.title': 'Ready to Transform Your Practice?',
+    'home.cta.subtitle': 'Join thousands of yogis who have discovered the power of intelligent, personalized yoga flows.',
+    'home.cta.button': 'Start Your Journey Today',
+    
+    // Common UI elements
+    'common.search': 'Search',
+    'common.search.placeholder': 'Search poses, flows, techniques...',
+    'common.search.button': 'Search',
+    'common.cancel': 'Cancel'
   },
   de: {
     'nav.dashboard': 'Dashboard',
@@ -120,7 +142,29 @@ const translations = {
     'manual.chapter.teacher': 'Lehrer',
     'manual.chapter.leader': 'Anführer',
     'manual.chapter.yogaflow': 'YogaFlow',
-    'manual.chapter.community': 'Gemeinschaft'
+    'manual.chapter.community': 'Gemeinschaft',
+    
+    // Homepage content sections
+    'home.features.title': 'Alles was Sie für Ihre Yoga-Reise brauchen',
+    'home.features.subtitle': 'Entdecken Sie die Kraft der KI-gestützten Yoga-Praxis mit unserer umfassenden Plattform',
+    'home.features.flow.title': 'Intelligente Flow-Erstellung',
+    'home.features.flow.description': 'Generieren Sie personalisierte Yoga-Sequenzen mit KI-Unterstützung, zugeschnitten auf Ihre Ziele, Erfahrungsstufe und Präferenzen.',
+    'home.features.library.title': 'Umfassende Asana-Bibliothek',
+    'home.features.library.description': 'Greifen Sie auf detaillierte Anleitungen, Modifikationen und Vorteile für Hunderte von Yoga-Posen mit Expertenführung zu.',
+    'home.features.meditation.title': 'Geführte Meditation',
+    'home.features.meditation.description': 'Erweitern Sie Ihre Praxis mit Meditationstechniken, Atemübungen und Achtsamkeitstraining.',
+    'home.stats.poses': 'Yoga-Posen',
+    'home.stats.flows': 'Flow-Kombinationen',
+    'home.stats.sessions': 'Meditations-Sitzungen',
+    'home.cta.title': 'Bereit, Ihre Praxis zu transformieren?',
+    'home.cta.subtitle': 'Schließen Sie sich Tausenden von Yogis an, die die Kraft intelligenter, personalisierter Yoga-Flows entdeckt haben.',
+    'home.cta.button': 'Beginnen Sie Ihre Reise heute',
+    
+    // Common UI elements
+    'common.search': 'Suchen',
+    'common.search.placeholder': 'Posen, Flows, Techniken suchen...',
+    'common.search.button': 'Suchen',
+    'common.cancel': 'Abbrechen'
   },
   ro: {
     'nav.dashboard': 'Tablou de bord',
@@ -174,7 +218,29 @@ const translations = {
     'manual.chapter.teacher': 'Profesor',
     'manual.chapter.leader': 'Lider',
     'manual.chapter.yogaflow': 'YogaFlow',
-    'manual.chapter.community': 'Comunitate'
+    'manual.chapter.community': 'Comunitate',
+    
+    // Homepage content sections
+    'home.features.title': 'Tot ce aveți nevoie pentru călătoria voastră de yoga',
+    'home.features.subtitle': 'Descoperiți puterea practicii de yoga îmbunătățite cu AI pe platforma noastră cuprinzătoare',
+    'home.features.flow.title': 'Creare inteligentă de fluxuri',
+    'home.features.flow.description': 'Generați secvențe de yoga personalizate alimentate de AI, adaptate obiectivelor, nivelului de experiență și preferințelor voastre.',
+    'home.features.library.title': 'Bibliotecă cuprinzătoare de pozitii',
+    'home.features.library.description': 'Accesați instrucțiuni detaliate, modificări și beneficii pentru sute de pozitii de yoga cu îndrumări de expert.',
+    'home.features.meditation.title': 'Meditație ghidată',
+    'home.features.meditation.description': 'Îmbunătățiți-vă practica cu tehnici de meditație, exerciții de respirație și antrenament de mindfulness.',
+    'home.stats.poses': 'Pozitii de yoga',
+    'home.stats.flows': 'Combinații de fluxuri',
+    'home.stats.sessions': 'Sesiuni de meditație',
+    'home.cta.title': 'Gata să vă transformați practica?',
+    'home.cta.subtitle': 'Alăturați-vă miilor de practicanți de yoga care au descoperit puterea fluxurilor de yoga inteligente și personalizate.',
+    'home.cta.button': 'Începeți călătoria azi',
+    
+    // Common UI elements
+    'common.search': 'Căutare',
+    'common.search.placeholder': 'Căutați pozitii, fluxuri, tehnici...',
+    'common.search.button': 'Căutare',
+    'common.cancel': 'Anulează'
   },
   ru: {
     'nav.dashboard': 'Панель управления',
@@ -228,7 +294,29 @@ const translations = {
     'manual.chapter.teacher': 'Учитель',
     'manual.chapter.leader': 'Лидер',
     'manual.chapter.yogaflow': 'YogaFlow',
-    'manual.chapter.community': 'Сообщество'
+    'manual.chapter.community': 'Сообщество',
+    
+    // Homepage content sections
+    'home.features.title': 'Все что нужно для вашего йога-путешествия',
+    'home.features.subtitle': 'Откройте силу практики йоги с поддержкой ИИ на нашей комплексной платформе',
+    'home.features.flow.title': 'Интеллектуальное создание потоков',
+    'home.features.flow.description': 'Создавайте персонализированные йога-последовательности с помощью ИИ, адаптированные под ваши цели, уровень опыта и предпочтения.',
+    'home.features.library.title': 'Всеобъемлющая библиотека поз',
+    'home.features.library.description': 'Получите доступ к подробным инструкциям, модификациям и преимуществам сотен поз йоги с экспертным руководством.',
+    'home.features.meditation.title': 'Управляемая медитация',
+    'home.features.meditation.description': 'Улучшите свою практику с помощью техник медитации, дыхательных упражнений и тренировки осознанности.',
+    'home.stats.poses': 'Позы йоги',
+    'home.stats.flows': 'Комбинации потоков',
+    'home.stats.sessions': 'Сеансы медитации',
+    'home.cta.title': 'Готовы преобразить свою практику?',
+    'home.cta.subtitle': 'Присоединяйтесь к тысячам йогов, которые открыли силу интеллектуальных, персонализированных йога-потоков.',
+    'home.cta.button': 'Начните путешествие сегодня',
+    
+    // Common UI elements
+    'common.search': 'Поиск',
+    'common.search.placeholder': 'Поиск поз, потоков, техник...',
+    'common.search.button': 'Поиск',
+    'common.cancel': 'Отмена'
   }
 };
 
