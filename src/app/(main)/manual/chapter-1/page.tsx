@@ -3,20 +3,23 @@
 import React from 'react';
 import { ManualLayout, ManualTOC, ManualSection, FigureCard } from '@/components/manual';
 import PoseVideo from '@/components/PoseLibrary/PoseVideo';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 export default function Chapter1Page() {
+  const { t } = useLanguage();
+  
   const breadcrumbs = [
-    { label: '← Manual Index', href: '/manual' },
-    { label: 'Chapter 1' }
+    { label: t('manual.chapter1.breadcrumb'), href: '/manual' },
+    { label: t('manual.chapter1.nav') }
   ];
 
   const tocItems = [
-    { id: 'welcome', title: 'Welcome to the Journey' },
-    { id: 'commitments', title: 'Our Mutual Commitments' },
-    { id: 'intention', title: 'Training Intention & Methodology' },
-    { id: 'setup', title: 'Setting Up for Success' },
-    { id: 'journals', title: 'The Power of Self-Reflection' },
-    { id: 'reading', title: 'Further Reading & Resources' }
+    { id: 'welcome', title: t('manual.chapter1.welcome.title') },
+    { id: 'commitments', title: t('manual.chapter1.commitments.title') },
+    { id: 'intention', title: t('manual.chapter1.intention.title') },
+    { id: 'setup', title: t('manual.chapter1.setup.title') },
+    { id: 'journals', title: t('manual.chapter1.journals.title') },
+    { id: 'reading', title: t('manual.chapter1.reading.title') }
   ];
 
   const chapterNavigation = {
@@ -34,7 +37,7 @@ export default function Chapter1Page() {
 
   return (
     <ManualLayout 
-      title="Chapter 1 — Welcome & Program Overview" 
+      title={t('manual.chapter1.title')} 
       breadcrumbs={breadcrumbs}
     >
       <div className="max-w-7xl mx-auto">
@@ -45,20 +48,20 @@ export default function Chapter1Page() {
           />
           
           <article>
-            <ManualSection id="welcome" title="Welcome to the Journey">
-              <PoseVideo url="https://youtu.be/NTVE5KBuHpU" title="Welcome to the Journey" className="mb-8" />
+            <ManualSection id="welcome" title={t('manual.chapter1.welcome.title')}>
+              <PoseVideo url="https://youtu.be/NTVE5KBuHpU" title={t('manual.chapter1.welcome.title')} className="mb-8" />
               
               <div className="md:grid md:grid-cols-2 gap-8 items-center mb-8">
                 <div>
                   <p className="mb-4 leading-relaxed text-lg">
-                    Welcome to your YogaFlow Teacher Training—a transformative path of self-discovery, dedicated practice, and the art of guiding others. This manual is more than a textbook; it's your field guide and companion. We encourage you to engage with it fully: write in the margins, highlight what resonates, and let its pages spark new questions and insights.
+                    {t('manual.chapter1.welcome.intro')}
                   </p>
                   <p className="mb-4 leading-relaxed">
-                    You are now an integral part of the YogaFlow teaching community, a network of passionate practitioners and teachers. We are thrilled to support your evolution as both a student and a future leader in the world of yoga.
+                    {t('manual.chapter1.welcome.community')}
                   </p>
                 </div>
                 <div>
-                  <FigureCard title="The Journey of Transformation">
+                  <FigureCard title={t('manual.chapter1.journey.card-title')}>
                     <svg viewBox="0 0 300 200" xmlns="http://www.w3.org/2000/svg" className="w-full max-w-md">
                       <defs>
                         <linearGradient id="pathGradient" x1="0%" y1="0%" x2="100%" y2="0%">
@@ -84,10 +87,10 @@ export default function Chapter1Page() {
                       <circle cx="270" cy="140" r="8" fill="#c084fc" />
                       
                       {/* Labels */}
-                      <text x="30" y="180" textAnchor="middle" className="fill-current text-xs">Student</text>
-                      <text x="100" y="130" textAnchor="middle" className="fill-current text-xs">Practitioner</text>
-                      <text x="200" y="175" textAnchor="middle" className="fill-current text-xs">Teacher</text>
-                      <text x="270" y="125" textAnchor="middle" className="fill-current text-xs">Leader</text>
+                      <text x="30" y="180" textAnchor="middle" className="fill-current text-xs">{t('manual.chapter.student')}</text>
+                      <text x="100" y="130" textAnchor="middle" className="fill-current text-xs">{t('manual.chapter.practitioner')}</text>
+                      <text x="200" y="175" textAnchor="middle" className="fill-current text-xs">{t('manual.chapter.teacher')}</text>
+                      <text x="270" y="125" textAnchor="middle" className="fill-current text-xs">{t('manual.chapter.leader')}</text>
                       
                       {/* Decorative elements */}
                       <g transform="translate(150, 50)">
@@ -96,8 +99,8 @@ export default function Chapter1Page() {
                         <path d="M-10,-10 L10,10 M10,-10 L-10,10" stroke="currentColor" strokeWidth="2" opacity="0.7" />
                       </g>
                       
-                      <text x="150" y="100" textAnchor="middle" className="fill-current text-sm font-semibold">YogaFlow</text>
-                      <text x="150" y="115" textAnchor="middle" className="fill-current text-xs">Community</text>
+                      <text x="150" y="100" textAnchor="middle" className="fill-current text-sm font-semibold">{t('manual.chapter.yogaflow')}</text>
+                      <text x="150" y="115" textAnchor="middle" className="fill-current text-xs">{t('manual.chapter.community')}</text>
                     </svg>
                   </FigureCard>
                 </div>
@@ -108,23 +111,23 @@ export default function Chapter1Page() {
                   <svg className="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
                     <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clipRule="evenodd" />
                   </svg>
-                  A Journey, Not a Destination
+                  {t('manual.chapter1.journey.info-title')}
                 </h4>
                 <p className="text-blue-700 dark:text-blue-200 leading-relaxed">
-                  This training is designed to be an immersive experience that transforms not just your understanding of yoga, but your entire approach to life. The skills and knowledge you gain will extend far beyond the yoga mat, influencing how you connect with yourself, interact with others, and navigate the complexities of daily life. Embrace the process with an open heart and a curious mind.
+                  {t('manual.chapter1.journey.info-text')}
                 </p>
                 <div className="mt-4 grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
                   <div className="flex items-center text-blue-600 dark:text-blue-300">
                     <span className="w-2 h-2 bg-blue-500 rounded-full mr-2"></span>
-                    Self-Discovery
+                    {t('manual.chapter1.journey.self-discovery')}
                   </div>
                   <div className="flex items-center text-blue-600 dark:text-blue-300">
                     <span className="w-2 h-2 bg-blue-500 rounded-full mr-2"></span>
-                    Dedicated Practice
+                    {t('manual.chapter1.journey.community-building')}
                   </div>
                   <div className="flex items-center text-blue-600 dark:text-blue-300">
                     <span className="w-2 h-2 bg-blue-500 rounded-full mr-2"></span>
-                    Art of Teaching
+                    {t('manual.chapter1.journey.leadership')}
                   </div>
                 </div>
               </div>

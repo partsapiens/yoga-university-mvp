@@ -87,10 +87,10 @@ const HomePage = () => {
         <div className="container-wide">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-5xl font-bold text-gray-900 dark:text-white mb-6">
-              Everything You Need for Your Yoga Journey
+              {t('home.features.title')}
             </h2>
             <p className="text-xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
-              Discover the power of AI-enhanced yoga practice with our comprehensive platform
+              {t('home.features.subtitle')}
             </p>
           </div>
           
@@ -100,10 +100,10 @@ const HomePage = () => {
                 <span className="text-3xl">✨</span>
               </div>
               <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">
-                Intelligent Flow Creation
+                {t('home.features.flow.title')}
               </h3>
               <p className="text-gray-600 dark:text-gray-300 leading-relaxed">
-                Generate personalized yoga sequences powered by AI, tailored to your goals, experience level, and preferences.
+                {t('home.features.flow.description')}
               </p>
             </div>
             
@@ -112,10 +112,10 @@ const HomePage = () => {
                 <span className="text-3xl">📚</span>
               </div>
               <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">
-                Comprehensive Pose Library
+                {t('home.features.library.title')}
               </h3>
               <p className="text-gray-600 dark:text-gray-300 leading-relaxed">
-                Access detailed instructions, modifications, and benefits for hundreds of yoga poses with expert guidance.
+                {t('home.features.library.description')}
               </p>
             </div>
             
@@ -124,10 +124,10 @@ const HomePage = () => {
                 <span className="text-3xl">🧘</span>
               </div>
               <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">
-                Guided Meditation
+                {t('home.features.meditation.title')}
               </h3>
               <p className="text-gray-600 dark:text-gray-300 leading-relaxed">
-                Enhance your practice with meditation techniques, breathing exercises, and mindfulness training.
+                {t('home.features.meditation.description')}
               </p>
             </div>
           </div>
@@ -140,15 +140,15 @@ const HomePage = () => {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
             <div>
               <div className="text-4xl font-bold text-blue-600 dark:text-blue-400 mb-2">500+</div>
-              <div className="text-gray-600 dark:text-gray-300">Yoga Poses</div>
+              <div className="text-gray-600 dark:text-gray-300">{t('home.stats.poses')}</div>
             </div>
             <div>
               <div className="text-4xl font-bold text-green-600 dark:text-green-400 mb-2">1000+</div>
-              <div className="text-gray-600 dark:text-gray-300">Flow Combinations</div>
+              <div className="text-gray-600 dark:text-gray-300">{t('home.stats.flows')}</div>
             </div>
             <div>
               <div className="text-4xl font-bold text-purple-600 dark:text-purple-400 mb-2">50+</div>
-              <div className="text-gray-600 dark:text-gray-300">Meditation Sessions</div>
+              <div className="text-gray-600 dark:text-gray-300">{t('home.stats.sessions')}</div>
             </div>
           </div>
         </div>
@@ -158,16 +158,16 @@ const HomePage = () => {
       <section className="py-20 bg-gradient-to-r from-blue-600 to-purple-700 text-white">
         <div className="container-wide text-center">
           <h2 className="text-3xl md:text-5xl font-bold mb-6">
-            Ready to Transform Your Practice?
+            {t('home.cta.title')}
           </h2>
           <p className="text-xl text-blue-100 mb-10 max-w-2xl mx-auto">
-            Join thousands of yogis who have discovered the power of intelligent, personalized yoga flows.
+            {t('home.cta.subtitle')}
           </p>
           <Link
             href="/dashboard"
             className="inline-block bg-white text-blue-600 hover:bg-blue-50 px-10 py-4 rounded-xl font-semibold transition-all duration-300 hover:scale-105 shadow-lg text-lg"
           >
-            Start Your Journey Today
+            {t('home.cta.button')}
           </Link>
         </div>
       </section>
