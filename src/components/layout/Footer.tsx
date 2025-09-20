@@ -67,7 +67,6 @@ export const Footer = () => {
     { name: 'Meditation', href: '/meditation' },
     { name: 'Training Manual', href: '/manual' },
     { name: 'Business Resources', href: '/business' },
-    { name: 'Certification', href: '/certification' },
     { name: 'Studio Management', href: '/studio' },
     { name: 'About', href: '/about' },
     { name: 'Pricing', href: '/pricing' },
