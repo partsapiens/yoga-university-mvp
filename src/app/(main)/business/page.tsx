@@ -1,6 +1,6 @@
 "use client";
 
-import React from 'react';
+import React, { useState } from 'react';
 import Link from 'next/link';
 import { 
   TrendingUp, 
@@ -15,8 +15,10 @@ import {
   Download,
   Play
 } from 'lucide-react';
+import { BrandingModal } from '@/components/business/BrandingModal';
 
 export default function BusinessResourcesPage() {
+  const [isBrandingModalOpen, setIsBrandingModalOpen] = useState(false);
   const resourceCategories = [
     {
       title: 'Marketing & Social Media',
@@ -264,7 +266,13 @@ export default function BusinessResourcesPage() {
                     <p className="text-white text-sm opacity-90">{webinar.duration}</p>
                   </div>
                   <button
-                    onClick={() => window.open(webinar.videoUrl)}
+                    onClick={() => {
+                      if (webinar.title === 'Building Your Yoga Brand from Scratch') {
+                        setIsBrandingModalOpen(true);
+                      } else {
+                        window.open(webinar.videoUrl);
+                      }
+                    }}
                     className="absolute inset-0 flex items-center justify-center text-white hover:bg-black hover:bg-opacity-20 transition-all"
                   >
                     <div className="w-16 h-16 bg-white bg-opacity-90 rounded-full flex items-center justify-center">
@@ -320,6 +328,12 @@ export default function BusinessResourcesPage() {
           </div>
         </div>
       </div>
+
+      {/* Branding Modal */}
+      <BrandingModal 
+        isOpen={isBrandingModalOpen} 
+        onClose={() => setIsBrandingModalOpen(false)} 
+      />
     </div>
   );
 }
