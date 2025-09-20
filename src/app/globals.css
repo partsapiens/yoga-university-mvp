@@ -629,3 +629,166 @@
     -webkit-line-clamp: 3;
   }
 }
+
+/* Print Styles for Yoga Content */
+@media print {
+  /* Reset for print */
+  *, *::before, *::after {
+    background: transparent !important;
+    color: black !important;
+    box-shadow: none !important;
+    text-shadow: none !important;
+  }
+
+  /* Hide navigation and non-essential elements */
+  nav, .navbar, .navigation, .sidebar, .floating-action, 
+  .print-hide, button:not(.print-show), .btn:not(.print-show),
+  .social-share, .advertisement, .cookie-banner {
+    display: none !important;
+  }
+
+  /* Page setup */
+  @page {
+    margin: 0.75in;
+    size: letter;
+  }
+
+  /* Typography for print */
+  body {
+    font-family: "Times New Roman", serif !important;
+    font-size: 12pt !important;
+    line-height: 1.4 !important;
+    color: black !important;
+  }
+
+  h1 { font-size: 18pt !important; margin-bottom: 12pt !important; }
+  h2 { font-size: 16pt !important; margin-bottom: 10pt !important; }
+  h3 { font-size: 14pt !important; margin-bottom: 8pt !important; }
+  h4 { font-size: 12pt !important; margin-bottom: 6pt !important; }
+
+  /* Printable content containers */
+  .printable-pose-card {
+    break-inside: avoid !important;
+    margin-bottom: 18pt !important;
+    border: 1pt solid #ccc !important;
+    padding: 12pt !important;
+    page-break-inside: avoid !important;
+  }
+
+  .printable-sequence {
+    break-inside: auto !important;
+  }
+
+  .sequence-header {
+    break-inside: avoid !important;
+    margin-bottom: 18pt !important;
+    border: 1pt solid #ccc !important;
+    padding: 12pt !important;
+  }
+
+  .sequence-overview {
+    break-inside: avoid !important;
+    margin-bottom: 18pt !important;
+  }
+
+  .pose-detail {
+    break-inside: avoid !important;
+    margin-bottom: 18pt !important;
+    page-break-inside: avoid !important;
+  }
+
+  .sequence-footer {
+    break-before: page !important;
+    margin-top: 18pt !important;
+    border-top: 1pt solid #ccc !important;
+    padding-top: 12pt !important;
+  }
+
+  /* Images for print */
+  img {
+    max-width: 100% !important;
+    height: auto !important;
+    break-inside: avoid !important;
+  }
+
+  /* Tables for print */
+  table {
+    border-collapse: collapse !important;
+    width: 100% !important;
+  }
+
+  table, th, td {
+    border: 1pt solid #ccc !important;
+  }
+
+  th, td {
+    padding: 6pt !important;
+    text-align: left !important;
+  }
+
+  /* Lists for print */
+  ul, ol {
+    margin: 6pt 0 !important;
+    padding-left: 18pt !important;
+  }
+
+  li {
+    margin: 3pt 0 !important;
+  }
+
+  /* Print-specific utilities */
+  .print-only {
+    display: block !important;
+  }
+
+  .no-print {
+    display: none !important;
+  }
+
+  /* Ensure no orphans/widows */
+  p, h1, h2, h3, h4, h5, h6 {
+    orphans: 3 !important;
+    widows: 3 !important;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    break-after: avoid !important;
+  }
+
+  /* Links for print */
+  a[href]:after {
+    content: " (" attr(href) ")" !important;
+    font-size: 10pt !important;
+    color: #666 !important;
+  }
+
+  a[href^="#"]:after,
+  a[href^="javascript:"]:after {
+    content: "" !important;
+  }
+
+  /* Cards and containers */
+  .card, .bg-white, .bg-gray-50 {
+    background: white !important;
+    border: 1pt solid #ccc !important;
+  }
+
+  /* Ensure good contrast */
+  .text-gray-500, .text-gray-600, .text-muted-foreground {
+    color: #333 !important;
+  }
+
+  .text-blue-600, .text-primary {
+    color: #000 !important;
+    font-weight: bold !important;
+  }
+
+  /* Grid layouts for print */
+  .grid {
+    display: block !important;
+  }
+
+  .grid > * {
+    margin-bottom: 12pt !important;
+  }
+}
