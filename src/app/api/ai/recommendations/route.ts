@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { generateCompletion, filterContent } from '@/lib/openai';
+import { generateCompletion, filterContent, isOpenAIAvailable } from '@/lib/openai';
 import { MeditationRecommendation, RecommendationContext, UserMeditationProfile } from '@/types/ai';
 
 export async function POST(request: NextRequest) {
@@ -50,105 +50,80 @@ async function generatePersonalizedRecommendations(
 ): Promise<MeditationRecommendation[]> {
   const { timeOfDay, userProfile, recentSessions, currentMood, availableTime } = context;
   
-  // Build context for AI prompt
+  // Try AI generation first if available
+  if (isOpenAIAvailable()) {
+    try {
+      return await generateAIRecommendations(context);
+    } catch (error) {
+      console.warn('AI recommendations failed, using fallback:', error);
+    }
+  }
+  
+  // Use improved fallback logic
+  return generateFallbackRecommendations(context);
+}
+
+async function generateAIRecommendations(context: RecommendationContext): Promise<MeditationRecommendation[]> {
+  const { timeOfDay, userProfile, recentSessions, currentMood, availableTime } = context;
+  
+  // Build a simplified prompt
   const recentSessionsText = recentSessions.length > 0 
-    ? recentSessions.slice(-5).map(s => 
-        `${s.style} (${s.duration}min, ${s.completed ? 'completed' : 'incomplete'}${s.rating ? `, rated ${s.rating}/5` : ''}, mood: ${s.mood || 'unknown'})`
-      ).join(', ')
+    ? recentSessions.slice(-3).map(s => `${s.style} (${s.duration}min, ${s.completed ? 'completed' : 'incomplete'})`).join(', ')
     : 'No recent sessions';
 
-  const userPreferencesText = `
-    Preferred durations: ${userProfile.preferredDurations.join(', ')} minutes
-    Favorite styles: ${userProfile.favoriteStyles.join(', ')}
-    Typical meditation times: ${userProfile.typicalMeditationTimes.join(', ')}
-    Completion rate: ${userProfile.completionRate}%
-    Average rating: ${userProfile.averageRating}/5
-    Recent moods: ${userProfile.recentMoods.join(', ')}
-    Goals: ${userProfile.meditationGoals.join(', ')}
-  `;
+  const prompt = `Generate 3 meditation recommendations for a user.
 
-  const prompt = `Based on user context, generate 3-4 personalized meditation recommendations.
+Context:
+- Time: ${timeOfDay}
+- Current mood: ${currentMood || 'neutral'}
+- Available time: ${availableTime || 'flexible'} minutes
+- Preferred durations: ${userProfile.preferredDurations.join(', ')} minutes
+- Favorite styles: ${userProfile.favoriteStyles.join(', ') || 'none'}
+- Recent sessions: ${recentSessionsText}
+- Goals: ${userProfile.meditationGoals.join(', ') || 'general wellness'}
 
-Time context: ${timeOfDay} 
-Current mood: ${currentMood || 'unknown'}
-Available time: ${availableTime || 'flexible'} minutes
+Available styles: mindfulness, breathing, body-scan, loving-kindness, sleep, focus
 
-User profile:
-${userPreferencesText}
-
-Recent sessions (last 5):
-${recentSessionsText}
-
-Available meditation styles: Mindfulness, Breathing, Body Scan, Loving Kindness, Sleep, Focus, Progressive Relaxation
-
-Consider:
-- User's historical preferences and completion patterns
-- Time appropriateness (energizing vs calming)
-- Variety to avoid repetition from recent sessions
-- Progression based on experience level
-- Mood-appropriate recommendations
-- Duration preferences and available time
-
-Return JSON array of recommendations with this format:
+Respond with 3 recommendations in this JSON format:
 [
   {
-    "id": "unique_id",
-    "title": "Short descriptive title",
-    "description": "Brief explanation of what this meditation involves",
-    "duration": number_in_minutes,
+    "title": "Brief descriptive title",
+    "description": "What this meditation involves",
+    "duration": minutes_as_number,
     "style": "meditation_style",
-    "confidence": number_0_to_1,
-    "reasoning": "Why this is recommended for the user right now",
-    "tags": ["tag1", "tag2"],
-    "timeOfDay": "morning|afternoon|evening|night",
-    "breathingPattern": {"name": "pattern_name", "inhale": 4, "exhale": 6, "description": "brief_description"},
-    "personalizedFor": {
-      "mood": "current_mood",
-      "energyLevel": "low|medium|high",
-      "stressLevel": "low|medium|high",
-      "experience": "beginner|intermediate|advanced"
-    }
+    "reasoning": "Why this is recommended",
+    "confidence": 0.8
   }
 ]`;
 
+  const response = await generateCompletion(prompt, 'medium', 0.7);
+  
+  // Parse and validate response
   try {
-    // Generate AI response
-    const aiResponse = await generateCompletion(prompt, 'complex', 0.7);
-    const filteredResponse = filterContent(aiResponse);
-
-    // Ensure we have a valid response before parsing
-    if (!filteredResponse || typeof filteredResponse !== 'string') {
-      console.warn('Invalid AI response, using fallback');
-      return generateFallbackRecommendations(context);
-    }
-
-    // Parse JSON response
-    const jsonMatch = filteredResponse.match(/\[[\s\S]*\]/);
-    const jsonStr = jsonMatch ? jsonMatch[0] : filteredResponse;
-    const parsedRecommendations = JSON.parse(jsonStr);
+    const jsonMatch = response.match(/\[[\s\S]*\]/);
+    if (!jsonMatch) throw new Error('No JSON found in response');
     
-    return parsedRecommendations.map((rec: any) => ({
-      id: rec.id || `rec_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
+    const parsedRecommendations = JSON.parse(jsonMatch[0]);
+    
+    return parsedRecommendations.map((rec: any, index: number) => ({
+      id: `ai_rec_${Date.now()}_${index}`,
       title: rec.title || 'Personalized Meditation',
       description: rec.description || 'A meditation tailored to your needs',
       duration: Math.min(Math.max(rec.duration || 10, 3), 60),
       style: rec.style || 'mindfulness',
       confidence: Math.min(Math.max(rec.confidence || 0.8, 0), 1),
       reasoning: rec.reasoning || 'Recommended based on your preferences',
-      tags: Array.isArray(rec.tags) ? rec.tags : ['personalized'],
-      timeOfDay: rec.timeOfDay || timeOfDay,
-      breathingPattern: rec.breathingPattern,
-      personalizedFor: rec.personalizedFor || {
-        mood: currentMood,
+      tags: ['ai-generated', rec.style || 'mindfulness'],
+      timeOfDay: timeOfDay,
+      personalizedFor: {
+        mood: currentMood || 'neutral',
         energyLevel: 'medium',
         stressLevel: 'medium',
-        experience: 'beginner'
+        experience: userProfile.completionRate > 80 ? 'intermediate' : 'beginner'
       }
     }));
-
   } catch (parseError) {
-    console.error('Failed to parse AI recommendations:', parseError);
-    return generateFallbackRecommendations(context);
+    throw new Error(`Failed to parse AI response: ${parseError}`);
   }
 }
 
