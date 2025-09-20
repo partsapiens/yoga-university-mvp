@@ -16,9 +16,11 @@ import {
   Play
 } from 'lucide-react';
 import { BrandingModal } from '@/components/business/BrandingModal';
+import { PricingModal } from '@/components/business/PricingModal';
 
 export default function BusinessResourcesPage() {
   const [isBrandingModalOpen, setIsBrandingModalOpen] = useState(false);
+  const [isPricingModalOpen, setIsPricingModalOpen] = useState(false);
   const resourceCategories = [
     {
       title: 'Marketing & Social Media',
@@ -269,6 +271,8 @@ export default function BusinessResourcesPage() {
                     onClick={() => {
                       if (webinar.title === 'Building Your Yoga Brand from Scratch') {
                         setIsBrandingModalOpen(true);
+                      } else if (webinar.title === 'Pricing Your Yoga Services for Profit') {
+                        setIsPricingModalOpen(true);
                       } else {
                         window.open(webinar.videoUrl);
                       }
@@ -333,6 +337,12 @@ export default function BusinessResourcesPage() {
       <BrandingModal 
         isOpen={isBrandingModalOpen} 
         onClose={() => setIsBrandingModalOpen(false)} 
+      />
+
+      {/* Pricing Modal */}
+      <PricingModal 
+        isOpen={isPricingModalOpen} 
+        onClose={() => setIsPricingModalOpen(false)} 
       />
     </div>
   );
