@@ -4,17 +4,19 @@ import React from 'react';
 import Link from 'next/link';
 import { ManualLayout } from '@/components/manual';
 import { useTheme } from '@/contexts/ThemeContext';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 export default function ManualPage() {
   const { theme } = useTheme();
+  const { t } = useLanguage();
   
   const breadcrumbs = [
-    { label: '← Back to Yoga Flow', href: '/' }
+    { label: t('manual.back-to-home'), href: '/' }
   ];
 
   return (
     <ManualLayout 
-      title="YogaFlow 200-Hour Teacher Training Manual" 
+      title={t('manual.title')} 
       breadcrumbs={breadcrumbs}
     >
       <div className="max-w-5xl mx-auto">
@@ -27,16 +29,16 @@ export default function ManualPage() {
         >
           <h2 className={`text-xl font-semibold mt-0 mb-3 ${
             theme === 'dark' ? 'text-teal-300' : 'text-teal-700'
-          }`}>Welcome to Your Training Manual</h2>
+          }`}>{t('manual.welcome.title')}</h2>
           <p className={`mb-4 leading-relaxed ${
             theme === 'dark' ? 'text-gray-300' : 'text-gray-700'
           }`}>
-            This comprehensive manual is your guide through the YogaFlow 200-Hour Teacher Training program. Each chapter builds upon the last, providing you with the knowledge, skills, and confidence to become an exceptional yoga instructor.
+            {t('manual.welcome.description')}
           </p>
           <p className={`mb-0 leading-relaxed ${
             theme === 'dark' ? 'text-gray-300' : 'text-gray-700'
           }`}>
-            Navigate through the chapters below to access the complete curriculum. We recommend reading them in order, but feel free to revisit any section as needed during your training journey.
+            {t('manual.welcome.navigation')}
           </p>
         </div>
 

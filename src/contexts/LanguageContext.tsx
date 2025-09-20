@@ -12,7 +12,7 @@ interface LanguageContextType {
 
 const LanguageContext = createContext<LanguageContextType | null>(null);
 
-// Basic translations for key UI elements
+// Comprehensive translations for all pages
 const translations = {
   en: {
     'nav.dashboard': 'Dashboard',
@@ -32,13 +32,46 @@ const translations = {
     'cta.explore-poses': 'Asana Library',
     'cta.try-meditation': 'Try Meditation',
     'footer.made-with-love': 'Made with 💙 for the yoga community',
-    'footer.carbon-neutral': 'Carbon neutral hosting'
+    'footer.carbon-neutral': 'Carbon neutral hosting',
+    
+    // Manual translations
+    'manual.title': 'YogaFlow 200-Hour Teacher Training Manual',
+    'manual.back-to-home': '← Back to Yoga Flow',
+    'manual.welcome.title': 'Welcome to Your Training Manual',
+    'manual.welcome.description': 'This comprehensive manual is your guide through the YogaFlow 200-Hour Teacher Training program. Each chapter builds upon the last, providing you with the knowledge, skills, and confidence to become an exceptional yoga instructor.',
+    'manual.welcome.navigation': 'Navigate through the chapters below to access the complete curriculum. We recommend reading them in order, but feel free to revisit any section as needed during your training journey.',
+    
+    // Chapter 1
+    'manual.chapter1.title': 'Chapter 1 — Welcome & Program Overview',
+    'manual.chapter1.breadcrumb': '← Manual Index',
+    'manual.chapter1.nav': 'Chapter 1',
+    'manual.chapter1.welcome.title': 'Welcome to the Journey',
+    'manual.chapter1.commitments.title': 'Our Mutual Commitments',
+    'manual.chapter1.intention.title': 'Training Intention & Methodology',
+    'manual.chapter1.setup.title': 'Setting Up for Success',
+    'manual.chapter1.journals.title': 'The Power of Self-Reflection',
+    'manual.chapter1.reading.title': 'Further Reading & Resources',
+    'manual.chapter1.welcome.intro': 'Welcome to your YogaFlow Teacher Training—a transformative path of self-discovery, dedicated practice, and the art of guiding others. This manual is more than a textbook; it\'s your field guide and companion. We encourage you to engage with it fully: write in the margins, highlight what resonates, and let its pages spark new questions and insights.',
+    'manual.chapter1.welcome.community': 'You are now an integral part of the YogaFlow teaching community, a network of passionate practitioners and teachers. We are thrilled to support your evolution as both a student and a future leader in the world of yoga.',
+    'manual.chapter1.journey.card-title': 'The Journey of Transformation',
+    'manual.chapter1.journey.info-title': 'A Journey, Not a Destination',
+    'manual.chapter1.journey.info-text': 'This training is designed to be an immersive experience that transforms not just your understanding of yoga, but your entire approach to life. The skills and knowledge you gain will extend far beyond the yoga mat, influencing how you connect with yourself, interact with others, and navigate the complexities of daily life. Embrace the process with an open heart and a curious mind.',
+    'manual.chapter1.journey.self-discovery': 'Self-Discovery',
+    'manual.chapter1.journey.community-building': 'Community Building',
+    'manual.chapter1.journey.leadership': 'Leadership',
+    
+    // Common chapter elements
+    'manual.chapter.student': 'Student',
+    'manual.chapter.practitioner': 'Practitioner', 
+    'manual.chapter.teacher': 'Teacher',
+    'manual.chapter.leader': 'Leader',
+    'manual.chapter.yogaflow': 'YogaFlow',
+    'manual.chapter.community': 'Community'
   },
   de: {
     'nav.dashboard': 'Dashboard',
     'nav.poses': 'Asana-Bibliothek',
     'nav.flows': 'Flow Erstellen',
-    
     'nav.meditation': 'Meditation',
     'nav.manual': 'Handbuch',
     'nav.business': 'Business',
@@ -53,13 +86,46 @@ const translations = {
     'cta.explore-poses': 'Asana-Bibliothek',
     'cta.try-meditation': 'Meditation Ausprobieren',
     'footer.made-with-love': 'Mit 💙 für die Yoga-Gemeinschaft gemacht',
-    'footer.carbon-neutral': 'Klimaneutrales Hosting'
+    'footer.carbon-neutral': 'Klimaneutrales Hosting',
+    
+    // Manual translations
+    'manual.title': 'YogaFlow 200-Stunden Yogalehrer-Ausbildung Handbuch',
+    'manual.back-to-home': '← Zurück zu Yoga Flow',
+    'manual.welcome.title': 'Willkommen zu Ihrem Ausbildungshandbuch',
+    'manual.welcome.description': 'Dieses umfassende Handbuch ist Ihr Leitfaden durch das YogaFlow 200-Stunden Yogalehrer-Ausbildungsprogramm. Jedes Kapitel baut auf dem vorherigen auf und vermittelt Ihnen das Wissen, die Fähigkeiten und das Vertrauen, um ein außergewöhnlicher Yogalehrer zu werden.',
+    'manual.welcome.navigation': 'Navigieren Sie durch die unten stehenden Kapitel, um auf den vollständigen Lehrplan zuzugreifen. Wir empfehlen, sie in der Reihenfolge zu lesen, aber zögern Sie nicht, jeden Abschnitt während Ihrer Ausbildungsreise erneut zu besuchen.',
+    
+    // Chapter 1
+    'manual.chapter1.title': 'Kapitel 1 — Willkommen & Programmübersicht',
+    'manual.chapter1.breadcrumb': '← Handbuch Index',
+    'manual.chapter1.nav': 'Kapitel 1',
+    'manual.chapter1.welcome.title': 'Willkommen zur Reise',
+    'manual.chapter1.commitments.title': 'Unsere gegenseitigen Verpflichtungen',
+    'manual.chapter1.intention.title': 'Ausbildungsabsicht & Methodik',
+    'manual.chapter1.setup.title': 'Erfolgreich aufstellen',
+    'manual.chapter1.journals.title': 'Die Kraft der Selbstreflexion',
+    'manual.chapter1.reading.title': 'Weiterführende Literatur & Ressourcen',
+    'manual.chapter1.welcome.intro': 'Willkommen zu Ihrer YogaFlow Yogalehrer-Ausbildung—ein transformativer Weg der Selbstentdeckung, engagierten Praxis und der Kunst, andere zu führen. Dieses Handbuch ist mehr als ein Lehrbuch; es ist Ihr Feldführer und Begleiter. Wir ermutigen Sie, sich vollständig darauf einzulassen: schreiben Sie an die Ränder, markieren Sie, was mit Ihnen in Resonanz steht, und lassen Sie seine Seiten neue Fragen und Einsichten entfachen.',
+    'manual.chapter1.welcome.community': 'Sie sind nun ein integraler Teil der YogaFlow Lehrgemeinschaft, ein Netzwerk leidenschaftlicher Praktizierender und Lehrer. Wir freuen uns darauf, Ihre Entwicklung sowohl als Student als auch als zukünftiger Anführer in der Welt des Yoga zu unterstützen.',
+    'manual.chapter1.journey.card-title': 'Die Reise der Transformation',
+    'manual.chapter1.journey.info-title': 'Eine Reise, kein Ziel',
+    'manual.chapter1.journey.info-text': 'Diese Ausbildung ist darauf ausgelegt, eine intensive Erfahrung zu sein, die nicht nur Ihr Verständnis von Yoga transformiert, sondern Ihren gesamten Lebensansatz. Die Fähigkeiten und das Wissen, das Sie erlangen, werden weit über die Yogamatte hinausgehen und beeinflussen, wie Sie sich mit sich selbst verbinden, mit anderen interagieren und die Komplexitäten des täglichen Lebens navigieren. Umarmen Sie den Prozess mit einem offenen Herzen und einem neugierigen Geist.',
+    'manual.chapter1.journey.self-discovery': 'Selbstentdeckung',
+    'manual.chapter1.journey.community-building': 'Gemeinschaftsaufbau',
+    'manual.chapter1.journey.leadership': 'Führung',
+    
+    // Common chapter elements
+    'manual.chapter.student': 'Student',
+    'manual.chapter.practitioner': 'Praktizierender',
+    'manual.chapter.teacher': 'Lehrer',
+    'manual.chapter.leader': 'Anführer',
+    'manual.chapter.yogaflow': 'YogaFlow',
+    'manual.chapter.community': 'Gemeinschaft'
   },
   ro: {
     'nav.dashboard': 'Tablou de bord',
     'nav.poses': 'Biblioteca de posturi',
     'nav.flows': 'Creează flux',
-    
     'nav.meditation': 'Meditație',
     'nav.manual': 'Manual',
     'nav.business': 'Afaceri',
@@ -74,13 +140,46 @@ const translations = {
     'cta.explore-poses': 'Biblioteca Asana',
     'cta.try-meditation': 'Încearcă meditația',
     'footer.made-with-love': 'Făcut cu 💙 pentru comunitatea de yoga',
-    'footer.carbon-neutral': 'Hosting neutru din punct de vedere al carbonului'
+    'footer.carbon-neutral': 'Hosting neutru din punct de vedere al carbonului',
+    
+    // Manual translations
+    'manual.title': 'Manual de formare pentru instructori Yoga Flow de 200 de ore',
+    'manual.back-to-home': '← Înapoi la Yoga Flow',
+    'manual.welcome.title': 'Bun venit la manualul dvs. de instruire',
+    'manual.welcome.description': 'Acest manual cuprinzător este ghidul dvs. prin programul de formare pentru instructori YogaFlow de 200 de ore. Fiecare capitol se bazează pe cel anterior, oferindu-vă cunoștințele, abilitățile și încrederea pentru a deveni un instructor de yoga excepțional.',
+    'manual.welcome.navigation': 'Navigați prin capitolele de mai jos pentru a accesa programa completă. Vă recomandăm să le citiți în ordine, dar nu ezitați să revizitați orice secțiune după cum este necesar în timpul călătoriei dvs. de formare.',
+    
+    // Chapter 1
+    'manual.chapter1.title': 'Capitolul 1 — Bun venit și prezentare generală a programului',
+    'manual.chapter1.breadcrumb': '← Index manual',
+    'manual.chapter1.nav': 'Capitolul 1',
+    'manual.chapter1.welcome.title': 'Bun venit în călătorie',
+    'manual.chapter1.commitments.title': 'Angajamentele noastre reciproce',
+    'manual.chapter1.intention.title': 'Intenția de instruire și metodologia',
+    'manual.chapter1.setup.title': 'Pregătirea pentru succes',
+    'manual.chapter1.journals.title': 'Puterea auto-reflecției',
+    'manual.chapter1.reading.title': 'Lectură suplimentară și resurse',
+    'manual.chapter1.welcome.intro': 'Bun venit la formarea dvs. de instructor YogaFlow—o cale transformatoare de autodescoperire, practică dedicată și arta de a ghida pe alții. Acest manual este mai mult decât un manual; este ghidul și companionul dvs. de teren. Vă încurajăm să vă angajați pe deplin cu acesta: scrieți în margini, evidențiați ce rezonează și lăsați paginile sale să declanșeze întrebări și perspective noi.',
+    'manual.chapter1.welcome.community': 'Acum faceți parte integrantă din comunitatea de predare YogaFlow, o rețea de practicanți și profesori pasionați. Suntem încântați să vă sprijinim evoluția atât ca student, cât și ca viitor lider în lumea yoga.',
+    'manual.chapter1.journey.card-title': 'Călătoria transformării',
+    'manual.chapter1.journey.info-title': 'O călătorie, nu o destinație',
+    'manual.chapter1.journey.info-text': 'Această formare este concepută să fie o experiență intensivă care transformă nu doar înțelegerea dvs. asupra yoga, ci întreaga dvs. abordare a vieții. Abilitățile și cunoștințele pe care le dobândiți se vor extinde mult dincolo de saltea, influențând modul în care vă conectați cu voi înșivă, interacționați cu alții și navigați complexitățile vieții de zi cu zi. Îmbrățișați procesul cu o inimă deschisă și o minte curioasă.',
+    'manual.chapter1.journey.self-discovery': 'Autodescoperire',
+    'manual.chapter1.journey.community-building': 'Construirea comunității',
+    'manual.chapter1.journey.leadership': 'Conducere',
+    
+    // Common chapter elements
+    'manual.chapter.student': 'Student',
+    'manual.chapter.practitioner': 'Practicant',
+    'manual.chapter.teacher': 'Profesor',
+    'manual.chapter.leader': 'Lider',
+    'manual.chapter.yogaflow': 'YogaFlow',
+    'manual.chapter.community': 'Comunitate'
   },
   ru: {
     'nav.dashboard': 'Панель управления',
     'nav.poses': 'Библиотека поз',
     'nav.flows': 'Создать поток',
-    
     'nav.meditation': 'Медитация',
     'nav.manual': 'Руководство',
     'nav.business': 'Бизнес',
@@ -95,7 +194,41 @@ const translations = {
     'cta.explore-poses': 'Библиотека асан',
     'cta.try-meditation': 'Попробовать медитацию',
     'footer.made-with-love': 'Сделано с 💙 для йога-сообщества',
-    'footer.carbon-neutral': 'Углеродно-нейтральный хостинг'
+    'footer.carbon-neutral': 'Углеродно-нейтральный хостинг',
+    
+    // Manual translations
+    'manual.title': 'Руководство по подготовке инструкторов йоги YogaFlow на 200 часов',
+    'manual.back-to-home': '← Назад к Yoga Flow',
+    'manual.welcome.title': 'Добро пожаловать в ваше учебное руководство',
+    'manual.welcome.description': 'Это всеобъемлющее руководство является вашим проводником через программу подготовки инструкторов YogaFlow на 200 часов. Каждая глава основывается на предыдущей, предоставляя вам знания, навыки и уверенность, чтобы стать исключительным инструктором йоги.',
+    'manual.welcome.navigation': 'Перемещайтесь по главам ниже, чтобы получить доступ к полной учебной программе. Мы рекомендуем читать их по порядку, но не стесняйтесь пересматривать любой раздел по мере необходимости во время вашего обучения.',
+    
+    // Chapter 1
+    'manual.chapter1.title': 'Глава 1 — Добро пожаловать и обзор программы',
+    'manual.chapter1.breadcrumb': '← Указатель руководства',
+    'manual.chapter1.nav': 'Глава 1',
+    'manual.chapter1.welcome.title': 'Добро пожаловать в путешествие',
+    'manual.chapter1.commitments.title': 'Наши взаимные обязательства',
+    'manual.chapter1.intention.title': 'Цель обучения и методология',
+    'manual.chapter1.setup.title': 'Настройка на успех',
+    'manual.chapter1.journals.title': 'Сила самоанализа',
+    'manual.chapter1.reading.title': 'Дополнительная литература и ресурсы',
+    'manual.chapter1.welcome.intro': 'Добро пожаловать в вашу подготовку инструктора YogaFlow—трансформационный путь самопознания, преданной практики и искусства руководства другими. Это руководство больше, чем учебник; это ваш полевой справочник и спутник. Мы призываем вас полностью погрузиться в него: пишите на полях, выделяйте то, что резонирует, и позвольте его страницам вызвать новые вопросы и озарения.',
+    'manual.chapter1.welcome.community': 'Теперь вы являетесь неотъемлемой частью сообщества преподавателей YogaFlow, сети страстных практикующих и учителей. Мы рады поддержать ваше развитие как студента и будущего лидера в мире йоги.',
+    'manual.chapter1.journey.card-title': 'Путешествие трансформации',
+    'manual.chapter1.journey.info-title': 'Путешествие, а не пункт назначения',
+    'manual.chapter1.journey.info-text': 'Это обучение разработано как погружающий опыт, который трансформирует не только ваше понимание йоги, но и весь ваш подход к жизни. Навыки и знания, которые вы приобретете, выйдут далеко за пределы коврика для йоги, влияя на то, как вы соединяетесь с собой, взаимодействуете с другими и справляетесь со сложностями повседневной жизни. Примите процесс с открытым сердцем и любознательным умом.',
+    'manual.chapter1.journey.self-discovery': 'Самопознание',
+    'manual.chapter1.journey.community-building': 'Построение сообщества',
+    'manual.chapter1.journey.leadership': 'Лидерство',
+    
+    // Common chapter elements
+    'manual.chapter.student': 'Студент',
+    'manual.chapter.practitioner': 'Практикующий',
+    'manual.chapter.teacher': 'Учитель',
+    'manual.chapter.leader': 'Лидер',
+    'manual.chapter.yogaflow': 'YogaFlow',
+    'manual.chapter.community': 'Сообщество'
   }
 };
 
