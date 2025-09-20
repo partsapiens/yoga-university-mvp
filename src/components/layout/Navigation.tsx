@@ -22,6 +22,9 @@ export const Navigation = ({ userRole }: NavigationProps) => {
     { href: '/flows/create', label: t('nav.flows') },
     { href: '/meditation', label: t('nav.meditation') },
     { href: '/manual', label: t('nav.manual') },
+    { href: '/business', label: t('nav.business') },
+    { href: '/certification', label: t('nav.certification') },
+    { href: '/studio', label: t('nav.studio') },
     { href: '/about', label: t('nav.about') },
     { href: '/pricing', label: t('nav.pricing') },
   ];
