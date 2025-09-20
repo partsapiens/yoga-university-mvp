@@ -57,8 +57,7 @@ export default function PricingPage() {
         "Printable pose cards and sequences",
         "Advanced anatomy and alignment guides",
         "Business and marketing resources",
-        "1-on-1 mentorship sessions",
-        "Teacher certification pathway"
+        "1-on-1 mentorship sessions"
       ],
       limitations: [],
       cta: "Start Free Trial",
