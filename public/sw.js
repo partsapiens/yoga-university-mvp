@@ -181,6 +181,14 @@ self.addEventListener('fetch', (event) => {
   
   const url = event.request.url;
   
+  // Skip critical SEO files - let them pass through to ensure crawler access
+  if (url.includes('/robots.txt') || 
+      url.includes('/ads.txt') || 
+      url.includes('/sitemap.xml') ||
+      url.includes('/manifest.webmanifest')) {
+    return;
+  }
+  
   // Determine strategy based on URL patterns
   let strategy = 'network-first';
   
