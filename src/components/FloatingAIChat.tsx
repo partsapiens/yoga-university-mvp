@@ -66,20 +66,59 @@ export const FloatingAIChat: React.FC<FloatingAIChatProps> = ({ className = '' }
         })
       });
 
+      if (!response.ok) {
+        throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+      }
+
       const data = await response.json();
+      
+      // Check if we have debug info (development mode)
+      if (data._debugInfo) {
+        console.log('AI Guide Debug Info:', data._debugInfo);
+      }
+      
+      let assistantContent = data.content || 'I\'m here to help with your yoga and wellness journey. What would you like to know?';
+      
+      // In development, show if we're in fallback mode
+      if (data._debugInfo?.fallbackMode && process.env.NODE_ENV === 'development') {
+        assistantContent += '\n\n[Debug: Using fallback response - API unavailable]';
+      }
       
       const assistantMessage: ChatMessage = {
         role: 'assistant',
-        content: data.content || 'I\'m here to help with your yoga and wellness journey. What would you like to know?',
+        content: assistantContent,
         timestamp: new Date()
       };
 
       setMessages(prev => [...prev, assistantMessage]);
     } catch (error) {
-      console.error('Chat error:', error);
+      console.error('Chat error details:', {
+        error: error instanceof Error ? error.message : 'Unknown error',
+        timestamp: new Date().toISOString(),
+        userMessage: userMessage.content
+      });
+      
+      // Provide more specific error message based on error type
+      let errorContent = 'I apologize, but I\'m having trouble connecting right now. Please try again in a moment.';
+      
+      if (error instanceof Error) {
+        if (error.message.includes('404')) {
+          errorContent = 'The AI service is temporarily unavailable. Please try again later.';
+        } else if (error.message.includes('500')) {
+          errorContent = 'There\'s a temporary server issue. Please try again in a few moments.';
+        } else if (error.message.includes('timeout')) {
+          errorContent = 'The request timed out. Please check your connection and try again.';
+        }
+      }
+      
+      // In development, show more details
+      if (process.env.NODE_ENV === 'development' && error instanceof Error) {
+        errorContent += `\n\n[Debug: ${error.message}]`;
+      }
+      
       const errorMessage: ChatMessage = {
         role: 'assistant',
-        content: 'I apologize, but I\'m having trouble connecting right now. Please try again in a moment. In the meantime, remember to breathe deeply and stay present.',
+        content: errorContent + '\n\nIn the meantime, remember to breathe deeply and stay present.',
         timestamp: new Date()
       };
       setMessages(prev => [...prev, errorMessage]);

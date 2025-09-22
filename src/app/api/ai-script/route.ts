@@ -32,12 +32,34 @@ Return STRICT JSON:
     });
     return NextResponse.json(JSON.parse(r.choices[0].message.content!));
   } catch (error) {
-    console.error('AI Script error:', error);
-    // Fallback response
+    // Enhanced error logging for debugging
+    const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+    const errorCode = error instanceof Error && 'code' in error ? error.code : 'UNKNOWN';
+    
+    console.error('AI Script error details:', {
+      message: errorMessage,
+      code: errorCode,
+      timestamp: new Date().toISOString(),
+      requestData: { style, duration, mood },
+      isOpenAIAvailable: isOpenAIAvailable(),
+      nodeEnv: process.env.NODE_ENV
+    });
+    
+    // Return specific error information in development, generic in production
+    const isDevelopment = process.env.NODE_ENV === 'development';
+    
     return NextResponse.json({
       intro: `Welcome to this ${style || 'mindfulness'} practice. Find a comfortable position and allow yourself to settle.`,
       loopCue: "Breathe naturally and stay present with each breath.",
-      outro: "Gently return your awareness to your surroundings. Take your time."
+      outro: "Gently return your awareness to your surroundings. Take your time.",
+      // Include error details in development only
+      ...(isDevelopment && {
+        _debugInfo: {
+          error: errorMessage,
+          fallbackMode: true,
+          timestamp: new Date().toISOString()
+        }
+      })
     });
   }
 }
