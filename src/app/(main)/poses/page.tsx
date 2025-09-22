@@ -295,7 +295,7 @@ const PoseLibraryPage = () => {
                 }`}
               >
                 <Sparkles className="w-4 h-4" />
-                AI Search
+                🤖 Search
               </button>
             </div>
 

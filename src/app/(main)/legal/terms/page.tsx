@@ -45,7 +45,7 @@ export default function TermsPage() {
                 The Service includes but is not limited to:
               </p>
               <ul className="list-disc pl-5 mt-2">
-                <li>Yoga flow creation tools with AI assistance</li>
+                <li>Yoga flow creation tools with 🤖 assistance</li>
                 <li>Comprehensive pose library with instructions</li>
                 <li>Meditation and breathing exercise sessions</li>
                 <li>Educational resources and teacher training content</li>

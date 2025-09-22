@@ -4,19 +4,19 @@ This document explains how to set up and test the OpenAI integration for the Yog
 
 ## Current Status
 
-✅ **All AI endpoints are functional and tested**
+✅ **All 🤖 endpoints are functional and tested**
 ✅ **Proper fallback behavior when OpenAI API is unavailable**
 ✅ **Safe error handling and content filtering**
-✅ **Tests passing for all AI functionality**
+✅ **Tests passing for all 🤖 functionality**
 
-## Available AI Endpoints
+## Available 🤖 Endpoints
 
-1. **AI Selector** (`/api/ai-select`) - Natural language meditation style recommendation
-2. **AI Script Generator** (`/api/ai-script`) - Dynamic meditation script generation
-3. **AI Recap** (`/api/ai-recap`) - Session summary and insights
-4. **AI Guide** (`/api/ai-guide`) - Chat-based meditation guidance
-5. **AI Recommendations** (`/api/ai/recommendations`) - Personalized practice recommendations
-6. **Flow Suggestion** (`/api/flow-suggest`) - AI-generated yoga sequences
+1. **🤖 Selector** (`/api/ai-select`) - Natural language meditation style recommendation
+2. **🤖 Script Generator** (`/api/ai-script`) - Dynamic meditation script generation
+3. **🤖 Recap** (`/api/ai-recap`) - Session summary and insights
+4. **🤖 Guide** (`/api/ai-guide`) - Chat-based meditation guidance
+5. **🤖 Recommendations** (`/api/ai/recommendations`) - Personalized practice recommendations
+6. **Flow Suggestion** (`/api/flow-suggest`) - 🤖 generated yoga sequences
 
 ## Setup Instructions
 

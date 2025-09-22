@@ -43,7 +43,7 @@ export const MountainMeditationHero: React.FC = () => {
         </div>
       </div>
       
-      {/* Enhanced breathing sphere with AI elements */}
+      {/* Enhanced breathing sphere with 🤖 elements */}
       <div className="breathing-sphere">
         <div className="sphere-outer-glow"></div>
         <div className="sphere-core">

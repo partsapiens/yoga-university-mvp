@@ -17,7 +17,7 @@ interface OverviewSectionProps {
 
   const mockRecentActivity = [
     { type: 'user_signup', user: 'John Doe', timestamp: new Date(), details: 'New student registration' },
-    { type: 'flow_created', user: 'AI System', timestamp: new Date(Date.now() - 300000), details: 'Morning Flow generated' },
+    { type: 'flow_created', user: '🤖 System', timestamp: new Date(Date.now() - 300000), details: 'Morning Flow generated' },
     { type: 'course_completed', user: 'Emma Wilson', timestamp: new Date(Date.now() - 600000), details: 'Yoga Philosophy course completed' },
     { type: 'pose_added', user: 'Admin', timestamp: new Date(Date.now() - 900000), details: 'Bird of Paradise pose added to library' }
   ]

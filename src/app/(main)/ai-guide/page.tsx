@@ -98,7 +98,7 @@ export default function AIGuidePage() {
             </div>
             <h2 className="text-2xl font-semibold mb-4">Camera Access Granted!</h2>
             <p className="text-gray-600 dark:text-gray-300 mb-6">
-              Great! You&apos;re ready to start your AI-guided yoga session.
+              Great! You&apos;re ready to start your 🤖 guided yoga session.
             </p>
             <button
               onClick={handleTryDemo}
@@ -119,7 +119,7 @@ export default function AIGuidePage() {
                 <AlertCircle className="w-16 h-16 text-amber-500 mx-auto mb-4" />
                 <h2 className="text-2xl font-semibold mb-4">Camera Access Not Available</h2>
                 <p className="text-gray-600 dark:text-gray-300 mb-6">
-                  No worries! You can still benefit from our AI yoga guidance with these alternatives.
+                  No worries! You can still benefit from our 🤖 yoga guidance with these alternatives.
                 </p>
               </div>
 
@@ -130,7 +130,7 @@ export default function AIGuidePage() {
                   <Video className="w-8 h-8 text-blue-600 mb-3" />
                   <h3 className="text-lg font-semibold mb-2">Try Demo Mode</h3>
                   <p className="text-gray-600 dark:text-gray-300 mb-4 text-sm">
-                    Experience the AI pose analysis interface with sample poses and learn how it works.
+                    Experience the 🤖 pose analysis interface with sample poses and learn how it works.
                   </p>
                   <button
                     onClick={handleTryDemo}
