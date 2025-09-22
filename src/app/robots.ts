@@ -39,11 +39,53 @@ export default function robots(): MetadataRoute.Robots {
       },
       {
         userAgent: 'GPTBot', // OpenAI bot
-        disallow: '/', // Prevent AI training on our content
+        allow: '/',
+        disallow: [
+          '/admin/',
+          '/dashboard', // Private user area
+          '/journal/', // Private user content
+          '/reading/', // Private user content
+        ],
       },
       {
         userAgent: 'Google-Extended', // Google AI training
-        disallow: '/',
+        allow: '/',
+        disallow: [
+          '/admin/',
+          '/dashboard', // Private user area
+          '/journal/', // Private user content
+          '/reading/', // Private user content
+        ],
+      },
+      {
+        userAgent: 'ClaudeBot', // Anthropic Claude
+        allow: '/',
+        disallow: [
+          '/admin/',
+          '/dashboard', // Private user area
+          '/journal/', // Private user content
+          '/reading/', // Private user content
+        ],
+      },
+      {
+        userAgent: 'ChatGPT-User', // ChatGPT browsing
+        allow: '/',
+        disallow: [
+          '/admin/',
+          '/dashboard', // Private user area
+          '/journal/', // Private user content
+          '/reading/', // Private user content
+        ],
+      },
+      {
+        userAgent: 'BingBot', // Microsoft Bing
+        allow: '/',
+        disallow: [
+          '/admin/',
+          '/dashboard', // Private user area
+          '/journal/', // Private user content
+          '/reading/', // Private user content
+        ],
       },
     ],
     sitemap: `${baseUrl}/sitemap.xml`,
