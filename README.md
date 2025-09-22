@@ -234,6 +234,68 @@ Currently supports:
 
 Language detection happens automatically based on browser settings, with manual override available in the header.
 
+## 🔧 Domain Accessibility & AdSense Verification Tools
+
+Comprehensive diagnostic tools for troubleshooting domain accessibility and AdSense verification issues:
+
+### Quick Start Menu
+```bash
+./scripts/domain-diagnostics-menu.sh
+```
+Interactive menu for all diagnostic tools with guided workflows.
+
+### Individual Tools
+
+#### 1. Comprehensive Domain Check
+```bash
+./scripts/verify-domain-access.sh [domain]
+./scripts/verify-domain-access.sh https://fltwht.com
+```
+- DNS resolution verification (A, AAAA, CNAME records)
+- SSL/HTTPS accessibility and certificate validation
+- robots.txt and ads.txt accessibility checks
+- CDN/hosting provider detection
+- AdSense implementation verification
+
+#### 2. fltwht.com Specific Diagnostics
+```bash
+./scripts/check-fltwht-access.sh
+```
+- Tailored troubleshooting for fltwht.com issues
+- Step-by-step checklist for fixing accessibility problems
+- Cloudflare configuration guidance
+- Specific solutions for AI crawler access
+
+#### 3. Enhanced AdSense Verification
+```bash
+./scripts/verify-adsense.sh [domain]
+```
+- Network connectivity verification
+- ads.txt content validation
+- AdSense script implementation checks
+- Publisher ID verification
+- Enhanced error reporting with solutions
+
+### Common Issues Addressed
+- **AI Tools Access**: When ChatGPT, OpenAI can't access your site ("content is not publicly accessible")
+- **AdSense Verification**: When Google AdSense cannot verify domain ownership
+- **DNS Configuration**: A/AAAA/CNAME record issues
+- **SSL Problems**: Certificate validation and HTTPS accessibility
+- **Bot Access**: robots.txt and firewall blocking issues
+- **CDN Configuration**: Cloudflare, Netlify, Vercel settings
+
+### Documentation
+- `DOMAIN_ACCESSIBILITY_TROUBLESHOOTING.md` - Complete troubleshooting guide
+- `scripts/README.md` - Detailed script documentation
+- `ADSENSE_IMPLEMENTATION.md` - AdSense setup guide
+- `ADSENSE_DOMAIN_CONFIG.md` - Domain configuration guide
+
+### Integration Testing
+```bash
+./scripts/test-verification-tools.sh
+```
+Comprehensive test suite for all diagnostic tools.
+
 ## 📊 Analytics
 
 Privacy-first analytics implementation:
