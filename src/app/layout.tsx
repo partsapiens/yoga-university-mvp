@@ -11,7 +11,7 @@ import type { Metadata } from 'next'
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_BASE_URL || 'https://yogaflowuniversity.com'),
   title: {
-    default: 'Yoga Flow University - ✨-Powered Yoga Platform',
+    default: 'Yoga Flow University - ✨ Powered Yoga Platform',
     template: '%s | Yoga Flow University'
   },
   description: 'Create personalized yoga flows with ✨ assistance, track your practice, and grow your teaching skills. Join thousands of yogis in our comprehensive platform.',
@@ -45,14 +45,14 @@ export const metadata: Metadata = {
     locale: 'en_US',
     url: '/',
     siteName: 'Yoga Flow University',
-    title: 'Yoga Flow University - ✨-Powered Yoga Platform',
+    title: 'Yoga Flow University - ✨ Powered Yoga Platform',
     description: 'Create personalized yoga flows with ✨ assistance, track your practice, and grow your teaching skills.',
     images: [
       {
         url: '/og-image.png',
         width: 1200,
         height: 630,
-        alt: 'Yoga Flow University - ✨-Powered Yoga Platform',
+        alt: 'Yoga Flow University - ✨ Powered Yoga Platform',
       },
     ],
   },
@@ -60,7 +60,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     site: '@yogaflowuni',
     creator: '@yogaflowuni',
-    title: 'Yoga Flow University - ✨-Powered Yoga Platform',
+    title: 'Yoga Flow University - ✨ Powered Yoga Platform',
     description: 'Create personalized yoga flows with ✨ assistance, track your practice, and grow your teaching skills.',
     images: ['/twitter-image.png'],
   },

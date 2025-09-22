@@ -172,7 +172,7 @@ export const AIInsightsDashboard: React.FC<AIInsightsDashboardProps> = ({
               No Practice Data Yet
             </h3>
             <p className="text-gray-500 dark:text-gray-400 mb-4">
-              Complete a few practice sessions to unlock ✨-powered insights and personalized recommendations.
+              Complete a few practice sessions to unlock ✨ powered insights and personalized recommendations.
             </p>
             <Button variant="outline" onClick={() => window.location.href = '/flows/create'}>
               Start Your First Practice

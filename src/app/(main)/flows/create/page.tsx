@@ -652,7 +652,7 @@ export default function CreateFlowPage() {
         />
         
         <div className="space-y-6 mt-6">
-          {/* ✨-Powered Flow Validation */}
+          {/* ✨ Powered Flow Validation */}
           <FlowValidation 
             flow={flow} 
             totalSeconds={totalSeconds} 
