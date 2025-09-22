@@ -4,6 +4,8 @@ import Link from 'next/link';
 import { UserRole } from '@/types';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { useTheme } from '@/contexts/ThemeContext';
+import { Bell } from 'lucide-react';
+import { useNotifications } from '@/hooks/useNotifications';
 
 interface NavigationProps {
   userRole?: UserRole;
@@ -12,6 +14,7 @@ interface NavigationProps {
 export const Navigation = ({ userRole }: NavigationProps) => {
   const { language, setLanguage, t } = useLanguage();
   const { theme, toggleTheme } = useTheme();
+  const { unreadCount } = useNotifications();
   const [mobileOpen, setMobileOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
@@ -112,6 +115,25 @@ export const Navigation = ({ userRole }: NavigationProps) => {
                 <option value="ru">RU</option>
               </select>
             </div>
+
+            {/* Profile Icon */}
+            <button
+              className="p-2 text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors rounded-lg relative"
+              aria-label="Go to notifications"
+              onClick={() => {
+                const notificationsSection = document.getElementById('notifications');
+                if (notificationsSection) {
+                  notificationsSection.scrollIntoView({ behavior: 'smooth' });
+                }
+              }}
+            >
+              <Bell className="w-5 h-5" />
+              {unreadCount > 0 && (
+                <span className="absolute -top-1 -right-1 rounded-full bg-red-500 px-1 text-[10px] text-white">
+                  {unreadCount}
+                </span>
+              )}
+            </button>
 
             {/* Profile Icon */}
             <button
