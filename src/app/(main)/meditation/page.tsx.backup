@@ -6,7 +6,10 @@ import { generateMeditationScript } from '@/lib/api/ai';
 import { MeditationInput, MeditationScript, MeditationRecommendation } from '@/types/ai';
 import { MoodInput } from '@/components/meditation/MoodInput';
 import { GuidedMeditationPlayer } from '@/components/meditation/GuidedMeditationPlayer';
+import { BreathingOrb } from '@/components/meditation/BreathingOrb';
 import { EvolvingBreathingOrb } from '@/components/meditation/EvolvingBreathingOrb';
+import { MeditationRecommendations } from '@/components/meditation/MeditationRecommendations';
+import { PersonalizedAffirmations } from '@/components/ai/PersonalizedAffirmations';
 import { MeditationCard, MeditationButton, StatBox } from '@/components/ui/MeditationCard';
 
 // Types for meditation features
@@ -81,6 +84,15 @@ export default function MeditationPage() {
   const [generatedScript, setGeneratedScript] = useState<MeditationScript | null>(null);
   const [showPlayer, setShowPlayer] = useState(false);
   
+  // State for affirmations
+  const [selectedAffirmation, setSelectedAffirmation] = useState<any>(null);
+  const [userProfile, setUserProfile] = useState({
+    experience: 'beginner' as 'beginner' | 'intermediate' | 'advanced',
+    preferredTone: 'gentle' as 'gentle' | 'empowering' | 'calming' | 'energizing',
+    goals: ['stress relief', 'better sleep'],
+    challenges: []
+  });
+
   // Local storage for session tracking
   const [sessionStats, setSessionStats] = useLocalStorage<SessionStats>('meditation_stats', {
     streak: 0,
@@ -100,6 +112,7 @@ export default function MeditationPage() {
         setTimeRemaining(time => {
           if (time <= 1) {
             setIsPlaying(false);
+            console.log('Session completed - triggering handleSessionComplete');
             handleSessionComplete();
             return 0;
           }
@@ -116,8 +129,13 @@ export default function MeditationPage() {
   }, [isPlaying, timeRemaining]);
 
   const handleSessionComplete = () => {
+    console.log('handleSessionComplete called');
+    console.log('Current sessionStats:', sessionStats);
+    
     const today = new Date().toDateString();
     const lastSessionDate = sessionStats.lastSession;
+    
+    console.log('Today:', today, 'Last session:', lastSessionDate);
     
     // Calculate streak
     let newStreak = sessionStats.streak;
@@ -134,7 +152,7 @@ export default function MeditationPage() {
       newStreak = 1; // First session
     }
     
-    const sessionDuration = selectedSession?.duration || 5;
+    const sessionDuration = selectedSession?.duration || Math.floor((generatedScript?.totalDuration || 0) / 60) || 5; // Default 5 min
     
     const newStats = {
       streak: newStreak,
@@ -145,7 +163,14 @@ export default function MeditationPage() {
       averageRating: sessionStats.averageRating
     };
     
+    console.log('Setting new stats:', newStats);
     setSessionStats(newStats);
+    
+    // Verify localStorage was updated
+    setTimeout(() => {
+      const stored = localStorage.getItem('meditation_stats');
+      console.log('Stored in localStorage:', stored);
+    }, 100);
   };
 
   const startSession = (session: MeditationSession) => {
@@ -163,6 +188,7 @@ export default function MeditationPage() {
       setShowPlayer(true);
     } catch (error) {
       console.error('Failed to generate meditation script:', error);
+      // TODO: Show error message to user
     } finally {
       setIsGenerating(false);
     }
@@ -178,6 +204,28 @@ export default function MeditationPage() {
     setShowPlayer(false);
     setGeneratedScript(null);
     setSelectedSession(null);
+  };
+
+  const handleRecommendationSelect = (recommendation: MeditationRecommendation) => {
+    // Convert recommendation to a meditation input for AI generation
+    const meditationInput: MeditationInput = {
+      mood: recommendation.personalizedFor?.mood || 'neutral',
+      goal: recommendation.description,
+      duration: recommendation.duration,
+      experience: recommendation.personalizedFor?.experience || 'beginner',
+      style: recommendation.style as any,
+      timeOfDay: recommendation.timeOfDay || getTimeOfDay()
+    };
+    
+    handleAIGenerate(meditationInput);
+  };
+
+  const getTimeOfDay = (): 'morning' | 'afternoon' | 'evening' | 'night' => {
+    const hour = new Date().getHours();
+    if (hour < 12) return 'morning';
+    if (hour < 17) return 'afternoon';
+    if (hour < 21) return 'evening';
+    return 'night';
   };
 
   const startCustomTimer = () => {
@@ -206,10 +254,27 @@ export default function MeditationPage() {
     return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
   };
 
+  const formatTimeForSpeech = (seconds: number) => {
+    const mins = Math.floor(seconds / 60);
+    const secs = seconds % 60;
+    if (mins === 0) {
+      return `${secs} seconds`;
+    } else if (secs === 0) {
+      return `${mins} ${mins === 1 ? 'minute' : 'minutes'}`;
+    } else {
+      return `${mins} ${mins === 1 ? 'minute' : 'minutes'} and ${secs} seconds`;
+    }
+  };
+
   // Wearables functions
   const connectWearable = (type: 'apple' | 'android' | 'other') => {
     setConnectedWearable(type);
     setShowWearableOptions(false);
+    
+    // Simulate connection success
+    console.log(`Connected to ${type} wearable`);
+    
+    // Start simulated biofeedback
     startBioFeedbackSimulation();
   };
 
@@ -219,6 +284,7 @@ export default function MeditationPage() {
   };
 
   const startBioFeedbackSimulation = () => {
+    // Simulate real-time biofeedback data updates
     const interval = setInterval(() => {
       if (!connectedWearable) {
         clearInterval(interval);
@@ -233,6 +299,7 @@ export default function MeditationPage() {
       }));
     }, 2000);
 
+    // Clean up interval after 5 minutes or when component unmounts
     setTimeout(() => clearInterval(interval), 300000);
   };
 
@@ -443,6 +510,13 @@ export default function MeditationPage() {
                         description: 'Natural breathing rhythm'
                       }
                     }
+                    onBreathCycle={(phase) => {
+                      // Optional: Add breath cycle callbacks for additional features
+                    }}
+                    onEvolution={(stage) => {
+                      // Optional: Handle evolution events
+                      console.log('Evolved to:', stage.name);
+                    }}
                   />
                 </div>
 
@@ -727,8 +801,22 @@ export default function MeditationPage() {
                 </div>
               </div>
             )}
-          </MeditationCard>
+          </div>
         </div>
+
+        {/* Personalized Affirmations Section - Temporarily commented */}
+        {/*<PersonalizedAffirmations
+          context="meditation"
+          userProfile={userProfile}
+          sessionData={{
+            mood: 'calm',
+            timeOfDay: getTimeOfDay(),
+            focusArea: 'mindfulness',
+            duration: customDuration
+          }}
+          onAffirmationSelect={setSelectedAffirmation}
+          className="mb-8"
+        />*/}
 
         {/* Additional Features */}
         <div className="mt-12 grid grid-cols-1 md:grid-cols-2 gap-8">
