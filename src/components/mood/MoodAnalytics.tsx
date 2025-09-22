@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { MoodTrackingService, MoodAnalytics } from '@/lib/services/moodTracking';
 
 interface MoodAnalyticsProps {
@@ -14,11 +14,7 @@ export const MoodAnalyticsComponent: React.FC<MoodAnalyticsProps> = ({ className
 
   const moodTracker = MoodTrackingService.getInstance();
 
-  useEffect(() => {
-    loadAnalytics();
-  }, []);
-
-  const loadAnalytics = async () => {
+  const loadAnalytics = useCallback(async () => {
     try {
       setIsLoading(true);
       const data = moodTracker.getMoodAnalytics();
@@ -28,7 +24,11 @@ export const MoodAnalyticsComponent: React.FC<MoodAnalyticsProps> = ({ className
     } finally {
       setIsLoading(false);
     }
-  };
+  }, [moodTracker]);
+
+  useEffect(() => {
+    loadAnalytics();
+  }, [loadAnalytics]);
 
   if (isLoading) {
     return (

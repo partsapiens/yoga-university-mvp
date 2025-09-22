@@ -1,5 +1,6 @@
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
+import Image from 'next/image';
 import { getPosesFromDatabase } from '../../lib/database';
 import PoseVideo from '../../components/PoseLibrary/PoseVideo';
 import TTSPlayback from '../../components/PoseLibrary/TTSPlayback';
@@ -109,9 +110,11 @@ export default function PoseDetailPage() {
             </div>
 
             {pose.image_url && (
-              <img 
+              <Image 
                 src={pose.image_url} 
-                alt={pose.name} 
+                alt={pose.name}
+                width={600}
+                height={400}
                 className="w-full rounded mb-4 max-h-96 object-cover" 
               />
             )}

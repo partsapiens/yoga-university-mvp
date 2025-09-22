@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useEffect, useCallback, useRef } from 'react';
+import Image from 'next/image';
 import { Search, Filter, ChevronDown, Heart, Plus } from 'lucide-react';
 import { supabase } from '@/utils/supabaseClient';
 import { PoseId } from '@/types/yoga';
@@ -487,11 +488,12 @@ export function PoseLibrarySidebar({ onAddPose, className = '' }: PoseLibrarySid
             {/* Icon */}
             <div className="mb-2 flex h-20 w-full items-center justify-center rounded-xl bg-muted text-3xl">
               {pose.image_url ? (
-                <img
+                <Image
                   src={pose.image_url}
                   alt={pose.name}
+                  width={80}
+                  height={80}
                   className="w-full h-full object-cover rounded-xl"
-                  loading="lazy"
                 />
               ) : (
                 <span>🧘</span>
