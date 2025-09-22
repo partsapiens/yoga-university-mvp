@@ -94,7 +94,7 @@ export default function PricingPage() {
       category: "Support",
       explorer: "Email support",
       practitioner: "Priority email support",
-      teacher: "1-on-1 mentorship"
+      teacher: "Priority email support + dedicated teacher resources"
     },
     {
       category: "Training Materials",
