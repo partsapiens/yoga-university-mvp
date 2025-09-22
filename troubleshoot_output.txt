@@ -1,0 +1,116 @@
+🔧 OpenAI API Troubleshooting Tool
+==================================
+
+📍 Environment: Local Development
+🌐 Local URL: http://localhost:3000
+
+1. Testing basic connectivity...
+✅ Server is reachable
+
+2. Testing health endpoint...
+📡 Testing /api/health...
+   Status: 200
+   ✅ Success
+{
+  "status": "unhealthy",
+  "openai": false,
+  "timestamp": "2025-09-22T10:15:52.237Z",
+  "message": "API unavailable",
+  "debugInfo": {
+    "hasApiKey": false,
+    "useMock": false,
+    "nodeEnv": "development",
+    "netlifyContext": "unknown",
+    "error": "API key not configured"
+  }
+}
+
+3. Testing debug environment endpoint...
+📡 Testing /api/debug/environment...
+   Status: 200
+   ✅ Success
+{
+  "nodeEnv": "development",
+  "netlify": false,
+  "context": "unknown",
+  "deployId": "local",
+  "buildId": "local",
+  "timestamp": "2025-09-22T10:15:52.269Z",
+  "openai": {
+    "hasApiKey": false,
+    "apiKeyLength": 0,
+    "apiKeyPrefix": "none",
+    "useMock": false,
+    "mockEnvVar": "false"
+  },
+  "runtime": {
+    "platform": "linux",
+    "nodeVersion": "v20.19.5",
+    "memoryUsage": {
+      "rss": 699895808,
+      "heapTotal": 320970752,
+      "heapUsed": 301549856,
+      "external": 1209053837,
+      "arrayBuffers": 1204887578
+    },
+    "uptime": 606.731877689
+  },
+  "headers": {
+    "userAgent": "server-side",
+    "host": "server-side"
+  }
+}
+
+4. Testing AI endpoints...
+4a. AI Select endpoint...
+📡 Testing /api/ai-select...
+   Status: 200
+   ✅ Success
+{
+  "style": "Box Breathing",
+  "duration": 10,
+  "rationale": "Mock"
+}
+
+4b. AI Guide endpoint...
+📡 Testing /api/ai-guide...
+   Status: 200
+   ✅ Success
+{
+  "content": "I'm here to help with your meditation and mindfulness practice. While I'm currently running in demo mode, I can still provide general guidance about breathing techniques, meditation styles, and wellness practices. What would you like to know?"
+}
+
+4c. AI Script endpoint...
+📡 Testing /api/ai-script...
+   Status: 200
+   ✅ Success
+{
+  "intro": "Welcome. Settle in…",
+  "loopCue": "Inhale… Exhale…",
+  "outro": "Gently open your eyes when you're ready."
+}
+
+5. Environment Analysis...
+=========================
+✅ .env file exists
+⚠️  OPENAI_API_KEY not found in .env
+✅ USE_MOCK is set to: false
+ℹ️  .env.local file not found (optional)
+
+
+7. Troubleshooting Recommendations...
+====================================
+For local development issues:
+• Create .env.local with OPENAI_API_KEY=your_key_here
+• Set USE_MOCK=false to enable live API calls
+• Restart the development server after changing environment variables
+• Get an API key from: https://platform.openai.com/api-keys
+
+For both environments:
+• Check server logs for detailed error messages
+• Verify API key is valid and has sufficient credits
+• Test health endpoint: http://localhost:3000/api/health
+• Check debug endpoint: http://localhost:3000/api/debug/environment
+
+🎯 Troubleshooting Complete!
+Check the output above for any issues that need attention.
