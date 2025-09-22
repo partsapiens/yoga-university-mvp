@@ -100,7 +100,7 @@ export const ContentSection: React.FC = () => {
                     <p className="text-sm text-slate-600">20 min • Vinyasa • 156 practices</p>
                   </div>
                   <div className="flex space-x-2">
-                    <Badge variant="info">AI Generated</Badge>
+                    <Badge variant="info">🤖 Generated</Badge>
                     <Button size="sm" variant="outline">View</Button>
                   </div>
                 </div>

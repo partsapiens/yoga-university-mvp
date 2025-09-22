@@ -14,7 +14,7 @@ This guide covers the newly implemented enhanced LLM integration features for th
    npm install
    ```
 
-2. Configure environment (optional for enhanced AI features):
+2. Configure environment (optional for enhanced 🤖 features):
    ```bash
    cp .env.example .env
    # Add your OpenAI API key to .env:
@@ -32,19 +32,19 @@ This guide covers the newly implemented enhanced LLM integration features for th
 
 ### 1. Enhanced Natural-Language Meditation Selector
 
-**Location**: `/meditation` → "AI-Guided Meditation"
+**Location**: `/meditation` → "🤖 Guided Meditation"
 
 **Features**:
 - **Conversational Interface**: Users describe feelings naturally instead of forms
 - **Time-aware Greetings**: Dynamic greetings based on time of day
-- **AI Mode Toggle**: Switch between simple and AI-powered modes
+- **🤖 Mode Toggle**: Switch between simple and 🤖 powered modes
 - **Voice Input**: Web Speech API for hands-free interaction
 - **Smart Adaptation**: UI adapts based on input method
 
 **Example Usage**:
 ```
 User input: "I've had a stressful day at work and need to unwind before bed"
-AI output: Recommends breathing meditation, 10 minutes, calming pattern
+🤖 output: Recommends breathing meditation, 10 minutes, calming pattern
 ```
 
 ### 2. Intelligent API Routes
@@ -100,9 +100,9 @@ Provides post-session analysis and journey tracking.
 3. Set duration and experience level
 4. Generate meditation
 
-### After (AI Mode)
+### After (🤖 Mode)
 1. Describe feelings naturally: "Stressed after long day, need to relax"
-2. AI automatically selects optimal style, duration, and breathing pattern
+2. 🤖 automatically selects optimal style, duration, and breathing pattern
 3. Personalized experience created instantly
 
 ## 🔧 Technical Implementation
@@ -118,7 +118,7 @@ Provides post-session analysis and journey tracking.
 
 ### Key Components
 - **MoodInput**: Enhanced with conversational interface and voice input
-- **AI APIs**: Three new routes for select, script, and insights
+- **🤖 APIs**: Three new routes for select, script, and insights
 - **OpenAI Client**: Configurable with graceful error handling
 - **Type Safety**: Comprehensive TypeScript definitions
 
@@ -154,8 +154,8 @@ const rateLimits = {
 
 ### Manual Testing
 1. Navigate to `/meditation`
-2. Click "AI-Guided Meditation"
-3. Test both AI and Simple modes
+2. Click "🤖 Guided Meditation"
+3. Test both 🤖 and Simple modes
 4. Try voice input (Chrome/Edge)
 5. Submit different types of input
 
@@ -191,7 +191,7 @@ For questions or issues:
 ## 🏆 Success Metrics
 
 **Target KPIs**:
-- AI-powered session adoption: >80%
+- 🤖 powered session adoption: >80%
 - Session completion improvement: +15%
 - User satisfaction: >4.2/5 average
-- Response time: <2 seconds for AI calls
+- Response time: <2 seconds for 🤖 calls

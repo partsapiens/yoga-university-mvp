@@ -95,7 +95,7 @@ export function KeyboardShortcuts({ className = '' }: KeyboardShortcutsProps) {
                 <div className="text-sm text-muted-foreground space-y-2">
                   <div>• Hold Shift while clicking to select multiple poses</div>
                   <div>• Drag poses to reorder them in your flow</div>
-                  <div>• Use the AI generator for inspiration, then customize</div>
+                  <div>• Use the 🤖 generator for inspiration, then customize</div>
                   <div>• Export flows as PDF to print for offline practice</div>
                 </div>
               </div>

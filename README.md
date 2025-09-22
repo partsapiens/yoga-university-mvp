@@ -1,4 +1,4 @@
-# Yoga Flow University - AI-Powered Yoga Platform
+# Yoga Flow University - 🤖 Powered Yoga Platform
 
 <p align="center">
   <img src="https://img.shields.io/badge/Next.js-13.5-black?style=for-the-badge&logo=next.js" alt="Next.js">
@@ -8,14 +8,14 @@
   <img src="https://img.shields.io/badge/PWA-Ready-purple?style=for-the-badge" alt="PWA Ready">
 </p>
 
-A comprehensive web platform for yoga practitioners and teachers, featuring AI-powered flow creation, guided meditation, extensive pose libraries, and progressive web app capabilities. Built with modern web technologies and a focus on privacy, accessibility, and performance.
+A comprehensive web platform for yoga practitioners and teachers, featuring 🤖 powered flow creation, guided meditation, extensive pose libraries, and progressive web app capabilities. Built with modern web technologies and a focus on privacy, accessibility, and performance.
 
 ## ✨ Features
 
 ### 🧘‍♀️ **Yoga Flow Creation**
-- **AI-Powered Generation** — Create personalized sequences based on duration, intensity, and focus areas
+- **🤖 Powered Generation** — Create personalized sequences based on duration, intensity, and focus areas
 - **Interactive Builder** — Drag-and-drop interface with real-time preview
-- **Smart Sequencing** — AI suggestions for safer, more effective flow transitions
+- **Smart Sequencing** — 🤖 suggestions for safer, more effective flow transitions
 - **Custom Durations** — Adjust individual pose timings and flow tempo
 - **Voice Control** — Hands-free commands for seamless practice
 
@@ -56,9 +56,9 @@ cd yoga-university-mvp
 # Install dependencies
 npm install
 
-# Set up environment variables (optional - for AI features)
+# Set up environment variables (optional - for 🤖 features)
 cp .env.local.example .env.local
-# Edit .env.local to add your OpenAI API key if you want AI features
+# Edit .env.local to add your OpenAI API key if you want 🤖 features
 
 # Start development server
 npm run dev
@@ -66,9 +66,9 @@ npm run dev
 
 Visit [http://localhost:3000](http://localhost:3000) to see the application.
 
-### ⚙️ AI Features Setup (Optional)
+### ⚙️ 🤖 Features Setup (Optional)
 
-To enable AI-powered features like flow generation and meditation guidance:
+To enable 🤖 powered features like flow generation and meditation guidance:
 
 1. Get an OpenAI API key from [platform.openai.com](https://platform.openai.com/api-keys)
 2. Add it to `.env.local`:
@@ -79,7 +79,7 @@ To enable AI-powered features like flow generation and meditation guidance:
 3. Restart the development server
 4. Test with: `./check-openai-config.sh`
 
-**Note**: AI features work in fallback mode without an API key, providing default responses.
+**Note**: 🤖 features work in fallback mode without an API key, providing default responses.
 
 ### Build for Production
 
@@ -170,7 +170,7 @@ Full-width hero section with compelling CTAs, feature overview, and smooth anima
 - Contraindications and safety notes
 
 ### ✨ **Flow Creator** (`/flows/create`)
-- AI-powered flow generation
+- 🤖 powered flow generation
 - Interactive pose sequencing
 - Real-time preview and playback
 - Save and share custom flows

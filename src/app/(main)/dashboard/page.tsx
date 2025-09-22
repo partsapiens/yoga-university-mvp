@@ -32,9 +32,9 @@ const DashboardPage = async () => {
             <RecentSessions sessions={data.recentSessions} />
           </div>
           
-          {/* AI Progress Insights Section */}
+          {/* 🤖 Progress Insights Section */}
           <div>
-            <SectionHeader title="AI Progress Insights" />
+            <SectionHeader title="🤖 Progress Insights" />
             <AIInsightsDashboard sessions={data.practiceSessions} />
           </div>
           

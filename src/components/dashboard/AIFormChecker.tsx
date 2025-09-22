@@ -39,7 +39,7 @@ export const AIFormChecker = () => {
   return (
     <Card className="flex flex-col">
       <CardHeader>
-        <CardTitle>AI Form Checker</CardTitle>
+        <CardTitle>🤖 Form Checker</CardTitle>
       </CardHeader>
       <CardContent className="space-y-4">
         <Select value={pose} onValueChange={(v) => setPose(v as PoseId)}>
@@ -66,7 +66,7 @@ export const AIFormChecker = () => {
         {feedback.length > 0 && (
           <div className="space-y-3">
             <div className="rounded-lg bg-blue-50 p-4 border border-blue-200">
-              <h4 className="font-medium text-blue-900 mb-2">AI Form Analysis</h4>
+              <h4 className="font-medium text-blue-900 mb-2">🤖 Form Analysis</h4>
               <ul className="space-y-2">
                 {feedback.map((f, idx) => (
                   <li key={idx} className="flex items-start gap-2 text-sm text-blue-800">

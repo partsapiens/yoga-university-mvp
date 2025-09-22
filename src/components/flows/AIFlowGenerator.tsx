@@ -9,7 +9,7 @@ export const AIFlowGenerator = () => {
 
   const handleGenerate = () => {
     setIsGenerating(true);
-    // Simulate AI processing
+    // Simulate 🤖 processing
     setTimeout(() => {
       setIsGenerating(false);
       // TODO: Handle generated flow
@@ -18,7 +18,7 @@ export const AIFlowGenerator = () => {
 
   return (
     <div className="card p-6">
-      <h2 className="text-2xl font-bold mb-4">AI Flow Generator</h2>
+      <h2 className="text-2xl font-bold mb-4">🤖 Flow Generator</h2>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {/* TODO: Add form controls for focus area, difficulty, style, duration, etc. */}
         <div>
@@ -50,7 +50,7 @@ export const AIFlowGenerator = () => {
       </div>
       {isGenerating && (
         <div className="mt-4">
-          <p className="text-center text-foreground">Simulating AI processing...</p>
+          <p className="text-center text-foreground">Simulating 🤖 processing...</p>
           {/* TODO: Add a nice progress indicator */}
           <div className="w-full bg-gray-200 rounded-full h-2.5 mt-2">
             <div className="bg-primary h-2.5 rounded-full animate-pulse"></div>

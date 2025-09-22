@@ -155,7 +155,7 @@ export default function SemanticSearch({
   const getSourceLabel = (source: string) => {
     switch (source) {
       case 'semantic':
-        return 'AI Understanding';
+        return '🤖 Understanding';
       case 'hybrid':
         return 'Smart Match';
       case 'fuzzy':
@@ -199,7 +199,7 @@ export default function SemanticSearch({
           onFocus={() => query && setIsOpen(true)}
         />
         
-        {/* AI Indicator */}
+        {/* 🤖 Indicator */}
         {!isLoading && (
           <div className="absolute inset-y-0 right-12 flex items-center pointer-events-none">
             <Sparkles className="h-4 w-4 text-purple-400" />
@@ -222,7 +222,7 @@ export default function SemanticSearch({
           {searchInfo.semanticCount > 0 && (
             <span className="inline-flex items-center gap-1 px-2 py-1 rounded-full bg-purple-50 text-purple-700 dark:bg-purple-900/20 dark:text-purple-300">
               <Brain className="w-3 h-3" />
-              {searchInfo.semanticCount} AI matches
+              {searchInfo.semanticCount} 🤖 matches
             </span>
           )}
           {searchInfo.hybridCount > 0 && (

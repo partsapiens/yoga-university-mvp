@@ -19,7 +19,7 @@ export const FloatingAIChat: React.FC<FloatingAIChatProps> = ({ className = '' }
   const [messages, setMessages] = useState<ChatMessage[]>([
     {
       role: 'assistant',
-      content: 'Hello! I\'m your AI yoga and wellness guide. Ask me about poses, meditation techniques, breathing exercises, or any wellness questions you have!',
+      content: 'Hello! I\'m your 🤖 yoga and wellness guide. Ask me about poses, meditation techniques, breathing exercises, or any wellness questions you have!',
       timestamp: new Date()
     }
   ]);
@@ -185,7 +185,7 @@ export const FloatingAIChat: React.FC<FloatingAIChatProps> = ({ className = '' }
                       <div className="bg-white text-gray-800 border border-gray-200 rounded-2xl px-4 py-2 max-w-[80%]">
                         <div className="flex items-center space-x-2">
                           <Loader2 size={14} className="animate-spin text-purple-600" />
-                          <p className="text-sm text-gray-600">AI is thinking...</p>
+                          <p className="text-sm text-gray-600">🤖 is thinking...</p>
                         </div>
                       </div>
                     </div>
