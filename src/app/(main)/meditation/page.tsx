@@ -77,7 +77,7 @@ export default function MeditationPage() {
   });
   const [showWearableOptions, setShowWearableOptions] = useState(false);
   
-  // ✨-guided meditation state
+  // ✨ guided meditation state
   const [showMoodInput, setShowMoodInput] = useState(false);
   const [isGenerating, setIsGenerating] = useState(false);
   const [generatedScript, setGeneratedScript] = useState<MeditationScript | null>(null);
@@ -313,7 +313,7 @@ export default function MeditationPage() {
     );
   }
 
-  // Show mood input for ✨-guided meditation
+  // Show mood input for ✨ guided meditation
   if (showMoodInput) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-purple-50 via-blue-50 to-indigo-50 py-8">
@@ -325,7 +325,7 @@ export default function MeditationPage() {
             >
               ← Back to Meditation Center
             </button>
-            <h1 className="text-4xl font-bold text-gray-900 mb-4">✨-Guided Meditation</h1>
+            <h1 className="text-4xl font-bold text-gray-900 mb-4">✨ Guided Meditation</h1>
             <p className="text-lg text-gray-600 max-w-2xl mx-auto">
               Tell me how you're feeling, and I'll create a personalized meditation just for you.
             </p>
@@ -348,7 +348,7 @@ export default function MeditationPage() {
           </p>
         </div>
 
-        {/* ✨-Powered Recommendations Section */}
+        {/* ✨ Powered Recommendations Section */}
         <div className="mb-8">
           <div className="bg-white/70 dark:bg-gray-800/70 backdrop-blur-sm rounded-lg p-6 shadow-lg">
             <h2 className="text-xl font-semibold mb-4 text-gray-900 dark:text-white">Recommended for You</h2>

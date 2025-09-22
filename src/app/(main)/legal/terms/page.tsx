@@ -37,7 +37,7 @@ export default function TermsPage() {
             <h2 className="text-xl font-semibold text-gray-900 mb-4">2. Description of Service</h2>
             <div className="mb-6 text-gray-600">
               <p className="mb-4">
-                Yoga Flow University provides a ✨-powered platform for creating personalized yoga flows, 
+                Yoga Flow University provides a ✨ powered platform for creating personalized yoga flows, 
                 accessing pose libraries, guided meditation sessions, and educational resources for yoga 
                 practitioners and teachers.
               </p>

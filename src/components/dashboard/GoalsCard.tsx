@@ -92,8 +92,7 @@ export const GoalsCard: React.FC<GoalsCardProps> = ({ goals }) => {
           {/* AI Recommendations */}
           <div>
             <div className="flex items-center gap-2 mb-3">
-              <Sparkles className="h-4 w-4 text-primary" />
-              <span className="text-sm font-medium">AI Recommended</span>
+              <span className="text-sm font-medium">✨ AI Recommended</span>
             </div>
             <div className="space-y-2">
               {aiRecommendedGoals.map((goal) => {

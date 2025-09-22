@@ -132,7 +132,6 @@ export function CombinedPoseLibrary({ onAddPose, className = '' }: CombinedPoseL
                 : 'text-muted-foreground hover:text-foreground hover:bg-muted'
             }`}
           >
-            <Sparkles size={16} />
             ✨ Suggestions
           </button>
           <button
@@ -368,8 +367,7 @@ export function CombinedPoseLibrary({ onAddPose, className = '' }: CombinedPoseL
           </div>
           {activeTab === 'suggestions' && (
             <div className="flex items-center gap-1">
-              <Sparkles size={12} />
-              <span>Powered by AI</span>
+              <span>✨ Powered by AI</span>
             </div>
           )}
         </div>
