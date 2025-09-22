@@ -1,11 +1,21 @@
 import OpenAI from "openai";
 
-// Simplified OpenAI client setup
+// Simplified OpenAI client setup with enhanced validation
 const apiKey = process.env.OPENAI_API_KEY;
 const useMock = process.env.USE_MOCK === "true";
+const isDevelopment = process.env.NODE_ENV === 'development';
+const isNetlify = process.env.NETLIFY === 'true';
 
-// Log configuration status (only in development)
-if (process.env.NODE_ENV === 'development') {
+// Enhanced logging for configuration status
+if (isDevelopment) {
+  console.log('OpenAI Configuration Status:', {
+    hasApiKey: !!apiKey,
+    useMock,
+    nodeEnv: process.env.NODE_ENV,
+    isNetlify,
+    netlifyContext: process.env.CONTEXT || 'unknown'
+  });
+  
   if (!apiKey) {
     console.warn("OPENAI_API_KEY not configured - using mock responses");
   } else if (useMock) {
@@ -13,6 +23,17 @@ if (process.env.NODE_ENV === 'development') {
   } else {
     console.info("OpenAI API configured and enabled");
   }
+}
+
+// Production logging for debugging deployment issues (no sensitive data)
+if (!isDevelopment && isNetlify) {
+  console.log('Production OpenAI Config Check:', {
+    hasApiKey: !!apiKey,
+    useMock,
+    context: process.env.CONTEXT,
+    deployId: process.env.DEPLOY_ID,
+    timestamp: new Date().toISOString()
+  });
 }
 
 // Create OpenAI client only when API key is available and not mocked
@@ -126,19 +147,49 @@ export function filterContent(content: string): string {
   return filtered;
 }
 
-// Simplified health check
+// Simplified health check with enhanced error reporting
 export async function checkOpenAIHealth(): Promise<{ ok: boolean; error?: string }> {
   try {
     if (!isOpenAIAvailable()) {
-      return { ok: false, error: "OpenAI not configured or mocked" };
+      const reason = !apiKey ? "API key not configured" : "Mock mode enabled";
+      return { ok: false, error: reason };
     }
     
     // Simple test to verify API is working
+    const startTime = Date.now();
     await openai!.models.list();
+    const responseTime = Date.now() - startTime;
+    
+    // Log successful API calls for monitoring
+    if (isDevelopment) {
+      console.log(`OpenAI API health check passed (${responseTime}ms)`);
+    }
+    
     return { ok: true };
   } catch (error) {
     const errorMessage = error instanceof Error ? error.message : 'Unknown error';
-    console.error('OpenAI health check failed:', errorMessage);
-    return { ok: false, error: "API connection failed" };
+    const errorCode = error instanceof Error && 'code' in error ? error.code : 'UNKNOWN';
+    
+    // Enhanced error logging for debugging
+    console.error('OpenAI health check failed:', {
+      message: errorMessage,
+      code: errorCode,
+      timestamp: new Date().toISOString(),
+      hasApiKey: !!apiKey,
+      isNetlify,
+      netlifyContext: process.env.CONTEXT || 'unknown'
+    });
+    
+    // Return user-friendly error message based on error type
+    let userError = "API connection failed";
+    if (errorMessage.includes('401') || errorMessage.includes('Unauthorized')) {
+      userError = "Invalid API key";
+    } else if (errorMessage.includes('429') || errorMessage.includes('rate limit')) {
+      userError = "Rate limit exceeded";
+    } else if (errorMessage.includes('timeout') || errorMessage.includes('ETIMEDOUT')) {
+      userError = "Request timeout";
+    }
+    
+    return { ok: false, error: userError };
   }
 }

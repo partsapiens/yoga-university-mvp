@@ -43,7 +43,18 @@ Guidelines:
 
     return NextResponse.json({ content });
   } catch (error) {
-    console.error('AI Guide error:', error);
+    // Enhanced error logging for debugging
+    const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+    const errorCode = error instanceof Error && 'code' in error ? error.code : 'UNKNOWN';
+    
+    console.error('AI Guide error details:', {
+      message: errorMessage,
+      code: errorCode,
+      timestamp: new Date().toISOString(),
+      requestData: { messagesCount: messages?.length || 0 },
+      isOpenAIAvailable: isOpenAIAvailable(),
+      nodeEnv: process.env.NODE_ENV
+    });
     
     // Fallback response based on the user's question
     const userMessage = messages[messages.length - 1]?.content || "";
@@ -57,6 +68,19 @@ Guidelines:
       fallbackContent = "Box breathing is excellent for focus and calm: Inhale for 4 counts, hold for 4, exhale for 4, hold for 4. Repeat this cycle 5-10 times. It's simple but very effective for centering yourself.";
     }
     
-    return NextResponse.json({ content: fallbackContent });
+    // Return specific error information in development, generic in production
+    const isDevelopment = process.env.NODE_ENV === 'development';
+    
+    return NextResponse.json({ 
+      content: fallbackContent,
+      // Include error details in development only
+      ...(isDevelopment && {
+        _debugInfo: {
+          error: errorMessage,
+          fallbackMode: true,
+          timestamp: new Date().toISOString()
+        }
+      })
+    });
   }
 }
