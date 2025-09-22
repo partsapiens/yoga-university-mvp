@@ -397,7 +397,7 @@ export function PoseAnalysis({
                   </div>
                   <div className="mt-4 p-3 bg-blue-900/30 rounded text-xs text-blue-200">
                     <p className="font-medium mb-1">Help: Enable camera access</p>
-                    <p>Click the camera icon in your browser's address bar and select "Allow"</p>
+                    <p>Click the camera icon in your browser&apos;s address bar and select &ldquo;Allow&rdquo;</p>
                   </div>
                 </div>
               ) : (
