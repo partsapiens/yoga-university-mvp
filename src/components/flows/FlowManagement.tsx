@@ -110,13 +110,7 @@ export function FlowManagement({
 
       {/* Your Flow Grid - Only show when no flow exists or show minimal info */}
       <div>
-        {flow.length > 0 ? (
-          <div className="text-center py-8 text-muted-foreground">
-            <div className="text-4xl mb-2">🧘‍♀️</div>
-            <h3 className="text-lg font-semibold mb-2">Flow Active</h3>
-            <p className="text-sm">Your flow sequence is now displayed in the player below for easy access during practice</p>
-          </div>
-        ) : (
+        {flow.length === 0 && (
           <div className="text-center py-12 text-muted-foreground">
             <div className="text-6xl mb-4">🧘‍♀️</div>
             <h3 className="text-lg font-semibold mb-2">Start Building Your Flow</h3>
