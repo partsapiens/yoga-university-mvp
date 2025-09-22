@@ -46,14 +46,14 @@ export default function Chapter3Page() {
             <ManualSection id="integration" title="The Integration Series">
               <PoseVideo url="https://youtu.be/OTameg8uBws" title="The Integration Series" className="mb-8" />
               <p className="mb-4 leading-relaxed text-lg">
-                The Integration Series is the gentle beginning of our practice. Its purpose is to transition from the busyness of the outside world to the internal landscape of the body and breath. It's a time to check in, notice sensations, and establish a steady rhythm of breath that will carry you through the practice.
+                The Integration Series is the gentle beginning of our practice. Its purpose is to transition from the busyness of the outside world to the internal landscape of the body and breath. It&apos;s a time to check in, notice sensations, and establish a steady rhythm of breath that will carry you through the practice.
               </p>
               <div className="space-y-6">
                 <div>
-                  <h4 className="font-semibold text-lg text-teal-300">1. Child's Pose — Balasana</h4>
+                  <h4 className="font-semibold text-lg text-teal-300">1. Child&apos;s Pose — Balasana</h4>
                   <p className="mb-2">A pose of surrender and grounding. Knees can be together or wide. Forehead rests on the mat, allowing the neck to be long. Focus on deep, diaphragmatic breaths that expand the back body.</p>
                   <ul className="list-disc ml-5 space-y-1 text-gray-300">
-                    <li><strong>Cueing</strong>: "Settle your hips back towards your heels," "Let your forehead rest heavily on the mat."</li>
+                    <li><strong>Cueing</strong>: &ldquo;Settle your hips back towards your heels,&rdquo; &ldquo;Let your forehead rest heavily on the mat.&rdquo;</li>
                     <li><strong>Anatomy</strong>: Gently stretches the hips, thighs, and ankles while releasing tension in the back and shoulders.</li>
                   </ul>
                 </div>

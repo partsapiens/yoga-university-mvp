@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { generatePersonalizedAffirmations } from '@/lib/api/ai';
 
 interface PersonalizedAffirmationsProps {
@@ -30,7 +30,7 @@ export function PersonalizedAffirmations({
   const [loading, setLoading] = useState(false);
   const [selectedAffirmation, setSelectedAffirmation] = useState<any>(null);
 
-  const generateAffirmations = async () => {
+  const generateAffirmations = useCallback(async () => {
     setLoading(true);
     try {
       const generated = await generatePersonalizedAffirmations({
@@ -46,13 +46,13 @@ export function PersonalizedAffirmations({
     } finally {
       setLoading(false);
     }
-  };
+  }, [context, userProfile, sessionData]);
 
   useEffect(() => {
     if (Object.keys(userProfile).length > 0 || Object.keys(sessionData).length > 0) {
       generateAffirmations();
     }
-  }, [context, userProfile, sessionData]);
+  }, [generateAffirmations, userProfile, sessionData]);
 
   const handleAffirmationClick = (affirmation: any) => {
     setSelectedAffirmation(affirmation);

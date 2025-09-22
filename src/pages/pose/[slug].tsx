@@ -1,5 +1,6 @@
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
+import Image from 'next/image';
 import { getPosesFromDatabase } from '../../lib/database';
 import PoseVideo from '../../components/PoseLibrary/PoseVideo';
 import TTSPlayback from '../../components/PoseLibrary/TTSPlayback';
@@ -64,7 +65,7 @@ export default function PoseDetailPage() {
     return (
       <div className="max-w-2xl mx-auto p-6">
         <h1 className="text-2xl font-bold mb-4">Pose Not Found</h1>
-        <p className="mb-4">Sorry, we couldn't find the pose you're looking for.</p>
+        <p className="mb-4">Sorry, we couldn&apos;t find the pose you&apos;re looking for.</p>
         <button 
           onClick={() => router.push('/poses')}
           className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
@@ -109,9 +110,11 @@ export default function PoseDetailPage() {
             </div>
 
             {pose.image_url && (
-              <img 
+              <Image 
                 src={pose.image_url} 
-                alt={pose.name} 
+                alt={pose.name}
+                width={600}
+                height={400}
                 className="w-full rounded mb-4 max-h-96 object-cover" 
               />
             )}

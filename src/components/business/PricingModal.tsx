@@ -75,7 +75,7 @@ Communication Strategy for Increases: When the time comes to increase your rates
               className="flex items-center justify-between w-full p-4 bg-gray-50 dark:bg-gray-800 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
             >
               <span className="font-semibold text-gray-900 dark:text-white">
-                Excerpts from "Yoga Teacher Pricing for Profit and Sustainability"
+                Excerpts from &ldquo;Yoga Teacher Pricing for Profit and Sustainability&rdquo;
               </span>
               {isTextExpanded ? (
                 <ChevronUp className="w-5 h-5 text-gray-600 dark:text-gray-400" />
