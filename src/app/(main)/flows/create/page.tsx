@@ -84,9 +84,6 @@ const QuickActions = dynamic(() => import("@/components/dashboard/QuickActions")
   loading: () => <div className="animate-pulse bg-gray-200 rounded h-32"></div>
 });
 
-const PersonalizedAffirmations = dynamic(() => import("@/components/ai/PersonalizedAffirmations").then(mod => ({ default: mod.PersonalizedAffirmations })), {
-  ssr: false
-});
 
 const AdaptiveFlow = dynamic(() => import("@/components/ai/AdaptiveFlow").then(mod => ({ default: mod.AdaptiveFlow })), {
   ssr: false
@@ -123,6 +120,7 @@ export default function CreateFlowPage() {
   const [preview, setPreview] = useState<PoseId[] | null>(null);
   const [flowName, setFlowName] = useState('');
   const [showCustomSettings, setShowCustomSettings] = useState<boolean>(false);
+  const [showFlowTemplates, setShowFlowTemplates] = useState<boolean>(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userId, setUserId] = useState<string | null>(null);
 
@@ -499,6 +497,10 @@ export default function CreateFlowPage() {
     setFlowName('');
   };
 
+  const handleCustomButtonClick = () => {
+    setShowFlowTemplates(true);
+  };
+
   const handleFlowAdapted = (adaptedFlow: any, insights: any) => {
     if (adaptedFlow.poses) {
       setFlow(adaptedFlow.poses);
@@ -579,13 +581,17 @@ export default function CreateFlowPage() {
         
         {/* Quick Start Section */}
         <div className="mt-6">
-          <QuickActions />
+          <QuickActions onCustomClick={handleCustomButtonClick} />
         </div>
 
-        {/* Flow Templates Section */}
-        <div className="mt-6">
-          <FlowTemplates onSelectTemplate={handleSelectTemplate} onCreateOwn={handleCreateOwn} />
-        </div>
+        {/* Flow Templates Section - shown when Custom button is clicked */}
+        {showFlowTemplates && (
+          <div className="mt-6">
+            <FlowTemplates onSelectTemplate={handleSelectTemplate} onCreateOwn={handleCreateOwn} />
+          </div>
+        )}
+
+
 
         {/* Pose Analysis Settings */}
         <div className="mt-6">
@@ -604,24 +610,7 @@ export default function CreateFlowPage() {
           </div>
         )}
         
-        {/* Personalized Affirmations for Flow */}
-        {flow.length > 0 && (
-          <PersonalizedAffirmations
-            context="flow"
-            userProfile={{
-              experience: userProfile.experience,
-              preferredTone: 'empowering',
-              goals: userProfile.preferences,
-              challenges: userProfile.physicalLimitations
-            }}
-            sessionData={{
-              focusArea: focus.toLowerCase().replace('-', ' '),
-              duration: minutes,
-              timeOfDay: 'afternoon'
-            }}
-            className="mt-6"
-          />
-        )}
+
 
         {/* Adaptive Flow Modifications */}
         {flow.length > 0 && (

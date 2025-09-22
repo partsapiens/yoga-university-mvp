@@ -79,7 +79,11 @@ const quickActions = [
   }
 ];
 
-export const QuickActions: React.FC = () => {
+interface QuickActionsProps {
+  onCustomClick?: () => void;
+}
+
+export const QuickActions: React.FC<QuickActionsProps> = ({ onCustomClick }) => {
   return (
     <Card className="w-full">
       <CardHeader className="pb-4">
@@ -92,6 +96,7 @@ export const QuickActions: React.FC = () => {
             size="sm"
             variant="ghost"
             className="text-xs"
+            onClick={onCustomClick}
           >
             <PlusCircle className="h-4 w-4 mr-1" />
             Custom
