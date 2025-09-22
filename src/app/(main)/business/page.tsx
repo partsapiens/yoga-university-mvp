@@ -18,11 +18,190 @@ import {
 import { BrandingModal } from '@/components/business/BrandingModal';
 import { SocialMediaModal } from '@/components/business/SocialMediaModal';
 import { PricingModal } from '@/components/business/PricingModal';
+import { 
+  downloadFile, 
+  downloadFileFromContent, 
+  generateSocialMediaCalendar,
+  generateEmailTemplate,
+  generateBusinessPlanTemplate,
+  generateFinancialTrackingSpreadsheet,
+  generateStudentIntakeForm
+} from '@/lib/businessDownloads';
 
 export default function BusinessResourcesPage() {
   const [isBrandingModalOpen, setIsBrandingModalOpen] = useState(false);
   const [isSocialMediaModalOpen, setIsSocialMediaModalOpen] = useState(false);
   const [isPricingModalOpen, setIsPricingModalOpen] = useState(false);
+
+  // Handle different types of downloads
+  const handleDownload = (resourceTitle: string) => {
+    switch (resourceTitle) {
+      case 'Social Media Content Calendar':
+        const calendarContent = generateSocialMediaCalendar();
+        downloadFileFromContent(calendarContent, 'social-media-content-calendar.csv', 'text/csv');
+        break;
+      
+      case 'Instagram Story Templates':
+        downloadFile('/downloads/instagram-story-templates-guide.md', 'instagram-story-templates-guide.md');
+        break;
+      
+      case 'Email Marketing Templates':
+        const emailTemplate = generateEmailTemplate();
+        downloadFileFromContent(emailTemplate, 'yoga-newsletter-template.html', 'text/html');
+        break;
+      
+      case 'Yoga Business Plan Template':
+        const businessPlan = generateBusinessPlanTemplate();
+        downloadFileFromContent(businessPlan, 'yoga-business-plan-template.md', 'text/markdown');
+        break;
+      
+      case 'Pricing Strategy Guide':
+        downloadFile('/downloads/pricing-strategy-guide.md', 'pricing-strategy-guide.md');
+        break;
+      
+      case 'Financial Tracking Spreadsheet':
+        const financialData = generateFinancialTrackingSpreadsheet();
+        downloadFileFromContent(financialData, 'yoga-financial-tracking.csv', 'text/csv');
+        break;
+      
+      case 'Student Intake Forms':
+        const intakeForm = generateStudentIntakeForm();
+        downloadFileFromContent(intakeForm, 'student-intake-form.html', 'text/html');
+        break;
+      
+      case 'Class Feedback Surveys':
+        // Generate a simple feedback survey
+        const feedbackSurvey = generateFeedbackSurvey();
+        downloadFileFromContent(feedbackSurvey, 'class-feedback-survey.html', 'text/html');
+        break;
+      
+      case 'Retention Strategies Guide':
+        downloadFile('/downloads/retention-strategies-guide.md', 'retention-strategies-guide.md');
+        break;
+      
+      default:
+        console.log('Download not implemented for:', resourceTitle);
+    }
+  };
+
+  // Generate feedback survey
+  const generateFeedbackSurvey = () => {
+    return `<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Class Feedback Survey</title>
+    <style>
+        body { font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; line-height: 1.6; }
+        .header { text-align: center; margin-bottom: 30px; }
+        .question { margin-bottom: 20px; padding: 15px; background: #f9f9f9; border-radius: 5px; }
+        .question h3 { margin-top: 0; color: #333; }
+        .rating { display: flex; gap: 10px; align-items: center; }
+        .rating input { margin-right: 5px; }
+        textarea { width: 100%; height: 80px; padding: 8px; border: 1px solid #ccc; border-radius: 4px; }
+        input[type="text"] { width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px; }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Class Feedback Survey</h1>
+        <p>Your feedback helps us improve our classes and better serve our community. Thank you for taking the time to share your thoughts!</p>
+    </div>
+
+    <form>
+        <div class="question">
+            <h3>1. Overall Class Rating</h3>
+            <div class="rating">
+                <label><input type="radio" name="overall" value="5"> 5 - Excellent</label>
+                <label><input type="radio" name="overall" value="4"> 4 - Good</label>
+                <label><input type="radio" name="overall" value="3"> 3 - Average</label>
+                <label><input type="radio" name="overall" value="2"> 2 - Below Average</label>
+                <label><input type="radio" name="overall" value="1"> 1 - Poor</label>
+            </div>
+        </div>
+
+        <div class="question">
+            <h3>2. Instructor Name</h3>
+            <input type="text" name="instructor" placeholder="Please enter the instructor's name">
+        </div>
+
+        <div class="question">
+            <h3>3. Class Type & Date</h3>
+            <input type="text" name="classinfo" placeholder="e.g., Vinyasa Flow - January 15, 2024">
+        </div>
+
+        <div class="question">
+            <h3>4. Instruction Quality</h3>
+            <div class="rating">
+                <label><input type="radio" name="instruction" value="5"> 5 - Clear and helpful</label>
+                <label><input type="radio" name="instruction" value="4"> 4 - Good</label>
+                <label><input type="radio" name="instruction" value="3"> 3 - Average</label>
+                <label><input type="radio" name="instruction" value="2"> 2 - Unclear</label>
+                <label><input type="radio" name="instruction" value="1"> 1 - Confusing</label>
+            </div>
+        </div>
+
+        <div class="question">
+            <h3>5. Class Pace</h3>
+            <div class="rating">
+                <label><input type="radio" name="pace" value="too-fast"> Too fast</label>
+                <label><input type="radio" name="pace" value="just-right"> Just right</label>
+                <label><input type="radio" name="pace" value="too-slow"> Too slow</label>
+            </div>
+        </div>
+
+        <div class="question">
+            <h3>6. Studio Environment</h3>
+            <div class="rating">
+                <label><input type="radio" name="environment" value="5"> 5 - Perfect</label>
+                <label><input type="radio" name="environment" value="4"> 4 - Good</label>
+                <label><input type="radio" name="environment" value="3"> 3 - Average</label>
+                <label><input type="radio" name="environment" value="2"> 2 - Could improve</label>
+                <label><input type="radio" name="environment" value="1"> 1 - Poor</label>
+            </div>
+        </div>
+
+        <div class="question">
+            <h3>7. What did you enjoy most about this class?</h3>
+            <textarea name="enjoyed" placeholder="Please share what you liked..."></textarea>
+        </div>
+
+        <div class="question">
+            <h3>8. What could be improved?</h3>
+            <textarea name="improvements" placeholder="Please share any suggestions..."></textarea>
+        </div>
+
+        <div class="question">
+            <h3>9. Would you recommend this class to a friend?</h3>
+            <div class="rating">
+                <label><input type="radio" name="recommend" value="definitely"> Definitely</label>
+                <label><input type="radio" name="recommend" value="probably"> Probably</label>
+                <label><input type="radio" name="recommend" value="maybe"> Maybe</label>
+                <label><input type="radio" name="recommend" value="probably-not"> Probably not</label>
+                <label><input type="radio" name="recommend" value="definitely-not"> Definitely not</label>
+            </div>
+        </div>
+
+        <div class="question">
+            <h3>10. Additional Comments</h3>
+            <textarea name="additional" placeholder="Any other feedback you'd like to share..."></textarea>
+        </div>
+
+        <div class="question">
+            <h3>Contact Information (Optional)</h3>
+            <input type="text" name="contact" placeholder="Name and email if you'd like us to follow up">
+        </div>
+    </form>
+
+    <div style="text-align: center; margin-top: 30px; padding: 20px; background: #e8f4f8; border-radius: 5px;">
+        <p><strong>Thank you for your feedback!</strong></p>
+        <p>Please submit this form to the front desk or email it to [STUDIO_EMAIL]</p>
+    </div>
+</body>
+</html>`;
+  };
+
   const resourceCategories = [
     {
       title: 'Marketing & Social Media',
@@ -34,21 +213,21 @@ export default function BusinessResourcesPage() {
           title: 'Social Media Content Calendar',
           type: 'Template',
           description: '30-day content calendar with post ideas and hashtags',
-          downloadUrl: '#',
+          downloadUrl: 'social-media-calendar',
           icon: <Calendar className="w-5 h-5" />
         },
         {
           title: 'Instagram Story Templates',
           type: 'Design Pack',
           description: 'Professional story templates for classes and workshops',
-          downloadUrl: '#',
+          downloadUrl: 'instagram-templates',
           icon: <Camera className="w-5 h-5" />
         },
         {
           title: 'Email Marketing Templates',
           type: 'Template',
           description: 'Ready-to-use email templates for newsletters and promotions',
-          downloadUrl: '#',
+          downloadUrl: 'email-templates',
           icon: <FileText className="w-5 h-5" />
         }
       ]
@@ -63,21 +242,21 @@ export default function BusinessResourcesPage() {
           title: 'Yoga Business Plan Template',
           type: 'Document',
           description: 'Comprehensive business plan template for yoga studios',
-          downloadUrl: '#',
+          downloadUrl: 'business-plan',
           icon: <FileText className="w-5 h-5" />
         },
         {
           title: 'Pricing Strategy Guide',
           type: 'Guide',
           description: 'How to price your classes, workshops, and retreats',
-          downloadUrl: '#',
+          downloadUrl: 'pricing-guide',
           icon: <DollarSign className="w-5 h-5" />
         },
         {
           title: 'Financial Tracking Spreadsheet',
           type: 'Template',
           description: 'Track income, expenses, and profit margins',
-          downloadUrl: '#',
+          downloadUrl: 'financial-tracking',
           icon: <TrendingUp className="w-5 h-5" />
         }
       ]
@@ -92,21 +271,21 @@ export default function BusinessResourcesPage() {
           title: 'Student Intake Forms',
           type: 'Template',
           description: 'Health questionnaires and liability waivers',
-          downloadUrl: '#',
+          downloadUrl: 'intake-forms',
           icon: <FileText className="w-5 h-5" />
         },
         {
           title: 'Class Feedback Surveys',
           type: 'Template',
           description: 'Collect valuable feedback to improve your teaching',
-          downloadUrl: '#',
+          downloadUrl: 'feedback-surveys',
           icon: <Target className="w-5 h-5" />
         },
         {
           title: 'Retention Strategies Guide',
           type: 'Guide',
           description: 'Proven methods to keep students coming back',
-          downloadUrl: '#',
+          downloadUrl: 'retention-guide',
           icon: <Users className="w-5 h-5" />
         }
       ]
@@ -233,7 +412,7 @@ export default function BusinessResourcesPage() {
                         {resource.description}
                       </p>
                       <button
-                        onClick={() => window.open(resource.downloadUrl)}
+                        onClick={() => handleDownload(resource.title)}
                         className="w-full flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg font-medium transition-colors"
                       >
                         <Download className="w-4 h-4" />
