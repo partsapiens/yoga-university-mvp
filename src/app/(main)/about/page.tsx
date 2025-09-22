@@ -11,7 +11,7 @@ export default function AboutPage() {
       experience: "15+ years",
       credentials: ["RYT-500", "PhD in Movement Science", "Certified Ayurveda Practitioner"],
       bio: "Sarah combines traditional yoga wisdom with modern movement science to create transformative learning experiences.",
-      image: "/team/sarah.jpg"
+      image: "https://imagine-public.x.ai/imagine-public/images/f21e3eeb-40b7-48a5-a4eb-80c2f9706eb6.png?cache=1"
     },
     {
       name: "Marcus Chen",
@@ -19,7 +19,7 @@ export default function AboutPage() {
       experience: "12+ years",
       credentials: ["E-RYT 500", "Yin Yoga Specialist", "Meditation Teacher"],
       bio: "Marcus brings a gentle yet powerful approach to yoga, specializing in restorative and yin practices.",
-      image: "/team/marcus.jpg"
+      image: "https://imagine-public.x.ai/imagine-public/images/b904932d-abd8-490d-a178-c4777b00962c.png?cache=1"
     },
     {
       name: "Luna Rodriguez",
@@ -27,7 +27,7 @@ export default function AboutPage() {
       experience: "8+ years",
       credentials: ["RYT-500", "Prenatal Yoga Certified", "Trauma-Informed Yoga"],
       bio: "Luna creates dynamic flows that honor both strength and flexibility, welcoming practitioners of all levels.",
-      image: "/team/luna.jpg"
+      image: "https://imagine-public.x.ai/imagine-public/images/b5feb0e6-896f-492b-a45e-ff4d4721adf6.png?cache=1"
     }
   ];
 
@@ -152,7 +152,13 @@ export default function AboutPage() {
           {team.map((member, index) => (
             <div key={index} className="bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden">
               <div className="aspect-square bg-gradient-to-br from-blue-100 to-purple-100 dark:from-blue-800 dark:to-purple-800 flex items-center justify-center">
-                <div className="text-6xl">🧘‍♀️</div>
+                <Image
+                  src={member.image}
+                  alt={member.name}
+                  width={300}
+                  height={300}
+                  className="w-full h-full object-cover"
+                />
               </div>
               <div className="p-6">
                 <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-1">
