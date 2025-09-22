@@ -70,9 +70,9 @@ const translations = {
     
     // Homepage content sections
     'home.features.title': 'Everything You Need for Your Yoga Journey',
-    'home.features.subtitle': 'Discover the power of AI-enhanced yoga practice with our comprehensive platform',
+    'home.features.subtitle': 'Discover the power of 🤖 enhanced yoga practice with our comprehensive platform',
     'home.features.flow.title': 'Intelligent Flow Creation',
-    'home.features.flow.description': 'Generate personalized yoga sequences powered by AI, tailored to your goals, experience level, and preferences.',
+    'home.features.flow.description': 'Generate personalized yoga sequences powered by 🤖, tailored to your goals, experience level, and preferences.',
     'home.features.library.title': 'Comprehensive Pose Library', 
     'home.features.library.description': 'Access detailed instructions, modifications, and benefits for hundreds of yoga poses with expert guidance.',
     'home.features.meditation.title': 'Guided Meditation',
@@ -222,9 +222,9 @@ const translations = {
     
     // Homepage content sections
     'home.features.title': 'Tot ce aveți nevoie pentru călătoria voastră de yoga',
-    'home.features.subtitle': 'Descoperiți puterea practicii de yoga îmbunătățite cu AI pe platforma noastră cuprinzătoare',
+    'home.features.subtitle': 'Descoperiți puterea practicii de yoga îmbunătățite cu 🤖 pe platforma noastră cuprinzătoare',
     'home.features.flow.title': 'Creare inteligentă de fluxuri',
-    'home.features.flow.description': 'Generați secvențe de yoga personalizate alimentate de AI, adaptate obiectivelor, nivelului de experiență și preferințelor voastre.',
+    'home.features.flow.description': 'Generați secvențe de yoga personalizate alimentate de 🤖, adaptate obiectivelor, nivelului de experiență și preferințelor voastre.',
     'home.features.library.title': 'Bibliotecă cuprinzătoare de pozitii',
     'home.features.library.description': 'Accesați instrucțiuni detaliate, modificări și beneficii pentru sute de pozitii de yoga cu îndrumări de expert.',
     'home.features.meditation.title': 'Meditație ghidată',

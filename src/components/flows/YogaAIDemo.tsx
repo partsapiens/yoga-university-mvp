@@ -49,7 +49,7 @@ const YogaFlowGenerator = () => {
     <div className="max-w-4xl mx-auto p-6 bg-white dark:bg-gray-800 rounded-lg shadow-lg">
       <div className="mb-8">
         <h2 className="text-3xl font-bold text-gray-800 dark:text-gray-200 mb-2 flex items-center gap-2">
-          ✨ Yoga Flow Generator
+          🤖 Yoga Flow Generator
         </h2>
         <p className="text-gray-600 dark:text-gray-400">
           Create personalized yoga sequences tailored to your needs and goals
@@ -147,7 +147,7 @@ const YogaFlowGenerator = () => {
               </>
             ) : (
               <>
-                ✨ Generate Flow
+                🤖 Generate Flow
               </>
             )}
           </button>
@@ -182,7 +182,7 @@ const YogaFlowGenerator = () => {
           ) : (
             <div className="text-center py-12">
               <p className="text-gray-500">
-                Your ✨ generated yoga flow will appear here
+                Your 🤖 generated yoga flow will appear here
               </p>
             </div>
           )}
@@ -201,7 +201,7 @@ const YogaChatbot = () => {
   const [messages, setMessages] = useState<ChatMessage[]>([
     {
       role: 'assistant',
-      content: 'Hello! I\'m your ✨ yoga assistant. Ask me about poses, sequences, yoga philosophy, or any practice questions you have!'
+      content: 'Hello! I\'m your 🤖 yoga assistant. Ask me about poses, sequences, yoga philosophy, or any practice questions you have!'
     }
   ]);
   const [inputMessage, setInputMessage] = useState('');
@@ -241,7 +241,7 @@ const YogaChatbot = () => {
 
   return (
     <div className="max-w-2xl mx-auto p-6 bg-white rounded-lg shadow-lg">
-      <h2 className="text-2xl font-bold text-gray-800 mb-4">✨ Yoga Assistant</h2>
+      <h2 className="text-2xl font-bold text-gray-800 mb-4">🤖 Yoga Assistant</h2>
       
       <div className="h-96 overflow-y-auto border border-gray-200 rounded-lg p-4 mb-4 space-y-4">
         {messages.map((message, index) => (
