@@ -5,6 +5,7 @@ import { QueryProvider } from '@/components/providers/QueryProvider'
 import { LanguageProvider } from '@/contexts/LanguageContext'
 import { ThemeProvider } from '@/contexts/ThemeContext'
 import { Toaster } from '@/components/ui/Toaster'
+import { ErrorBoundary } from '@/components/ErrorBoundary'
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
@@ -170,18 +171,20 @@ export default function RootLayout({
         />
       </head>
       <body className="h-full bg-gray-50 dark:bg-gray-900 antialiased font-sans">
-        <ThemeProvider>
-          <LanguageProvider>
-            <QueryProvider>
-              <AuthProvider>
-                <div className="min-h-full">
-                  {children}
-                </div>
-                <Toaster />
-              </AuthProvider>
-            </QueryProvider>
-          </LanguageProvider>
-        </ThemeProvider>
+        <ErrorBoundary>
+          <ThemeProvider>
+            <LanguageProvider>
+              <QueryProvider>
+                <AuthProvider>
+                  <div className="min-h-full">
+                    {children}
+                  </div>
+                  <Toaster />
+                </AuthProvider>
+              </QueryProvider>
+            </LanguageProvider>
+          </ThemeProvider>
+        </ErrorBoundary>
       </body>
     </html>
   )
