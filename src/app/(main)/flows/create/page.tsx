@@ -5,7 +5,6 @@ import dynamic from "next/dynamic";
 import { useLocalStorage } from "@/hooks/useLocalStorage";
 import { useTimer } from "@/hooks/useTimer";
 import { useKeyboardShortcuts } from "@/components/flows/KeyboardShortcuts";
-import { ControlPanel } from "@/components/flows/ControlPanel";
 import { Focus, TimingMode, PoseId, SavedFlow, Pose } from "@/types/yoga";
 import { POSES } from "@/lib/yoga-data";
 import {
@@ -121,6 +120,7 @@ export default function CreateFlowPage() {
   const [flowName, setFlowName] = useState('');
   const [showCustomSettings, setShowCustomSettings] = useState<boolean>(false);
   const [showFlowTemplates, setShowFlowTemplates] = useState<boolean>(false);
+  const [showPoseLibrary, setShowPoseLibrary] = useState<boolean>(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userId, setUserId] = useState<string | null>(null);
 
@@ -491,6 +491,7 @@ export default function CreateFlowPage() {
 
   const handleCreateOwn = () => {
     setShowCustomSettings(true);
+    setShowPoseLibrary(true);
     // Reset to default state for custom creation
     setFlow([]);
     setOverrides({});
@@ -593,22 +594,9 @@ export default function CreateFlowPage() {
 
 
 
-        {/* Pose Analysis Settings */}
-        <div className="mt-6">
-          <PoseAnalysisSettings />
-        </div>
 
-        {/* Progress Tracking */}
-        <div className="mt-6">
-          <ProgressTracking />
-        </div>
         
-        {/* Conditional Settings Section - only shown when creating own template */}
-        {showCustomSettings && (
-          <div className="mt-6">
-            <ControlPanel {...{ minutes, setMinutes, intensity, setIntensity, focus, setFocus, breathingCues, setBreathingCues, saferSequencing, setSaferSequencing, saveToDevice, setSaveToDevice, timingMode, setTimingMode, secPerBreath, setSecPerBreath, transitionSec, setTransitionSec, cooldownMin, setCooldownMin, onAutoGenerate: handleGenerate, flowName, setFlowName, onSaveFlow: handleSaveFlow }} />
-          </div>
-        )}
+
         
 
 
@@ -636,17 +624,7 @@ export default function CreateFlowPage() {
           />
         </div>
         
-        {/* Authentication notice for saving */}
-        {!isLoggedIn && (
-          <div className="mt-4 p-3 bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 rounded-lg text-center">
-            <p className="text-sm text-amber-800 dark:text-amber-200">
-              <strong>Creating as Guest:</strong> You can build flows freely! Sign in to save, export, and access your flows later.
-              <a href="/login" className="ml-2 text-amber-600 dark:text-amber-400 hover:underline">
-                Sign in here
-              </a>
-            </p>
-          </div>
-        )}
+
       </header>
       
       {/* Main content area with sidebar */}
@@ -682,8 +660,8 @@ export default function CreateFlowPage() {
             className="mt-6"
           />
           
-          {/* Combined ✨ Suggestions and Search Library */}
-          <CombinedPoseLibrary onAddPose={addPose} />
+          {/* Combined ✨ Suggestions and Search Library - Only show when creating custom flow */}
+          {showPoseLibrary && <CombinedPoseLibrary onAddPose={addPose} />}
 
           {/* Export Flow Section */}
           {flow.length > 0 && (
