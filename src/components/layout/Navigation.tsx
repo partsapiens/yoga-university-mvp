@@ -1,6 +1,7 @@
 "use client";
 import React, { useState } from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { UserRole } from '@/types';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { useTheme } from '@/contexts/ThemeContext';
@@ -15,6 +16,7 @@ export const Navigation = ({ userRole }: NavigationProps) => {
   const { language, setLanguage, t } = useLanguage();
   const { theme, toggleTheme } = useTheme();
   const { unreadCount } = useNotifications();
+  const router = useRouter();
   const [mobileOpen, setMobileOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
@@ -121,10 +123,7 @@ export const Navigation = ({ userRole }: NavigationProps) => {
               className="p-2 text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors rounded-lg relative"
               aria-label="Go to notifications"
               onClick={() => {
-                const notificationsSection = document.getElementById('notifications');
-                if (notificationsSection) {
-                  notificationsSection.scrollIntoView({ behavior: 'smooth' });
-                }
+                router.push('/dashboard#notifications');
               }}
             >
               <Bell className="w-5 h-5" />

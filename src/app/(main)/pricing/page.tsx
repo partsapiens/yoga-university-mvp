@@ -56,8 +56,7 @@ export default function PricingPage() {
         "Student progress tracking",
         "Printable pose cards and sequences",
         "Advanced anatomy and alignment guides",
-        "Business and marketing resources",
-        "1-on-1 mentorship sessions"
+        "Business and marketing resources"
       ],
       limitations: [],
       cta: "Start Free Trial",
@@ -95,7 +94,7 @@ export default function PricingPage() {
       category: "Support",
       explorer: "Email support",
       practitioner: "Priority email support",
-      teacher: "1-on-1 mentorship"
+      teacher: "Priority email support + dedicated teacher resources"
     },
     {
       category: "Training Materials",
