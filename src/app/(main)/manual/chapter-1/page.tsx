@@ -135,10 +135,10 @@ export default function Chapter1Page() {
               <div className="bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-700 rounded-lg p-6 my-8">
                 <h4 className="font-semibold text-amber-800 dark:text-amber-300 mb-3">💡 Training Philosophy</h4>
                 <p className="text-amber-700 dark:text-amber-200 mb-4">
-                  At YogaFlow University, we believe that the best yoga teachers are those who maintain a beginner's mind while developing deep expertise. This paradox—being both student and teacher—is at the heart of our approach.
+                  At YogaFlow University, we believe that the best yoga teachers are those who maintain a beginner&apos;s mind while developing deep expertise. This paradox—being both student and teacher—is at the heart of our approach.
                 </p>
                 <blockquote className="border-l-4 border-amber-400 pl-4 italic text-amber-700 dark:text-amber-200">
-                  "In the beginner's mind there are many possibilities, but in the expert's mind there are few." 
+                  "                  &ldquo;In the beginner&apos;s mind there are many possibilities, but in the expert&apos;s mind there are few.&rdquo;" 
                   <cite className="block text-right text-sm mt-2 not-italic">— Shunryu Suzuki</cite>
                 </blockquote>
               </div>
@@ -242,7 +242,7 @@ export default function Chapter1Page() {
                     Aparigraha (Non-Attachment)
                   </h4>
                   <p className="text-purple-700 dark:text-purple-200">
-                    Be open to new ideas, unexpected challenges, and personal evolution. Release preconceived notions of what this journey "should" be. Embrace the unknown with curiosity.
+                    Be open to new ideas, unexpected challenges, and personal evolution. Release preconceived notions of what this journey &ldquo;should&rdquo; be. Embrace the unknown with curiosity.
                   </p>
                 </div>
                 
@@ -293,9 +293,9 @@ export default function Chapter1Page() {
             <ManualSection id="setup" title="Setting Up for Success">
               <p className="mb-4">Your environment and mindset are key. Here’s how to create a supportive container for your learning:</p>
               <ul className="space-y-3 ml-5 list-disc">
-                <li><strong>Active Participation</strong>: Embrace a "front-row" mindset. Ask questions, volunteer for demonstrations, and engage fully in discussions.</li>
-                <li><strong>Consistent Practice</strong>: Aim to practice yoga more days than you don't. Your personal practice is your most valuable resource.</li>
-                <li><strong>Community & Connection</strong>: Learn and use the names of your fellow trainees. Speak with kindness and intention. Use inclusive language like "team," "everyone," or "this group."</li>
+                <li><strong>Active Participation</strong>: Embrace a &ldquo;front-row&rdquo; mindset. Ask questions, volunteer for demonstrations, and engage fully in discussions.</li>
+                <li><strong>Consistent Practice</strong>: Aim to practice yoga more days than you don&apos;t. Your personal practice is your most valuable resource.</li>
+                <li><strong>Community & Connection</strong>: Learn and use the names of your fellow trainees. Speak with kindness and intention. Use inclusive language like &ldquo;team,&rdquo; &ldquo;everyone,&rdquo; or &ldquo;this group.&rdquo;</li>
                 <li><strong>Contribution Mindset</strong>: Share your insights and experiences when they can add value to the conversation. Listen with the intent to understand, not just to respond.</li>
                 <li><strong>Growth Mindset</strong>: View challenges as opportunities. Celebrate not just your achievements, but your efforts and learning process.</li>
               </ul>

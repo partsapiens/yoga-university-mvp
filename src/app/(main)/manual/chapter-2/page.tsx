@@ -88,14 +88,14 @@ export default function Chapter2Page() {
               <div className="p-4 bg-gray-800/50 border border-gray-700 rounded-lg my-6">
                 <h4 className="font-semibold text-teal-300 mb-2">Cueing Tip: Linking Breath to Movement</h4>
                 <p className="text-gray-300">
-                  Use simple, direct cues. For example: "On your inhale, reach your arms high." (Expansion). "On your exhale, fold forward." (Contraction). This synchronization, or <em>vinyasa</em>, is the heart of a flowing practice.
+                  Use simple, direct cues. For example: &ldquo;On your inhale, reach your arms high.&rdquo; (Expansion). &ldquo;On your exhale, fold forward.&rdquo; (Contraction). This synchronization, or <em>vinyasa</em>, is the heart of a flowing practice.
                 </p>
               </div>
             </ManualSection>
 
             <ManualSection id="alignment" title="Pillar 2: Intelligent Alignment (Asana)">
               <p className="mb-4 leading-relaxed">
-                Alignment in yoga is not about forcing the body into a perfect shape. It's about creating a clear pathway for energy to flow, ensuring safety, and maximizing the pose's benefits. It is always a balance between effort (Sthira) and ease (Sukha).
+                Alignment in yoga is not about forcing the body into a perfect shape. It&apos;s about creating a clear pathway for energy to flow, ensuring safety, and maximizing the pose&apos;s benefits. It is always a balance between effort (Sthira) and ease (Sukha).
               </p>
               <h4 className="text-lg font-medium text-teal-300 mt-6 mb-3">Universal Principles of Alignment:</h4>
               <ol className="space-y-3 mb-4 ml-5 list-decimal">
@@ -131,7 +131,7 @@ export default function Chapter2Page() {
                <div className="p-4 bg-blue-900/20 border-l-4 border-blue-400 rounded-r-lg my-6">
                 <h4 className="font-semibold text-blue-300 mb-2">Case Study: Alignment in Downward-Facing Dog</h4>
                 <p className="text-blue-200/90">
-                  A student has a rounded upper back. Instead of telling them to "flatten your back," cue them to "press firmly through your hands, bend your knees generously, and send your hips high." This addresses the root of the issue (tight hamstrings/shoulders) and prioritizes spinal length over straight legs.
+                  A student has a rounded upper back. Instead of telling them to &ldquo;flatten your back,&rdquo; cue them to &ldquo;press firmly through your hands, bend your knees generously, and send your hips high.&rdquo; This addresses the root of the issue (tight hamstrings/shoulders) and prioritizes spinal length over straight legs.
                 </p>
               </div>
             </ManualSection>
@@ -159,14 +159,14 @@ export default function Chapter2Page() {
                 </div>
                 <div className="p-4 bg-gray-900/50 border border-gray-600 rounded-lg">
                   <h5 className="font-semibold text-blue-300 mb-2">Mid-Practice Check-ins</h5>
-                  <p className="text-sm">Pause in poses to ask: "What sensations do you notice?" or "Can you soften around intensity while maintaining strength?"</p>
+                  <p className="text-sm">Pause in poses to ask: &ldquo;What sensations do you notice?&rdquo; or &ldquo;Can you soften around intensity while maintaining strength?&rdquo;</p>
                 </div>
               </div>
             </ManualSection>
 
             <ManualSection id="practice" title="Your Personal Practice Lab">
               <p className="mb-4 leading-relaxed">
-                Your personal practice is where the theory comes to life. It is your laboratory for exploration, discovery, and embodiment. It doesn't need to be long or intense, but it should be consistent.
+                Your personal practice is where the theory comes to life. It is your laboratory for exploration, discovery, and embodiment. It doesn&apos;t need to be long or intense, but it should be consistent.
               </p>
               <h4 className="text-lg font-medium text-teal-300 mt-6 mb-3">Building a Sustainable Practice:</h4>
               <ul className="space-y-2 ml-5">
@@ -182,9 +182,9 @@ export default function Chapter2Page() {
                 As a teacher, your primary responsibility is to create a safe and supportive environment. This means prioritizing the well-being of your students above all else.
               </p>
               <ul className="space-y-3 mb-4 ml-5 list-disc">
-                <li><strong>"No Pain, No Pain"</strong>: Teach the crucial difference between the discomfort of a muscle stretching (sensation) and the sharp, nervy feeling of joint pain (pain). Pain is always a signal to stop.</li>
+                <li><strong>&ldquo;No Pain, No Pain&rdquo;</strong>: Teach the crucial difference between the discomfort of a muscle stretching (sensation) and the sharp, nervy feeling of joint pain (pain). Pain is always a signal to stop.</li>
                 <li><strong>Honor Individuality</strong>: Every body is unique. Emphasize that poses will look and feel different for everyone. Offer modifications and variations for all levels.</li>
-                <li><strong>Empower Students</strong>: Encourage students to listen to their own bodies and make choices that serve them. Remind them that Child's Pose is always an option.</li>
+                <li><strong>Empower Students</strong>: Encourage students to listen to their own bodies and make choices that serve them. Remind them that Child&apos;s Pose is always an option.</li>
                 <li><strong>Create a Non-Competitive Space</strong>: Foster an atmosphere of self-acceptance and exploration, rather than achievement or comparison.</li>
               </ul>
 
@@ -214,8 +214,8 @@ export default function Chapter2Page() {
               <div className="p-4 bg-blue-900/20 border-l-4 border-blue-400 rounded-r-lg my-6">
                 <h4 className="font-semibold text-blue-300 mb-2">Teaching Technique: The Art of Inclusive Language</h4>
                 <p className="text-blue-200/90 mb-2">
-                  Instead of: "Everyone lift your leg higher" 
-                  <br />Try: "If it serves you, explore lifting your leg a bit more"
+                  Instead of: &ldquo;Everyone lift your leg higher&rdquo; 
+                  <br />Try: &ldquo;If it serves you, explore lifting your leg a bit more&rdquo;
                 </p>
                 <p className="text-blue-200/90">
                   This language honors student autonomy and removes pressure to perform.
