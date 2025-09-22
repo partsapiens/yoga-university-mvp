@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Loader2, Sparkles, Clock, Target, User } from 'lucide-react';
+import { Loader2, Sparkles, Clock, Target, User, Zap } from 'lucide-react';
 
 interface GeneratedPose {
   name: string;
@@ -17,6 +17,7 @@ const YogaFlowGenerator = () => {
     duration: 30,
     level: 'beginner',
     focus: 'flexibility',
+    muscleFocus: 'full-body',
     injuries: []
   });
   const [isGenerating, setIsGenerating] = useState(false);
@@ -110,6 +111,28 @@ const YogaFlowGenerator = () => {
               <option value="core">Core Strength</option>
               <option value="backbends">Backbends</option>
               <option value="hip_openers">Hip Openers</option>
+            </select>
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2 flex items-center gap-2">
+              <Zap className="w-4 h-4" />
+              Muscle Focus
+            </label>
+            <select
+              value={preferences.muscleFocus}
+              onChange={(e) => setPreferences({...preferences, muscleFocus: e.target.value})}
+              className="w-full p-3 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+            >
+              <option value="full-body">Full Body</option>
+              <option value="upper-body">Upper Body</option>
+              <option value="lower-body">Lower Body</option>
+              <option value="core">Core</option>
+              <option value="legs">Legs</option>
+              <option value="arms">Arms</option>
+              <option value="shoulders">Shoulders</option>
+              <option value="hips">Hips</option>
+              <option value="spine">Spine</option>
             </select>
           </div>
 
