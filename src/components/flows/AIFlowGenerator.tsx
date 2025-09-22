@@ -50,7 +50,7 @@ export const AIFlowGenerator = () => {
       </div>
       {isGenerating && (
         <div className="mt-4">
-          <p className="text-center text-foreground">Simulating AI processing...</p>
+          <p className="text-center text-foreground">Simulating 🤖 processing...</p>
           {/* TODO: Add a nice progress indicator */}
           <div className="w-full bg-gray-200 rounded-full h-2.5 mt-2">
             <div className="bg-primary h-2.5 rounded-full animate-pulse"></div>

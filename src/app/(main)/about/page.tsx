@@ -200,7 +200,7 @@ export default function AboutPage() {
               {
                 name: "Emma Thompson",
                 role: "Yoga Teacher, London",
-                text: "The AI flow builder has revolutionized how I plan my classes. My students love the personalized sequences!",
+                text: "The 🤖 flow builder has revolutionized how I plan my classes. My students love the personalized sequences!",
                 rating: 5
               },
               {

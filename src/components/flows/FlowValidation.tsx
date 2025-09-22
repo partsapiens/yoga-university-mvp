@@ -60,7 +60,7 @@ export function FlowValidation({ flow, totalSeconds, className = '', onSaferAlte
         const result: AIValidationResult = await response.json();
         setAIValidation(result);
       } else {
-        setValidationError('AI validation temporarily unavailable');
+        setValidationError('🤖 validation temporarily unavailable');
       }
     } catch (error) {
       console.error('Validation error:', error);
@@ -134,7 +134,7 @@ export function FlowValidation({ flow, totalSeconds, className = '', onSaferAlte
     messages.push({
       type: 'info',
       message: 'Start building your flow by adding poses',
-      suggestion: 'Try the AI generator or browse the pose library below'
+      suggestion: 'Try the 🤖 generator or browse the pose library below'
     });
     return (
       <div className={className}>
@@ -247,7 +247,7 @@ export function FlowValidation({ flow, totalSeconds, className = '', onSaferAlte
             </button>
           </div>
           <p className="text-xs text-blue-700 dark:text-blue-300 mt-1">
-            Our AI has created a modified version that addresses the safety concerns above.
+            Our 🤖 has created a modified version that addresses the safety concerns above.
           </p>
         </div>
       )}
@@ -260,7 +260,7 @@ export function FlowValidation({ flow, totalSeconds, className = '', onSaferAlte
             className="flex items-center gap-2 px-3 py-2 bg-indigo-50 hover:bg-indigo-100 dark:bg-indigo-900/20 dark:hover:bg-indigo-900/30 border border-indigo-200 dark:border-indigo-800 rounded-lg text-sm text-indigo-700 dark:text-indigo-300 transition-colors"
           >
             <RefreshCw size={14} />
-            Get AI Safety Analysis
+            Get 🤖 Safety Analysis
           </button>
         </div>
       )}

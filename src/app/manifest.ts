@@ -4,7 +4,7 @@ export default function manifest(): MetadataRoute.Manifest {
   return {
     name: 'Yoga Flow University - ✨ Powered Yoga Platform',
     short_name: 'Yoga Flow',
-    description: 'Create personalized yoga flows with AI assistance, track your practice, and grow your teaching skills.',
+    description: 'Create personalized yoga flows with 🤖 assistance, track your practice, and grow your teaching skills.',
     start_url: '/',
     display: 'standalone',
     background_color: '#ffffff',

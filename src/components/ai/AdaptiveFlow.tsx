@@ -226,7 +226,7 @@ export function AdaptiveFlow({
       )}
 
       <div className="mt-4 text-xs text-gray-500">
-        AI adapts your flow based on your experience level, preferences, and real-time feedback.
+        🤖 adapts your flow based on your experience level, preferences, and real-time feedback.
       </div>
     </div>
   );
