@@ -24,6 +24,9 @@ interface FlowManagementProps {
   onShuffleFlow: () => void;
   onOptimizeFlow?: () => void;
   
+  // FlowValidation props
+  onSaferAlternative?: (flow: PoseId[]) => void;
+  
   className?: string;
 }
 
@@ -34,6 +37,9 @@ export function FlowManagement({
   
   // QuickActions props
   onDuplicateFlow, onReverseFlow, onClearFlow, onShuffleFlow, onOptimizeFlow,
+  
+  // FlowValidation props
+  onSaferAlternative,
   
   className = ''
 }: FlowManagementProps) {
@@ -105,7 +111,7 @@ export function FlowManagement({
 
       {/* Flow Validation */}
       <div>
-        <FlowValidation flow={flow} totalSeconds={totalSeconds} />
+        <FlowValidation flow={flow} totalSeconds={totalSeconds} onSaferAlternative={onSaferAlternative} />
       </div>
 
       {/* Your Flow Grid - Only show when no flow exists or show minimal info */}

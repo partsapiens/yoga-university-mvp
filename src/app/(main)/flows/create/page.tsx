@@ -648,18 +648,11 @@ export default function CreateFlowPage() {
           onReverseFlow={handleReverseFlow}
           onClearFlow={handleClearFlow}
           onShuffleFlow={handleShuffleFlow}
+          onSaferAlternative={handleSaferAlternative}
           className="mt-6"
         />
         
         <div className="space-y-6 mt-6">
-          {/* ✨-Powered Flow Validation */}
-          <FlowValidation 
-            flow={flow} 
-            totalSeconds={totalSeconds} 
-            onSaferAlternative={handleSaferAlternative}
-            className="mt-6"
-          />
-          
           {/* Combined ✨ Suggestions and Search Library - Only show when creating custom flow */}
           {showPoseLibrary && <CombinedPoseLibrary onAddPose={addPose} />}
 
