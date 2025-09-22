@@ -91,7 +91,7 @@ export const RecentAchievements: React.FC = () => {
         <div className="flex items-center justify-between">
           <CardTitle className="flex items-center gap-2">
             <Award className="h-5 w-5" />
-            Recent Achievements
+            Achievement Progress
           </CardTitle>
           <div className="flex items-center gap-1 text-sm text-muted-foreground">
             <TrendingUp className="h-4 w-4" />

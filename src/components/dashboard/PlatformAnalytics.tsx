@@ -84,7 +84,7 @@ export const PlatformAnalytics: React.FC<PlatformAnalyticsProps> = ({ className 
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <Brain className="w-5 h-5 text-blue-600" />
-            Platform Intelligence
+            Loading Analytics
           </CardTitle>
         </CardHeader>
         <CardContent>
@@ -104,7 +104,7 @@ export const PlatformAnalytics: React.FC<PlatformAnalyticsProps> = ({ className 
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <AlertCircle className="w-5 h-5 text-red-600" />
-            Platform Intelligence
+            Analytics Error
           </CardTitle>
         </CardHeader>
         <CardContent>
@@ -127,7 +127,7 @@ export const PlatformAnalytics: React.FC<PlatformAnalyticsProps> = ({ className 
           <div className="flex items-center justify-between">
             <CardTitle className="flex items-center gap-2">
               <Brain className="w-5 h-5 text-blue-600" />
-              Platform Intelligence
+              Analytics Overview
               <span className="ml-2 text-sm text-blue-600 bg-blue-100 dark:bg-blue-800 px-2 py-1 rounded-full">
                 AI Powered
               </span>

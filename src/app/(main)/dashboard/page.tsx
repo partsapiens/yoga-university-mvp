@@ -13,12 +13,16 @@ import { StatsSkeleton } from '@/components/dashboard/StatsSkeleton';
 import { RecentAchievements } from '@/components/dashboard/RecentAchievements';
 import { AIInsightsDashboard } from '@/components/dashboard/AIInsightsDashboard';
 import { PlatformAnalytics } from '@/components/dashboard/PlatformAnalytics';
+import { HeaderBar } from '@/components/dashboard/HeaderBar';
 
 const DashboardPage = async () => {
   const data = await fetchDashboardData();
+  const unreadCount = data.notifications.filter(n => !n.read).length;
   
   return (
-    <div className="container mx-auto p-4 md:p-8">
+    <div className="min-h-screen">
+      <HeaderBar unreadCount={unreadCount} />
+      <div className="container mx-auto p-4 md:p-8">
       <div className="mb-8">
         <h1 className="text-4xl font-bold">Dashboard</h1>
         <p className="text-lg text-muted-foreground mt-2">Welcome to Yoga Flow University.</p>
@@ -74,11 +78,12 @@ const DashboardPage = async () => {
         </div>
         
         {/* Notifications - Full Width Bottom */}
-        <div className="lg:col-span-12">
+        <div id="notifications" className="lg:col-span-12">
           <SectionHeader title="Notifications" />
           <NotificationsPanel notifications={data.notifications} />
         </div>
       </section>
+    </div>
     </div>
   );
 };

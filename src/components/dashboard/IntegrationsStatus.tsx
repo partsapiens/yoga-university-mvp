@@ -35,7 +35,7 @@ export const IntegrationsStatus: React.FC<IntegrationsStatusProps> = ({ integrat
         <div className="flex items-center justify-between">
           <CardTitle className="flex items-center gap-2">
             <Wifi className="h-5 w-5" />
-            Connected Apps
+            Integration Status
           </CardTitle>
           <div className="text-sm text-muted-foreground">
             {connectedApps.length} of {integrations.length} connected

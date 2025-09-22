@@ -80,7 +80,7 @@ export const RecentSessions: React.FC<RecentSessionsProps> = ({ sessions }) => {
     <Card className="flex flex-col">
       <CardHeader>
         <div className="flex items-center justify-between">
-          <CardTitle>Recent Sessions</CardTitle>
+          <CardTitle>Session History</CardTitle>
           <div className="flex items-center gap-2">
             <Filter className="h-4 w-4 text-muted-foreground" />
             <Select value={filter} onValueChange={setFilter}>

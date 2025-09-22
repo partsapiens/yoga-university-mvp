@@ -97,7 +97,17 @@ export const HeaderBar: React.FC<HeaderBarProps> = ({ unreadCount, userName = "Y
           />
           <ThemeToggle />
           <div className="relative">
-            <Button variant="ghost" size="icon" aria-label="Notifications">
+            <Button 
+              variant="ghost" 
+              size="icon" 
+              aria-label="Go to notifications"
+              onClick={() => {
+                const notificationsSection = document.getElementById('notifications');
+                if (notificationsSection) {
+                  notificationsSection.scrollIntoView({ behavior: 'smooth' });
+                }
+              }}
+            >
               <Bell className="h-4 w-4" />
               {unreadCount > 0 && (
                 <span className="absolute -top-1 -right-1 rounded-full bg-red-500 px-1 text-[10px] text-white">
