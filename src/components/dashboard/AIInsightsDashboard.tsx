@@ -121,7 +121,7 @@ export const AIInsightsDashboard: React.FC<AIInsightsDashboardProps> = ({
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <Brain className="w-5 h-5 text-purple-600" />
-            🤖 Progress Insights
+            ML-Powered Analysis
           </CardTitle>
         </CardHeader>
         <CardContent>
@@ -141,7 +141,7 @@ export const AIInsightsDashboard: React.FC<AIInsightsDashboardProps> = ({
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <AlertCircle className="w-5 h-5 text-red-600" />
-            🤖 Progress Insights
+            Analysis Error
           </CardTitle>
         </CardHeader>
         <CardContent>
@@ -162,7 +162,7 @@ export const AIInsightsDashboard: React.FC<AIInsightsDashboardProps> = ({
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <Brain className="w-5 h-5 text-gray-600" />
-            🤖 Progress Insights
+            Start Your Journey
           </CardTitle>
         </CardHeader>
         <CardContent>
@@ -190,7 +190,7 @@ export const AIInsightsDashboard: React.FC<AIInsightsDashboardProps> = ({
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <Brain className="w-5 h-5 text-purple-600" />
-            🤖 Progress Insights
+            Progress Score
             <span className="ml-auto text-sm text-purple-600 bg-purple-100 dark:bg-purple-800 px-2 py-1 rounded-full">
               ML Powered
             </span>
