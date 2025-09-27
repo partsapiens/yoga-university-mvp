@@ -120,6 +120,10 @@ export default function RootLayout({
         {/* Google AdSense Account Verification */}
         <meta name="google-adsense-account" content="ca-pub-9900806169268429" />
         
+        {/* Performance optimizations - Preload critical resources */}
+        <link rel="preload" href="/_next/static/css/app/layout.css" as="style" />
+        <link rel="preload" href="/_next/static/chunks/main.js" as="script" />
+        
         {/* Viewport meta tag */}
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
         <meta name="theme-color" content="#2563eb" media="(prefers-color-scheme: light)" />

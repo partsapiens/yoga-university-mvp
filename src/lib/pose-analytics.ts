@@ -1,4 +1,18 @@
-import { PoseAnalysisResult, DetectedPose } from './pose-detection';
+// Define local interfaces to avoid circular imports
+interface PoseAnalysisResult {
+  score: number;
+  feedback: string[];
+  keypoints?: any[];
+  timestamp: number;
+  accuracy?: number;
+  pose?: any;
+  suggestions?: string[];
+}
+
+interface DetectedPose {
+  keypoints: any[];
+  score: number;
+}
 
 export interface PoseSession {
   id: string;

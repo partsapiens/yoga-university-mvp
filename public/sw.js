@@ -1,5 +1,5 @@
 // Enhanced Service Worker for Yoga Flow University PWA
-const CACHE_NAME = 'yoga-flow-v2';
+const CACHE_NAME = 'yoga-flow-v3'; // Increment version for fresh caches
 const STATIC_CACHE_URLS = [
   '/',
   '/dashboard',
@@ -7,18 +7,11 @@ const STATIC_CACHE_URLS = [
   '/flows/create',
   '/meditation',
   '/manual',
-  '/business',
-  '/studio',
-  '/certification',
   '/offline',
-  '/poses/print',
-  '/flows/print',
   '/manifest.webmanifest',
-  '/_next/static/css/',
-  '/_next/static/chunks/',
 ];
 
-// Dynamic cache patterns
+// Simplified cache patterns - less aggressive caching for better crawler access
 const CACHE_PATTERNS = {
   poses: /\/api\/poses/,
   flows: /\/api\/flows/,
@@ -28,10 +21,15 @@ const CACHE_PATTERNS = {
   static: /\/_next\/static\//
 };
 
-// Cache strategies
+// Simplified cache strategies - prioritize network for fresh content
 const CACHE_STRATEGIES = {
-  poses: 'stale-while-revalidate', // Always show cached, update in background
-  flows: 'stale-while-revalidate',
+  poses: 'network-first', // Network first for fresh data
+  flows: 'network-first',
+  images: 'cache-first', // Cache first for static assets
+  fonts: 'cache-first',
+  api: 'network-first', // Always try network first for API calls
+  static: 'cache-first' // Static assets can be cached
+};
   images: 'cache-first', // Cache first, fallback to network
   fonts: 'cache-first',
   api: 'network-first', // Network first, fallback to cache
@@ -171,7 +169,7 @@ async function staleWhileRevalidate(request) {
   return cachedResponse || fetchPromise;
 }
 
-// Fetch event - intelligent caching strategies
+// Fetch event - crawler-friendly caching strategies
 self.addEventListener('fetch', (event) => {
   // Skip non-GET requests
   if (event.request.method !== 'GET') return;
@@ -180,6 +178,15 @@ self.addEventListener('fetch', (event) => {
   if (!event.request.url.startsWith(self.location.origin)) return;
   
   const url = event.request.url;
+  const userAgent = event.request.headers.get('user-agent') || '';
+  
+  // Bypass service worker for crawlers to ensure they get fresh content
+  const isCrawler = /googlebot|adsbot|bingbot|slurp|duckduckbot|baiduspider|yandexbot|facebookexternalhit|twitterbot|rogerbot|linkedinbot|embedly|quoraagent|outbrainampfetcher|co2vap1/i.test(userAgent);
+  
+  if (isCrawler) {
+    // Let crawlers bypass service worker completely
+    return;
+  }
   
   // Skip critical SEO files - let them pass through to ensure crawler access
   if (url.includes('/robots.txt') || 
@@ -192,12 +199,12 @@ self.addEventListener('fetch', (event) => {
   // Determine strategy based on URL patterns
   let strategy = 'network-first';
   
-  if (CACHE_PATTERNS.poses.test(url)) strategy = 'stale-while-revalidate';
-  else if (CACHE_PATTERNS.flows.test(url)) strategy = 'stale-while-revalidate';
-  else if (CACHE_PATTERNS.images.test(url)) strategy = 'cache-first';
-  else if (CACHE_PATTERNS.fonts.test(url)) strategy = 'cache-first';
-  else if (CACHE_PATTERNS.static.test(url)) strategy = 'cache-first';
-  else if (CACHE_PATTERNS.api.test(url)) strategy = 'network-first';
+  if (CACHE_PATTERNS.poses.test(url)) strategy = CACHE_STRATEGIES.poses;
+  else if (CACHE_PATTERNS.flows.test(url)) strategy = CACHE_STRATEGIES.flows;
+  else if (CACHE_PATTERNS.images.test(url)) strategy = CACHE_STRATEGIES.images;
+  else if (CACHE_PATTERNS.fonts.test(url)) strategy = CACHE_STRATEGIES.fonts;
+  else if (CACHE_PATTERNS.static.test(url)) strategy = CACHE_STRATEGIES.static;
+  else if (CACHE_PATTERNS.api.test(url)) strategy = CACHE_STRATEGIES.api;
   
   // Apply the appropriate strategy
   event.respondWith(
