@@ -1,3 +1,9 @@
+import bundleAnalyzer from '@next/bundle-analyzer';
+
+const withBundleAnalyzer = bundleAnalyzer({
+  enabled: process.env.ANALYZE === 'true',
+});
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   // DO NOT expose OPENAI_API_KEY to client-side code
@@ -11,7 +17,22 @@ const nextConfig = {
     ignoreDuringBuilds: true,
   },
   images: {
-    unoptimized: true, // Improve performance for static images
+    unoptimized: false, // Enable Next.js image optimization for better performance
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: '**', // Allow all HTTPS images - consider restricting in production
+      },
+    ],
+    formats: ['image/webp', 'image/avif'], // Modern image formats for better compression
+  },
+  // Enable SWC minification for better performance
+  swcMinify: true,
+  // Experimental features for better performance
+  experimental: {
+    optimizeCss: true,
+    esmExternals: true,
+    serverComponentsExternalPackages: ['@tensorflow/tfjs', '@tensorflow-models/pose-detection'],
   },
   async redirects() {
     return [
@@ -28,6 +49,52 @@ const nextConfig = {
       },
     ]
   },
+  async headers() {
+    return [
+      // Security headers
+      {
+        source: '/(.*)',
+        headers: [
+          {
+            key: 'X-Frame-Options',
+            value: 'DENY',
+          },
+          {
+            key: 'X-Content-Type-Options',
+            value: 'nosniff',
+          },
+          {
+            key: 'Referrer-Policy',
+            value: 'origin-when-cross-origin',
+          },
+        ],
+      },
+      // Cache headers for static assets
+      {
+        source: '/_next/static/(.*)',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'public, max-age=31536000, immutable',
+          },
+        ],
+      },
+      // Crawler-friendly headers for SEO files
+      {
+        source: '/(robots.txt|ads.txt|sitemap.xml)',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'public, max-age=3600, must-revalidate',
+          },
+          {
+            key: 'Content-Type',
+            value: 'text/plain; charset=utf-8',
+          },
+        ],
+      },
+    ]
+  },
 }
 
-export default nextConfig
+export default withBundleAnalyzer(nextConfig);

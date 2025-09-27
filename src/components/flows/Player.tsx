@@ -5,8 +5,15 @@ import { Avatar } from '@/components/Avatar';
 import { useYogaVoiceGuide } from '@/hooks/useYogaVoiceGuide';
 import { PoseCard } from './PoseCard';
 import { PoseAnalysis, usePoseAnalysisSettings } from '@/components/pose-analysis';
-import { PoseAnalysisResult } from '@/lib/pose-detection';
 import { Camera, CameraOff } from 'lucide-react';
+
+// Define local type to match our optimized PoseAnalysis component
+interface PoseAnalysisResult {
+  score: number;
+  feedback: string[];
+  keypoints?: any[];
+  timestamp: number;
+}
 
 interface PlayerProps {
   isPlaying: boolean;
@@ -77,10 +84,10 @@ export function Player({
     setCurrentAnalysis(result);
     
     // Voice feedback integration if enabled
-    if (poseAnalysisSettings.voiceFeedback && voiceGuide.isVoiceEnabled && result.accuracy < 60) {
+    if (poseAnalysisSettings.voiceFeedback && voiceGuide.isVoiceEnabled && result.score < 60) {
       // Provide voice correction occasionally for low accuracy
       if (Math.random() < 0.1) { // 10% chance to avoid spam
-        const suggestion = result.suggestions[0];
+        const suggestion = result.feedback[0];
         if (suggestion) {
           voiceGuide.speakResponse(suggestion);
         }
@@ -308,11 +315,11 @@ export function Player({
                     {/* Analysis Accuracy Indicator */}
                     {currentAnalysis && poseAnalysisEnabled && (
                       <div className={`text-xs font-bold px-1.5 py-0.5 rounded ${
-                        currentAnalysis.accuracy >= 80 ? 'bg-green-100 text-green-800' :
-                        currentAnalysis.accuracy >= 60 ? 'bg-yellow-100 text-yellow-800' :
+                        currentAnalysis.score >= 80 ? 'bg-green-100 text-green-800' :
+                        currentAnalysis.score >= 60 ? 'bg-yellow-100 text-yellow-800' :
                         'bg-red-100 text-red-800'
                       }`}>
-                        {currentAnalysis.accuracy}%
+                        {Math.round(currentAnalysis.score)}%
                       </div>
                     )}
                   </div>

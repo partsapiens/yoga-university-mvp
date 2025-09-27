@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import { Camera, Video, Play, AlertCircle, Info, BookOpen } from 'lucide-react';
-import { PoseAnalysisDemo } from '@/components/pose-analysis/PoseAnalysisDemo';
+import { LazyPoseAnalysisDemo } from '@/components/pose-analysis/LazyPoseAnalysisDemo';
 
 export default function AIGuidePage() {
   const [cameraPermission, setCameraPermission] = useState<'granted' | 'denied' | 'prompt' | null>(null);
@@ -25,7 +25,7 @@ export default function AIGuidePage() {
   };
 
   if (showDemo) {
-    return <PoseAnalysisDemo />;
+    return <LazyPoseAnalysisDemo onBack={() => setShowDemo(false)} />;
   }
 
   return (

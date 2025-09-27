@@ -15,6 +15,7 @@ export default function robots(): MetadataRoute.Robots {
           '/dashboard', // Private user area
           '/journal/', // Private user content
           '/reading/', // Private user content
+          '/.well-known/', // Security files
         ],
       },
       {
@@ -26,6 +27,8 @@ export default function robots(): MetadataRoute.Robots {
           '/journal/', // Private user content
           '/reading/', // Private user content
         ],
+        // Crawl-delay for non-critical pages to avoid overwhelming server
+        crawlDelay: 1,
       },
       {
         userAgent: 'AdsBot-Google',
@@ -36,6 +39,7 @@ export default function robots(): MetadataRoute.Robots {
           '/journal/', // Private user content
           '/reading/', // Private user content
         ],
+        // Allow faster crawling for AdSense verification
       },
       {
         userAgent: 'GPTBot', // OpenAI bot
@@ -86,6 +90,7 @@ export default function robots(): MetadataRoute.Robots {
           '/journal/', // Private user content
           '/reading/', // Private user content
         ],
+        crawlDelay: 1,
       },
     ],
     sitemap: `${baseUrl}/sitemap.xml`,
