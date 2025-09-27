@@ -1,0 +1,14 @@
+User-Agent: *
+Allow: /
+Disallow: /admin/
+Disallow: /api/
+Disallow: /_next/
+Disallow: /dashboard
+Disallow: /journal/
+Disallow: /reading/
+
+User-Agent: AdsBot-Google
+Allow: /
+
+Host: https://fltwht.com
+Sitemap: https://fltwht.com/sitemap.xml
