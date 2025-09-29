@@ -20,12 +20,14 @@ const LoginPageContent = () => {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    const status = searchParams.get('status');
-    if (status === 'registered') {
-      toast({
-        title: 'Registration Successful!',
-        description: 'Please log in to continue.',
-      });
+    if (searchParams) {
+      const status = searchParams.get('status');
+      if (status === 'registered') {
+        toast({
+          title: 'Registration Successful!',
+          description: 'Please log in to continue.',
+        });
+      }
     }
   }, [searchParams, toast]);
 
