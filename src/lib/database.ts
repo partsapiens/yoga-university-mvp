@@ -6,21 +6,7 @@ import { supabase } from "@/utils/supabaseClient";
 // and for fetching and updating data.
 
 // Example with Supabase
-import { createClient, type SupabaseClient } from '@supabase/supabase-js';
-
-let supabaseClient: SupabaseClient | null = null;
-
-export const getSupabase = (): SupabaseClient | null => {
-  if (supabaseClient) return supabaseClient;
-  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
-  const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
-  if (!supabaseUrl || !supabaseAnonKey) {
-    console.warn('Supabase client not configured');
-    return null;
-  }
-  supabaseClient = createClient(supabaseUrl, supabaseAnonKey);
-  return supabaseClient;
-};
+import { type SupabaseClient } from '@supabase/supabase-js';
 
 // Transform database pose to legacy pose format for backward compatibility
 function transformDatabasePoseToLegacy(dbPose: DatabasePose): Pose {
@@ -177,39 +163,27 @@ export const getPosesFromDatabase = async (): Promise<DatabasePose[]> => {
     ];
   
   try {
-    // Check if Supabase is properly configured
-    const supabase = getSupabase();
-    if (!supabase) {
-      console.warn('Supabase not configured - using sample data');
-      return samplePoses; // Return sample data when no database connection
+    const { data: poses, error } = await supabase
+      .from('poses')
+      .select('*')
+      .order('sort_order', { ascending: true });
+
+    if (error) {
+      console.warn('Supabase query error:', error.message, '- using sample data');
+      return samplePoses;
     }
 
-    // Try to fetch from the actual database first
-    try {
-      const { data: poses, error } = await supabase
-        .from('poses')
-        .select('*')
-        .order('sort_order', { ascending: true });
-      
-      if (error) {
-        console.warn('Supabase query error:', error.message, '- using sample data');
-        return samplePoses;
-      }
-      
-      if (poses && poses.length > 0) {
-        console.log(`Loaded ${poses.length} poses from Supabase`);
-        return poses as DatabasePose[];
-      }
-    } catch (dbError) {
-      console.warn('Database connection failed:', dbError, '- using sample data');
+    if (poses && poses.length > 0) {
+      console.log(`Loaded ${poses.length} poses from Supabase`);
+      return poses as DatabasePose[];
     }
-    
+
     // Return sample data as fallback
     console.warn('No poses in database - using sample data');
     return samplePoses;
   } catch (error) {
-    console.error('Error in getPosesFromDatabase:', error);
-    return samplePoses; // Return sample data instead of empty array
+    console.error('Error fetching poses from Supabase:', error);
+    return samplePoses; // Return sample data on error
   }
 };
 
