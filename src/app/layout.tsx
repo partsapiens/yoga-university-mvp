@@ -9,32 +9,23 @@ import { ErrorBoundary } from '@/components/ErrorBoundary'
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  metadataBase: new URL(process.env.NEXT_PUBLIC_BASE_URL || 'https://yogaflowuniversity.com'),
+  metadataBase: new URL(process.env.NEXT_PUBLIC_BASE_URL || 'https://fltwht.com'),
   title: {
-    default: 'Yoga Flow University - ✨ Powered Yoga Platform',
-    template: '%s | Yoga Flow University'
+    default: 'fltwht.com - Your Site Title',
+    template: '%s | fltwht.com'
   },
-  description: 'Create personalized yoga flows with ✨ assistance, track your practice, and grow your teaching skills. Join thousands of yogis in our comprehensive platform.',
+  description: 'Your site description.',
   keywords: [
-    'yoga',
-    'flow',
-    'AI',
-    'poses',
-    'sequences',
-    'teacher training',
-    'mindfulness',
-    'meditation',
-    'breathing exercises',
-    'yoga therapy',
-    'wellness',
-    'practice tracking'
+    'keyword1',
+    'keyword2',
+    'keyword3'
   ],
   authors: [
-    { name: 'Yoga Flow University Team' },
-    { name: 'YFU Development', url: 'https://yogaflowuniversity.com' }
+    { name: 'fltwht.com Team' },
+    { name: 'fltwht.com Development', url: 'https://fltwht.com' }
   ],
-  creator: 'Yoga Flow University',
-  publisher: 'Yoga Flow University',
+  creator: 'fltwht.com',
+  publisher: 'fltwht.com',
   formatDetection: {
     email: false,
     address: false,
@@ -43,25 +34,25 @@ export const metadata: Metadata = {
   openGraph: {
     type: 'website',
     locale: 'en_US',
-    url: '/',
-    siteName: 'Yoga Flow University',
-    title: 'Yoga Flow University - ✨ Powered Yoga Platform',
-    description: 'Create personalized yoga flows with ✨ assistance, track your practice, and grow your teaching skills.',
+    url: 'https://fltwht.com',
+    siteName: 'fltwht.com',
+    title: 'fltwht.com - Your Site Title',
+    description: 'Your site description.',
     images: [
       {
         url: '/og-image.png',
         width: 1200,
         height: 630,
-        alt: 'Yoga Flow University - ✨ Powered Yoga Platform',
+        alt: 'fltwht.com - Your Site Title',
       },
     ],
   },
   twitter: {
     card: 'summary_large_image',
-    site: '@yogaflowuni',
-    creator: '@yogaflowuni',
-    title: 'Yoga Flow University - ✨ Powered Yoga Platform',
-    description: 'Create personalized yoga flows with ✨ assistance, track your practice, and grow your teaching skills.',
+    site: '@fltwht',
+    creator: '@fltwht',
+    title: 'fltwht.com - Your Site Title',
+    description: 'Your site description.',
     images: ['/twitter-image.png'],
   },
   robots: {
@@ -93,9 +84,10 @@ export const metadata: Metadata = {
   classification: 'Health & Wellness',
   referrer: 'origin-when-cross-origin',
   other: {
+    'google-adsense-account': 'ca-pub-9900806169268429',
     'apple-mobile-web-app-capable': 'yes',
     'apple-mobile-web-app-status-bar-style': 'default',
-    'apple-mobile-web-app-title': 'Yoga Flow',
+    'apple-mobile-web-app-title': 'fltwht',
     'mobile-web-app-capable': 'yes',
     'msapplication-TileColor': '#2563eb',
     'msapplication-config': '/browserconfig.xml',
@@ -117,8 +109,6 @@ export default function RootLayout({
           crossOrigin="anonymous"
         ></script>
         
-        {/* Google AdSense Account Verification */}
-        <meta name="google-adsense-account" content="ca-pub-9900806169268429" />
         
         {/* Performance optimizations - Preload critical resources */}
         <link rel="preload" href="/_next/static/css/app/layout.css" as="style" />
