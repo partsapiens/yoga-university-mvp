@@ -21,6 +21,8 @@ export interface User {
 }
 
 // 2. Pose and Flow Data Structures
+export type Difficulty = 'beginner' | 'intermediate' | 'advanced';
+
 // Database pose type matching actual Supabase schema
 export interface DatabasePose {
   id: string;
@@ -116,14 +118,7 @@ export interface ProgressMetrics {
   longestStreak: number; // in days
 }
 
-// 4. AI Flow Generation
-export interface AIGenerationParams {
-  focusArea: 'flexibility' | 'strength' | 'balance' | 'mindfulness';
-  difficulty: 'beginner' | 'intermediate' | 'advanced';
-  practiceStyle: 'vinyasa' | 'hatha' | 'power';
-  duration: number; // in minutes
-  physicalLimitations?: string[];
-}
+// 4. AI Flow Generation is now in src/types/ai.ts
 
 // 5. Learning Management System
 export interface Course {

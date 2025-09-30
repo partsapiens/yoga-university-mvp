@@ -1,4 +1,4 @@
-import { AIGenerationParams, Flow, Pose } from "@/types";
+
 import { getPosesFromDatabase } from "@/lib/database";
 import OpenAI from "openai";
 
@@ -21,7 +21,7 @@ export const generateFlow = async (params: AIGenerationParams): Promise<Partial<
     if (!allPoses || allPoses.length === 0) {
       throw new Error("No poses found in the database. Cannot generate a flow.");
     }
-    const poseNames = allPoses.map(p => p.slug).join(", ");
+
 
     // 2. Construct a detailed prompt for the AI
     const prompt = `
@@ -36,8 +36,7 @@ export const generateFlow = async (params: AIGenerationParams): Promise<Partial<
       - Include Warm-up: ${params.includeWarmup}
       - Include Cool-down: ${params.includeCooldown}
 
-      Available Poses (use only these slugs):
-      ${poseNames}
+
 
       JSON Output Structure:
       {
@@ -46,12 +45,11 @@ export const generateFlow = async (params: AIGenerationParams): Promise<Partial<
         "difficulty": "${params.difficulty}",
         "style": "${params.practiceStyle}",
         "poses": [
-          { "slug": "pose-slug-from-list", "duration": 60 },
-          { "slug": "another-pose-slug", "duration": 90 }
         ]
       }
 
       Instructions:
+
       - The total duration of all poses should roughly match the user's requested duration.
       - Select a sequence of poses that logically and safely flow together.
       - Start with a warm-up and end with a cool-down if requested.
@@ -77,6 +75,36 @@ export const generateFlow = async (params: AIGenerationParams): Promise<Partial<
     }
 
     // 4. Parse the JSON response
+    const parsedFlow = JSON.parse(content);
+
+    // 5. Validate and transform the generated flow to match our schema
+    if (!parsedFlow.name || !parsedFlow.poses || !Array.isArray(parsedFlow.poses)) {
+        throw new Error("AI returned an invalid flow structure.");
+    }
+
+    const validPoseSlugs = new Set(allPoses.map(p => p.slug));
+    const transformedPoses: FlowPose[] = parsedFlow.poses.map((pose: any, index: number) => {
+        if (!pose.poseId || typeof pose.duration !== 'number' || !validPoseSlugs.has(pose.poseId)) {
+            console.warn(`AI returned an invalid or unknown pose object at index ${index}:`, pose);
+            return null;
+        }
+        return {
+            poseId: pose.poseId,
+            duration: pose.duration,
+            order: index,
+        };
+    }).filter((p: FlowPose | null): p is FlowPose => p !== null); // Filter out any nulls from invalid poses
+
+    const finalFlow: Partial<Flow> = {
+        name: parsedFlow.name,
+        description: parsedFlow.description,
+        difficulty: parsedFlow.difficulty,
+        style: parsedFlow.style,
+        poses: transformedPoses,
+    };
+
+    console.log("Successfully generated and transformed flow:", finalFlow.name);
+    return finalFlow;
     const generatedFlow = JSON.parse(content);
 
     // 5. Validate the generated flow to ensure it matches our schema

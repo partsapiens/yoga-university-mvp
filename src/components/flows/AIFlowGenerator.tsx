@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from 'react';
-import { AIGenerationParams, Difficulty, PracticeStyle, FocusArea } from '@/types';
+
 import { Button } from '@/components/ui/Button';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/Card';
 import { Label } from '@/components/ui/Label';

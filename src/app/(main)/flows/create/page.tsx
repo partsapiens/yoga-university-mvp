@@ -6,6 +6,8 @@ import { useLocalStorage } from "@/hooks/useLocalStorage";
 import { useTimer } from "@/hooks/useTimer";
 import { useKeyboardShortcuts } from "@/components/flows/KeyboardShortcuts";
 import { Focus, TimingMode, PoseId, SavedFlow, Pose } from "@/types/yoga";
+import { Flow } from "@/types";
+import { Difficulty } from "@/types/ai";
 import { POSES } from "@/lib/yoga-data";
 import {
   smartGenerate,
@@ -495,9 +497,6 @@ export default function CreateFlowPage() {
       console.error("Received invalid or empty flow from generator.");
       return;
     }
-
-    // 1. Map the generated pose slugs to the PoseId[] format for the flow state
-    const newFlow: PoseId[] = generatedFlow.poses.map(pose => pose.slug as PoseId);
 
     // 2. Create the duration overrides object from the generated durations
     const newOverrides: Record<number, number> = {};
