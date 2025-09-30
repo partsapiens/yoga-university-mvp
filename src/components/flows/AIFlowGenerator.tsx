@@ -10,6 +10,7 @@ import { Slider } from '@/components/ui/Slider';
 import { Switch } from '@/components/ui/Switch';
 import { useToast } from '@/components/ui/use-toast';
 import { AIGenerationParams, FocusArea, Difficulty, PracticeStyle } from '@/types/ai';
+import { Flow } from '@/types';
 // Define the props for the component, which will include the function to handle the generated flow
 interface AIFlowGeneratorProps {
   onFlowGenerated: (flow: Flow) => void;

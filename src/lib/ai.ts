@@ -3,8 +3,6 @@ import { getPosesFromDatabase } from "@/lib/database";
 import { AIGenerationParams } from "@/types/ai";
 import { Flow, FlowPose } from "@/types";
 import OpenAI from "openai";
-import { AIGenerationParams } from "@/types/ai";
-import { Flow, FlowPose } from "@/types";
 
 // Initialize OpenAI client
 const openai = new OpenAI({
