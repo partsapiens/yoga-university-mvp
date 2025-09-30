@@ -6,6 +6,8 @@ import { useLocalStorage } from "@/hooks/useLocalStorage";
 import { useTimer } from "@/hooks/useTimer";
 import { useKeyboardShortcuts } from "@/components/flows/KeyboardShortcuts";
 import { Focus, TimingMode, PoseId, SavedFlow, Pose } from "@/types/yoga";
+import { Flow } from "@/types";
+import { Difficulty } from "@/types/ai";
 import { POSES } from "@/lib/yoga-data";
 import {
   smartGenerate,
@@ -71,8 +73,9 @@ const FlowNameInput = dynamic(() => import("@/components/flows/FlowNameInput").t
   loading: () => <div className="animate-pulse bg-gray-200 rounded h-10 w-64"></div>
 });
 
-const YogaAIDemo = dynamic(() => import("@/components/flows/YogaAIDemo"), {
-  loading: () => <div className="animate-pulse bg-gray-200 rounded h-64"></div>
+const AIFlowGenerator = dynamic(() => import("@/components/flows/AIFlowGenerator").then(mod => mod.AIFlowGenerator), {
+  loading: () => <div className="animate-pulse bg-gray-200 rounded-lg h-96 w-full"></div>,
+  ssr: false
 });
 
 const FlowTemplates = dynamic(() => import("@/components/flows/FlowTemplates").then(mod => ({ default: mod.FlowTemplates })), {
@@ -489,6 +492,45 @@ export default function CreateFlowPage() {
     setShowCustomSettings(false);
   };
 
+  const handleFlowGenerated = (generatedFlow: Flow) => {
+    if (!generatedFlow || !Array.isArray(generatedFlow.poses) || generatedFlow.poses.length === 0) {
+      console.error("Received invalid or empty flow from generator.");
+      return;
+    }
+
+    // 1. Map the generated pose IDs to the PoseId[] format for the flow state
+    const newFlow: PoseId[] = generatedFlow.poses.map(pose => pose.poseId as PoseId);
+
+    // 2. Create the duration overrides object from the generated durations
+    const newOverrides: Record<number, number> = {};
+    let totalDurationInSeconds = 0;
+    generatedFlow.poses.forEach((pose, index) => {
+      if (pose.duration) {
+        newOverrides[index] = pose.duration;
+        totalDurationInSeconds += pose.duration;
+      }
+    });
+
+    // 3. Update the page's state with the new flow data
+    setFlow(newFlow);
+    setOverrides(newOverrides);
+    setFlowName(generatedFlow.name || 'AI Generated Flow');
+
+    // 4. Update the control panel UI to reflect the new flow's properties
+    setMinutes(Math.round(totalDurationInSeconds / 60));
+    if (generatedFlow.difficulty) {
+      const difficultyMap: { [key in Difficulty]: number } = {
+        beginner: 2,
+        intermediate: 3,
+        advanced: 4,
+      };
+      setIntensity(difficultyMap[generatedFlow.difficulty] || 3);
+    }
+
+    // Optional: Scroll to the flow view so the user can see the result
+    document.getElementById('flow-management-section')?.scrollIntoView({ behavior: 'smooth' });
+  };
+
   const handleCreateOwn = () => {
     setShowCustomSettings(true);
     setShowPoseLibrary(true);
@@ -575,9 +617,10 @@ export default function CreateFlowPage() {
           <KeyboardShortcuts />
         </div>
         
+
         {/* ✨ Yoga Flow Generator */}
-        <div className="mt-6">
-          <YogaAIDemo />
+        <div className="my-8">
+          <AIFlowGenerator onFlowGenerated={handleFlowGenerated} />
         </div>
         
         {/* Quick Start Section */}

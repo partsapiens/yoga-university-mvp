@@ -1,5 +1,21 @@
 import { PoseId } from './yoga';
 
+// Types for the AI Flow Generator
+export type FocusArea = 'flexibility' | 'strength' | 'balance' | 'mindfulness';
+export type PracticeStyle = 'vinyasa' | 'hatha' | 'power' | 'restorative';
+export type Difficulty = 'beginner' | 'intermediate' | 'advanced';
+
+export interface AIGenerationParams {
+  focusArea: FocusArea;
+  difficulty: Difficulty;
+  practiceStyle: PracticeStyle;
+  duration: number; // in minutes
+  includeWarmup: boolean;
+  includeCooldown: boolean;
+  physicalLimitations?: string[];
+}
+
+
 export interface RecommendationInput {
   focus: string;
   duration: number;

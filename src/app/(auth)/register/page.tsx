@@ -2,27 +2,60 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/Button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/Card';
 import { Input } from '@/components/ui/Input';
 import { Label } from '@/components/ui/Label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/Select';
+import { useToast } from '@/components/ui/use-toast';
+import { signUp } from '@/lib/auth';
 import { UserRole } from '@/types';
 
 const RegisterPage = () => {
+  const router = useRouter();
+  const { toast } = useToast();
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [role, setRole] = useState<UserRole>('student');
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
-  const handleRegister = (e: React.FormEvent) => {
+  const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault();
-    // TODO: Implement actual registration logic
-    console.log('Registering with:', { name, email, password, role });
+    setIsLoading(true);
+    setError(null);
+
+    if (password.length < 6) {
+        setError('Password must be at least 6 characters long.');
+        setIsLoading(false);
+        return;
+    }
+
+    const { error: signUpError } = await signUp(email, password, { name, role });
+
+    setIsLoading(false);
+
+    if (signUpError) {
+      setError(signUpError.message);
+      toast({
+        title: 'Registration Failed',
+        description: signUpError.message,
+        variant: 'destructive',
+      });
+    } else {
+      toast({
+        title: 'Registration Successful!',
+        description: 'Please check your email to verify your account.',
+      });
+      // Redirect to a confirmation page or the login page
+      router.push('/login?status=registered');
+    }
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gray-100">
+    <div className="flex items-center justify-center min-h-screen bg-gray-100 dark:bg-gray-900">
       <Card className="w-full max-w-md">
         <CardHeader className="text-center">
           <CardTitle>Create an Account</CardTitle>
@@ -39,6 +72,7 @@ const RegisterPage = () => {
                 required
                 value={name}
                 onChange={(e) => setName(e.target.value)}
+                disabled={isLoading}
               />
             </div>
             <div className="space-y-2">
@@ -50,6 +84,7 @@ const RegisterPage = () => {
                 required
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
+                disabled={isLoading}
               />
             </div>
             <div className="space-y-2">
@@ -60,11 +95,12 @@ const RegisterPage = () => {
                 required
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
+                disabled={isLoading}
               />
             </div>
             <div className="space-y-2">
               <Label htmlFor="role">I am a...</Label>
-              <Select onValueChange={(value) => setRole(value as UserRole)} defaultValue="student">
+              <Select onValueChange={(value) => setRole(value as UserRole)} defaultValue="student" disabled={isLoading}>
                 <SelectTrigger id="role" className="w-full">
                   <SelectValue placeholder="Select your role" />
                 </SelectTrigger>
@@ -74,8 +110,9 @@ const RegisterPage = () => {
                 </SelectContent>
               </Select>
             </div>
-            <Button type="submit" className="w-full">
-              Create Account
+            {error && <p className="text-sm text-red-500">{error}</p>}
+            <Button type="submit" className="w-full" disabled={isLoading}>
+              {isLoading ? 'Creating Account...' : 'Create Account'}
             </Button>
           </form>
           <div className="mt-4 text-center text-sm">
