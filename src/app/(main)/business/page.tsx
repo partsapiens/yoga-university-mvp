@@ -105,7 +105,7 @@ export default function BusinessResourcesPage() {
 </head>
 <body>
     <div class="header">
-        <h1>Class Feedback Survey</h1>
+        <h2>Class Feedback Survey</h2>
         <p>Your feedback helps us improve our classes and better serve our community. Thank you for taking the time to share your thoughts!</p>
     </div>
 

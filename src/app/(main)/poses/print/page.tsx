@@ -141,9 +141,9 @@ export default function PrintPosePage() {
                 <ArrowLeft className="w-4 h-4" />
                 Back to Poses
               </Link>
-              <h1 className="text-xl font-bold text-gray-900 dark:text-white">
+              <h2 className="text-xl font-bold text-gray-900 dark:text-white">
                 Print Pose Cards ({filteredPoses.length} poses)
-              </h1>
+              </h2>
             </div>
             
             <div className="flex items-center gap-4">
