@@ -16,7 +16,7 @@ NEXT_PUBLIC_BASE_URL=https://yourdomain.com
 # This is configured directly in src/app/layout.tsx
 # GOOGLE_ADSENSE_PUBLISHER_ID=ca-pub-9900806169268429
 
-# === Alternative Domain Examples ===
+
 # For fltwht.com (current default):
 # NEXT_PUBLIC_BASE_URL=https://fltwht.com
 
