@@ -33,7 +33,7 @@ const RegisterPage = () => {
         return;
     }
 
-    const { error: signUpError } = await signUp(email, password, { name, role });
+    const { error: signUpError } = await signUp(email, password);
 
     setIsLoading(false);
 
