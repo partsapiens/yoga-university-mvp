@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useMemo, useState, useRef, useEffect, useCallback } from "react";
+import React, { useMemo, useState, useRef, useEffect, useCallback, Suspense } from "react";
 import dynamic from "next/dynamic";
 import { useLocalStorage } from "@/hooks/useLocalStorage";
 import { useTimer } from "@/hooks/useTimer";
@@ -80,7 +80,7 @@ const AdaptiveFlow = dynamic(() => import("@/components/ai/AdaptiveFlow").then(m
 
 const clamp = (n: number, min: number, max: number) => Math.max(min, Math.min(max, n));
 
-export default function CreateFlowPage() {
+function CreateFlowPageContent() {
   const searchParams = useSearchParams();
   
   // --- Core Flow State ---
@@ -767,5 +767,33 @@ export default function CreateFlowPage() {
 
       <GeneratePreviewModal isOpen={!!preview} onClose={() => setPreview(null)} preview={preview} onShuffle={handleGenerate} onAccept={acceptPreview} />
     </div>
+  );
+}
+
+// Loading fallback component
+function CreateFlowPageFallback() {
+  return (
+    <div className="min-h-screen bg-background text-foreground">
+      <header className="mx-auto max-w-7xl px-4 py-6">
+        <div className="flex items-center justify-between mb-4">
+          <div>
+            <h1 className="text-3xl font-semibold tracking-tight">Create your sequence</h1>
+          </div>
+        </div>
+        <div className="space-y-6 mt-6">
+          <div className="animate-pulse bg-gray-200 dark:bg-gray-700 rounded-lg h-96 w-full"></div>
+          <div className="animate-pulse bg-gray-200 dark:bg-gray-700 rounded-lg h-64 w-full"></div>
+        </div>
+      </header>
+    </div>
+  );
+}
+
+// Wrap the component with Suspense to handle useSearchParams properly
+export default function CreateFlowPage() {
+  return (
+    <Suspense fallback={<CreateFlowPageFallback />}>
+      <CreateFlowPageContent />
+    </Suspense>
   );
 }
