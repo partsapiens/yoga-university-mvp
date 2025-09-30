@@ -229,6 +229,7 @@ export function Player({
                     ? 'bg-green-500 text-white hover:bg-green-600' 
                     : 'bg-gray-500 text-white hover:bg-gray-600'
                 }`}
+                aria-label={voiceGuide.isVoiceEnabled ? 'Disable voice guide' : 'Enable voice guide'}
               >
                 {voiceGuide.isVoiceEnabled ? '🎙️' : '🔇'}
               </button>
@@ -237,6 +238,7 @@ export function Player({
                   onClick={voiceGuide.startListening}
                   disabled={voiceGuide.isListening}
                   className="px-1.5 py-0.5 text-xs rounded-md font-medium bg-blue-500 text-white hover:bg-blue-600 disabled:opacity-50 disabled:cursor-not-allowed"
+                  aria-label={voiceGuide.isListening ? 'Listening for voice commands' : 'Start voice command listening'}
                 >
                   {voiceGuide.isListening ? '👂' : '💬'}
                 </button>
@@ -251,6 +253,7 @@ export function Player({
                       : 'bg-gray-500 text-white hover:bg-gray-600'
                   }`}
                   title={poseAnalysisEnabled ? 'Disable pose analysis' : 'Enable pose analysis'}
+                  aria-label={poseAnalysisEnabled ? 'Disable pose analysis' : 'Enable pose analysis'}
                 >
                   {poseAnalysisEnabled ? <Camera size={12} /> : <CameraOff size={12} />}
                 </button>
@@ -352,20 +355,33 @@ export function Player({
                 onClick={onPrev} 
                 disabled={!isPlaying} 
                 className="h-12 w-12 rounded-full bg-secondary hover:bg-secondary/80 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center text-lg font-bold shadow-lg"
+                aria-label="Previous pose"
               >
                 ⏮
               </button>
               
               {!isPlaying ? (
-                <button onClick={onPlay} className="h-16 w-16 bg-primary text-primary-foreground rounded-full font-semibold flex items-center justify-center text-2xl shadow-lg hover:shadow-xl transition-all">
+                <button 
+                  onClick={onPlay} 
+                  className="h-16 w-16 bg-primary text-primary-foreground rounded-full font-semibold flex items-center justify-center text-2xl shadow-lg hover:shadow-xl transition-all"
+                  aria-label="Start flow"
+                >
                   ▶
                 </button>
               ) : isPaused ? (
-                <button onClick={onResume} className="h-16 w-16 bg-primary text-primary-foreground rounded-full font-semibold flex items-center justify-center text-2xl shadow-lg hover:shadow-xl transition-all">
+                <button 
+                  onClick={onResume} 
+                  className="h-16 w-16 bg-primary text-primary-foreground rounded-full font-semibold flex items-center justify-center text-2xl shadow-lg hover:shadow-xl transition-all"
+                  aria-label="Resume flow"
+                >
                   ▶
                 </button>
               ) : (
-                <button onClick={onPause} className="h-16 w-16 bg-secondary text-secondary-foreground rounded-full font-semibold flex items-center justify-center text-2xl shadow-lg hover:shadow-xl transition-all">
+                <button 
+                  onClick={onPause} 
+                  className="h-16 w-16 bg-secondary text-secondary-foreground rounded-full font-semibold flex items-center justify-center text-2xl shadow-lg hover:shadow-xl transition-all"
+                  aria-label="Pause flow"
+                >
                   ⏸
                 </button>
               )}
@@ -374,6 +390,7 @@ export function Player({
                 onClick={onNext} 
                 disabled={!isPlaying} 
                 className="h-12 w-12 rounded-full bg-secondary hover:bg-secondary/80 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center text-lg font-bold shadow-lg"
+                aria-label="Next pose"
               >
                 ⏭
               </button>
@@ -382,6 +399,7 @@ export function Player({
                 onClick={onStop} 
                 disabled={!isPlaying && !isPaused} 
                 className="h-12 w-12 rounded-full bg-destructive text-destructive-foreground hover:bg-destructive/80 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center text-lg font-bold shadow-lg"
+                aria-label="Stop flow"
               >
                 ⏹
               </button>
@@ -394,6 +412,7 @@ export function Player({
                   onClick={() => adjustRate(-0.25)} 
                   disabled={playbackRate <= 0.5} 
                   className="h-7 w-7 border rounded-md disabled:opacity-50 hover:bg-muted flex items-center justify-center text-xs font-mono shadow"
+                  aria-label="Decrease playback speed"
                 >
                   −
                 </button>
@@ -404,6 +423,7 @@ export function Player({
                   onClick={() => adjustRate(0.25)} 
                   disabled={playbackRate >= 2.0} 
                   className="h-7 w-7 border rounded-md disabled:opacity-50 hover:bg-muted flex items-center justify-center text-xs font-mono shadow"
+                  aria-label="Increase playback speed"
                 >
                   +
                 </button>

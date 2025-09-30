@@ -210,6 +210,7 @@ export default function SemanticSearch({
           <button
             onClick={clearSearch}
             className="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 transition-colors"
+            aria-label="Clear search"
           >
             <X className="h-5 w-5" />
           </button>
@@ -250,6 +251,7 @@ export default function SemanticSearch({
               <button
                 onClick={() => performSearch(query)}
                 className="mt-2 px-3 py-1 text-sm bg-red-100 dark:bg-red-900/20 rounded hover:bg-red-200 dark:hover:bg-red-900/40 transition-colors"
+                aria-label="Try search again"
               >
                 Try Again
               </button>
