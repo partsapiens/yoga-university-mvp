@@ -17,11 +17,8 @@ NEXT_PUBLIC_BASE_URL=https://yourdomain.com
 # GOOGLE_ADSENSE_PUBLISHER_ID=ca-pub-9900806169268429
 
 # === Alternative Domain Examples ===
-# For fitwht.com:
-# NEXT_PUBLIC_BASE_URL=https://fitwht.com
-
-# For yogaflowuniversity.com (current default):
-# NEXT_PUBLIC_BASE_URL=https://yogaflowuniversity.com
+# For fltwht.com (current default):
+# NEXT_PUBLIC_BASE_URL=https://fltwht.com
 
 # For local development:
 # NEXT_PUBLIC_BASE_URL=http://localhost:3000

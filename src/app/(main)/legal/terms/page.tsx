@@ -180,7 +180,7 @@ export default function TermsPage() {
               <p className="mb-2">
                 For questions about these Terms of Service, contact us at:
               </p>
-              <p className="mb-2"><strong>Email:</strong> legal@yogaflowuniversity.com</p>
+              <p className="mb-2"><strong>Email:</strong> legal@fltwht.com</p>
               <p><strong>Response Time:</strong> We aim to respond within 5 business days</p>
             </div>
 

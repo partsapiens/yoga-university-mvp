@@ -129,7 +129,7 @@ export default function PrivacyPage() {
               <p className="mb-2">
                 For privacy-related questions or to exercise your rights, contact us at:
               </p>
-              <p className="mb-2"><strong>Email:</strong> privacy@yogaflowuniversity.com</p>
+              <p className="mb-2"><strong>Email:</strong> privacy@fltwht.com</p>
               <p><strong>Response Time:</strong> We aim to respond within 30 days</p>
             </div>
 
