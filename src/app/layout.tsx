@@ -1,13 +1,9 @@
 // src/app/layout.tsx
-import type { Metadata, Viewport } from "next";
+import type { Metadata } from "next";
 import "./globals.css";
 
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL ?? "https://fltwht.com";
 const ADSENSE_PUBLISHER = "ca-pub-9900806169268429"; // <-- replace if you ever change accounts
-
-export const viewport: Viewport = {
-  themeColor: "#000000",
-};
 
 export const metadata: Metadata = {
   metadataBase: new URL(BASE_URL),
@@ -17,6 +13,7 @@ export const metadata: Metadata = {
   },
   description:
     "fltwht — flows, breath, and tools for practice. Build, explore, and share your yoga flows.",
+  themeColor: "#000000",
   alternates: {
     canonical: "/",
   },
@@ -48,7 +45,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 
         {/* AdSense loader script (must be in <head>, async, with your client id) */}
         <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9900806169268429"
-     crossorigin="anonymous"></script>
+     crossOrigin="anonymous"></script>
 
         {/* Optional: Search Console or other site verifications can go here */}
         {/* <meta name="google-site-verification" content="XXXX" /> */}
