@@ -60,7 +60,7 @@ export default function PoseCard({ pose }: PoseCardProps) {
           <div className="h-24 w-24 relative mb-2 rounded overflow-hidden">
             <Image 
               src={pose.thumbnail_url || pose.icon_url || '/images/pose-placeholder.svg'} 
-              alt={pose.name_en} 
+              alt={`${pose.name_en} (${pose.name_sanskrit}) - ${pose.family_id} yoga pose`} 
               fill
               className="object-cover"
               sizes="96px"
