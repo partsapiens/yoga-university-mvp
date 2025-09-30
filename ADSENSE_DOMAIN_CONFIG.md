@@ -66,7 +66,7 @@ Run this command to verify your configuration:
 
 ## Common Domain-Specific Issues
 
-### fitwht.com Configuration
+### fltwht.com Configuration
 ```bash
 NEXT_PUBLIC_BASE_URL=https://fitwht.com
 ```
