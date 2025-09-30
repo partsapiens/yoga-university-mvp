@@ -57,7 +57,7 @@ export default function LegalPage() {
                 legal matters, please reach out to us.
               </p>
               <div className="text-sm text-gray-500">
-                <p>Email: legal@yogaflowuniversity.com</p>
+                <p>Email: legal@fltwht.com</p>
                 <p>Last updated: {new Date().toLocaleDateString()}</p>
               </div>
             </div>

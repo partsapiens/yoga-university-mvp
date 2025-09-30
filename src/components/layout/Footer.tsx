@@ -140,7 +140,7 @@ export const Footer = () => {
                 ))}
                 <li>
                   <a
-                    href="mailto:support@yogaflowuniversity.com"
+                    href="mailto:support@fltwht.com"
                     className="text-gray-400 hover:text-blue-400 transition-colors"
                   >
                     Contact Support

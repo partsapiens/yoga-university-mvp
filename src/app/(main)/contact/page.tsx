@@ -58,7 +58,7 @@ export default function ContactPage() {
       icon: <Mail className="w-6 h-6" />,
       title: "Email Support",
       description: "Get help with technical issues, billing, or general questions",
-      contact: "support@yogaflowuniversity.com",
+      contact: "support@fltwht.com",
       responseTime: "Within 24 hours"
     },
     {
@@ -353,7 +353,7 @@ export default function ContactPage() {
                 </div>
                 <div className="flex items-center">
                   <Mail className="w-5 h-5 mr-3" />
-                  <span>hello@yogaflowuniversity.com</span>
+                  <span>hello@fltwht.com</span>
                 </div>
               </div>
             </div>
