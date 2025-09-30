@@ -1,5 +1,4 @@
-import { Flow, FlowPose } from "@/types";
-import { AIGenerationParams } from "@/types/ai";
+
 import { getPosesFromDatabase } from "@/lib/database";
 import OpenAI from "openai";
 
@@ -22,7 +21,7 @@ export const generateFlow = async (params: AIGenerationParams): Promise<Partial<
     if (!allPoses || allPoses.length === 0) {
       throw new Error("No poses found in the database. Cannot generate a flow.");
     }
-    const poseIds = allPoses.map(p => p.slug).join(", ");
+
 
     // 2. Construct a detailed prompt for the AI
     const prompt = `
@@ -37,8 +36,7 @@ export const generateFlow = async (params: AIGenerationParams): Promise<Partial<
       - Include Warm-up: ${params.includeWarmup}
       - Include Cool-down: ${params.includeCooldown}
 
-      Available Poses (use only these pose IDs):
-      ${poseIds}
+
 
       JSON Output Structure:
       {
@@ -47,13 +45,11 @@ export const generateFlow = async (params: AIGenerationParams): Promise<Partial<
         "difficulty": "${params.difficulty}",
         "style": "${params.practiceStyle}",
         "poses": [
-          { "poseId": "pose-slug-from-list", "duration": 60 },
-          { "poseId": "another-pose-slug", "duration": 90 }
         ]
       }
 
       Instructions:
-      - The 'poseId' MUST be one of the slugs from the 'Available Poses' list.
+
       - The total duration of all poses should roughly match the user's requested duration.
       - Select a sequence of poses that logically and safely flow together.
       - Start with a warm-up and end with a cool-down if requested.
@@ -108,6 +104,15 @@ export const generateFlow = async (params: AIGenerationParams): Promise<Partial<
 
     console.log("Successfully generated and transformed flow:", finalFlow.name);
     return finalFlow;
+    const generatedFlow = JSON.parse(content);
+
+    // 5. Validate the generated flow to ensure it matches our schema
+    if (!generatedFlow.name || !generatedFlow.poses || !Array.isArray(generatedFlow.poses)) {
+        throw new Error("AI returned an invalid flow structure.");
+    }
+
+    console.log("Successfully generated flow:", generatedFlow.name);
+    return generatedFlow;
 
   } catch (error) {
     console.error("Error generating AI flow:", error);
