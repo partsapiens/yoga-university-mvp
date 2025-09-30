@@ -13,7 +13,7 @@ export const metadata: Metadata = {
     template: "%s | fltwht",
   },
   description:
-    "fltwht — flows, breath, and tools for practice. Build, explore, and share your yoga flows.",
+    "Create personalized yoga flows, explore a comprehensive pose library, and deepen your practice with guided meditations at Yoga Flow University.",
   themeColor: "#000000",
   alternates: {
     canonical: "/",
@@ -24,7 +24,7 @@ export const metadata: Metadata = {
     title: "fltwht",
     siteName: "fltwht",
     description:
-      "fltwht — flows, breath, and tools for practice. Build, explore, and share your yoga flows.",
+      "Create personalized yoga flows, explore a comprehensive pose library, and deepen your practice with guided meditations at Yoga Flow University.",
   },
   robots: {
     index: true,
