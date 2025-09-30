@@ -11,12 +11,14 @@ type AuthResponse = {
  * Signs up a new user with email and password.
  * @param email The user's email address.
  * @param password The user's chosen password.
+ * @param metadata Optional user metadata to store with the user.
  * @returns An object containing the new user or an error.
  */
-export const signUp = async (email: string, password: string): Promise<AuthResponse> => {
+export const signUp = async (email: string, password: string, metadata?: object): Promise<AuthResponse> => {
   const { data, error } = await supabase.auth.signUp({
     email,
     password,
+    options: metadata ? { data: metadata } : undefined,
   });
   return { user: data.user, error };
 };

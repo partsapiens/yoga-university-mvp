@@ -1,6 +1,8 @@
 
 import { getPosesFromDatabase } from "@/lib/database";
 import OpenAI from "openai";
+import { AIGenerationParams } from "@/types/ai";
+import { Flow, FlowPose } from "@/types";
 
 // Initialize OpenAI client
 const openai = new OpenAI({
@@ -105,15 +107,6 @@ export const generateFlow = async (params: AIGenerationParams): Promise<Partial<
 
     console.log("Successfully generated and transformed flow:", finalFlow.name);
     return finalFlow;
-    const generatedFlow = JSON.parse(content);
-
-    // 5. Validate the generated flow to ensure it matches our schema
-    if (!generatedFlow.name || !generatedFlow.poses || !Array.isArray(generatedFlow.poses)) {
-        throw new Error("AI returned an invalid flow structure.");
-    }
-
-    console.log("Successfully generated flow:", generatedFlow.name);
-    return generatedFlow;
 
   } catch (error) {
     console.error("Error generating AI flow:", error);
