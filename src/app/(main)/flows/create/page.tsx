@@ -498,6 +498,9 @@ export default function CreateFlowPage() {
       return;
     }
 
+    // 1. Convert FlowPose[] to PoseId[] format that the page expects
+    const newFlow: PoseId[] = generatedFlow.poses.map(pose => pose.poseId as PoseId);
+
     // 2. Create the duration overrides object from the generated durations
     const newOverrides: Record<number, number> = {};
     let totalDurationInSeconds = 0;
