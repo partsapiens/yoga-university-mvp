@@ -5,7 +5,7 @@ import dynamic from "next/dynamic";
 import { useLocalStorage } from "@/hooks/useLocalStorage";
 import { useTimer } from "@/hooks/useTimer";
 import { useKeyboardShortcuts } from "@/components/flows/KeyboardShortcuts";
-import { Focus, TimingMode, PoseId, SavedFlow, Pose } from "@/types/yoga";
+import { Focus, TimingMode, PoseId, SavedFlow } from "@/types/yoga";
 import { Flow } from "@/types";
 import { Difficulty } from "@/types/ai";
 import { POSES } from "@/lib/yoga-data";
@@ -29,10 +29,6 @@ import {
 import { useSearchParams } from 'next/navigation';
 
 // Dynamic imports for heavy components to improve initial page load
-const SuggestionsGrid = dynamic(() => import("@/components/flows/SuggestionsGrid").then(mod => ({ default: mod.SuggestionsGrid })), {
-  loading: () => <div className="animate-pulse bg-gray-200 rounded h-32"></div>
-});
-
 const CombinedPoseLibrary = dynamic(() => import("@/components/flows/CombinedPoseLibrary").then(mod => ({ default: mod.CombinedPoseLibrary })), {
   loading: () => <div className="animate-pulse bg-gray-200 rounded h-64"></div>
 });
@@ -43,10 +39,6 @@ const GeneratePreviewModal = dynamic(() => import("@/components/flows/GeneratePr
 
 const SavedFlows = dynamic(() => import("@/components/flows/SavedFlows").then(mod => ({ default: mod.SavedFlows })), {
   loading: () => <div className="animate-pulse bg-gray-200 rounded h-40"></div>
-});
-
-const PoseLibrarySidebar = dynamic(() => import("@/components/flows/PoseLibrarySidebar").then(mod => ({ default: mod.PoseLibrarySidebar })), {
-  loading: () => <div className="animate-pulse bg-gray-200 rounded h-96"></div>
 });
 
 const ExportFlow = dynamic(() => import("@/components/flows/ExportFlow").then(mod => ({ default: mod.ExportFlow })), {
@@ -65,12 +57,8 @@ const AutoSave = dynamic(() => import("@/components/flows/AutoSave").then(mod =>
   ssr: false
 });
 
-const KeyboardShortcuts = dynamic(() => import("@/components/flows/KeyboardShortcuts").then(mod => ({ default: mod.KeyboardShortcuts })), {
+const KeyboardShortcutsHelp = dynamic(() => import("@/components/flows/KeyboardShortcuts").then(mod => ({ default: mod.KeyboardShortcuts })), {
   ssr: false
-});
-
-const FlowNameInput = dynamic(() => import("@/components/flows/FlowNameInput").then(mod => ({ default: mod.FlowNameInput })), {
-  loading: () => <div className="animate-pulse bg-gray-200 rounded h-10 w-64"></div>
 });
 
 const AIFlowGenerator = dynamic(() => import("@/components/flows/AIFlowGenerator").then(mod => mod.AIFlowGenerator), {
@@ -86,16 +74,7 @@ const QuickActions = dynamic(() => import("@/components/dashboard/QuickActions")
   loading: () => <div className="animate-pulse bg-gray-200 rounded h-32"></div>
 });
 
-
 const AdaptiveFlow = dynamic(() => import("@/components/ai/AdaptiveFlow").then(mod => ({ default: mod.AdaptiveFlow })), {
-  ssr: false
-});
-
-const PoseAnalysisSettings = dynamic(() => import("@/components/pose-analysis").then(mod => ({ default: mod.PoseAnalysisSettings })), {
-  ssr: false
-});
-
-const ProgressTracking = dynamic(() => import("@/components/pose-analysis").then(mod => ({ default: mod.ProgressTracking })), {
   ssr: false
 });
 
@@ -111,7 +90,7 @@ export default function CreateFlowPage() {
   // --- Control Panel State ---
   const [minutes, setMinutes] = useState<number>(30);
   const [intensity, setIntensity] = useState<number>(3);
-  const [focus, setFocus] = useState<Focus>("Full-Body");
+  const [focus, setFocus] = useState<Focus>("Full-Body"); // keep as-is to match existing app types
   const [breathingCues, setBreathingCues] = useState<boolean>(true);
   const [saferSequencing, setSaferSequencing] = useState<boolean>(true);
   const [saveToDevice, setSaveToDevice] = useState<boolean>(false);
@@ -134,17 +113,20 @@ export default function CreateFlowPage() {
       try {
         const flowData = parseSharedFlowData(importData);
         if (flowData) {
-          // Import the flow data
           setFlowName(flowData.name || 'Imported Flow');
-          
+
           // Convert poses to PoseId array
           const importedFlow = flowData.poses.map(pose => pose.pose_id as PoseId);
           setFlow(importedFlow);
-          
-          // Set duration overrides
+
+          // Compute base durations for imported flow to avoid hardcoded 30s
+          const baseImported = baseDurationsFromTable(importedFlow);
+
+          // Set duration overrides relative to base
           const newOverrides: Record<number, number> = {};
           flowData.poses.forEach((pose, index) => {
-            if (pose.duration !== 30) { // Default duration
+            const base = baseImported[index] ?? 30;
+            if (pose.duration !== base) {
               newOverrides[index] = pose.duration;
             }
           });
@@ -156,7 +138,7 @@ export default function CreateFlowPage() {
           else if (flowData.difficulty === 'intermediate') setIntensity(3);
           else if (flowData.difficulty === 'advanced') setIntensity(4);
           
-          // Show success message
+          // Success message
           setTimeout(() => {
             alert(`Flow "${flowData.name}" imported successfully! You can now modify and save it.`);
           }, 500);
@@ -167,6 +149,7 @@ export default function CreateFlowPage() {
       }
     }
   }, [searchParams]);
+
   const [saveToDatabase, setSaveToDatabase] = useState(false);
 
   // User profile for personalization
@@ -242,7 +225,6 @@ export default function CreateFlowPage() {
         const result = await response.json();
         // Map database poses back to PoseId enum for compatibility
         const generatedPoseIds = result.flow.map((item: any) => {
-          // This is a simplified mapping - in a real app, you'd want a more robust system
           const poseName = item.pose?.name?.toLowerCase() || '';
           if (poseName.includes('downward') && poseName.includes('dog')) return PoseId.DownDog;
           if (poseName.includes('warrior') && poseName.includes('i')) return PoseId.Warrior1Right;
@@ -318,6 +300,7 @@ export default function CreateFlowPage() {
     const exportData = createExportData();
     downloadFlowAsJSON(exportData);
   };
+
   const acceptPreview = () => { if (preview) { setFlow(preview); setOverrides({}); setPreview(null); } };
   const removePose = (index: number) => { setFlow(flow.filter((_, i) => i !== index)); setOverrides(reindexOverridesAfterRemoval(overrides, index)); };
   const addPose = (id: PoseId) => setFlow([...flow, id]);
@@ -328,20 +311,17 @@ export default function CreateFlowPage() {
   useEffect(() => {
     // Check for real authentication state - in production, this would check actual auth tokens
     const checkAuth = () => {
-      // Check for authentication token or session
       const authToken = localStorage.getItem('authToken') || sessionStorage.getItem('authToken');
       const isAuthenticated = Boolean(authToken);
-      
       if (isAuthenticated) {
-        const mockUserId = 'user-' + Math.random().toString(36).substr(2, 9);
-        setUserId(mockUserId);
+        // Use the token itself as a stable user identifier placeholder (until real auth wired)
+        setUserId(String(authToken));
         setIsLoggedIn(true);
       } else {
         setUserId(null);
         setIsLoggedIn(false);
       }
     };
-    
     checkAuth();
   }, []);
 
@@ -358,7 +338,7 @@ export default function CreateFlowPage() {
           description: `A ${intensity <= 2 ? 'beginner' : intensity <= 4 ? 'intermediate' : 'advanced'} ${focus} yoga flow`,
           duration: Math.round(totalSeconds / 60),
           difficulty: intensity <= 2 ? 'beginner' : intensity <= 4 ? 'intermediate' : 'advanced',
-          style: 'vinyasa', // Default style
+          style: 'vinyasa',
           focus_areas: [focus.toLowerCase().replace('-', ' ')],
           is_public: false,
           is_ai_generated: false,
@@ -381,7 +361,6 @@ export default function CreateFlowPage() {
           console.log('Flow saved to database successfully');
         } else {
           console.error('Failed to save flow to database');
-          // Fall back to local storage
           setSavedFlows([...savedFlows, { 
             id: new Date().toISOString(), 
             name: flowName.trim(), 
@@ -391,7 +370,6 @@ export default function CreateFlowPage() {
         }
       } catch (error) {
         console.error('Error saving flow to database:', error);
-        // Fall back to local storage
         setSavedFlows([...savedFlows, { 
           id: new Date().toISOString(), 
           name: flowName.trim(), 
@@ -400,7 +378,6 @@ export default function CreateFlowPage() {
         }]);
       }
     } else {
-      // Save to local storage
       setSavedFlows([...savedFlows, { 
         id: new Date().toISOString(), 
         name: flowName.trim(), 
@@ -411,7 +388,12 @@ export default function CreateFlowPage() {
     
     setFlowName(''); 
   };
-  const handleLoadFlow = (id: string) => { const f = savedFlows.find(x => x.id === id); if (f) { setFlow(f.flow); setOverrides(f.overrides); setFlowName(f.name); } };
+
+  const handleLoadFlow = (id: string) => { 
+    const f = savedFlows.find(x => x.id === id); 
+    if (f) { setFlow(f.flow); setOverrides(f.overrides); setFlowName(f.name); } 
+  };
+
   const handleDeleteFlow = (id: string) => setSavedFlows(savedFlows.filter(f => f.id !== id));
 
   // --- New Enhanced Handlers ---
@@ -478,17 +460,15 @@ export default function CreateFlowPage() {
     setFlow(template.poses);
     setOverrides({});
     setFlowName(template.name);
-    // Update control panel settings based on template
     setMinutes(template.duration);
     if (template.difficulty === 'Beginner') setIntensity(2);
     else if (template.difficulty === 'Intermediate') setIntensity(3);
     else setIntensity(4);
-    // Set focus if it matches available options
+
     const validFoci = ["Full-Body", "Hips", "Hamstrings", "Shoulders", "Core", "Spine", "Balance"];
     if (validFoci.includes(template.focus)) {
       setFocus(template.focus as Focus);
     }
-    // Hide custom settings when selecting a template
     setShowCustomSettings(false);
   };
 
@@ -498,10 +478,10 @@ export default function CreateFlowPage() {
       return;
     }
 
-    // 1. Convert FlowPose array to PoseId array
-    const newFlow = generatedFlow.poses.map(pose => pose.poseId as PoseId);
+    // 1) Convert FlowPose[] to PoseId[]
+    const newFlow: PoseId[] = generatedFlow.poses.map(pose => pose.poseId as PoseId);
 
-    // 2. Create the duration overrides object from the generated durations
+    // 2) Create the duration overrides object from the generated durations
     const newOverrides: Record<number, number> = {};
     let totalDurationInSeconds = 0;
     generatedFlow.poses.forEach((pose, index) => {
@@ -511,20 +491,20 @@ export default function CreateFlowPage() {
       }
     });
 
-    // 3. Update the page's state with the new flow data
+    // 3) Update the page's state with the new flow data
     setFlow(newFlow);
     setOverrides(newOverrides);
     setFlowName(generatedFlow.name || 'AI Generated Flow');
 
-    // 4. Update the control panel UI to reflect the new flow's properties
+    // 4) Update the control panel UI to reflect the new flow's properties
     setMinutes(Math.round(totalDurationInSeconds / 60));
     if (generatedFlow.difficulty) {
-      const difficultyMap: { [key in Difficulty]: number } = {
+      const difficultyMap: Record<Difficulty, number> = {
         beginner: 2,
         intermediate: 3,
         advanced: 4,
       };
-      setIntensity(difficultyMap[generatedFlow.difficulty] || 3);
+      setIntensity(difficultyMap[generatedFlow.difficulty] ?? 3);
     }
 
     // Optional: Scroll to the flow view so the user can see the result
@@ -534,7 +514,6 @@ export default function CreateFlowPage() {
   const handleCreateOwn = () => {
     setShowCustomSettings(true);
     setShowPoseLibrary(true);
-    // Reset to default state for custom creation
     setFlow([]);
     setOverrides({});
     setFlowName('');
@@ -572,8 +551,16 @@ export default function CreateFlowPage() {
   // --- Effects ---
   useEffect(() => {
     const k = (e: KeyboardEvent) => {
-      if (e.metaKey || e.ctrlKey || e.altKey || document.activeElement?.tagName === 'INPUT') return;
-      if (e.key === ' ') { e.preventDefault(); if (playbackState === 'playing') handlePause(); else if (playbackState === 'paused') handleResume(); else handlePlay(); }
+      if (e.metaKey || e.ctrlKey || e.altKey) return;
+      const active = document.activeElement as HTMLElement | null;
+      if (active && (active.tagName === 'INPUT' || active.tagName === 'TEXTAREA' || active.isContentEditable)) return;
+
+      if (e.key === ' ') { 
+        e.preventDefault(); 
+        if (playbackState === 'playing') handlePause(); 
+        else if (playbackState === 'paused') handleResume(); 
+        else handlePlay(); 
+      }
       if (e.key === 'ArrowRight') handleNext();
       if (e.key === 'ArrowLeft') handlePrev();
       if (e.key === '[') adjustRate(-0.25);
@@ -597,7 +584,15 @@ export default function CreateFlowPage() {
 
   const sessionTimeRemaining = useMemo(() => {
     const currentDuration = tempoAdjust(secondsPerPose[currentPoseIndex] ?? 0, playbackRate);
-    return computeTotalRemaining(currentPoseIndex, currentDuration - timeInPose, secondsPerPose.map(s => tempoAdjust(s, playbackRate)), transitionSec, flow.length, cooldownMin * 60, false);
+    return computeTotalRemaining(
+      currentPoseIndex,
+      currentDuration - timeInPose,
+      secondsPerPose.map(s => tempoAdjust(s, playbackRate)),
+      transitionSec,
+      flow.length,
+      cooldownMin * 60,
+      false
+    );
   }, [currentPoseIndex, timeInPose, secondsPerPose, flow.length, transitionSec, cooldownMin, playbackRate]);
 
   // --- Keyboard Shortcuts ---
@@ -612,12 +607,10 @@ export default function CreateFlowPage() {
         <div className="flex items-center justify-between mb-4">
           <div>
             <h1 className="text-3xl font-semibold tracking-tight">Create your sequence</h1>
-
           </div>
-          <KeyboardShortcuts />
+          <KeyboardShortcutsHelp />
         </div>
         
-
         {/* ✨ Yoga Flow Generator */}
         <div className="my-8">
           <AIFlowGenerator onFlowGenerated={handleFlowGenerated} />
@@ -634,14 +627,6 @@ export default function CreateFlowPage() {
             <FlowTemplates onSelectTemplate={handleSelectTemplate} onCreateOwn={handleCreateOwn} />
           </div>
         )}
-
-
-
-
-        
-
-        
-
 
         {/* Adaptive Flow Modifications */}
         {flow.length > 0 && (
@@ -666,8 +651,6 @@ export default function CreateFlowPage() {
             onRestoreFlow={handleRestoreFlow}
           />
         </div>
-        
-
       </header>
       
       {/* Main content area with sidebar */}
@@ -675,24 +658,25 @@ export default function CreateFlowPage() {
         <SavedFlows flows={savedFlows} onLoad={handleLoadFlow} onDelete={handleDeleteFlow} />
         
         {/* Combined Flow Management: Your Flow + Quick Actions + ✨ Flow Review */}
-        <FlowManagement
-          flow={flow}
-          secondsPerPose={secondsPerPose}
-          totalSeconds={totalSeconds}
-          onRemovePose={removePose}
-          onUpdatePoseDuration={updatePoseDuration}
-          timingMode={timingMode}
-          secPerBreath={secPerBreath}
-          onMovePose={movePose}
-          dragIndexRef={dragIndex}
-          activePoseIndex={playbackState !== 'idle' ? currentPoseIndex : -1}
-          timeInPose={timeInPose}
-          onDuplicateFlow={handleDuplicateFlow}
-          onReverseFlow={handleReverseFlow}
-          onClearFlow={handleClearFlow}
-          onShuffleFlow={handleShuffleFlow}
-          className="mt-6"
-        />
+        <div id="flow-management-section" className="mt-6">
+          <FlowManagement
+            flow={flow}
+            secondsPerPose={secondsPerPose}
+            totalSeconds={totalSeconds}
+            onRemovePose={removePose}
+            onUpdatePoseDuration={updatePoseDuration}
+            timingMode={timingMode}
+            secPerBreath={secPerBreath}
+            onMovePose={movePose}
+            dragIndexRef={dragIndex}
+            activePoseIndex={playbackState !== 'idle' ? currentPoseIndex : -1}
+            timeInPose={timeInPose}
+            onDuplicateFlow={handleDuplicateFlow}
+            onReverseFlow={handleReverseFlow}
+            onClearFlow={handleClearFlow}
+            onShuffleFlow={handleShuffleFlow}
+          />
+        </div>
         
         <div className="space-y-6 mt-6">
           {/* ✨ Powered Flow Validation */}
@@ -780,7 +764,6 @@ export default function CreateFlowPage() {
           )}
         </div>
       </div>
-      
 
       <GeneratePreviewModal isOpen={!!preview} onClose={() => setPreview(null)} preview={preview} onShuffle={handleGenerate} onAccept={acceptPreview} />
     </div>

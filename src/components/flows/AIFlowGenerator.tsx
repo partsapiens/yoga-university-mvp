@@ -10,10 +10,9 @@ import { Slider } from '@/components/ui/Slider';
 import { Switch } from '@/components/ui/Switch';
 import { useToast } from '@/components/ui/use-toast';
 import { AIGenerationParams, FocusArea, Difficulty, PracticeStyle } from '@/types/ai';
-
 // Define the props for the component, which will include the function to handle the generated flow
 interface AIFlowGeneratorProps {
-  onFlowGenerated: (flow: any) => void;
+  onFlowGenerated: (flow: Flow) => void;
 }
 
 export const AIFlowGenerator = ({ onFlowGenerated }: AIFlowGeneratorProps) => {
@@ -62,8 +61,19 @@ export const AIFlowGenerator = ({ onFlowGenerated }: AIFlowGeneratorProps) => {
         description: error instanceof Error ? error.message : "An unknown error occurred.",
         variant: "destructive",
       });
-      // Pass an empty/error state flow up to the parent
-      onFlowGenerated({ name: "Error", poses: [] });
+      // Pass a properly structured error Flow object up to the parent
+      const errorFlow: Flow = {
+        id: `error-${Date.now()}`,
+        name: "Error",
+        description: "Flow generation failed",
+        difficulty: params.difficulty,
+        style: params.practiceStyle as 'vinyasa' | 'hatha' | 'ashtanga' | 'power' | 'restorative',
+        poses: [],
+        createdBy: "system",
+        createdAt: new Date(),
+        updatedAt: new Date()
+      };
+      onFlowGenerated(errorFlow);
     } finally {
       setIsGenerating(false);
     }
