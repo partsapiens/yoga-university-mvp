@@ -1,6 +1,7 @@
 // src/app/layout.tsx
 import type { Metadata } from "next";
 import "./globals.css";
+import { AppProviders } from "@/components/providers/AppProviders";
 
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL ?? "https://fltwht.com";
 const ADSENSE_PUBLISHER = "ca-pub-9900806169268429"; // <-- replace if you ever change accounts
@@ -51,7 +52,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         {/* <meta name="google-site-verification" content="XXXX" /> */}
       </head>
       <body>
-        {children}
+        <AppProviders>
+          {children}
+        </AppProviders>
 
         {/* If you render display ad units manually, you can queue them like this:
             <script dangerouslySetInnerHTML={{
