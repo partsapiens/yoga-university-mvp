@@ -5,7 +5,7 @@ import { fetchVisitorCount } from '@/lib/api/visitors';
 import { track } from '@/lib/telemetry';
 
 export const FooterStats = () => {
-  const [count, setCount] = useState<number | null>(null);
+  const [count, setCount] = useState<number | null>(1000);
 
   useEffect(() => {
     async function load() {
@@ -18,7 +18,7 @@ export const FooterStats = () => {
 
   return (
     <footer className="mt-8 text-center text-sm text-muted-foreground">
-      <div aria-live="polite">Yogis inspired: {count ?? '...'}</div>
+      <div aria-live="polite">Yogis inspired: {count ? `${count.toLocaleString()}+` : '...'}</div>
       <div className="mt-2 space-x-4">
         <a href="/privacy">Privacy</a>
         <a href="/terms">Terms</a>
