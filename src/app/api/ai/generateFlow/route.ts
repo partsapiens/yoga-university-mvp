@@ -27,16 +27,13 @@ export async function POST(request: Request) {
     // 3. Call the AI generation logic
     const flow = await generateFlow(params);
 
-    // Check if the AI returned an error state
-    if (flow.name === "Error Generating Flow") {
-        return NextResponse.json({ error: flow.description }, { status: 500 });
-    }
-
     // 4. Return the successful response
     return NextResponse.json(flow);
 
   } catch (error) {
     console.error('[API /generateFlow] Error:', error);
-    return NextResponse.json({ error: 'An unexpected error occurred while generating the flow.' }, { status: 500 });
+    return NextResponse.json({ 
+      error: error instanceof Error ? error.message : 'An unexpected error occurred while generating the flow.' 
+    }, { status: 500 });
   }
 }
