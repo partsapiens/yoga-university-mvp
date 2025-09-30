@@ -86,16 +86,19 @@ The existing AdSense script checks:
 ### Step 2: SSL/HTTPS Check
 **What to check:**
 - Does https://fltwht.com load in a private browser window?
+- Does HTTP redirect to HTTPS?
 
 **How to verify:**
 - Visit from mobile/LTE to bypass local cache
 - Use SSL Labs test: https://www.ssllabs.com/ssltest/
 - Check certificate validity and configuration
+- Test `curl -I http://fltwht.com` to verify 301 redirect to HTTPS
 
 **Common solutions:**
 - Install valid SSL certificate
 - Configure certificate properly with hosting provider
 - Ensure certificate covers both www and non-www versions
+- **Implement HTTP to HTTPS redirect** (see `HTTPS_REDIRECT_IMPLEMENTATION.md`)
 
 ### Step 3: robots.txt Check
 **What to check:**
