@@ -9,23 +9,30 @@ import { ErrorBoundary } from '@/components/ErrorBoundary'
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  metadataBase: new URL(process.env.NEXT_PUBLIC_BASE_URL || 'https://fltwht.com'),
+  metadataBase: new URL(process.env.NEXT_PUBLIC_BASE_URL || 'https://yoga-university.com'),
   title: {
-    default: 'fltwht.com - Your Site Title',
-    template: '%s | fltwht.com'
+    default: 'Yoga University - Your Personalized Yoga Journey',
+    template: '%s | Yoga University'
   },
-  description: 'Your site description.',
+  description: 'Transform your practice with AI-powered personalized yoga flows, pose analysis, and guided meditation. Join thousands discovering their perfect yoga journey.',
   keywords: [
-    'keyword1',
-    'keyword2',
-    'keyword3'
+    'yoga',
+    'meditation',
+    'yoga flows',
+    'personalized yoga',
+    'AI yoga',
+    'yoga poses',
+    'mindfulness',
+    'wellness',
+    'yoga practice',
+    'guided meditation'
   ],
   authors: [
-    { name: 'fltwht.com Team' },
-    { name: 'fltwht.com Development', url: 'https://fltwht.com' }
+    { name: 'Yoga University Team' },
+    { name: 'Yoga University Development', url: 'https://yoga-university.com' }
   ],
-  creator: 'fltwht.com',
-  publisher: 'fltwht.com',
+  creator: 'Yoga University',
+  publisher: 'Yoga University',
   formatDetection: {
     email: false,
     address: false,
@@ -34,25 +41,25 @@ export const metadata: Metadata = {
   openGraph: {
     type: 'website',
     locale: 'en_US',
-    url: 'https://fltwht.com',
-    siteName: 'fltwht.com',
-    title: 'fltwht.com - Your Site Title',
-    description: 'Your site description.',
+    url: 'https://yoga-university.com',
+    siteName: 'Yoga University',
+    title: 'Yoga University - Your Personalized Yoga Journey',
+    description: 'Transform your practice with AI-powered personalized yoga flows, pose analysis, and guided meditation. Join thousands discovering their perfect yoga journey.',
     images: [
       {
         url: '/og-image.png',
         width: 1200,
         height: 630,
-        alt: 'fltwht.com - Your Site Title',
+        alt: 'Yoga University - Personalized Yoga Journey',
       },
     ],
   },
   twitter: {
     card: 'summary_large_image',
-    site: '@fltwht',
-    creator: '@fltwht',
-    title: 'fltwht.com - Your Site Title',
-    description: 'Your site description.',
+    site: '@YogaUniversity',
+    creator: '@YogaUniversity',
+    title: 'Yoga University - Your Personalized Yoga Journey',
+    description: 'Transform your practice with AI-powered personalized yoga flows, pose analysis, and guided meditation.',
     images: ['/twitter-image.png'],
   },
   robots: {
@@ -87,7 +94,7 @@ export const metadata: Metadata = {
     'google-adsense-account': 'ca-pub-9900806169268429',
     'apple-mobile-web-app-capable': 'yes',
     'apple-mobile-web-app-status-bar-style': 'default',
-    'apple-mobile-web-app-title': 'fltwht',
+    'apple-mobile-web-app-title': 'Yoga University',
     'mobile-web-app-capable': 'yes',
     'msapplication-TileColor': '#2563eb',
     'msapplication-config': '/browserconfig.xml',
