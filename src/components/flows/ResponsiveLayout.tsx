@@ -23,6 +23,7 @@ export function ResponsiveLayout({
         <button
           onClick={() => setIsCollapsed(!isCollapsed)}
           className="w-full flex items-center justify-between p-4 text-left hover:bg-muted/50 transition-colors"
+          aria-label={isCollapsed ? `Expand ${title}` : `Collapse ${title}`}
         >
           <h3 className="font-semibold">{title}</h3>
           {isCollapsed ? <ChevronDown size={20} /> : <ChevronUp size={20} />}

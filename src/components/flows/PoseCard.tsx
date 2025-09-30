@@ -57,7 +57,7 @@ export function PoseCard({
       <div className="flex items-start justify-between">
         <div className="text-xs text-muted-foreground flex items-center gap-2">
           <span className="cursor-grab select-none hidden md:inline" title="Drag to reorder" aria-hidden>≡</span>
-          <span className="inline-flex md:hidden items-center gap-1"><button onClick={() => onMove(index, index - 1)} disabled={isFirst} className="disabled:opacity-30">↑</button><button onClick={() => onMove(index, index + 1)} disabled={isLast} className="disabled:opacity-30">↓</button></span>
+          <span className="inline-flex md:hidden items-center gap-1"><button onClick={() => onMove(index, index - 1)} disabled={isFirst} className="disabled:opacity-30" aria-label="Move pose up">↑</button><button onClick={() => onMove(index, index + 1)} disabled={isLast} className="disabled:opacity-30" aria-label="Move pose down">↓</button></span>
           {index + 1}
         </div>
         <div className="flex items-center gap-2 shrink-0">
