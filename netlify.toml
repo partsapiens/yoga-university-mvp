@@ -5,6 +5,20 @@
 [[plugins]]
   package = "@netlify/plugin-nextjs"
 
+# HTTP to HTTPS redirect (301 permanent)
+# Ensures all traffic uses secure HTTPS protocol
+[[redirects]]
+  from = "http://fltwht.com/*"
+  to = "https://fltwht.com/:splat"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "http://www.fltwht.com/*"
+  to = "https://fltwht.com/:splat"
+  status = 301
+  force = true
+
 # Ensure proper MIME types for AdSense files
 [[headers]]
   for = "/ads.txt"

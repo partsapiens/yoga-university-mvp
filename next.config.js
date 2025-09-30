@@ -36,6 +36,9 @@ const nextConfig = {
   },
   async redirects() {
     return [
+      // NOTE: HTTP to HTTPS redirect is handled at the platform level (see netlify.toml)
+      // This ensures all traffic uses secure HTTPS protocol with 301 redirects
+      
       // Redirect legacy manual URLs to new React manual page
       {
         source: '/manual/index.html',
