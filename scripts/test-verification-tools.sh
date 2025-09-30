@@ -18,7 +18,6 @@ echo ""
 # Test domains
 TEST_DOMAINS=(
     "https://fltwht.com"
-    "https://yogaflowuniversity.com"
     "https://example.com"
 )
 
