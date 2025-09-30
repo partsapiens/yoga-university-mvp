@@ -13,7 +13,7 @@ BOLD='\033[1m'
 NC='\033[0m' # No Color
 
 # Get domain from command line argument, environment, or use default
-DOMAIN=${1:-${NEXT_PUBLIC_BASE_URL:-"https://yogaflowuniversity.com"}}
+DOMAIN=${1:-${NEXT_PUBLIC_BASE_URL:-"https://fltwht.com"}}
 TIMEOUT=10
 
 echo -e "${BOLD}${BLUE}=== Google AdSense Verification Script ===${NC}"

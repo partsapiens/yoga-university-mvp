@@ -179,7 +179,7 @@ location = /ads.txt {
 
 ## Publisher Information
 - Publisher ID: `ca-pub-9900806169268429`
-- Domain: `yogaflowuniversity.com`
+- Domain: `fltwht.com`
 - Implementation Date: 2025-01-17
 
 ## Notes
