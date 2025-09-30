@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 
 export const Footer = () => {
-  const [yogisInspired, setYogisInspired] = useState(0);
+  const [yogisInspired, setYogisInspired] = useState(1000);
 
   // Load and increment Yogis Inspired counter
   useEffect(() => {
@@ -99,7 +99,7 @@ export const Footer = () => {
               </p>
               <div className="flex items-center gap-2 text-blue-400 mb-6">
                 <span className="text-lg font-semibold">
-                  {yogisInspired.toLocaleString()}
+                  {yogisInspired.toLocaleString()}+
                 </span>
                 <span className="text-sm text-gray-400">
                   Yogis Inspired
