@@ -82,9 +82,10 @@ export const generateFlow = async (params: AIGenerationParams): Promise<Partial<
         throw new Error("AI returned an invalid flow structure.");
     }
 
+    const validPoseSlugs = new Set(allPoses.map(p => p.slug));
     const transformedPoses: FlowPose[] = parsedFlow.poses.map((pose: any, index: number) => {
-        if (!pose.poseId || typeof pose.duration !== 'number') {
-            console.warn(`AI returned an invalid pose object at index ${index}:`, pose);
+        if (!pose.poseId || typeof pose.duration !== 'number' || !validPoseSlugs.has(pose.poseId)) {
+            console.warn(`AI returned an invalid or unknown pose object at index ${index}:`, pose);
             return null;
         }
         return {
