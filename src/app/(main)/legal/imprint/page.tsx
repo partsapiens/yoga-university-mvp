@@ -29,8 +29,8 @@ export default function ImprintPage() {
             <h2 className="text-xl font-semibold text-gray-900 mb-4">Contact Information</h2>
             <div className="mb-6">
               <p className="mb-2"><strong>Phone:</strong> +49 (0) 30 12345678</p>
-              <p className="mb-2"><strong>Email:</strong> info@yogaflowuniversity.com</p>
-              <p className="mb-2"><strong>Website:</strong> https://yogaflowuniversity.com</p>
+              <p className="mb-2"><strong>Email:</strong> info@fltwht.com</p>
+              <p className="mb-2"><strong>Website:</strong> https://fltwht.com</p>
             </div>
 
             <h2 className="text-xl font-semibold text-gray-900 mb-4">Legal Representatives</h2>
