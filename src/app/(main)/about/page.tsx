@@ -154,7 +154,7 @@ export default function AboutPage() {
               <div className="aspect-square bg-gradient-to-br from-blue-100 to-purple-100 dark:from-blue-800 dark:to-purple-800 flex items-center justify-center">
                 <Image
                   src={member.image}
-                  alt={member.name}
+                  alt={`${member.name}, ${member.role} with ${member.experience} of teaching experience`}
                   width={300}
                   height={300}
                   className="w-full h-full object-cover"

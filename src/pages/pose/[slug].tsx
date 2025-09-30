@@ -112,7 +112,7 @@ export default function PoseDetailPage() {
             {pose.image_url && (
               <Image 
                 src={pose.image_url} 
-                alt={pose.name}
+                alt={`${pose.name} (${pose.sanskrit || 'yoga pose'}) - ${pose.family || 'yoga'} pose demonstration`}
                 width={600}
                 height={400}
                 className="w-full rounded mb-4 max-h-96 object-cover" 

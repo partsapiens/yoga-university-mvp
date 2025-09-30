@@ -37,7 +37,7 @@ export default function PrintablePoseCard({
         <div className="relative w-20 h-20 flex-shrink-0">
           <Image
             src={pose.thumbnail_url || pose.icon_url || '/images/pose-placeholder.svg'}
-            alt={pose.name_en}
+            alt={`${pose.name_en} (${pose.name_sanskrit}) - ${pose.family_id} yoga pose`}
             fill
             className="object-cover rounded-lg"
             sizes="80px"

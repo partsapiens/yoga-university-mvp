@@ -490,7 +490,7 @@ export function PoseLibrarySidebar({ onAddPose, className = '' }: PoseLibrarySid
               {pose.image_url ? (
                 <Image
                   src={pose.image_url}
-                  alt={pose.name}
+                  alt={`${pose.name} (${pose.sanskrit_name}) - ${pose.category} yoga pose`}
                   width={80}
                   height={80}
                   className="w-full h-full object-cover rounded-xl"
