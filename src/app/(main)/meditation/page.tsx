@@ -259,7 +259,7 @@ export default function MeditationPage() {
             >
               ← Back to Meditation Center
             </button>
-            <h1 className="text-4xl font-bold text-gray-900 mb-4">✨ Guided Meditation</h1>
+            <h2 className="text-4xl font-bold text-gray-900 mb-4">✨ Guided Meditation</h2>
             <p className="text-lg text-gray-600 max-w-2xl mx-auto">
               Tell me how you're feeling, and I'll create a personalized meditation just for you.
             </p>
