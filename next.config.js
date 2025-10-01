@@ -98,6 +98,7 @@ const nextConfig = {
       },
     ]
   },
+  productionBrowserSourceMaps: true,
 }
 
 export default withBundleAnalyzer(nextConfig);

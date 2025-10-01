@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useMemo } from 'react';
 import { Search, Sparkles } from 'lucide-react';
 import { getPosesFromDatabase } from '@/lib/database';
 import { DatabasePose } from '@/types';
@@ -76,12 +76,12 @@ const PoseLibraryPage = () => {
   const [quickFilters, setQuickFilters] = useState<{[key: string]: boolean}>({});
 
   // Quick filter definitions
-  const quickFilterOptions = [
+  const quickFilterOptions = useMemo(() => [
     { key: 'beginner-friendly', label: 'Beginner-friendly', filter: (p: ExtendedPose) => p.difficulty === 'beginner' },
     { key: 'energizing', label: 'Energizing', filter: (p: ExtendedPose) => p.intensity >= 3 },
     { key: 'relaxing', label: 'Relaxing', filter: (p: ExtendedPose) => p.intensity <= 2 },
     { key: 'core-strength', label: 'Core Strength', filter: (p: ExtendedPose) => p.bodyFocus?.includes('Core') || false }
-  ];
+  ], []);
 
   // Load poses from database and user preferences
   useEffect(() => {
@@ -195,7 +195,7 @@ const PoseLibraryPage = () => {
     }
 
     setFilteredPoses(filtered);
-  }, [poses, search, filters, quickFilters, sort, useSemanticSearch, semanticResults]);
+  }, [poses, search, filters, quickFilters, sort, useSemanticSearch, semanticResults, quickFilterOptions]);
 
   const handleSemanticResults = (results: any[]) => {
     const transformedResults = results.map(result => ({

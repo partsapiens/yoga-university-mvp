@@ -4,8 +4,17 @@ import { PoseId } from '@/types/yoga';
 import { Avatar } from '@/components/Avatar';
 import { useYogaVoiceGuide } from '@/hooks/useYogaVoiceGuide';
 import { PoseCard } from './PoseCard';
-import { PoseAnalysis, usePoseAnalysisSettings } from '@/components/pose-analysis';
+import { usePoseAnalysisSettings } from '@/components/pose-analysis';
 import { Camera, CameraOff } from 'lucide-react';
+import dynamic from 'next/dynamic';
+
+const PoseAnalysis = dynamic(
+  () => import('@/components/pose-analysis/PoseAnalysis').then((mod) => mod.PoseAnalysis),
+  {
+    ssr: false,
+    loading: () => <div className="text-center p-4">Loading Analysis Engine...</div>
+  }
+);
 
 // Define local type to match our optimized PoseAnalysis component
 interface PoseAnalysisResult {

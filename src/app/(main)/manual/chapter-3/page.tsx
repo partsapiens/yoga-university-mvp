@@ -61,7 +61,7 @@ export default function Chapter3Page() {
                   <h4 className="font-semibold text-lg text-teal-300">2. Downward-Facing Dog — Adho Mukha Svanasana</h4>
                   <p className="mb-2">An inversion that energizes and lengthens the entire body. Hands are shoulder-width, feet are hip-width. Prioritize a long spine over straight legs by bending the knees generously.</p>
                    <ul className="list-disc ml-5 space-y-1 text-gray-300">
-                    <li><strong>Cueing</strong>: "Press the ground away," "Lift your hips high," "Let your head hang heavy."</li>
+                    <li><strong>Cueing</strong>: &ldquo;Press the ground away,&rdquo; &ldquo;Lift your hips high,&rdquo; &ldquo;Let your head hang heavy.&rdquo;</li>
                     <li><strong>Anatomy</strong>: Stretches the hamstrings, calves, and shoulders. Strengthens the arms and legs.</li>
                   </ul>
                 </div>
@@ -69,7 +69,7 @@ export default function Chapter3Page() {
                   <h4 className="font-semibold text-lg text-teal-300">3. Ragdoll — Uttanasana Variation</h4>
                   <p className="mb-2">A passive forward fold that releases the spine and hamstrings. Feet are hip-width apart with a generous bend in the knees. Clasp opposite elbows and let gravity do the work.</p>
                   <ul className="list-disc ml-5 space-y-1 text-gray-300">
-                    <li><strong>Cueing</strong>: "Introduce a soft bend in your knees," "Let your head be heavy, your neck be long."</li>
+                    <li><strong>Cueing</strong>: &ldquo;Introduce a soft bend in your knees,&rdquo; &ldquo;Let your head be heavy, your neck be long.&rdquo;</li>
                     <li><strong>Anatomy</strong>: Releases tension in the lumbar spine and neck. Gently opens the hamstrings.</li>
                   </ul>
                 </div>
@@ -126,11 +126,11 @@ export default function Chapter3Page() {
               <div className="p-4 bg-blue-900/20 border-l-4 border-blue-400 rounded-r-lg my-6">
                 <h4 className="font-semibold text-blue-300 mb-2">Teaching Cues for Sun A</h4>
                 <ul className="list-disc ml-5 space-y-1 text-blue-200/90 text-sm">
-                  <li><strong>Tadasana:</strong> "Find your breath, set your intention"</li>
-                  <li><strong>Urdhva Hastasana:</strong> "Inhale, sweep arms wide like you're gathering energy"</li>
-                  <li><strong>Uttanasana:</strong> "Exhale, hinge at hips, bend knees generously"</li>
-                  <li><strong>Chaturanga:</strong> "Strong core, elbows hug in, lower with control"</li>
-                  <li><strong>Up Dog:</strong> "Press hands down, lift heart, legs strong"</li>
+                  <li><strong>Tadasana:</strong> &ldquo;Find your breath, set your intention&rdquo;</li>
+                  <li><strong>Urdhva Hastasana:</strong> &ldquo;Inhale, sweep arms wide like you&apos;re gathering energy&rdquo;</li>
+                  <li><strong>Uttanasana:</strong> &ldquo;Exhale, hinge at hips, bend knees generously&rdquo;</li>
+                  <li><strong>Chaturanga:</strong> &ldquo;Strong core, elbows hug in, lower with control&rdquo;</li>
+                  <li><strong>Up Dog:</strong> &ldquo;Press hands down, lift heart, legs strong&rdquo;</li>
                 </ul>
               </div>
 
@@ -234,9 +234,9 @@ export default function Chapter3Page() {
               <div className="p-4 bg-gray-800/50 border border-gray-700 rounded-lg my-6">
                 <h4 className="font-semibold text-teal-300 mb-2">Key Alignment Cues for Sun B</h4>
                 <ul className="list-disc ml-5 space-y-1 text-gray-300 text-sm">
-                  <li><strong>Utkatasana:</strong> "Weight in heels, knees track over ankles, arms reach up strongly"</li>
-                  <li><strong>Warrior I:</strong> "Front knee over ankle, back leg straight and strong, square hips forward"</li>
-                  <li><strong>Transitions:</strong> "Move with your breath, skip vinyasa if you need to rest"</li>
+                  <li><strong>Utkatasana:</strong> &ldquo;Weight in heels, knees track over ankles, arms reach up strongly&rdquo;</li>
+                  <li><strong>Warrior I:</strong> &ldquo;Front knee over ankle, back leg straight and strong, square hips forward&rdquo;</li>
+                  <li><strong>Transitions:</strong> &ldquo;Move with your breath, skip vinyasa if you need to rest&rdquo;</li>
                 </ul>
               </div>
 
@@ -285,15 +285,15 @@ export default function Chapter3Page() {
               <h4 className="text-lg font-medium text-teal-300 mt-6 mb-3">Common Student Challenges & Solutions:</h4>
               <div className="space-y-3 mb-6">
                 <div className="p-3 bg-red-900/20 border border-red-600 rounded-lg">
-                  <h5 className="font-semibold text-red-300 text-sm">Challenge: "I can't keep up with the breath"</h5>
-                  <p className="text-xs text-gray-300"><strong>Solution:</strong> Encourage longer breaths, offer option to hold poses longer, remind them it's practice, not performance.</p>
+                  <h5 className="font-semibold text-red-300 text-sm">Challenge: &ldquo;I can&apos;t keep up with the breath&rdquo;</h5>
+                  <p className="text-xs text-gray-300"><strong>Solution:</strong> Encourage longer breaths, offer option to hold poses longer, remind them it&apos;s practice, not performance.</p>
                 </div>
                 <div className="p-3 bg-red-900/20 border border-red-600 rounded-lg">
-                  <h5 className="font-semibold text-red-300 text-sm">Challenge: "Chaturanga hurts my shoulders"</h5>
+                  <h5 className="font-semibold text-red-300 text-sm">Challenge: &ldquo;Chaturanga hurts my shoulders&rdquo;</h5>
                   <p className="text-xs text-gray-300"><strong>Solution:</strong> Offer knees-down option, emphasize elbows hugging in, suggest skipping the vinyasa entirely.</p>
                 </div>
                 <div className="p-3 bg-red-900/20 border border-red-600 rounded-lg">
-                  <h5 className="font-semibold text-red-300 text-sm">Challenge: "I can't balance in Warrior I"</h5>
+                  <h5 className="font-semibold text-red-300 text-sm">Challenge: &ldquo;I can&apos;t balance in Warrior I&rdquo;</h5>
                   <p className="text-xs text-gray-300"><strong>Solution:</strong> Widen stance front-to-back, use blocks under hands, practice against wall for support.</p>
                 </div>
               </div>
@@ -301,7 +301,7 @@ export default function Chapter3Page() {
               <div className="p-4 bg-blue-900/20 border-l-4 border-blue-400 rounded-r-lg my-6">
                 <h4 className="font-semibold text-blue-300 mb-2">Journal Prompts for Deeper Integration</h4>
                 <ul className="list-disc ml-5 space-y-1 text-blue-200/90">
-                  <li>In Sun Salutation A, where do you feel the most fluid? Where do you feel "stuck"?</li>
+                  <li>In Sun Salutation A, where do you feel the most fluid? Where do you feel &ldquo;stuck&rdquo;?</li>
                   <li>How does the addition of Chair and Warrior I in Sun B change the energetic quality of the flow for you?</li>
                   <li>Practice teaching the Integration series to a friend or family member. What felt natural? What was challenging to articulate?</li>
                   <li>Notice your internal dialogue during challenging poses. Is it supportive or critical? How can you shift it?</li>
@@ -315,7 +315,7 @@ export default function Chapter3Page() {
                   <li><strong>Gentle Classes:</strong> 1-2 rounds of Sun A only</li>
                   <li><strong>Moderate Classes:</strong> 3 rounds Sun A, 2 rounds Sun B</li>
                   <li><strong>Vigorous Classes:</strong> 5 rounds Sun A, 3-5 rounds Sun B</li>
-                  <li><strong>Always offer modifications</strong> and encourage students to rest in Child's Pose when needed</li>
+                  <li><strong>Always offer modifications</strong> and encourage students to rest in Child&apos;s Pose when needed</li>
                 </ul>
               </div>
             </ManualSection>

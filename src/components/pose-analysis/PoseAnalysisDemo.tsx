@@ -1,12 +1,18 @@
 "use client";
 
 import React, { useState } from 'react';
-import { PoseAnalysis, ProgressTracking, PoseAnalysisSettings } from '@/components/pose-analysis';
+import dynamic from 'next/dynamic';
+import { ProgressTracking, PoseAnalysisSettings } from '@/components/pose-analysis';
 import { PoseId } from '@/types/yoga';
 import { Card } from '@/components/ui/Card';
 import { Button } from '@/components/ui/Button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/Tabs';
 import { Camera, BarChart3, Settings, Play, Info } from 'lucide-react';
+
+const PoseAnalysis = dynamic(() => import('./PoseAnalysis').then(mod => mod.PoseAnalysis), {
+  ssr: false,
+  loading: () => <div className="text-center p-4">Loading Analysis Engine...</div>
+});
 
 export function PoseAnalysisDemo() {
   const [activeDemo, setActiveDemo] = useState<'downdog' | 'warrior' | null>(null);
