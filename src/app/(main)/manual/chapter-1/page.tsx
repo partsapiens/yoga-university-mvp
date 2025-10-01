@@ -138,7 +138,7 @@ export default function Chapter1Page() {
                   At YogaFlow University, we believe that the best yoga teachers are those who maintain a beginner&apos;s mind while developing deep expertise. This paradox—being both student and teacher—is at the heart of our approach.
                 </p>
                 <blockquote className="border-l-4 border-amber-400 pl-4 italic text-amber-700 dark:text-amber-200">
-                  "                  &ldquo;In the beginner&apos;s mind there are many possibilities, but in the expert&apos;s mind there are few.&rdquo;" 
+                  &ldquo;In the beginner&apos;s mind there are many possibilities, but in the expert&apos;s mind there are few.&rdquo;
                   <cite className="block text-right text-sm mt-2 not-italic">— Shunryu Suzuki</cite>
                 </blockquote>
               </div>

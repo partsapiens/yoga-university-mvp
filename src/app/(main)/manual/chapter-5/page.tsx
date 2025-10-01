@@ -49,7 +49,7 @@ export default function Chapter5Page() {
                 While asana (physical postures) is the most visible aspect of yoga in the modern world, it is only one piece of a vast and profound system of personal and spiritual development. Yoga philosophy provides the essential map and compass for this journey.
               </p>
               <p className="mb-4 leading-relaxed">
-                The word "yoga" itself, from the Sanskrit root "yuj," means "to unite" or "to yoke." This refers to the integration of body, mind, and spirit, and the ultimate union of individual consciousness with universal consciousness. This chapter explores the foundational framework for this journey: the Eight Limbs of Yoga.
+                The word &ldquo;yoga&rdquo; itself, from the Sanskrit root &ldquo;yuj,&rdquo; means &ldquo;to unite&rdquo; or &ldquo;to yoke.&rdquo; This refers to the integration of body, mind, and spirit, and the ultimate union of individual consciousness with universal consciousness. This chapter explores the foundational framework for this journey: the Eight Limbs of Yoga.
               </p>
             </ManualSection>
 
@@ -76,7 +76,7 @@ export default function Chapter5Page() {
               <ul className="space-y-3 mb-4 ml-4">
                   <li><strong>Ahimsa (Non-harming)</strong>: Compassion and kindness in thought, word, and deed towards all living things, including oneself.</li>
                   <li><strong>Satya (Truthfulness)</strong>: Speaking and living our truth with integrity and skill.</li>
-                  <li><strong>Asteya (Non-stealing)</strong>: Not taking what is not freely given, including others' time and energy.</li>
+                  <li><strong>Asteya (Non-stealing)</strong>: Not taking what is not freely given, including others&apos; time and energy.</li>
                   <li><strong>Brahmacharya (Energy Moderation)</strong>: Directing our energy wisely, avoiding excess and depletion.</li>
                   <li><strong>Aparigraha (Non-possessiveness)</strong>: Cultivating generosity and letting go of the need to accumulate or hoard.</li>
               </ul>
@@ -103,7 +103,7 @@ export default function Chapter5Page() {
               </p>
               <ul className="space-y-3 mb-4 ml-5 list-disc">
                 <li><strong>Thematic Teaching</strong>: Build a class around a philosophical concept. For example, a class on <em>Aparigraha</em> might focus on letting go of physical tension and mental expectations.</li>
-                <li><strong>Embodied Language</strong>: Connect concepts to physical sensations. "Can you find a sense of <em>Santosha</em>, or contentment, in this pose, even with the intense sensation?"</li>
+                <li><strong>Embodied Language</strong>: Connect concepts to physical sensations. &ldquo;Can you find a sense of <em>Santosha</em>, or contentment, in this pose, even with the intense sensation?&rdquo;</li>
                 <li><strong>Lead by Example</strong>: The most powerful way to teach philosophy is to embody it. Your presence, your kindness, and your integrity speak volumes.</li>
               </ul>
 
@@ -112,27 +112,27 @@ export default function Chapter5Page() {
                 <div className="p-4 bg-gray-900/50 border border-gray-600 rounded-lg">
                   <h5 className="font-semibold text-blue-300 mb-2">Ahimsa (Non-harming) Class Theme</h5>
                   <div className="text-sm space-y-2">
-                    <p><strong>Opening:</strong> "Practice with kindness toward your body today"</p>
+                    <p><strong>Opening:</strong> &ldquo;Practice with kindness toward your body today&rdquo;</p>
                     <p><strong>Poses:</strong> Gentle flows, supported poses, emphasis on modifications</p>
-                    <p><strong>Language:</strong> "Honor what feels right" / "Be gentle with yourself"</p>
+                    <p><strong>Language:</strong> &ldquo;Honor what feels right&rdquo; / &ldquo;Be gentle with yourself&rdquo;</p>
                     <p><strong>Closing:</strong> Loving-kindness meditation</p>
                   </div>
                 </div>
                 <div className="p-4 bg-gray-900/50 border border-gray-600 rounded-lg">
                   <h5 className="font-semibold text-blue-300 mb-2">Tapas (Discipline) Class Theme</h5>
                   <div className="text-sm space-y-2">
-                    <p><strong>Opening:</strong> "Finding strength and commitment in challenge"</p>
+                    <p><strong>Opening:</strong> &ldquo;Finding strength and commitment in challenge&rdquo;</p>
                     <p><strong>Poses:</strong> Challenging holds, core work, arm balances</p>
-                    <p><strong>Language:</strong> "Stay with your breath in intensity" / "Find ease in effort"</p>
+                    <p><strong>Language:</strong> &ldquo;Stay with your breath in intensity&rdquo; / &ldquo;Find ease in effort&rdquo;</p>
                     <p><strong>Closing:</strong> Reflection on inner strength</p>
                   </div>
                 </div>
                 <div className="p-4 bg-gray-900/50 border border-gray-600 rounded-lg">
                   <h5 className="font-semibold text-blue-300 mb-2">Aparigraha (Non-attachment) Class Theme</h5>
                   <div className="text-sm space-y-2">
-                    <p><strong>Opening:</strong> "Let go of expectations about your practice today"</p>
+                    <p><strong>Opening:</strong> &ldquo;Let go of expectations about your practice today&rdquo;</p>
                     <p><strong>Poses:</strong> Flow sequences, transitions, balance challenges</p>
-                    <p><strong>Language:</strong> "Release and receive" / "Fall with grace"</p>
+                    <p><strong>Language:</strong> &ldquo;Release and receive&rdquo; / &ldquo;Fall with grace&rdquo;</p>
                     <p><strong>Closing:</strong> Practice letting go in Savasana</p>
                   </div>
                 </div>
@@ -165,7 +165,7 @@ export default function Chapter5Page() {
               <div className="p-4 bg-gray-800/50 border border-gray-700 rounded-lg my-6">
                 <h4 className="font-semibold text-teal-300 mb-2">Case Study: Theming a Class on Satya (Truthfulness)</h4>
                 <p className="text-gray-300">
-                  You could open class by inviting students to notice their "truth" today—their energy level, their physical sensations. The sequence could include heart-opening poses to encourage authentic expression and balancing poses that require honest self-assessment. The closing could be a reflection on speaking and living more truthfully off the mat.
+                  You could open class by inviting students to notice their &ldquo;truth&rdquo; today—their energy level, their physical sensations. The sequence could include heart-opening poses to encourage authentic expression and balancing poses that require honest self-assessment. The closing could be a reflection on speaking and living more truthfully off the mat.
                 </p>
               </div>
 

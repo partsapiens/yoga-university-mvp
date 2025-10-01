@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useLocalStorage } from '@/hooks/useLocalStorage';
 import { generateMeditationScript } from '@/lib/api/ai';
 import { MeditationInput, MeditationScript, MeditationRecommendation } from '@/types/ai';
@@ -91,31 +91,7 @@ export default function MeditationPage() {
     averageRating: undefined
   });
 
-  // Timer logic
-  useEffect(() => {
-    let interval: NodeJS.Timeout | null = null;
-    
-    if (isPlaying && timeRemaining > 0) {
-      interval = setInterval(() => {
-        setTimeRemaining(time => {
-          if (time <= 1) {
-            setIsPlaying(false);
-            handleSessionComplete();
-            return 0;
-          }
-          return time - 1;
-        });
-      }, 1000);
-    } else if (!isPlaying && interval) {
-      clearInterval(interval);
-    }
-    
-    return () => {
-      if (interval) clearInterval(interval);
-    };
-  }, [isPlaying, timeRemaining]);
-
-  const handleSessionComplete = () => {
+  const handleSessionComplete = useCallback(() => {
     const today = new Date().toDateString();
     const lastSessionDate = sessionStats.lastSession;
     
@@ -146,7 +122,31 @@ export default function MeditationPage() {
     };
     
     setSessionStats(newStats);
-  };
+  }, [sessionStats, setSessionStats, selectedSession]);
+
+  // Timer logic
+  useEffect(() => {
+    let interval: NodeJS.Timeout | null = null;
+
+    if (isPlaying && timeRemaining > 0) {
+      interval = setInterval(() => {
+        setTimeRemaining(time => {
+          if (time <= 1) {
+            setIsPlaying(false);
+            handleSessionComplete();
+            return 0;
+          }
+          return time - 1;
+        });
+      }, 1000);
+    } else if (!isPlaying && interval) {
+      clearInterval(interval);
+    }
+
+    return () => {
+      if (interval) clearInterval(interval);
+    };
+  }, [isPlaying, timeRemaining, handleSessionComplete]);
 
   const startSession = (session: MeditationSession) => {
     setSelectedSession(session);
@@ -261,7 +261,7 @@ export default function MeditationPage() {
             </button>
             <h2 className="text-4xl font-bold text-gray-900 mb-4">✨ Guided Meditation</h2>
             <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-              Tell me how you're feeling, and I'll create a personalized meditation just for you.
+              Tell me how you&apos;re feeling, and I&apos;ll create a personalized meditation just for you.
             </p>
           </div>
           

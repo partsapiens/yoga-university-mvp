@@ -46,12 +46,12 @@ export default function Chapter4Page() {
             <ManualSection id="assists" title="The Art of Hands-on Assists">
               <PoseVideo url="https://youtu.be/wj44gx15U8I" title="The Art of Hands-on Assists" className="mb-8" />
               <p className="mb-4 leading-relaxed text-lg">
-                Physical assists are a powerful form of communication, offering guidance, support, and deeper awareness. However, they must be approached with immense skill, respect, and a clear understanding of consent. The goal of an assist is never to "fix" a pose, but to enhance the student's experience and empower their own discovery.
+                Physical assists are a powerful form of communication, offering guidance, support, and deeper awareness. However, they must be approached with immense skill, respect, and a clear understanding of consent. The goal of an assist is never to &ldquo;fix&rdquo; a pose, but to enhance the student&apos;s experience and empower their own discovery.
               </p>
               <h3 className="text-xl font-semibold text-blue-300 mt-6 mb-4">The Philosophy of Assisting</h3>
               <ul className="space-y-3 mb-4 ml-5 list-disc">
                 <li><strong>Intention is Everything</strong>: Before you touch, be clear on your intention. Is it to ground, to lengthen, to stabilize, or to deepen?</li>
-                <li><strong>Assist the Breath</strong>: A good assist supports the student's breath, it doesn't restrict it. Cue them to breathe as you assist.</li>
+                <li><strong>Assist the Breath</strong>: A good assist supports the student&apos;s breath, it doesn&apos;t restrict it. Cue them to breathe as you assist.</li>
                 <li><strong>From the Ground Up</strong>: Ensure your own base is stable and grounded before attempting to assist someone else. Use your body weight intelligently.</li>
                 <li><strong>Less is More</strong>: Often, the most profound assists are the most subtle—a gentle hand on the sacrum, a light touch to guide the shoulders.</li>
               </ul>
@@ -59,12 +59,12 @@ export default function Chapter4Page() {
               <h3 className="text-xl font-semibold text-blue-300 mt-6 mb-4">Specific Assist Techniques</h3>
               <div className="space-y-4 mb-6">
                 <div className="p-4 bg-gray-900/50 border border-gray-600 rounded-lg">
-                  <h5 className="font-semibold text-blue-300 mb-2">Child's Pose — Grounding Assist</h5>
+                  <h5 className="font-semibold text-blue-300 mb-2">Child&apos;s Pose — Grounding Assist</h5>
                   <ul className="list-disc ml-5 space-y-1 text-sm">
                     <li>Place one hand on lower back/sacrum, one on upper back</li>
                     <li>Apply gentle, steady pressure encouraging surrender</li>
                     <li>Move hands slowly with their breath</li>
-                    <li><strong>Cue:</strong> "Let yourself rest completely into the earth"</li>
+                    <li><strong>Cue:</strong> &ldquo;Let yourself rest completely into the earth&rdquo;</li>
                   </ul>
                 </div>
                 <div className="p-4 bg-gray-900/50 border border-gray-600 rounded-lg">
@@ -73,7 +73,7 @@ export default function Chapter4Page() {
                     <li>Stand behind student, hands on back of pelvis</li>
                     <li>Draw hips back and up while they press hands down</li>
                     <li>Create length through the spine, not depth</li>
-                    <li><strong>Cue:</strong> "Press the ground away as I draw your hips back"</li>
+                    <li><strong>Cue:</strong> &ldquo;Press the ground away as I draw your hips back&rdquo;</li>
                   </ul>
                 </div>
                 <div className="p-4 bg-gray-900/50 border border-gray-600 rounded-lg">
@@ -82,7 +82,7 @@ export default function Chapter4Page() {
                     <li>Sit behind student, place hands on back ribs</li>
                     <li>Encourage length on inhale, gentle forward fold on exhale</li>
                     <li>Never push student deeper than they can go with breath</li>
-                    <li><strong>Cue:</strong> "Breathe into my hands, then fold from your heart"</li>
+                    <li><strong>Cue:</strong> &ldquo;Breathe into my hands, then fold from your heart&rdquo;</li>
                   </ul>
                 </div>
                 <div className="p-4 bg-gray-900/50 border border-gray-600 rounded-lg">
@@ -91,7 +91,7 @@ export default function Chapter4Page() {
                     <li>Stand behind student, one hand on sacrum for grounding</li>
                     <li>Other hand guides top shoulder back and up</li>
                     <li>Create space rather than depth</li>
-                    <li><strong>Cue:</strong> "Root down through your legs as your heart opens"</li>
+                    <li><strong>Cue:</strong> &ldquo;Root down through your legs as your heart opens&rdquo;</li>
                   </ul>
                 </div>
               </div>
@@ -99,7 +99,7 @@ export default function Chapter4Page() {
                <div className="p-4 bg-gray-800/50 border border-gray-700 rounded-lg my-6">
                 <h4 className="font-semibold text-teal-300 mb-2">Class Example: Assisting in Triangle Pose (Trikonasana)</h4>
                 <p className="text-gray-300">
-                  Instead of pushing a student deeper, stand behind them and place one hand on their sacrum, encouraging length. Use your other hand to gently guide their top shoulder open, creating space in the chest. Cue: "Imagine your spine growing longer as you breathe in."
+                  Instead of pushing a student deeper, stand behind them and place one hand on their sacrum, encouraging length. Use your other hand to gently guide their top shoulder open, creating space in the chest. Cue: &ldquo;Imagine your spine growing longer as you breathe in.&rdquo;
                 </p>
               </div>
 
@@ -111,7 +111,7 @@ export default function Chapter4Page() {
                     <li>Keep your own spine long and stable</li>
                     <li>Use your legs and core, not just your arms</li>
                     <li>Move slowly and mindfully</li>
-                    <li>Breathe continuously - if you hold your breath, you're trying too hard</li>
+                    <li>Breathe continuously - if you hold your breath, you&apos;re trying too hard</li>
                   </ul>
                 </div>
                 <div className="p-3 bg-yellow-900/20 border border-yellow-600 rounded-lg">
@@ -158,7 +158,7 @@ export default function Chapter4Page() {
                     <li><strong>Heart Opening:</strong> Lengthwise under spine for gentle backbends</li>
                     <li><strong>Hip Elevation:</strong> Under hips in seated poses and meditation</li>
                     <li><strong>Restorative Twists:</strong> Hug bolster in twisted position</li>
-                    <li><strong>Supported Child's Pose:</strong> Between legs for comfort</li>
+                    <li><strong>Supported Child&apos;s Pose:</strong> Between legs for comfort</li>
                     <li><strong>Pregnancy Modifications:</strong> Support belly in side-lying poses</li>
                   </ul>
                 </div>
@@ -193,10 +193,10 @@ export default function Chapter4Page() {
               <div className="p-4 bg-gray-800/50 border border-gray-700 rounded-lg my-6">
                 <h4 className="font-semibold text-teal-300 mb-2">Teaching Tip: Introducing Props Without Stigma</h4>
                 <p className="text-gray-300 mb-2">
-                  <strong>Instead of:</strong> "If you need help, take a block"
+                  <strong>Instead of:</strong> &ldquo;If you need help, take a block&rdquo;
                 </p>
                 <p className="text-gray-300">
-                  <strong>Try:</strong> "Let's all explore this pose with blocks today. They help us find proper alignment and allow us to hold poses longer."
+                  <strong>Try:</strong> &ldquo;Let&apos;s all explore this pose with blocks today. They help us find proper alignment and allow us to hold poses longer.&rdquo;
                 </p>
               </div>
             </ManualSection>
@@ -208,21 +208,21 @@ export default function Chapter4Page() {
               <h3 className="text-xl font-semibold text-blue-300 mt-6 mb-4">The Foundation of Trust: Consent</h3>
               <p className="mb-4">Consent is paramount. It must be explicit, enthusiastic, and can be revoked at any time.</p>
               <ul className="space-y-2 mb-4 ml-5 list-disc">
-                <li><strong>Consent Systems</strong>: At the start of class, clearly explain your system. This could be a "consent coin" (one side for yes, one for no), a simple thumbs-up, or a verbal opt-in.</li>
-                <li><strong>Ongoing Dialogue</strong>: Even with initial consent, check in with quiet questions like, "How does this feel?" or "Is this pressure okay?"</li>
-                <li><strong>Respecting "No"</strong>: A "no" is always honored immediately and without question. Never make a student feel they need to justify their boundary.</li>
+                <li><strong>Consent Systems</strong>: At the start of class, clearly explain your system. This could be a &ldquo;consent coin&rdquo; (one side for yes, one for no), a simple thumbs-up, or a verbal opt-in.</li>
+                <li><strong>Ongoing Dialogue</strong>: Even with initial consent, check in with quiet questions like, &ldquo;How does this feel?&rdquo; or &ldquo;Is this pressure okay?&rdquo;</li>
+                <li><strong>Respecting &ldquo;No&rdquo;</strong>: A &ldquo;no&rdquo; is always honored immediately and without question. Never make a student feel they need to justify their boundary.</li>
               </ul>
                <div className="p-4 bg-blue-900/20 border-l-4 border-blue-400 rounded-r-lg my-6">
                 <h4 className="font-semibold text-blue-300 mb-2">Trauma-Informed Approach</h4>
                 <p className="text-blue-200/90">
-                  Recognize that trauma is prevalent. Use invitational language ("I invite you to...", "If it feels right..."), avoid surprising or forceful assists, and always give students agency over their own bodies and practice.
+                  Recognize that trauma is prevalent. Use invitational language (&ldquo;I invite you to...&rdquo;, &ldquo;If it feels right...&rdquo;), avoid surprising or forceful assists, and always give students agency over their own bodies and practice.
                 </p>
               </div>
             </ManualSection>
 
             <ManualSection id="contraindications" title="Common Contraindications & Modifications">
               <p className="mb-4 leading-relaxed">
-                A key part of "do no harm" is understanding when a pose might be inappropriate for a student. While you are not a medical professional, having a working knowledge of common contraindications is essential for creating safe, inclusive classes.
+                A key part of &ldquo;do no harm&rdquo; is understanding when a pose might be inappropriate for a student. While you are not a medical professional, having a working knowledge of common contraindications is essential for creating safe, inclusive classes.
               </p>
 
               <h3 className="text-xl font-semibold text-blue-300 mt-6 mb-4">Common Conditions & Safe Modifications</h3>
@@ -355,7 +355,7 @@ export default function Chapter4Page() {
                 <ul className="list-disc ml-5 space-y-1 text-yellow-200/90 text-sm">
                   <li><strong>When in doubt, leave it out</strong> — Better to be conservative than cause harm</li>
                   <li><strong>Always offer alternatives</strong> — Every student should have a way to participate</li>
-                  <li><strong>Encourage medical guidance</strong> — Remind students to follow their doctor's advice</li>
+                  <li><strong>Encourage medical guidance</strong> — Remind students to follow their doctor&apos;s advice</li>
                   <li><strong>Create space for self-advocacy</strong> — Students know their bodies best</li>
                   <li><strong>Document and communicate</strong> — Note any specific needs for future classes</li>
                 </ul>
@@ -365,11 +365,11 @@ export default function Chapter4Page() {
               <div className="space-y-3 mb-6">
                 <div className="p-3 bg-blue-900/20 border border-blue-600 rounded-lg">
                   <h5 className="font-semibold text-blue-300 text-sm">Pre-Class Check-in</h5>
-                  <p className="text-xs text-gray-300">Ask students if they have any injuries or areas they'd like you to be mindful of. Make this normal, not exceptional.</p>
+                  <p className="text-xs text-gray-300">Ask students if they have any injuries or areas they&apos;d like you to be mindful of. Make this normal, not exceptional.</p>
                 </div>
                 <div className="p-3 bg-blue-900/20 border border-blue-600 rounded-lg">
                   <h5 className="font-semibold text-blue-300 text-sm">Inclusive Language</h5>
-                  <p className="text-xs text-gray-300">"If this doesn't serve your body today..." / "Honor what feels right for you..." / "Take the variation that calls to you..."</p>
+                  <p className="text-xs text-gray-300">&ldquo;If this doesn&apos;t serve your body today...&rdquo; / &ldquo;Honor what feels right for you...&rdquo; / &ldquo;Take the variation that calls to you...&rdquo;</p>
                 </div>
                 <div className="p-3 bg-blue-900/20 border border-blue-600 rounded-lg">
                   <h5 className="font-semibold text-blue-300 text-sm">Multiple Options Always</h5>

@@ -52,7 +52,7 @@ export default function Chapter7Page() {
               </p>
               <ul className="space-y-3 mb-4 ml-5 list-disc">
                 <li><strong>Teach from Your Scars, Not Your Wounds</strong>: Share what you have integrated and learned, not what you are still actively processing.</li>
-                <li><strong>Permission to be Imperfect</strong>: Your students don't need a perfect teacher; they need a real one. It's okay to stumble over words, forget a pose, or laugh at yourself.</li>
+                <li><strong>Permission to be Imperfect</strong>: Your students don&apos;t need a perfect teacher; they need a real one. It&apos;s okay to stumble over words, forget a pose, or laugh at yourself.</li>
                 <li><strong>The Power of Silence</strong>: A confident teacher knows when not to talk. Use silence to allow students to have their own experience and feel the effects of a pose.</li>
               </ul>
             </ManualSection>
@@ -71,7 +71,7 @@ export default function Chapter7Page() {
                 <li><strong>Savasana & Closing (5-10 min)</strong>: Final relaxation for integration.</li>
               </ol>
               <div className="p-4 bg-gray-800/50 border border-gray-700 rounded-lg my-6">
-                <h4 className="font-semibold text-teal-300 mb-2">Sample Theme & Sequence: "Grounding into Gratitude"</h4>
+                <h4 className="font-semibold text-teal-300 mb-2">Sample Theme & Sequence: &ldquo;Grounding into Gratitude&rdquo;</h4>
                 <p className="text-gray-300">
                   <strong>Theme:</strong> Cultivating stability (Muladhara Chakra) and thankfulness (Santosha).<br/>
                   <strong>Peak Pose:</strong> Vrksasana (Tree Pose).<br/>
@@ -84,9 +84,9 @@ export default function Chapter7Page() {
               <p className="mb-4 leading-relaxed">Effective cueing is clear, concise, and multi-dimensional. It guides students safely into a pose while also inviting them into a deeper experience.</p>
               <h3 className="text-xl font-semibold text-blue-300 mt-6 mb-4">The Three Layers of a Cue</h3>
               <ul className="space-y-3 mb-4 ml-5">
-                <li><strong>Layer 1: Foundational/Anatomical</strong>: The "what" and "how." (e.g., "Step your right foot forward, stack your knee over your ankle.")</li>
-                <li><strong>Layer 2: Energetic/Refinement</strong>: The feeling and direction of energy. (e.g., "Press down through your front foot to rise up through your heart.")</li>
-                <li><strong>Layer 3: Thematic/Inspirational</strong>: Connects the pose to the class theme or a deeper philosophical concept. (e.g., "As you root down, feel a sense of gratitude for the support of the earth beneath you.")</li>
+                <li><strong>Layer 1: Foundational/Anatomical</strong>: The &ldquo;what&rdquo; and &ldquo;how.&rdquo; (e.g., &ldquo;Step your right foot forward, stack your knee over your ankle.&rdquo;)</li>
+                <li><strong>Layer 2: Energetic/Refinement</strong>: The feeling and direction of energy. (e.g., &ldquo;Press down through your front foot to rise up through your heart.&rdquo;)</li>
+                <li><strong>Layer 3: Thematic/Inspirational</strong>: Connects the pose to the class theme or a deeper philosophical concept. (e.g., &ldquo;As you root down, feel a sense of gratitude for the support of the earth beneath you.&rdquo;)</li>
               </ul>
             </ManualSection>
 
@@ -97,14 +97,14 @@ export default function Chapter7Page() {
               <ul className="space-y-3 mb-4 ml-5 list-disc">
                 <li><strong>Liability Insurance</strong>: This is non-negotiable. It protects you and your students.</li>
                 <li><strong>Setting Your Rates</strong>: Research your local market. Value your time, training, and expertise.</li>
-                <li><strong>Marketing Yourself Authentically</strong>: You don't need to be a social media expert. Start by sharing what you love about yoga with your community. A simple website or email list can be very effective.</li>
+                <li><strong>Marketing Yourself Authentically</strong>: You don&apos;t need to be a social media expert. Start by sharing what you love about yoga with your community. A simple website or email list can be very effective.</li>
                 <li><strong>Continuing Education</strong>: The 200-hour training is just the beginning. Commit to being a lifelong student. Attend workshops, read books, and maintain your personal practice.</li>
               </ul>
             </ManualSection>
 
             <ManualSection id="ethics" title="Ethics & The Seat of the Teacher">
               <p className="mb-4 leading-relaxed">
-                "The seat of the teacher" (Guru) is a position of trust and responsibility. It requires impeccable integrity, clear boundaries, and a deep sense of humility.
+                &ldquo;The seat of the teacher&rdquo; (Guru) is a position of trust and responsibility. It requires impeccable integrity, clear boundaries, and a deep sense of humility.
               </p>
               <ul className="space-y-3 mb-4 ml-5 list-disc">
                 <li><strong>Scope of Practice</strong>: You are a yoga teacher, not a therapist or a doctor. Refer students to other professionals when their needs are outside your scope.</li>
