@@ -4,84 +4,92 @@ This guide helps diagnose and fix OpenAI API issues in the Yoga University MVP h
 
 ## Quick Diagnosis
 
-Run the automated troubleshooting script:
+First, run the automated troubleshooting script to check the status of all AI-related endpoints:
 
 ```bash
 # In your project directory
 ./troubleshoot-openai.sh
 ```
 
-This script will test all endpoints and provide specific recommendations.
+This script tests connectivity, authentication, and individual endpoints, providing specific recommendations.
 
-## Common Issues and Solutions
+## 1. Build & Deployment Issues on Netlify
 
-### 1. "API unavailable" Error
-
-**Symptoms:**
-- Health endpoint shows `"openai": false`
-- AI endpoints return fallback responses
-- Error message: "API unavailable"
-
-**Causes & Solutions:**
-
-#### Missing API Key
-```bash
-# Check if API key is configured
-curl https://your-site.netlify.app/api/debug/environment
-```
-
-**Fix:** Set `OPENAI_API_KEY` in Netlify environment variables:
-1. Go to Netlify Dashboard > Site Settings > Environment Variables
-2. Add `OPENAI_API_KEY` with your OpenAI API key
-3. Add `USE_MOCK=false` to enable live API calls
-4. Redeploy the site
-
-#### Invalid API Key
-**Symptoms:** Error code 401 or "Unauthorized"
-
-**Fix:** 
-1. Verify your API key at https://platform.openai.com/api-keys
-2. Ensure the key has sufficient credits
-3. Replace the key in Netlify environment variables
-
-#### Rate Limiting
-**Symptoms:** Error code 429 or "rate limit exceeded"
-
-**Fix:**
-1. Check your OpenAI usage at https://platform.openai.com/usage
-2. Upgrade your OpenAI plan if needed
-3. Implement request throttling (already included in the code)
-
-### 2. Network/Timeout Issues
+This is the most common and critical issue. If your AI features work locally but fail in production, start here.
 
 **Symptoms:**
-- Requests timeout
-- Intermittent connectivity issues
+- API calls to endpoints like `/api/ai-guide` or `/api/ai-select` fail with a 404 "Not Found" error.
+- The network tab shows the browser receiving an HTML page (your app's 404 page) instead of a JSON response.
+- The "Functions" tab in your Netlify dashboard is empty or missing the AI-related functions.
 
-**Solutions:**
-1. Check Netlify function logs for timeout errors
-2. Verify Netlify Functions are properly configured
-3. Check if `@netlify/plugin-nextjs` is installed
+**Cause:**
+The Next.js build process on Netlify is not correctly bundling the API routes as Serverless Functions. This often happens because the routes default to the "Edge" runtime, but they contain Node.js-specific code that is not compatible with the Edge environment.
 
-### 3. Environment Variable Issues
+**Solution: Force the Node.js Runtime**
+You must explicitly tell Next.js to use the Node.js runtime for each AI-related API route.
 
-**Common Problems:**
+1.  **Locate your API routes**: They are in the `src/app/api/` directory (e.g., `src/app/api/ai-guide/route.ts`).
+2.  **Add the runtime export**: In each `route.ts` file for your AI endpoints, add the following line at the top:
+    ```typescript
+    export const runtime = 'nodejs';
+    ```
+    For example:
+    ```typescript
+    // src/app/api/ai-guide/route.ts
+    import { NextResponse } from "next/server";
+    import { oa, isOpenAIAvailable } from "@/lib/openai";
 
-#### Variables Not Available at Runtime
-```bash
-# Test environment availability
-curl https://your-site.netlify.app/api/debug/environment
+    export const runtime = 'nodejs'; // <-- ADD THIS LINE
+    export const dynamic = 'force-dynamic';
+
+    export async function POST(req: Request) {
+      // ... rest of the code
+    }
+    ```
+3.  **Redeploy**: Commit and push the change to trigger a new build on Netlify.
+
+**Verification:**
+-   After the deploy finishes, go to the **Functions** tab in your Netlify project. You should now see a list of functions corresponding to your API routes.
+-   Use `curl` or your browser's developer tools to make a POST request to an endpoint. It should now return a JSON response, not a 404.
+
+## 2. Configuration & Environment Variables
+
+If the build is correct, the next step is to check your environment variables.
+
+### For Local Development
+Create a file named `.env.local` in the project root and add your keys:
 ```
+# Get your API key from https://platform.openai.com/api-keys
+OPENAI_API_KEY="your_openai_api_key_here"
 
-**Fix:**
-1. Ensure variables are set in Netlify (not just in your local .env)
-2. Redeploy after adding environment variables
-3. Check that variable names match exactly (case-sensitive)
+# Set to 'false' to use the live OpenAI API, 'true' for mock responses
+USE_MOCK=false
+```
+> **Remember to restart your local server** (`npm run dev`) after changing this file.
 
-#### Mock Mode Enabled in Production
-**Symptoms:** API returns mock/fallback responses
+### For Netlify (Production & Previews)
+1.  In your Netlify dashboard, go to `Site settings` > `Build & deploy` > `Environment`.
+2.  Ensure these variables are set:
+    -   `OPENAI_API_KEY`: Your secret OpenAI API key.
+    -   `USE_MOCK`: Set to `false` to enable live API calls.
+3.  Trigger a new deploy for the changes to apply.
 
-**Fix:** Set `USE_MOCK=false` in Netlify environment variables
+## 3. Troubleshooting Common Runtime Errors
+
+If your functions are deployed and configured but you still see errors, check the following.
+
+### "Invalid API key" or 401 Error
+-   **Verify your API key** at https://platform.openai.com/api-keys.
+-   Ensure the key has **sufficient credits**.
+-   Carefully **re-enter the key** and redeploy.
+
+### Rate Limiting (429 Error)
+-   Check your OpenAI usage at https://platform.openai.com/usage.
+-   Consider upgrading your OpenAI plan if you consistently hit rate limits.
+
+### Network/Timeout Issues
+-   Check your **Netlify function logs** for timeout errors.
+-   Check the OpenAI API status page: https://status.openai.com/
 
 ## Debugging Tools
 

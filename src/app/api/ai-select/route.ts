@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { oa, isOpenAIAvailable } from "@/lib/openai";
 import ErrorReporter from "@/lib/errorReporting";
 
+export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
 
 export async function POST(req: Request) {

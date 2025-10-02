@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { generateCompletion, filterContent } from '@/lib/openai';
 
+export const runtime = 'nodejs';
+
 export interface AffirmationRequest {
   context: 'meditation' | 'flow' | 'general';
   userProfile?: {
