@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { openai, isOpenAIAvailable } from '@/lib/openai';
 import { PoseId } from '@/types/yoga';
+
+export const runtime = 'nodejs';
 import { POSES } from '@/lib/yoga-data';
 
 interface ValidationRequest {

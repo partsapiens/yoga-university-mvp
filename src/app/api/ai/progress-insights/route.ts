@@ -2,6 +2,8 @@ import { NextRequest, NextResponse } from 'next/server';
 import { ProgressAnalyticsService, ProgressInsights } from '@/lib/services/progressAnalytics';
 import { PracticeSession } from '@/types/dashboard';
 
+export const runtime = 'nodejs';
+
 export async function GET(request: NextRequest) {
   return NextResponse.json({
     message: 'AI Progress Insights API',

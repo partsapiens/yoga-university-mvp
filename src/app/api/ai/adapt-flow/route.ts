@@ -2,6 +2,8 @@ import { NextRequest, NextResponse } from 'next/server';
 import { generateCompletion, filterContent } from '@/lib/openai';
 import { PoseId } from '@/types/yoga';
 
+export const runtime = 'nodejs';
+
 export interface FlowAdaptationRequest {
   currentFlow: {
     poses: PoseId[];
