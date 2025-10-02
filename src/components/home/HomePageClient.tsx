@@ -12,7 +12,7 @@ const HomePageClient = () => {
   return (
     <div>
       {/* Hero Section */}
-      <section className="relative bg-gradient-to-br from-blue-600 via-purple-600 to-indigo-700 text-white overflow-hidden">
+      <section className="relative text-white overflow-hidden hero-gradient-animated">
         {/* Background Pattern */}
         <div className="absolute inset-0 opacity-20">
           <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent"></div>

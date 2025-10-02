@@ -95,6 +95,18 @@
   /* Note: Typography sizes are defined in tailwind.config.ts with font-weight and letter-spacing */
   /* These utility classes can be used directly: text-large-title, text-title1, text-title2, etc. */
 
+  /* Animated Hero Gradient */
+  .hero-gradient-animated {
+    background: linear-gradient(-45deg, #2563eb, #7c3aed, #4f46e5, #6366f1);
+    background-size: 400% 400%;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .hero-gradient-animated {
+      animation: gradient-shift 15s ease infinite;
+    }
+  }
+
   /* Unified Button System */
   .btn {
     @apply inline-flex items-center justify-center whitespace-nowrap text-subhead font-medium transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50;
@@ -567,6 +579,18 @@
     50% { 
       transform: scale(1.05); 
       opacity: 0.9;
+    }
+  }
+
+  @keyframes gradient-shift {
+    0% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 50%;
     }
   }
 }
