@@ -4,130 +4,113 @@ This guide helps diagnose and fix OpenAI API issues in the Yoga University MVP h
 
 ## Quick Diagnosis
 
-Run the automated troubleshooting script:
+First, run the automated troubleshooting script to check the status of all AI-related endpoints:
 
 ```bash
 # In your project directory
 ./troubleshoot-openai.sh
 ```
 
-This script will test all endpoints and provide specific recommendations.
+This script tests connectivity, authentication, and individual endpoints, providing specific recommendations.
 
-## Common Issues and Solutions
+## 1. Configuration and Setup
 
-### 1. "API unavailable" Error
+Correct configuration is essential. Follow the instructions for your environment.
 
+### For Local Development
+For local development, you must provide your own OpenAI API key.
+
+1.  **Create a local environment file**: If it doesn't exist, create a file named `.env.local` in the root of the project.
+2.  **Add your API key**: Open `.env.local` and add your key:
+    ```
+    # Get your API key from https://platform.openai.com/api-keys
+    OPENAI_API_KEY="your_openai_api_key_here"
+
+    # Set to 'false' to use the live OpenAI API, 'true' for mock responses
+    USE_MOCK=false
+    ```
+3.  **Restart the server**: Stop and restart the development server (`npm run dev`) for the changes to take effect.
+
+> **Note**: The `.env.local` file is ignored by Git and should never be committed.
+
+### For Netlify (Production & Previews)
+For the live site and preview deploys, environment variables must be set in the Netlify dashboard.
+
+1.  **Navigate to Environment Variables**: In your Netlify dashboard, go to `Site settings` > `Build & deploy` > `Environment`.
+2.  **Add Required Variables**: Add the following variables:
+    -   `OPENAI_API_KEY`: Your secret OpenAI API key.
+    -   `USE_MOCK`: Set this to `false` to enable live API calls.
+3.  **Redeploy**: Trigger a new deploy for the changes to apply.
+
+## 2. Troubleshooting Common Errors
+
+If you've configured the environment variables correctly and still have issues, consult this list.
+
+### "Invalid API key" or 401 Error
 **Symptoms:**
-- Health endpoint shows `"openai": false`
-- AI endpoints return fallback responses
-- Error message: "API unavailable"
-
-**Causes & Solutions:**
-
-#### Missing API Key
-```bash
-# Check if API key is configured
-curl https://your-site.netlify.app/api/debug/environment
-```
-
-**Fix:** Set `OPENAI_API_KEY` in Netlify environment variables:
-1. Go to Netlify Dashboard > Site Settings > Environment Variables
-2. Add `OPENAI_API_KEY` with your OpenAI API key
-3. Add `USE_MOCK=false` to enable live API calls
-4. Redeploy the site
-
-#### Invalid API Key
-**Symptoms:** Error code 401 or "Unauthorized"
-
-**Fix:** 
-1. Verify your API key at https://platform.openai.com/api-keys
-2. Ensure the key has sufficient credits
-3. Replace the key in Netlify environment variables
-
-#### Rate Limiting
-**Symptoms:** Error code 429 or "rate limit exceeded"
+- The health endpoint (`/api/health`) shows `"openai": false` with an "Invalid API key" error.
+- AI features return fallback content.
+- The `troubleshoot-openai.sh` script reports a 401 error.
 
 **Fix:**
-1. Check your OpenAI usage at https://platform.openai.com/usage
-2. Upgrade your OpenAI plan if needed
-3. Implement request throttling (already included in the code)
+1.  **Verify your API key** at https://platform.openai.com/api-keys.
+2.  Ensure the key has **sufficient credits** and is not expired.
+3.  Carefully **re-enter the key** in your `.env.local` file (for local) or Netlify environment variables (for production) and redeploy.
 
-### 2. Network/Timeout Issues
-
+### "API unavailable" or "API key not configured"
 **Symptoms:**
-- Requests timeout
-- Intermittent connectivity issues
+- The health endpoint shows `"openai": false`.
+- The application uses mock/fallback responses.
+
+**Fix:**
+1.  Ensure `OPENAI_API_KEY` is set correctly for your environment (see section 1).
+2.  Make sure `USE_MOCK` is set to `false`. If `USE_MOCK` is `true`, the application will intentionally use fallback data.
+
+### Rate Limiting (429 Error)
+**Symptoms:**
+- AI features fail intermittently with a "rate limit exceeded" or 429 error.
+
+**Fix:**
+1.  Check your OpenAI usage at https://platform.openai.com/usage.
+2.  Consider upgrading your OpenAI plan if you are consistently hitting rate limits.
+3.  The application has built-in throttling, but high traffic can still exceed limits.
+
+### Network/Timeout Issues
+**Symptoms:**
+- Requests to AI endpoints time out.
 
 **Solutions:**
-1. Check Netlify function logs for timeout errors
-2. Verify Netlify Functions are properly configured
-3. Check if `@netlify/plugin-nextjs` is installed
+1.  Check Netlify function logs for timeout errors.
+2.  Verify your internet connection and check the OpenAI API status page: https://status.openai.com/
 
-### 3. Environment Variable Issues
+## 3. Debugging Tools
 
-**Common Problems:**
+Use these endpoints to get more information about the system's status.
 
-#### Variables Not Available at Runtime
+### Health Check Endpoint
 ```bash
-# Test environment availability
-curl https://your-site.netlify.app/api/debug/environment
+curl http://your-site-url/api/health
 ```
+Returns a summary of the API status, including whether OpenAI is available.
 
-**Fix:**
-1. Ensure variables are set in Netlify (not just in your local .env)
-2. Redeploy after adding environment variables
-3. Check that variable names match exactly (case-sensitive)
-
-#### Mock Mode Enabled in Production
-**Symptoms:** API returns mock/fallback responses
-
-**Fix:** Set `USE_MOCK=false` in Netlify environment variables
-
-## Debugging Tools
-
-### 1. Health Check Endpoint
+### Environment Debug Endpoint
 ```bash
-curl https://your-site.netlify.app/api/health
+curl http://your-site-url/api/debug/environment
 ```
+Returns detailed (but safe) information about the runtime environment, including whether an API key is present (without exposing the key itself). *Note: This endpoint may be disabled in production unless `DEBUG_MODE=true` is set.*
 
-Returns:
-- `openai: true/false` - API availability
-- `status: healthy/unhealthy` - Overall status
-- Debug info (in development mode)
-
-### 2. Environment Debug Endpoint
-```bash
-curl https://your-site.netlify.app/api/debug/environment
-```
-
-Returns (in development or with DEBUG_MODE=true):
-- Environment configuration
-- API key status (without exposing the key)
-- Runtime information
-
-### 3. Test AI Endpoints
-
+### Test AI Endpoints
+Use `curl` to test the AI endpoints directly:
 ```bash
 # Test AI selection
-curl -X POST https://your-site.netlify.app/api/ai-select \
+curl -X POST http://your-site-url/api/ai-select \
   -H "Content-Type: application/json" \
   -d '{"userText": "I feel stressed", "preferredDuration": 10}'
 
 # Test AI chat
-curl -X POST https://your-site.netlify.app/api/ai-guide \
+curl -X POST http://your-site-url/api/ai-guide \
   -H "Content-Type: application/json" \
   -d '{"messages": [{"role": "user", "content": "Help with breathing"}]}'
-```
-
-## Netlify-Specific Configuration
-
-### Required Environment Variables
-
-In Netlify Dashboard > Site Settings > Environment Variables:
-
-```
-OPENAI_API_KEY=sk-proj-your-actual-openai-api-key-here
-USE_MOCK=false
 ```
 
 ### Optional Debug Variables
